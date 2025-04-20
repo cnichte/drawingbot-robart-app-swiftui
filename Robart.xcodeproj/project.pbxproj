@@ -16,7 +16,6 @@
 		D56C4E462DB1275C00F09A0C /* View+DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E442DB1275C00F09A0C /* View+DropZone.swift */; };
 		D56C4E482DB1296700F09A0C /* DropZoneModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */; };
 		D56C4E492DB1296700F09A0C /* DropZoneModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */; };
-		D56C4E4C2DB1330800F09A0C /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E4A2DB1330800F09A0C /* WindowManager.swift */; platformFilters = (macos, ); };
 		D56C4E592DB1847400F09A0C /* WindowID.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E582DB1847400F09A0C /* WindowID.swift */; };
 		D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
@@ -89,8 +88,8 @@
 		D5A085342DAFE17000332690 /* CollapsibleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085322DAFE17000332690 /* CollapsibleSection.swift */; };
 		D5A085AC2DB023DA00332690 /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AB2DB023D600332690 /* NewProjectSheet.swift */; };
 		D5A085AD2DB023DA00332690 /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AB2DB023D600332690 /* NewProjectSheet.swift */; };
-		D5A085AF2DB0248000332690 /* ProjectEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AE2DB0248000332690 /* ProjectEditorView.swift */; };
-		D5A085B02DB0248000332690 /* ProjectEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AE2DB0248000332690 /* ProjectEditorView.swift */; };
+		D5A085AF2DB0248000332690 /* ProjectManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AE2DB0248000332690 /* ProjectManagerView.swift */; };
+		D5A085B02DB0248000332690 /* ProjectManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AE2DB0248000332690 /* ProjectManagerView.swift */; };
 		D5A085B52DB02D7800332690 /* ProjectSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085B42DB02D7800332690 /* ProjectSectionView.swift */; };
 		D5A085B62DB02D7800332690 /* ProjectSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085B42DB02D7800332690 /* ProjectSectionView.swift */; };
 		D5A085B92DB02E0000332690 /* UnassignedSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085B82DB02DFD00332690 /* UnassignedSectionView.swift */; };
@@ -105,6 +104,19 @@
 		D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042A2DAEF43900E8406E /* ORSSerial */; };
 		D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042D2DAEF44B00E8406E /* SVGView */; };
 		D5D104302DAEF45100E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042F2DAEF45100E8406E /* SVGView */; };
+		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
+		D5F4DDF82DB5A00500C9FE57 /* PenManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF72DB5A00500C9FE57 /* PenManagerView.swift */; };
+		D5F4DDF92DB5A00500C9FE57 /* PenManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF72DB5A00500C9FE57 /* PenManagerView.swift */; };
+		D5F4DDFB2DB5A1C100C9FE57 /* PenFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDFA2DB5A1C100C9FE57 /* PenFormView.swift */; };
+		D5F4DDFC2DB5A1C100C9FE57 /* PenFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDFA2DB5A1C100C9FE57 /* PenFormView.swift */; };
+		D5F4DDFE2DB5A20600C9FE57 /* PenListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDFD2DB5A20600C9FE57 /* PenListView.swift */; };
+		D5F4DDFF2DB5A20600C9FE57 /* PenListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDFD2DB5A20600C9FE57 /* PenListView.swift */; };
+		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
+		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
+		D5F4DE042DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */; };
+		D5F4DE052DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */; };
+		D5F4DE072DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE062DB5A3C200C9FE57 /* JobPickerSheet.swift */; };
+		D5F4DE082DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE062DB5A3C200C9FE57 /* JobPickerSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,10 +124,9 @@
 		D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropHandling.swift; sourceTree = "<group>"; };
 		D56C4E442DB1275C00F09A0C /* View+DropZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DropZone.swift"; sourceTree = "<group>"; };
 		D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneModifier.swift; sourceTree = "<group>"; };
-		D56C4E4A2DB1330800F09A0C /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		D56C4E582DB1847400F09A0C /* WindowID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowID.swift; sourceTree = "<group>"; };
 		D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WindowManager+Extensions.swift"; sourceTree = "<group>"; };
-		D56C4E5C2DB188C100F09A0C /*  WindowManager+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " WindowManager+Examples.swift"; sourceTree = "<group>"; };
+		D56C4E5C2DB188C100F09A0C /* WindowManager+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WindowManager+Examples.swift"; sourceTree = "<group>"; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -152,7 +163,7 @@
 		D5A085252DAFD8DE00332690 /* SVGTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGTreeView.swift; sourceTree = "<group>"; };
 		D5A085322DAFE17000332690 /* CollapsibleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSection.swift; sourceTree = "<group>"; };
 		D5A085AB2DB023D600332690 /* NewProjectSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectSheet.swift; sourceTree = "<group>"; };
-		D5A085AE2DB0248000332690 /* ProjectEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectEditorView.swift; sourceTree = "<group>"; };
+		D5A085AE2DB0248000332690 /* ProjectManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectManagerView.swift; sourceTree = "<group>"; };
 		D5A085B42DB02D7800332690 /* ProjectSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSectionView.swift; sourceTree = "<group>"; };
 		D5A085B82DB02DFD00332690 /* UnassignedSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnassignedSectionView.swift; sourceTree = "<group>"; };
 		D5A085BB2DB02E2100332690 /* JobRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRowView.swift; sourceTree = "<group>"; };
@@ -162,6 +173,13 @@
 		D5D104162DAEF30700E8406E /* Robart-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Robart-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D104242DAEF38000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
 		D5D104262DAEF39000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
+		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
+		D5F4DDF72DB5A00500C9FE57 /* PenManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenManagerView.swift; sourceTree = "<group>"; };
+		D5F4DDFA2DB5A1C100C9FE57 /* PenFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenFormView.swift; sourceTree = "<group>"; };
+		D5F4DDFD2DB5A20600C9FE57 /* PenListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenListView.swift; sourceTree = "<group>"; };
+		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
+		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
+		D5F4DE062DB5A3C200C9FE57 /* JobPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobPickerSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -246,8 +264,11 @@
 		D57076D62DB57F5000C277AF /* Projects */ = {
 			isa = PBXGroup;
 			children = (
-				D5A085AE2DB0248000332690 /* ProjectEditorView.swift */,
+				D5F4DE062DB5A3C200C9FE57 /* JobPickerSheet.swift */,
+				D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */,
+				D5A085AE2DB0248000332690 /* ProjectManagerView.swift */,
 				D5A085B42DB02D7800332690 /* ProjectSectionView.swift */,
+				D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -263,6 +284,9 @@
 		D57076D82DB58A2300C277AF /* Pens */ = {
 			isa = PBXGroup;
 			children = (
+				D5F4DDF72DB5A00500C9FE57 /* PenManagerView.swift */,
+				D5F4DDFA2DB5A1C100C9FE57 /* PenFormView.swift */,
+				D5F4DDFD2DB5A20600C9FE57 /* PenListView.swift */,
 			);
 			path = Pens;
 			sourceTree = "<group>";
@@ -435,9 +459,9 @@
 		D5D104232DAEF34B00E8406E /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				D56C4E5C2DB188C100F09A0C /*  WindowManager+Examples.swift */,
+				D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */,
+				D56C4E5C2DB188C100F09A0C /* WindowManager+Examples.swift */,
 				D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */,
-				D56C4E4A2DB1330800F09A0C /* WindowManager.swift */,
 				D5D104242DAEF38000E8406E /* USBSerialScanner.swift */,
 				D56C4E582DB1847400F09A0C /* WindowID.swift */,
 			);
@@ -571,13 +595,16 @@
 				D5A085182DAFD8C900332690 /* JobListView.swift in Sources */,
 				D5A085192DAFD8C900332690 /* PlotterWizardView.swift in Sources */,
 				D5A0851A2DAFD8C900332690 /* JobPreviewView.swift in Sources */,
+				D5F4DDF92DB5A00500C9FE57 /* PenManagerView.swift in Sources */,
 				D5A084D72DAFD84000332690 /* SettingsData.swift in Sources */,
 				D5A084D82DAFD84000332690 /* MachineData.swift in Sources */,
 				D5A084D92DAFD84000332690 /* PenData.swift in Sources */,
 				D5A085262DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */,
 				D5A085B92DB02E0000332690 /* UnassignedSectionView.swift in Sources */,
+				D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
 				D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
 				D5A085BC2DB02E2100332690 /* JobRowView.swift in Sources */,
+				D5F4DDFE2DB5A20600C9FE57 /* PenListView.swift in Sources */,
 				D5A085B52DB02D7800332690 /* ProjectSectionView.swift in Sources */,
 				D5A085282DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
 				D56C4E592DB1847400F09A0C /* WindowID.swift in Sources */,
@@ -588,15 +615,17 @@
 				D5A084DA2DAFD84000332690 /* PlotJobData.swift in Sources */,
 				D5A084DB2DAFD84000332690 /* ConnectionData.swift in Sources */,
 				D5D104092DAEF2E600E8406E /* ContentView.swift in Sources */,
+				D5F4DE052DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
 				D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */,
 				D5A0850B2DAFD8AD00332690 /* SettingsView.swift in Sources */,
 				D5A0850C2DAFD8AD00332690 /* AboutMeView.swift in Sources */,
-				D5A085B02DB0248000332690 /* ProjectEditorView.swift in Sources */,
-				D56C4E4C2DB1330800F09A0C /* WindowManager.swift in Sources */,
+				D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */,
+				D5A085B02DB0248000332690 /* ProjectManagerView.swift in Sources */,
 				D5A0850D2DAFD8AD00332690 /* ToastView.swift in Sources */,
 				D56C4E462DB1275C00F09A0C /* View+DropZone.swift in Sources */,
 				D5A0850E2DAFD8AD00332690 /* DeviceListView.swift in Sources */,
 				D5A0850F2DAFD8AD00332690 /* RemoteControlView.swift in Sources */,
+				D5F4DE072DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */,
 				D5A085102DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
 				D5A085112DAFD8AD00332690 /* Joystick_View.swift in Sources */,
 				D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */,
@@ -613,6 +642,7 @@
 				D5A084E72DAFD86700332690 /* GenericStore.swift in Sources */,
 				D5A085342DAFE17000332690 /* CollapsibleSection.swift in Sources */,
 				D5A084E32DAFD85300332690 /* Tools.swift in Sources */,
+				D5F4DDFB2DB5A1C100C9FE57 /* PenFormView.swift in Sources */,
 				D5A084E42DAFD85300332690 /* SettingsMigrator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -624,12 +654,15 @@
 				D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */,
 				D5A0851B2DAFD8C900332690 /* JobSummaryView.swift in Sources */,
 				D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */,
+				D5F4DDF82DB5A00500C9FE57 /* PenManagerView.swift in Sources */,
 				D5A0851D2DAFD8C900332690 /* PlotterWizardView.swift in Sources */,
 				D5A0851E2DAFD8C900332690 /* JobPreviewView.swift in Sources */,
+				D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
 				D5A084D12DAFD84000332690 /* SettingsData.swift in Sources */,
 				D5A084D22DAFD84000332690 /* MachineData.swift in Sources */,
 				D5A084D32DAFD84000332690 /* PenData.swift in Sources */,
 				D5A0852C2DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */,
+				D5F4DE042DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
 				D5A085BA2DB02E0000332690 /* UnassignedSectionView.swift in Sources */,
 				D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
 				D5A085BD2DB02E2100332690 /* JobRowView.swift in Sources */,
@@ -643,13 +676,15 @@
 				D5A084D52DAFD84000332690 /* ConnectionData.swift in Sources */,
 				D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */,
 				D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */,
+				D5F4DDFF2DB5A20600C9FE57 /* PenListView.swift in Sources */,
 				D5A085042DAFD8AD00332690 /* SettingsView.swift in Sources */,
 				D5A085052DAFD8AD00332690 /* AboutMeView.swift in Sources */,
-				D5A085AF2DB0248000332690 /* ProjectEditorView.swift in Sources */,
+				D5A085AF2DB0248000332690 /* ProjectManagerView.swift in Sources */,
 				D5A085062DAFD8AD00332690 /* ToastView.swift in Sources */,
 				D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */,
 				D5A085072DAFD8AD00332690 /* DeviceListView.swift in Sources */,
 				D5A085082DAFD8AD00332690 /* RemoteControlView.swift in Sources */,
+				D5F4DE082DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */,
 				D5A085092DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
 				D5A0850A2DAFD8AD00332690 /* Joystick_View.swift in Sources */,
 				D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */,
@@ -666,6 +701,7 @@
 				D5A084E82DAFD86700332690 /* GenericStore.swift in Sources */,
 				D5A085332DAFE17000332690 /* CollapsibleSection.swift in Sources */,
 				D5A084E02DAFD85300332690 /* Tools.swift in Sources */,
+				D5F4DDFC2DB5A1C100C9FE57 /* PenFormView.swift in Sources */,
 				D5A084E12DAFD85300332690 /* SettingsMigrator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

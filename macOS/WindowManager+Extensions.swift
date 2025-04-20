@@ -100,6 +100,29 @@ extension WindowManager {
             content: { modifiedView }
         )
     }
+    
+    func openTabbedWindow(
+            id: WindowID,
+            title: String,
+            width: CGFloat = 900,
+            height: CGFloat = 600,
+            views: [(label: String, view: AnyView)]
+        ) {
+            let tabView = TabView {
+                ForEach(0..<views.count, id: \.self) { index in
+                    views[index].view
+                        .tabItem { Text(views[index].label) }
+                }
+            }
+
+            openWindow(
+                id: id.rawValue,
+                title: title,
+                width: width,
+                height: height,
+                content: { tabView }
+            )
+        }
 
     /// Öffnet ein modales Sheet-Fenster
     func openSheet<V: View>(

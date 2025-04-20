@@ -26,6 +26,7 @@ import AppKit
 struct JobListView: View {
     @Binding var goToStep: Int
     @Binding var selectedJob: PlotJobData
+    
     @EnvironmentObject var store: GenericStore<PlotJobData>
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
 
@@ -60,7 +61,7 @@ struct JobListView: View {
             #if os(macOS)
             Button("Projekte") {
                 WindowManager.shared.openWithEnvironmentObjects(
-                    ProjectEditorView(),
+                    ProjectManagerView(),
                     id: .projectEditor,
                     title: "Projekte verwalten",
                     width: 900,
@@ -95,7 +96,7 @@ struct JobListView: View {
         }
     }
 
-    @State private var showProjectEditor = false
+    @State private var showProjectManager = false
 
     private var projectSections: some View {
         
