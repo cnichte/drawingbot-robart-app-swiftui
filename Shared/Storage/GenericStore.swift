@@ -11,8 +11,9 @@
 import Foundation
 import SwiftUI
 
-class GenericStore<T: Codable>: ObservableObject {
-    @Published var items: [T] = [] // Verwenden von T anstelle von PlotJob
+class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hashable {
+    @Published var items: [T] = []
+    
     private let fileManager = FileManager.default
     private let directory: URL
 
@@ -24,68 +25,84 @@ class GenericStore<T: Codable>: ObservableObject {
             try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
         }
 
-        // Asynchrones Nachladen auf dem MainActor
         Task {
             await self.loadItems()
         }
     }
 
+    // MARK: - Laden aller gültigen .json Dateien
     func loadItems() async {
         do {
-            let itemFiles = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
+            let files = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
             var loadedItems: [T] = []
 
-            for file in itemFiles {
-                if file.pathExtension == "json", let item = try? loadItem(from: file) {
+            for file in files where file.pathExtension == "json" {
+                if let item = try? loadItem(from: file) {
                     loadedItems.append(item)
+                } else {
+                    print("⚠️ Ungültige Datei übersprungen: \(file.lastPathComponent)")
                 }
             }
 
-            let itemsToSet = loadedItems
             await MainActor.run {
-                self.items = itemsToSet
+                self.items = loadedItems
             }
 
         } catch {
             print("Fehler beim Laden der Items: \(error.localizedDescription)")
         }
     }
-    
-    func loadItem(from file: URL) throws -> T {
+
+    private func loadItem(from file: URL) throws -> T {
+        print("📂 Lade: \(file.lastPathComponent)")
         let data = try Data(contentsOf: file)
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
     }
-    
+
+    // MARK: - Speichern eines Items
     func save(item: T, fileName: String) async {
         let encoder = JSONEncoder()
-        let data = try? encoder.encode(item)
+        guard let data = try? encoder.encode(item) else {
+            print("❌ Fehler beim Kodieren von \(fileName)")
+            return
+        }
 
-        // Erstelle den Dateipfad für das Item
         let itemFilePath = directory.appendingPathComponent("\(fileName).json")
+        print("💾 Speichere: \(itemFilePath.lastPathComponent)")
 
-        // Speichern des Items
         do {
-            try data?.write(to: itemFilePath)
-            await loadItems() // Die Items nach dem Speichern erneut laden
+            try data.write(to: itemFilePath)
+
+            await MainActor.run {
+                if let index = self.items.firstIndex(where: { $0.id == item.id }) {
+                    self.items[index] = item
+                } else {
+                    self.items.append(item)
+                }
+            }
         } catch {
-            print("Fehler beim Speichern des Items: \(error.localizedDescription)")
+            print("❌ Fehler beim Speichern: \(error.localizedDescription)")
         }
     }
 
+    // MARK: - Neuen Eintrag anlegen
     func createNewItem(defaultItem: T, fileName: String) async -> T {
-        // Speichern des neuen Items
         await save(item: defaultItem, fileName: fileName)
         return defaultItem
     }
 
+    // MARK: - Löschen eines Items
     func delete(item: T, fileName: String) async {
-        let itemFilePath = directory.appendingPathComponent("\(fileName).json")
-        print("🔍 Versuche zu löschen: \(itemFilePath.path)")
+        let path = directory.appendingPathComponent("\(fileName).json")
+        print("🗑️ Lösche: \(path.lastPathComponent)")
 
         do {
-            try fileManager.removeItem(at: itemFilePath)
-            await loadItems()
+            try fileManager.removeItem(at: path)
+
+            await MainActor.run {
+                self.items.removeAll { $0.id == item.id }
+            }
         } catch {
             print("❌ Fehler beim Löschen: \(error.localizedDescription)")
         }

@@ -8,8 +8,6 @@
 // PlotterWizardView.swift
 import SwiftUI
 
-import SwiftUI
-
 public struct PlotterWizardView: View {
     @Binding var goToStep: Int
     @Binding var selectedJob: PlotJobData  // selectedJob als Binding

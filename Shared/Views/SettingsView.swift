@@ -40,7 +40,7 @@ struct SettingsView: View {
                 }
                 .padding()
             }
-            .navigationTitle("⚙️ Einstellungen")
+            .navigationTitle("Settings")
             .platformFormPadding()
         }
     }

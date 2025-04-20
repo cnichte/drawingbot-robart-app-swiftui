@@ -18,6 +18,7 @@
 // Header für macOS und iOS
 
 // CrossPlatformUI_Helper.swift
+
 import SwiftUI
 
 #if os(macOS)
@@ -26,9 +27,8 @@ import AppKit
 import UIKit
 #endif
 
+// MARK: - Plattform-Erkennung
 struct PlatformUIHelper {
-    
-    /// Gibt an, ob die aktuelle Plattform iOS ist
     static var isiOS: Bool {
         #if os(iOS)
         return true
@@ -37,7 +37,6 @@ struct PlatformUIHelper {
         #endif
     }
 
-    // Gibt an, ob die aktuelle Plattform macOS ist
     static var isMacOS: Bool {
         #if os(macOS)
         return true
@@ -47,6 +46,7 @@ struct PlatformUIHelper {
     }
 }
 
+// MARK: - Bildschirmgrößen
 struct ScreenHelper {
     static var width: CGFloat {
         #if os(iOS)
@@ -55,7 +55,7 @@ struct ScreenHelper {
         return NSScreen.main?.visibleFrame.width ?? 0
         #endif
     }
-    
+
     static var height: CGFloat {
         #if os(iOS)
         return UIScreen.main.bounds.height
@@ -65,6 +65,7 @@ struct ScreenHelper {
     }
 }
 
+// MARK: - Farb-Hilfen
 struct ColorHelper {
     static var backgroundColor: Color {
         #if os(iOS)
@@ -75,10 +76,9 @@ struct ColorHelper {
     }
 }
 
-
+// MARK: - View-Erweiterungen
 extension View {
 
-    // Fügt iOS-Textfeldoptionen wie .autocorrection und .capitalization hinzu
     @ViewBuilder
     func platformTextFieldModifiers() -> some View {
         #if os(iOS)
@@ -90,7 +90,6 @@ extension View {
         #endif
     }
 
-    // Fügt iOS-Form-Styling hinzu (macOS ignoriert es)
     @ViewBuilder
     func platformFormStyle() -> some View {
         #if os(iOS)
@@ -100,7 +99,6 @@ extension View {
         #endif
     }
 
-    // Nutzt NavigationView auf iOS, ignoriert auf macOS
     @ViewBuilder
     func platformNavigationWrapper<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         #if os(iOS)
@@ -112,7 +110,6 @@ extension View {
         #endif
     }
 
-    // iOS prominent button style, fallback für macOS
     @ViewBuilder
     func platformPrimaryButtonStyle() -> some View {
         #if os(iOS)
@@ -121,8 +118,7 @@ extension View {
         self.buttonStyle(PlainButtonStyle())
         #endif
     }
-    
-    // Zusätzliches padding am Rand des Formulares auf MacOS
+
     @ViewBuilder
     func platformFormPadding() -> some View {
         #if os(macOS)
@@ -133,8 +129,7 @@ extension View {
         self
         #endif
     }
-    
-    // Zentrierte Buttons auf macOS
+
     @ViewBuilder
     func platformCenteredButton() -> some View {
         #if os(macOS)
@@ -147,19 +142,16 @@ extension View {
         self
         #endif
     }
-    
-    // Alle Controls wie TextField, Toggle, Picker, Button sollen auf macOS oben und unten etwas Abstand bekommen
+
     @ViewBuilder
     func platformVerticalFormSpacing(_ spacing: CGFloat = 8) -> some View {
         #if os(macOS)
-        self
-            .padding(.vertical, spacing)
+        self.padding(.vertical, spacing)
         #else
         self
         #endif
     }
-    
-    // Nutzt auf iOS .decimalPad, auf macOS bleibt es wirkungslos
+
     @ViewBuilder
     func crossPlatformDecimalKeyboard() -> some View {
         #if os(iOS)
@@ -168,16 +160,15 @@ extension View {
         self
         #endif
     }
-    
-    // Header für macOS und iOS
+
     func platformSectionHeader(title: String) -> some View {
         #if os(macOS)
-        return AnyView(Text(title).font(.headline))  // Return als AnyView für macOS
+        return AnyView(Text(title).font(.headline))
         #else
-        return Text(title)  // Return als Text für iOS
+        return Text(title)
         #endif
     }
-    
+
     @ViewBuilder
     func platformBackButton(label: String = "Zurück", action: @escaping () -> Void) -> some View {
         #if os(macOS)
@@ -188,7 +179,128 @@ extension View {
             self
         }
         #else
-        self // iOS macht nix
+        self
         #endif
+    }
+
+    // MARK: - Buttons Styles
+
+    @ViewBuilder
+    func buttonStyleLinkIfAvailable() -> some View {
+        #if os(macOS)
+        self.buttonStyle(.link)
+        #else
+        self.buttonStyle(.plain)
+        #endif
+    }
+
+    @ViewBuilder
+    func platformAddButtonStyle() -> some View {
+        self
+            .foregroundColor(.accentColor)
+            .buttonStyleLinkIfAvailable()
+    }
+
+    @ViewBuilder
+    func platformDeleteButtonStyle() -> some View {
+        self
+            .foregroundColor(.red)
+            .buttonStyle(.borderless)
+    }
+
+    @ViewBuilder
+    func platformPrimaryActionButton() -> some View {
+        self
+            .platformPrimaryButtonStyle()
+            .platformCenteredButton()
+            .padding(.top)
+    }
+
+    @ViewBuilder
+    func platformSecondaryButtonStyle() -> some View {
+        #if os(iOS)
+        self.buttonStyle(.bordered)
+        #else
+        self.buttonStyle(.plain)
+        #endif
+    }
+
+    @ViewBuilder
+    func platformTextActionStyle() -> some View {
+        self
+            .font(.callout)
+            .foregroundColor(.accentColor)
+            .buttonStyleLinkIfAvailable()
+    }
+
+    // MARK: - Labels
+
+    func platformIconLabel(_ title: String, systemImage: String, font: Font = .body) -> some View {
+        Label {
+            Text(title).font(font)
+        } icon: {
+            Image(systemName: systemImage)
+        }
+    }
+
+    func platformTextLabel(_ title: String, font: Font = .body) -> some View {
+        Text(title).font(font)
+    }
+
+    func platformIconOnly(_ systemImage: String, font: Font = .body) -> some View {
+        Image(systemName: systemImage).font(font)
+    }
+
+    // MARK: - Toolbar Buttons
+
+    @ViewBuilder
+    func platformToolbarButton(
+        label: String? = nil,
+        systemImage: String? = nil,
+        role: ButtonRole? = nil,
+        action: @escaping () -> Void
+    ) -> some View {
+        #if os(macOS)
+        Button(role: role, action: action) {
+            HStack(spacing: 6) {
+                if let image = systemImage {
+                    Image(systemName: image)
+                }
+                if let text = label {
+                    Text(text)
+                }
+            }
+        }.buttonStyle(.link)
+        #else
+        Button(role: role, action: action) {
+            Label {
+                Text(label ?? "")
+            } icon: {
+                if let image = systemImage {
+                    Image(systemName: image)
+                }
+            }
+        }.buttonStyle(.bordered)
+        #endif
+    }
+
+    @ViewBuilder
+    func platformToolbarItem(
+        placement: ToolbarItemPlacement = .automatic,
+        label: String? = nil,
+        systemImage: String? = nil,
+        role: ButtonRole? = nil,
+        action: @escaping () -> Void
+    ) -> some View {
+        toolbar {
+            ToolbarItem(placement: placement) {
+                self.platformToolbarButton(
+                    label: label,
+                    systemImage: systemImage,
+                    role: role,
+                    action: action
+                )
+            }
+        }
     }
 }

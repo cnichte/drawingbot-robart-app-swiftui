@@ -3,7 +3,10 @@
 //  Drawingbot-RobArt
 //
 //  Created by Carsten Nichte on 06.04.25.
-//  Reformat Code: command+a controll+i
+//  Copyright (C) 2025
+//  https://carsten-nichte.de/docs/drawingbot/
+//  This file is part of Robart.
+//  Licensed under the GNU General Public License v3.0. See LICENSE for details.
 //
 
 // ContentView.swift
@@ -17,9 +20,6 @@ struct ContentView: View {
     @State private var selectedTab = 0
     @State private var selectedJob: PlotJobData
     @State private var currentStep: Int = 1
-    
-    // Initialisiere GenericStore für PlotJob
-    @StateObject var store = GenericStore<PlotJobData>(directoryName: "jobs")
 
     init(bluetoothManager: BluetoothManager, usbScanner: USBSerialScanner) {
         self.bluetoothManager = bluetoothManager
@@ -132,7 +132,6 @@ struct ContentView: View {
                     }
 
                 PlotterWizardView(goToStep: $currentStep, selectedJob: $selectedJob)
-                    .environmentObject(store)  // Übergibt den store als EnvironmentObject
                     .tag(2)
                     .tabItem {
                         Label("Plotter", systemImage: "printer")
@@ -141,7 +140,7 @@ struct ContentView: View {
                 SettingsView()
                     .tag(3)
                     .tabItem {
-                        Label("Einstellungen", systemImage: "gear")
+                        Label("Settings", systemImage: "gear")
                     }
 
                 AboutMeView()

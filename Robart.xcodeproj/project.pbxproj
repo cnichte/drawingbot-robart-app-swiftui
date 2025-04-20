@@ -1,0 +1,997 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
+		D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
+		D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
+		D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
+		D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
+		D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E442DB1275C00F09A0C /* View+DropZone.swift */; };
+		D56C4E462DB1275C00F09A0C /* View+DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E442DB1275C00F09A0C /* View+DropZone.swift */; };
+		D56C4E482DB1296700F09A0C /* DropZoneModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */; };
+		D56C4E492DB1296700F09A0C /* DropZoneModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */; };
+		D56C4E4C2DB1330800F09A0C /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E4A2DB1330800F09A0C /* WindowManager.swift */; platformFilters = (macos, ); };
+		D56C4E592DB1847400F09A0C /* WindowID.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E582DB1847400F09A0C /* WindowID.swift */; };
+		D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */; };
+		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
+		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
+		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
+		D5A084D12DAFD84000332690 /* SettingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CF2DAFD84000332690 /* SettingsData.swift */; };
+		D5A084D22DAFD84000332690 /* MachineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CB2DAFD84000332690 /* MachineData.swift */; };
+		D5A084D32DAFD84000332690 /* PenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CC2DAFD84000332690 /* PenData.swift */; };
+		D5A084D42DAFD84000332690 /* PlotJobData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CD2DAFD84000332690 /* PlotJobData.swift */; };
+		D5A084D52DAFD84000332690 /* ConnectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CA2DAFD84000332690 /* ConnectionData.swift */; };
+		D5A084D62DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
+		D5A084D72DAFD84000332690 /* SettingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CF2DAFD84000332690 /* SettingsData.swift */; };
+		D5A084D82DAFD84000332690 /* MachineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CB2DAFD84000332690 /* MachineData.swift */; };
+		D5A084D92DAFD84000332690 /* PenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CC2DAFD84000332690 /* PenData.swift */; };
+		D5A084DA2DAFD84000332690 /* PlotJobData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CD2DAFD84000332690 /* PlotJobData.swift */; };
+		D5A084DB2DAFD84000332690 /* ConnectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CA2DAFD84000332690 /* ConnectionData.swift */; };
+		D5A084DF2DAFD85300332690 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084DC2DAFD85300332690 /* FileManagerService.swift */; };
+		D5A084E02DAFD85300332690 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084DE2DAFD85300332690 /* Tools.swift */; };
+		D5A084E12DAFD85300332690 /* SettingsMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084DD2DAFD85300332690 /* SettingsMigrator.swift */; };
+		D5A084E22DAFD85300332690 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084DC2DAFD85300332690 /* FileManagerService.swift */; };
+		D5A084E32DAFD85300332690 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084DE2DAFD85300332690 /* Tools.swift */; };
+		D5A084E42DAFD85300332690 /* SettingsMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084DD2DAFD85300332690 /* SettingsMigrator.swift */; };
+		D5A084E72DAFD86700332690 /* GenericStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084E62DAFD86700332690 /* GenericStore.swift */; };
+		D5A084E82DAFD86700332690 /* GenericStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084E62DAFD86700332690 /* GenericStore.swift */; };
+		D5A084F02DAFD88A00332690 /* GCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084EC2DAFD88A00332690 /* GCodeGenerator.swift */; };
+		D5A084F12DAFD88A00332690 /* PathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084ED2DAFD88A00332690 /* PathParser.swift */; };
+		D5A084F22DAFD88A00332690 /* SVGParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084EE2DAFD88A00332690 /* SVGParser.swift */; };
+		D5A084F32DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084EA2DAFD88A00332690 /* BasePlotterGenerator.swift */; };
+		D5A084F42DAFD88A00332690 /* EggbotGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084EB2DAFD88A00332690 /* EggbotGenerator.swift */; };
+		D5A084F72DAFD88A00332690 /* GCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084EC2DAFD88A00332690 /* GCodeGenerator.swift */; };
+		D5A084F82DAFD88A00332690 /* PathParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084ED2DAFD88A00332690 /* PathParser.swift */; };
+		D5A084F92DAFD88A00332690 /* SVGParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084EE2DAFD88A00332690 /* SVGParser.swift */; };
+		D5A084FA2DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084EA2DAFD88A00332690 /* BasePlotterGenerator.swift */; };
+		D5A084FB2DAFD88A00332690 /* EggbotGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084EB2DAFD88A00332690 /* EggbotGenerator.swift */; };
+		D5A085042DAFD8AD00332690 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085022DAFD8AD00332690 /* SettingsView.swift */; };
+		D5A085052DAFD8AD00332690 /* AboutMeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084FD2DAFD8AD00332690 /* AboutMeView.swift */; };
+		D5A085062DAFD8AD00332690 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085032DAFD8AD00332690 /* ToastView.swift */; };
+		D5A085072DAFD8AD00332690 /* DeviceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084FF2DAFD8AD00332690 /* DeviceListView.swift */; };
+		D5A085082DAFD8AD00332690 /* RemoteControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085012DAFD8AD00332690 /* RemoteControlView.swift */; };
+		D5A085092DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */; };
+		D5A0850A2DAFD8AD00332690 /* Joystick_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085002DAFD8AD00332690 /* Joystick_View.swift */; };
+		D5A0850B2DAFD8AD00332690 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085022DAFD8AD00332690 /* SettingsView.swift */; };
+		D5A0850C2DAFD8AD00332690 /* AboutMeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084FD2DAFD8AD00332690 /* AboutMeView.swift */; };
+		D5A0850D2DAFD8AD00332690 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085032DAFD8AD00332690 /* ToastView.swift */; };
+		D5A0850E2DAFD8AD00332690 /* DeviceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084FF2DAFD8AD00332690 /* DeviceListView.swift */; };
+		D5A0850F2DAFD8AD00332690 /* RemoteControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085012DAFD8AD00332690 /* RemoteControlView.swift */; };
+		D5A085102DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */; };
+		D5A085112DAFD8AD00332690 /* Joystick_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085002DAFD8AD00332690 /* Joystick_View.swift */; };
+		D5A085172DAFD8C900332690 /* JobSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085152DAFD8C900332690 /* JobSummaryView.swift */; };
+		D5A085182DAFD8C900332690 /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085132DAFD8C900332690 /* JobListView.swift */; };
+		D5A085192DAFD8C900332690 /* PlotterWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085162DAFD8C900332690 /* PlotterWizardView.swift */; };
+		D5A0851A2DAFD8C900332690 /* JobPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085142DAFD8C900332690 /* JobPreviewView.swift */; };
+		D5A0851B2DAFD8C900332690 /* JobSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085152DAFD8C900332690 /* JobSummaryView.swift */; };
+		D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085132DAFD8C900332690 /* JobListView.swift */; };
+		D5A0851D2DAFD8C900332690 /* PlotterWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085162DAFD8C900332690 /* PlotterWizardView.swift */; };
+		D5A0851E2DAFD8C900332690 /* JobPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085142DAFD8C900332690 /* JobPreviewView.swift */; };
+		D5A085262DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085212DAFD8DE00332690 /* PaperSizeSettigsView.swift */; };
+		D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */; };
+		D5A085282DAFD8DE00332690 /* Speedometer_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085232DAFD8DE00332690 /* Speedometer_View.swift */; };
+		D5A085292DAFD8DE00332690 /* SVGTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085252DAFD8DE00332690 /* SVGTreeView.swift */; };
+		D5A0852A2DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */; };
+		D5A0852B2DAFD8DE00332690 /* PaperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085202DAFD8DE00332690 /* PaperPreview.swift */; };
+		D5A0852C2DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085212DAFD8DE00332690 /* PaperSizeSettigsView.swift */; };
+		D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */; };
+		D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085232DAFD8DE00332690 /* Speedometer_View.swift */; };
+		D5A0852F2DAFD8DE00332690 /* SVGTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085252DAFD8DE00332690 /* SVGTreeView.swift */; };
+		D5A085302DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */; };
+		D5A085312DAFD8DE00332690 /* PaperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085202DAFD8DE00332690 /* PaperPreview.swift */; };
+		D5A085332DAFE17000332690 /* CollapsibleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085322DAFE17000332690 /* CollapsibleSection.swift */; };
+		D5A085342DAFE17000332690 /* CollapsibleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085322DAFE17000332690 /* CollapsibleSection.swift */; };
+		D5A085AC2DB023DA00332690 /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AB2DB023D600332690 /* NewProjectSheet.swift */; };
+		D5A085AD2DB023DA00332690 /* NewProjectSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AB2DB023D600332690 /* NewProjectSheet.swift */; };
+		D5A085AF2DB0248000332690 /* ProjectEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AE2DB0248000332690 /* ProjectEditorView.swift */; };
+		D5A085B02DB0248000332690 /* ProjectEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085AE2DB0248000332690 /* ProjectEditorView.swift */; };
+		D5A085B52DB02D7800332690 /* ProjectSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085B42DB02D7800332690 /* ProjectSectionView.swift */; };
+		D5A085B62DB02D7800332690 /* ProjectSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085B42DB02D7800332690 /* ProjectSectionView.swift */; };
+		D5A085B92DB02E0000332690 /* UnassignedSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085B82DB02DFD00332690 /* UnassignedSectionView.swift */; };
+		D5A085BA2DB02E0000332690 /* UnassignedSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085B82DB02DFD00332690 /* UnassignedSectionView.swift */; };
+		D5A085BC2DB02E2100332690 /* JobRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085BB2DB02E2100332690 /* JobRowView.swift */; };
+		D5A085BD2DB02E2100332690 /* JobRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085BB2DB02E2100332690 /* JobRowView.swift */; };
+		D5A085BF2DB0348D00332690 /* JobRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085BE2DB0348D00332690 /* JobRow.swift */; };
+		D5A085C02DB0348D00332690 /* JobRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085BE2DB0348D00332690 /* JobRow.swift */; };
+		D5D104092DAEF2E600E8406E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
+		D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104242DAEF38000E8406E /* USBSerialScanner.swift */; platformFilters = (macos, ); };
+		D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104262DAEF39000E8406E /* USBSerialScanner.swift */; platformFilter = ios; };
+		D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042A2DAEF43900E8406E /* ORSSerial */; };
+		D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042D2DAEF44B00E8406E /* SVGView */; };
+		D5D104302DAEF45100E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042F2DAEF45100E8406E /* SVGView */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D50A30632DAEFA9100859908 /* RobartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobartApp.swift; sourceTree = "<group>"; };
+		D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropHandling.swift; sourceTree = "<group>"; };
+		D56C4E442DB1275C00F09A0C /* View+DropZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DropZone.swift"; sourceTree = "<group>"; };
+		D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneModifier.swift; sourceTree = "<group>"; };
+		D56C4E4A2DB1330800F09A0C /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
+		D56C4E582DB1847400F09A0C /* WindowID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowID.swift; sourceTree = "<group>"; };
+		D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WindowManager+Extensions.swift"; sourceTree = "<group>"; };
+		D56C4E5C2DB188C100F09A0C /*  WindowManager+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " WindowManager+Examples.swift"; sourceTree = "<group>"; };
+		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
+		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
+		D5A084CC2DAFD84000332690 /* PenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenData.swift; sourceTree = "<group>"; };
+		D5A084CD2DAFD84000332690 /* PlotJobData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotJobData.swift; sourceTree = "<group>"; };
+		D5A084CE2DAFD84000332690 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
+		D5A084CF2DAFD84000332690 /* SettingsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsData.swift; sourceTree = "<group>"; };
+		D5A084DC2DAFD85300332690 /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
+		D5A084DD2DAFD85300332690 /* SettingsMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMigrator.swift; sourceTree = "<group>"; };
+		D5A084DE2DAFD85300332690 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		D5A084E62DAFD86700332690 /* GenericStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericStore.swift; sourceTree = "<group>"; };
+		D5A084EA2DAFD88A00332690 /* BasePlotterGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePlotterGenerator.swift; sourceTree = "<group>"; };
+		D5A084EB2DAFD88A00332690 /* EggbotGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EggbotGenerator.swift; sourceTree = "<group>"; };
+		D5A084EC2DAFD88A00332690 /* GCodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCodeGenerator.swift; sourceTree = "<group>"; };
+		D5A084ED2DAFD88A00332690 /* PathParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathParser.swift; sourceTree = "<group>"; };
+		D5A084EE2DAFD88A00332690 /* SVGParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGParser.swift; sourceTree = "<group>"; };
+		D5A084EF2DAFD88A00332690 /* SVGParser-Dokumentation.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SVGParser-Dokumentation.md"; sourceTree = "<group>"; };
+		D5A084FD2DAFD8AD00332690 /* AboutMeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeView.swift; sourceTree = "<group>"; };
+		D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatformUI_Helpers.swift; sourceTree = "<group>"; };
+		D5A084FF2DAFD8AD00332690 /* DeviceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListView.swift; sourceTree = "<group>"; };
+		D5A085002DAFD8AD00332690 /* Joystick_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Joystick_View.swift; sourceTree = "<group>"; };
+		D5A085012DAFD8AD00332690 /* RemoteControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteControlView.swift; sourceTree = "<group>"; };
+		D5A085022DAFD8AD00332690 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D5A085032DAFD8AD00332690 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		D5A085132DAFD8C900332690 /* JobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListView.swift; sourceTree = "<group>"; };
+		D5A085142DAFD8C900332690 /* JobPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobPreviewView.swift; sourceTree = "<group>"; };
+		D5A085152DAFD8C900332690 /* JobSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSummaryView.swift; sourceTree = "<group>"; };
+		D5A085162DAFD8C900332690 /* PlotterWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotterWizardView.swift; sourceTree = "<group>"; };
+		D5A085202DAFD8DE00332690 /* PaperPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperPreview.swift; sourceTree = "<group>"; };
+		D5A085212DAFD8DE00332690 /* PaperSizeSettigsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperSizeSettigsView.swift; sourceTree = "<group>"; };
+		D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperSourcePreview.swift; sourceTree = "<group>"; };
+		D5A085232DAFD8DE00332690 /* Speedometer_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speedometer_View.swift; sourceTree = "<group>"; };
+		D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgPropertyEditorView.swift; sourceTree = "<group>"; };
+		D5A085252DAFD8DE00332690 /* SVGTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGTreeView.swift; sourceTree = "<group>"; };
+		D5A085322DAFE17000332690 /* CollapsibleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSection.swift; sourceTree = "<group>"; };
+		D5A085AB2DB023D600332690 /* NewProjectSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectSheet.swift; sourceTree = "<group>"; };
+		D5A085AE2DB0248000332690 /* ProjectEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectEditorView.swift; sourceTree = "<group>"; };
+		D5A085B42DB02D7800332690 /* ProjectSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSectionView.swift; sourceTree = "<group>"; };
+		D5A085B82DB02DFD00332690 /* UnassignedSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnassignedSectionView.swift; sourceTree = "<group>"; };
+		D5A085BB2DB02E2100332690 /* JobRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRowView.swift; sourceTree = "<group>"; };
+		D5A085BE2DB0348D00332690 /* JobRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRow.swift; sourceTree = "<group>"; };
+		D5D104032DAEF2E600E8406E /* Robart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Robart.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5D104082DAEF2E600E8406E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D5D104162DAEF30700E8406E /* Robart-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Robart-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5D104242DAEF38000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
+		D5D104262DAEF39000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D5A085C22DB04E5A00332690 /* Exceptions for "Robart-iOS" folder in "Robart-iOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D5D104152DAEF30700E8406E /* Robart-iOS */;
+		};
+		D5A085CB2DB0540F00332690 /* Exceptions for "Robart" folder in "Robart" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D5D104022DAEF2E600E8406E /* Robart */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D5D104052DAEF2E600E8406E /* Robart */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D5A085CB2DB0540F00332690 /* Exceptions for "Robart" folder in "Robart" target */,
+			);
+			path = Robart;
+			sourceTree = "<group>";
+		};
+		D5D104172DAEF30700E8406E /* Robart-iOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D5A085C22DB04E5A00332690 /* Exceptions for "Robart-iOS" folder in "Robart-iOS" target */,
+			);
+			path = "Robart-iOS";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D5D104002DAEF2E600E8406E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */,
+				D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5D104132DAEF30700E8406E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5D104302DAEF45100E8406E /* SVGView in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D56C4E3D2DB118A600F09A0C /* ViewExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */,
+				D56C4E442DB1275C00F09A0C /* View+DropZone.swift */,
+				D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */,
+			);
+			path = ViewExtensions;
+			sourceTree = "<group>";
+		};
+		D57076D52DB57F4600C277AF /* AssetManager */ = {
+			isa = PBXGroup;
+			children = (
+				D57076DB2DB58A5B00C277AF /* Connections */,
+				D57076DA2DB58A5000C277AF /* Machines */,
+				D57076D92DB58A3F00C277AF /* Paper */,
+				D57076D82DB58A2300C277AF /* Pens */,
+				D57076D62DB57F5000C277AF /* Projects */,
+			);
+			path = AssetManager;
+			sourceTree = "<group>";
+		};
+		D57076D62DB57F5000C277AF /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				D5A085AE2DB0248000332690 /* ProjectEditorView.swift */,
+				D5A085B42DB02D7800332690 /* ProjectSectionView.swift */,
+			);
+			path = Projects;
+			sourceTree = "<group>";
+		};
+		D57076D72DB5892000C277AF /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				D5A085AB2DB023D600332690 /* NewProjectSheet.swift */,
+			);
+			path = Deprecated;
+			sourceTree = "<group>";
+		};
+		D57076D82DB58A2300C277AF /* Pens */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pens;
+			sourceTree = "<group>";
+		};
+		D57076D92DB58A3F00C277AF /* Paper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Paper;
+			sourceTree = "<group>";
+		};
+		D57076DA2DB58A5000C277AF /* Machines */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Machines;
+			sourceTree = "<group>";
+		};
+		D57076DB2DB58A5B00C277AF /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Connections;
+			sourceTree = "<group>";
+		};
+		D5A084C02DAFD58B00332690 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D5A084C12DAFD59B00332690 /* BluetoothManager.swift */,
+				D5A084DC2DAFD85300332690 /* FileManagerService.swift */,
+				D5A084DD2DAFD85300332690 /* SettingsMigrator.swift */,
+				D5A084DE2DAFD85300332690 /* Tools.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D5A084C92DAFD83400332690 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				D5A084CA2DAFD84000332690 /* ConnectionData.swift */,
+				D5A084CB2DAFD84000332690 /* MachineData.swift */,
+				D5A084CC2DAFD84000332690 /* PenData.swift */,
+				D5A084CD2DAFD84000332690 /* PlotJobData.swift */,
+				D5A084CE2DAFD84000332690 /* ProjectData.swift */,
+				D5A084CF2DAFD84000332690 /* SettingsData.swift */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		D5A084E52DAFD85E00332690 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				D5A084E62DAFD86700332690 /* GenericStore.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		D5A084E92DAFD87E00332690 /* SVGParser */ = {
+			isa = PBXGroup;
+			children = (
+				D5A084EA2DAFD88A00332690 /* BasePlotterGenerator.swift */,
+				D5A084EB2DAFD88A00332690 /* EggbotGenerator.swift */,
+				D5A084EC2DAFD88A00332690 /* GCodeGenerator.swift */,
+				D5A084ED2DAFD88A00332690 /* PathParser.swift */,
+				D5A084EE2DAFD88A00332690 /* SVGParser.swift */,
+				D5A084EF2DAFD88A00332690 /* SVGParser-Dokumentation.md */,
+			);
+			path = SVGParser;
+			sourceTree = "<group>";
+		};
+		D5A084FC2DAFD89900332690 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D57076D72DB5892000C277AF /* Deprecated */,
+				D57076D52DB57F4600C277AF /* AssetManager */,
+				D5A085B72DB02DBD00332690 /* JobListView */,
+				D5A085122DAFD8BC00332690 /* PlotterWizard */,
+				D5A084FD2DAFD8AD00332690 /* AboutMeView.swift */,
+				D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */,
+				D5A084FF2DAFD8AD00332690 /* DeviceListView.swift */,
+				D5A085002DAFD8AD00332690 /* Joystick_View.swift */,
+				D5A085012DAFD8AD00332690 /* RemoteControlView.swift */,
+				D5A085022DAFD8AD00332690 /* SettingsView.swift */,
+				D5A085032DAFD8AD00332690 /* ToastView.swift */,
+				D5A085322DAFE17000332690 /* CollapsibleSection.swift */,
+				D56C4E3D2DB118A600F09A0C /* ViewExtensions */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D5A085122DAFD8BC00332690 /* PlotterWizard */ = {
+			isa = PBXGroup;
+			children = (
+				D5A0851F2DAFD8D300332690 /* PartialViews */,
+				D5A085142DAFD8C900332690 /* JobPreviewView.swift */,
+				D5A085152DAFD8C900332690 /* JobSummaryView.swift */,
+				D5A085162DAFD8C900332690 /* PlotterWizardView.swift */,
+			);
+			path = PlotterWizard;
+			sourceTree = "<group>";
+		};
+		D5A0851F2DAFD8D300332690 /* PartialViews */ = {
+			isa = PBXGroup;
+			children = (
+				D5A085202DAFD8DE00332690 /* PaperPreview.swift */,
+				D5A085212DAFD8DE00332690 /* PaperSizeSettigsView.swift */,
+				D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */,
+				D5A085232DAFD8DE00332690 /* Speedometer_View.swift */,
+				D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */,
+				D5A085252DAFD8DE00332690 /* SVGTreeView.swift */,
+			);
+			path = PartialViews;
+			sourceTree = "<group>";
+		};
+		D5A085B72DB02DBD00332690 /* JobListView */ = {
+			isa = PBXGroup;
+			children = (
+				D5A085B82DB02DFD00332690 /* UnassignedSectionView.swift */,
+				D5A085132DAFD8C900332690 /* JobListView.swift */,
+				D5A085BB2DB02E2100332690 /* JobRowView.swift */,
+				D5A085BE2DB0348D00332690 /* JobRow.swift */,
+			);
+			path = JobListView;
+			sourceTree = "<group>";
+		};
+		D5D103FA2DAEF2E600E8406E = {
+			isa = PBXGroup;
+			children = (
+				D5D104232DAEF34B00E8406E /* macOS */,
+				D5D104222DAEF33D00E8406E /* iOS */,
+				D5D104212DAEF32D00E8406E /* Shared */,
+				D5D104052DAEF2E600E8406E /* Robart */,
+				D5D104172DAEF30700E8406E /* Robart-iOS */,
+				D5D1042C2DAEF44B00E8406E /* Frameworks */,
+				D5D104042DAEF2E600E8406E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D5D104042DAEF2E600E8406E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D5D104032DAEF2E600E8406E /* Robart.app */,
+				D5D104162DAEF30700E8406E /* Robart-iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D5D104212DAEF32D00E8406E /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				D5A084FC2DAFD89900332690 /* Views */,
+				D5A084E92DAFD87E00332690 /* SVGParser */,
+				D5A084E52DAFD85E00332690 /* Storage */,
+				D5A084C92DAFD83400332690 /* DataModels */,
+				D5A084C02DAFD58B00332690 /* Services */,
+				D50A30632DAEFA9100859908 /* RobartApp.swift */,
+				D5D104082DAEF2E600E8406E /* ContentView.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		D5D104222DAEF33D00E8406E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D5D104262DAEF39000E8406E /* USBSerialScanner.swift */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		D5D104232DAEF34B00E8406E /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				D56C4E5C2DB188C100F09A0C /*  WindowManager+Examples.swift */,
+				D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */,
+				D56C4E4A2DB1330800F09A0C /* WindowManager.swift */,
+				D5D104242DAEF38000E8406E /* USBSerialScanner.swift */,
+				D56C4E582DB1847400F09A0C /* WindowID.swift */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		D5D1042C2DAEF44B00E8406E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D5D104022DAEF2E600E8406E /* Robart */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5D1040F2DAEF2E800E8406E /* Build configuration list for PBXNativeTarget "Robart" */;
+			buildPhases = (
+				D5D103FF2DAEF2E600E8406E /* Sources */,
+				D5D104002DAEF2E600E8406E /* Frameworks */,
+				D5D104012DAEF2E600E8406E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D5D104052DAEF2E600E8406E /* Robart */,
+			);
+			name = Robart;
+			packageProductDependencies = (
+				D5D1042A2DAEF43900E8406E /* ORSSerial */,
+				D5D1042D2DAEF44B00E8406E /* SVGView */,
+			);
+			productName = Robart;
+			productReference = D5D104032DAEF2E600E8406E /* Robart.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D5D104152DAEF30700E8406E /* Robart-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5D1041E2DAEF30800E8406E /* Build configuration list for PBXNativeTarget "Robart-iOS" */;
+			buildPhases = (
+				D5D104122DAEF30700E8406E /* Sources */,
+				D5D104132DAEF30700E8406E /* Frameworks */,
+				D5D104142DAEF30700E8406E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D5D104172DAEF30700E8406E /* Robart-iOS */,
+			);
+			name = "Robart-iOS";
+			packageProductDependencies = (
+				D5D1042F2DAEF45100E8406E /* SVGView */,
+			);
+			productName = "Robart-iOS";
+			productReference = D5D104162DAEF30700E8406E /* Robart-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D5D103FB2DAEF2E600E8406E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					D5D104022DAEF2E600E8406E = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					D5D104152DAEF30700E8406E = {
+						CreatedOnToolsVersion = 16.3;
+					};
+				};
+			};
+			buildConfigurationList = D5D103FE2DAEF2E600E8406E /* Build configuration list for PBXProject "Robart" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D5D103FA2DAEF2E600E8406E;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */,
+				D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D5D104042DAEF2E600E8406E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D5D104022DAEF2E600E8406E /* Robart */,
+				D5D104152DAEF30700E8406E /* Robart-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D5D104012DAEF2E600E8406E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5D104142DAEF30700E8406E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D5D103FF2DAEF2E600E8406E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5A084D62DAFD84000332690 /* ProjectData.swift in Sources */,
+				D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */,
+				D5A085172DAFD8C900332690 /* JobSummaryView.swift in Sources */,
+				D5A085182DAFD8C900332690 /* JobListView.swift in Sources */,
+				D5A085192DAFD8C900332690 /* PlotterWizardView.swift in Sources */,
+				D5A0851A2DAFD8C900332690 /* JobPreviewView.swift in Sources */,
+				D5A084D72DAFD84000332690 /* SettingsData.swift in Sources */,
+				D5A084D82DAFD84000332690 /* MachineData.swift in Sources */,
+				D5A084D92DAFD84000332690 /* PenData.swift in Sources */,
+				D5A085262DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */,
+				D5A085B92DB02E0000332690 /* UnassignedSectionView.swift in Sources */,
+				D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
+				D5A085BC2DB02E2100332690 /* JobRowView.swift in Sources */,
+				D5A085B52DB02D7800332690 /* ProjectSectionView.swift in Sources */,
+				D5A085282DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
+				D56C4E592DB1847400F09A0C /* WindowID.swift in Sources */,
+				D5A085292DAFD8DE00332690 /* SVGTreeView.swift in Sources */,
+				D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */,
+				D5A0852A2DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */,
+				D5A0852B2DAFD8DE00332690 /* PaperPreview.swift in Sources */,
+				D5A084DA2DAFD84000332690 /* PlotJobData.swift in Sources */,
+				D5A084DB2DAFD84000332690 /* ConnectionData.swift in Sources */,
+				D5D104092DAEF2E600E8406E /* ContentView.swift in Sources */,
+				D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */,
+				D5A0850B2DAFD8AD00332690 /* SettingsView.swift in Sources */,
+				D5A0850C2DAFD8AD00332690 /* AboutMeView.swift in Sources */,
+				D5A085B02DB0248000332690 /* ProjectEditorView.swift in Sources */,
+				D56C4E4C2DB1330800F09A0C /* WindowManager.swift in Sources */,
+				D5A0850D2DAFD8AD00332690 /* ToastView.swift in Sources */,
+				D56C4E462DB1275C00F09A0C /* View+DropZone.swift in Sources */,
+				D5A0850E2DAFD8AD00332690 /* DeviceListView.swift in Sources */,
+				D5A0850F2DAFD8AD00332690 /* RemoteControlView.swift in Sources */,
+				D5A085102DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
+				D5A085112DAFD8AD00332690 /* Joystick_View.swift in Sources */,
+				D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */,
+				D5A084F72DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
+				D5A084F82DAFD88A00332690 /* PathParser.swift in Sources */,
+				D5A084F92DAFD88A00332690 /* SVGParser.swift in Sources */,
+				D5A084FA2DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
+				D5A084FB2DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
+				D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */,
+				D5A085AD2DB023DA00332690 /* NewProjectSheet.swift in Sources */,
+				D5A084E22DAFD85300332690 /* FileManagerService.swift in Sources */,
+				D5A085C02DB0348D00332690 /* JobRow.swift in Sources */,
+				D56C4E482DB1296700F09A0C /* DropZoneModifier.swift in Sources */,
+				D5A084E72DAFD86700332690 /* GenericStore.swift in Sources */,
+				D5A085342DAFE17000332690 /* CollapsibleSection.swift in Sources */,
+				D5A084E32DAFD85300332690 /* Tools.swift in Sources */,
+				D5A084E42DAFD85300332690 /* SettingsMigrator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5D104122DAEF30700E8406E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */,
+				D5A0851B2DAFD8C900332690 /* JobSummaryView.swift in Sources */,
+				D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */,
+				D5A0851D2DAFD8C900332690 /* PlotterWizardView.swift in Sources */,
+				D5A0851E2DAFD8C900332690 /* JobPreviewView.swift in Sources */,
+				D5A084D12DAFD84000332690 /* SettingsData.swift in Sources */,
+				D5A084D22DAFD84000332690 /* MachineData.swift in Sources */,
+				D5A084D32DAFD84000332690 /* PenData.swift in Sources */,
+				D5A0852C2DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */,
+				D5A085BA2DB02E0000332690 /* UnassignedSectionView.swift in Sources */,
+				D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
+				D5A085BD2DB02E2100332690 /* JobRowView.swift in Sources */,
+				D5A085B62DB02D7800332690 /* ProjectSectionView.swift in Sources */,
+				D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
+				D5A0852F2DAFD8DE00332690 /* SVGTreeView.swift in Sources */,
+				D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */,
+				D5A085302DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */,
+				D5A085312DAFD8DE00332690 /* PaperPreview.swift in Sources */,
+				D5A084D42DAFD84000332690 /* PlotJobData.swift in Sources */,
+				D5A084D52DAFD84000332690 /* ConnectionData.swift in Sources */,
+				D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */,
+				D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */,
+				D5A085042DAFD8AD00332690 /* SettingsView.swift in Sources */,
+				D5A085052DAFD8AD00332690 /* AboutMeView.swift in Sources */,
+				D5A085AF2DB0248000332690 /* ProjectEditorView.swift in Sources */,
+				D5A085062DAFD8AD00332690 /* ToastView.swift in Sources */,
+				D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */,
+				D5A085072DAFD8AD00332690 /* DeviceListView.swift in Sources */,
+				D5A085082DAFD8AD00332690 /* RemoteControlView.swift in Sources */,
+				D5A085092DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
+				D5A0850A2DAFD8AD00332690 /* Joystick_View.swift in Sources */,
+				D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */,
+				D5A084F02DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
+				D5A084F12DAFD88A00332690 /* PathParser.swift in Sources */,
+				D5A084F22DAFD88A00332690 /* SVGParser.swift in Sources */,
+				D5A084F32DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
+				D5A084F42DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
+				D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */,
+				D5A085AC2DB023DA00332690 /* NewProjectSheet.swift in Sources */,
+				D5A084DF2DAFD85300332690 /* FileManagerService.swift in Sources */,
+				D5A085BF2DB0348D00332690 /* JobRow.swift in Sources */,
+				D56C4E492DB1296700F09A0C /* DropZoneModifier.swift in Sources */,
+				D5A084E82DAFD86700332690 /* GenericStore.swift in Sources */,
+				D5A085332DAFE17000332690 /* CollapsibleSection.swift in Sources */,
+				D5A084E02DAFD85300332690 /* Tools.swift in Sources */,
+				D5A084E12DAFD85300332690 /* SettingsMigrator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D5D1040D2DAEF2E800E8406E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D5D1040E2DAEF2E800E8406E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		D5D104102DAEF2E800E8406E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Robart/Robart.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Robart/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Diese App verwendet Bluetooth, um mit Geräten zu kommunizieren.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Diese App benötigt Bluetooth für die Verbindung zu Peripheriegeräten.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.nichte.Robart;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D5D104112DAEF2E800E8406E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Robart/Robart.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Robart/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Diese App verwendet Bluetooth, um mit Geräten zu kommunizieren.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Diese App benötigt Bluetooth für die Verbindung zu Peripheriegeräten.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.nichte.Robart;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D5D1041F2DAEF30800E8406E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Robart-iOS/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Diese App verwendet Bluetooth, um mit Geräten zu kommunizieren.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Diese App benötigt Bluetooth für die Verbindung zu Peripheriegeräten.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.nichte.Robart-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D5D104202DAEF30800E8406E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Robart-iOS/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Diese App verwendet Bluetooth, um mit Geräten zu kommunizieren.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Diese App benötigt Bluetooth für die Verbindung zu Peripheriegeräten.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.nichte.Robart-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D5D103FE2DAEF2E600E8406E /* Build configuration list for PBXProject "Robart" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D1040D2DAEF2E800E8406E /* Debug */,
+				D5D1040E2DAEF2E800E8406E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D5D1040F2DAEF2E800E8406E /* Build configuration list for PBXNativeTarget "Robart" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D104102DAEF2E800E8406E /* Debug */,
+				D5D104112DAEF2E800E8406E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D5D1041E2DAEF30800E8406E /* Build configuration list for PBXNativeTarget "Robart-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D1041F2DAEF30800E8406E /* Debug */,
+				D5D104202DAEF30800E8406E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/SVGView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.6;
+			};
+		};
+		D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/armadsen/ORSSerialPort";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D5D1042A2DAEF43900E8406E /* ORSSerial */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
+			productName = ORSSerial;
+		};
+		D5D1042D2DAEF44B00E8406E /* SVGView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */;
+			productName = SVGView;
+		};
+		D5D1042F2DAEF45100E8406E /* SVGView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */;
+			productName = SVGView;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D5D103FB2DAEF2E600E8406E /* Project object */;
+}
