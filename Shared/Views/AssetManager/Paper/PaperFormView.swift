@@ -1,5 +1,5 @@
 //
-//  PenFormView.swift
+//  PaperFormView.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 22.04.25.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 #if os(macOS)
-struct PenFormView: View {
-    @Binding var data: PenData
-    @EnvironmentObject var store: GenericStore<PenData>
+struct PaperFormView: View {
+    @Binding var data: PaperData
+    @EnvironmentObject var store: GenericStore<PaperData>
 
     var body: some View {
         Form {
@@ -32,7 +32,7 @@ struct PenFormView: View {
             // Weitere Pen-spezifische Felder kannst du hier hinzufügen…
         }
         .platformFormPadding()
-        .navigationTitle("Stift bearbeiten")
+        .navigationTitle("Papier bearbeiten")
     }
 
     private func save() {

@@ -8,6 +8,7 @@
 // ProjectEditorView.swift
 import SwiftUI
 
+
 // MARK: - macOS ProjectEditorView is now ProjectManagerView
 struct ProjectManagerView: View {
     @EnvironmentObject var projectStore: GenericStore<ProjectData>

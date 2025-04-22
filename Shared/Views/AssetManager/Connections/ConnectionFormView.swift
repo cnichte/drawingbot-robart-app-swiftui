@@ -1,15 +1,15 @@
 //
-//  PenFormView.swift
+//  ConnectionFormView.swift
 //  Robart
 //
-//  Created by Carsten Nichte on 22.04.25.
+//  Created by Carsten Nichte on 23.04.25.
 //
 
 import SwiftUI
 #if os(macOS)
-struct PenFormView: View {
-    @Binding var data: PenData
-    @EnvironmentObject var store: GenericStore<PenData>
+struct ConnectionFormView: View {
+    @Binding var data: ConnectionData
+    @EnvironmentObject var store: GenericStore<ConnectionData>
 
     var body: some View {
         Form {
@@ -32,7 +32,7 @@ struct PenFormView: View {
             // Weitere Pen-spezifische Felder kannst du hier hinzufügen…
         }
         .platformFormPadding()
-        .navigationTitle("Stift bearbeiten")
+        .navigationTitle("Maschine bearbeiten")
     }
 
     private func save() {

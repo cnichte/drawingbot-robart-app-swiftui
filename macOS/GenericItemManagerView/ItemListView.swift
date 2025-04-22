@@ -1,44 +1,43 @@
 //
-//  PenListView.swift
+//  AssetListView.swift
 //  Robart
 //
-//  Created by Carsten Nichte on 20.04.25.
+//  Created by Carsten Nichte on 22.04.25.
 //
-
-// MARK: - PenListView.swift
+#if os(macOS)
 import SwiftUI
 
-struct PenListView: View {
-    let pens: [PenData]
-    @Binding var selectedPenID: UUID?
-    var onDelete: (PenData) -> Void
-    var onAdd: () -> Void
+struct ItemListView<Item: ManageableItem>: View {
+    let items: [Item]
+    @Binding var selectedID: Item.ID?
+    let title: String
+    let onDelete: (Item) -> Void
+    let onAdd: () -> Void
 
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("Stifte")
-                    .font(.title2.bold())
+                Text(title).font(.title2.bold())
                 Spacer()
                 Button(action: onAdd) {
-                    Label("Stift hinzufügen", systemImage: "plus")
+                    Label("Hinzufügen", systemImage: "plus")
                 }
             }
-            .padding([.horizontal, .top])
+            .padding()
 
-            List(selection: $selectedPenID) {
-                ForEach(pens) { pen in
+            List(selection: $selectedID) {
+                ForEach(items) { item in
                     HStack {
-                        Text(pen.name).bold()
+                        Text(item.displayName).bold()
                         Spacer()
                         Button(role: .destructive) {
-                            onDelete(pen)
+                            onDelete(item)
                         } label: {
                             Image(systemName: "trash")
                         }
                         .buttonStyle(.borderless)
                     }
-                    .tag(pen.id)
+                    .tag(item.id)
                 }
             }
         }
@@ -47,3 +46,4 @@ struct PenListView: View {
         .padding(.trailing, 8)
     }
 }
+#endif

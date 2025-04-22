@@ -12,11 +12,13 @@ enum ConnectionType: String, Codable {
     case bluetooth = ".bluetooth"
 }
 
-struct ConnectionData: Codable, Equatable, Identifiable {
+struct ConnectionData: Codable, Equatable, Identifiable, ManageableItem  {
+    
     var id: UUID
     var name: String
     var description: String
     var typ: ConnectionType
+    var displayName: String
     
     init(
         id: UUID = UUID(),
@@ -28,5 +30,6 @@ struct ConnectionData: Codable, Equatable, Identifiable {
         self.name = name
         self.description = description
         self.typ = typ
+        self.displayName = name
     }
 }

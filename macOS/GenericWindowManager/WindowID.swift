@@ -10,7 +10,14 @@ import Foundation
 #if os(macOS)
 /// Typsichere IDs für Fensterverwaltungsfunktionen unter macOS
 enum WindowID: String {
-    case projectEditor
+    case assetManager
+    
+    case connectionAssetManager
+    case machineAssetManager
+    case paperAssetManager
+    case penAssetManager
+    case projectManager
+    
     case jobDetail
     case settings
     // Weitere Fenster-IDs hier hinzufügen

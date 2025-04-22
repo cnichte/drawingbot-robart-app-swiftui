@@ -14,12 +14,15 @@ import SwiftUI
 
 @main
 struct RobartApp: App {
-    @StateObject private var projectsStore = GenericStore<ProjectData>(directoryName: "projects")
-    @StateObject private var plotJobStore = GenericStore<PlotJobData>(directoryName: "jobs")
-    @StateObject private var settingsStore = GenericStore<SettingsData>(directoryName: "settings")
-    @StateObject private var pensStore = GenericStore<SettingsData>(directoryName: "pens")
     @StateObject private var connectionsStore = GenericStore<ConnectionData>(directoryName: "connections")
-    // @StateObject private var typesStore = GenericStore<TypesData>(directoryName: "types")
+    
+    @StateObject private var projectsStore = GenericStore<ProjectData>(directoryName: "projects")
+    @StateObject private var jobStore = GenericStore<PlotJobData>(directoryName: "jobs")
+    @StateObject private var machineStore = GenericStore<MachineData>(directoryName: "machine")
+    @StateObject private var pensStore = GenericStore<PenData>(directoryName: "pens")
+    @StateObject private var paperStore = GenericStore<PaperData>(directoryName: "paper")
+    
+    @StateObject private var settingsStore = GenericStore<SettingsData>(directoryName: "settings")
     
     init() {
         setupInitialFilesAndDirectories()
@@ -28,11 +31,16 @@ struct RobartApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(bluetoothManager: BluetoothManager(),  usbScanner:  USBSerialScanner())
-                .environmentObject(plotJobStore)
-                .environmentObject(settingsStore)
-                .environmentObject(projectsStore)
-                .environmentObject(pensStore)
                 .environmentObject(connectionsStore)
+            
+                .environmentObject(projectsStore)
+                .environmentObject(jobStore)
+            
+                .environmentObject(machineStore)
+                .environmentObject(pensStore)
+                .environmentObject(paperStore)
+            
+                .environmentObject(settingsStore)
                 .preferredColorScheme(.dark) // Setzt die App auf Dark Mode
         }
     }

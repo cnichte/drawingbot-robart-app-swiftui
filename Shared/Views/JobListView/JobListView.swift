@@ -27,9 +27,16 @@ struct JobListView: View {
     @Binding var goToStep: Int
     @Binding var selectedJob: PlotJobData
     
-    @EnvironmentObject var store: GenericStore<PlotJobData>
+    @EnvironmentObject var jobStore: GenericStore<PlotJobData>
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
+    
+    @EnvironmentObject var machineStore: GenericStore<MachineData>
+    @EnvironmentObject var connectionsStore: GenericStore<ConnectionData>
+    
+    @EnvironmentObject var pensStore: GenericStore<PenData>
+    @EnvironmentObject var paperStore: GenericStore<PaperData>
 
+    
     @State private var isCopyMode = false
     @State private var searchText = ""
     
@@ -53,7 +60,7 @@ struct JobListView: View {
                 Task {
                     // Neuer Job wird sofort im Dateisystem gespeichert
                     let job = PlotJobData(name: "Neuer Job", paperSize: PaperSize(name: "A4", width: 210, height: 297, orientation: 0, note: ""))
-                    let newJob = await store.createNewItem(defaultItem: job, fileName: job.id.uuidString)
+                    let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)
                     selectedJob = newJob // Wählt den neuen Job aus
                     goToStep = 2
                 }
@@ -62,17 +69,93 @@ struct JobListView: View {
             Button("Projekte") {
                 WindowManager.shared.openWithEnvironmentObjects(
                     ProjectManagerView(),
-                    id: .projectEditor,
+                    id: .projectManager,
                     title: "Projekte verwalten",
                     width: 900,
                     height: 600,
                     environmentObjects: [
                         EnvironmentObjectModifier(object: projectStore),
-                        EnvironmentObjectModifier(object: store)
+                        EnvironmentObjectModifier(object: jobStore)
                     ]
                 )
             }
             .buttonStyle(.borderedProminent)
+            
+            
+            Button("TEST") {
+                
+                WindowManager.shared.openTabbedWindow(
+                    id: .assetManager,
+                    title: "Asset-Manager",
+                    tabs: [
+                        TabbedViewConfig( // TODO: Generic View überall benutzen!
+                            title: "Connection",
+                            view: ItemManagerView<ConnectionData, ConnectionFormView>(
+                                title: "Connection",
+                                createItem: { ConnectionData(name: "Neue Connection") },
+                                buildForm: { binding in
+                                    ConnectionFormView(data: binding)
+                                }
+                            ),
+                            environmentObjects: [
+                                EnvironmentObjectModifier(object: connectionsStore)
+                            ]
+                        ),
+                        TabbedViewConfig( // TODO: Generic View überall benutzen!
+                            title: "Maschine",
+                            view: ItemManagerView<MachineData, MachineFormView>(
+                                title: "Maschine",
+                                createItem: { MachineData(name: "Neue Maschine") },
+                                buildForm: { binding in
+                                    MachineFormView(data: binding)
+                                }
+                            ),
+                            environmentObjects: [
+                                EnvironmentObjectModifier(object: machineStore)
+                            ]
+                        ),
+                        TabbedViewConfig(
+                            title: "Projekte",
+                            view: ProjectManagerView(),
+                            environmentObjects: [
+                                EnvironmentObjectModifier(object: projectStore),
+                                EnvironmentObjectModifier(object: jobStore)
+                            ]
+                        ),
+                        TabbedViewConfig( // TODO: Generic View überall benutzen!
+                            title: "Stifte",
+                            view: ItemManagerView<PenData, PenFormView>(
+                                title: "Stifte",
+                                createItem: { PenData(name: "Neuer Stift") },
+                                buildForm: { binding in
+                                    PenFormView(data: binding)
+                                }
+                            ),
+                            environmentObjects: [
+                                EnvironmentObjectModifier(object: pensStore)
+                            ]
+                        ),
+                        TabbedViewConfig( // TODO: Generic View überall benutzen!
+                            title: "Papier",
+                            view: ItemManagerView<PaperData, PaperFormView>(
+                                title: "Papier",
+                                createItem: { PaperData(name: "Neues Papier") },
+                                buildForm: { binding in
+                                    PaperFormView(data: binding)
+                                }
+                            ),
+                            environmentObjects: [
+                                EnvironmentObjectModifier(object: paperStore)
+                            ]
+                        ),
+                        
+                    ]
+                )
+            }
+            .buttonStyle(.borderedProminent)
+            
+            
+    
             #else
             Button("📁 Projekte") {
                 showProjectEditor = true
@@ -127,14 +210,14 @@ struct JobListView: View {
                         height: 600,
                         environmentObjects: [
                             EnvironmentObjectModifier(object: projectStore),
-                            EnvironmentObjectModifier(object: store)
+                            EnvironmentObjectModifier(object: jobStore)
                         ]
                     )
                     #endif
                 },
                 onDeleteJob: { job in
                     Task {
-                        await store.delete(item: job, fileName: job.id.uuidString)
+                        await jobStore.delete(item: job, fileName: job.id.uuidString)
                     }
                 }
             )
@@ -143,7 +226,7 @@ struct JobListView: View {
 
     private var unassignedSection: some View {
         let assignedIDs = Set(projectStore.items.flatMap { $0.jobs.map { $0.id } })
-        let unassignedJobs = store.items.filter { !assignedIDs.contains($0.id) }
+        let unassignedJobs = jobStore.items.filter { !assignedIDs.contains($0.id) }
             .filter {
                 searchText.isEmpty ||
                 $0.name.localizedCaseInsensitiveContains(searchText) ||
@@ -168,14 +251,14 @@ struct JobListView: View {
                     height: 600,
                     environmentObjects: [
                         EnvironmentObjectModifier(object: projectStore),
-                        EnvironmentObjectModifier(object: store)
+                        EnvironmentObjectModifier(object: jobStore)
                     ]
                 )
                 #endif
             },
             onDeleteJob: { job in
                 Task {
-                    await store.delete(item: job, fileName: job.id.uuidString)
+                    await jobStore.delete(item: job, fileName: job.id.uuidString)
                 }
             }
         )

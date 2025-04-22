@@ -13,11 +13,12 @@ enum MachineType: String, Codable {
     case omnidirektionalPlotter = ".omnidirektionalPlotter"
 }
 
-struct MachineData: Codable, Equatable, Identifiable {
+struct MachineData: Codable, Equatable, Identifiable, ManageableItem {
     var id: UUID
     var name: String
     var description: String
     var typ: MachineType
+    var displayName: String
     
     init(
         id: UUID = UUID(),
@@ -29,5 +30,6 @@ struct MachineData: Codable, Equatable, Identifiable {
         self.name = name
         self.description = description
         self.typ = typ
+        self.displayName = name
     }
 }

@@ -14,6 +14,7 @@ protocol TabManageable: Identifiable, Codable, Equatable where ID == UUID {
     var displayName: String { get }
 }
 
+
 // alternative lösung:  struct TabManagerView<Item: TabManageable, FormView: View>: View where Item.ID == UUID {
 struct TabManagerView<Item: TabManageable & Identifiable<UUID>, FormView: View>: View {
 

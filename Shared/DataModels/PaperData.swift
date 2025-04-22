@@ -1,13 +1,13 @@
 //
-//  PenData.swift
-//  Drawingbot-RobArt
+//  PaperData.swift
+//  Robart
 //
-//  Created by Carsten Nichte on 15.04.25.
+//  Created by Carsten Nichte on 22.04.25.
 //
 
 import Foundation
 
-struct PenData: Codable, Equatable, Identifiable, ManageableItem {
+struct PaperData: Codable, Equatable, Identifiable, ManageableItem  {
     
     var id: UUID
     var name: String
