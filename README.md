@@ -1,6 +1,6 @@
 # Robart-App
 
-This is the App for the Omnidirectional Pen-Plotter [Robart](https://github.com/cnichte/robart).
+This is the App for the Omnidirectional Pen-Plotter [Robart](https://github.com/cnichte/drawingbot-robart).
 
 ---
 
