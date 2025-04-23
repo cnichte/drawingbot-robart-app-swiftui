@@ -5,42 +5,41 @@
 //  Created by Carsten Nichte on 20.04.25.
 //
 
-// MARK: - ProjectFormView
+//  MARK: - ProjectFormView.swift (bleibt bestehen, leicht angepasst)
 import SwiftUI
 
 struct ProjectFormView: View {
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
     @EnvironmentObject var plotJobStore: GenericStore<PlotJobData>
-    
-    @Binding var project: ProjectData
+
+    @Binding var data: ProjectData
     @State private var showJobPicker = false
-    
+
     var onBack: () -> Void
 
     var body: some View {
         VStack(alignment: .leading) {
             Form {
                 Section(header: Text("Details")) {
-                    TextField("Name", text: $project.name)
-                        .onChange(of: project.name) { save() }
+                    TextField("Name", text: $data.name)
+                        .onChange(of: data.name) { save() }
 
-                    TextEditor(text: $project.description)
+                    TextEditor(text: $data.description)
                         .frame(minHeight: 100)
-                        .onChange(of: project.description) { save() }
+                        .onChange(of: data.description) { save() }
                         .overlay(
                             RoundedRectangle(cornerRadius: 6)
                                 .stroke(Color.gray.opacity(0.2))
                         )
                 }
             }
+
             Section {
                 HStack(alignment: .top) {
                     Text("Jobs")
                         .frame(minWidth: 80, alignment: .leading)
 
                     VStack(alignment: .leading, spacing: 8) {
-                        
-                        
                         Button {
                             showJobPicker = true
                         } label: {
@@ -50,9 +49,9 @@ struct ProjectFormView: View {
                         .sheet(isPresented: $showJobPicker) {
                             JobPickerSheet(
                                 allJobs: plotJobStore.items,
-                                assignedJobs: project.jobs,
+                                assignedJobs: data.jobs,
                                 onSelect: { job in
-                                    project.jobs.append(job)
+                                    data.jobs.append(job)
                                     save()
                                     showJobPicker = false
                                 },
@@ -61,18 +60,13 @@ struct ProjectFormView: View {
                                 }
                             )
                         }
-                        .buttonStyleLinkIfAvailable()
-                        
-                        
-                        
-                        
 
-                        if project.jobs.isEmpty {
+                        if data.jobs.isEmpty {
                             Text("Keine zugewiesen")
                                 .foregroundColor(.secondary)
                         } else {
                             VStack(spacing: 0) {
-                                ForEach(project.jobs) { job in
+                                ForEach(data.jobs) { job in
                                     HStack(alignment: .top) {
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text(job.name)
@@ -93,7 +87,7 @@ struct ProjectFormView: View {
                                     }
                                     .padding()
 
-                                    if job.id != project.jobs.last?.id {
+                                    if job.id != data.jobs.last?.id {
                                         Divider()
                                     }
                                 }
@@ -122,13 +116,13 @@ struct ProjectFormView: View {
     }
 
     private func removeJob(_ job: PlotJobData) {
-        project.jobs.removeAll { $0.id == job.id }
+        data.jobs.removeAll { $0.id == job.id }
         save()
     }
-    
+
     private func save() {
         Task {
-            await projectStore.save(item: project, fileName: project.id.uuidString)
+            await projectStore.save(item: data, fileName: data.id.uuidString)
         }
     }
 }

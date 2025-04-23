@@ -8,11 +8,13 @@
 // ProjectData.swift
 import Foundation
 
-struct ProjectData: Codable, Identifiable, Hashable {
+struct ProjectData: Codable, Identifiable, Hashable, ManageableItem {
     var id: UUID
     var name: String
     var description: String
     var jobs: [PlotJobData] = []
+    
+    var displayName: String
 
     init(
         id: UUID = UUID(),
@@ -24,6 +26,7 @@ struct ProjectData: Codable, Identifiable, Hashable {
         self.name = name
         self.description = description
         self.jobs = jobs
+        self.displayName = name
     }
     
     static func == (lhs: ProjectData, rhs: ProjectData) -> Bool {

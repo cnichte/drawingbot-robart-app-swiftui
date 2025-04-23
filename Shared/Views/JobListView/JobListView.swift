@@ -99,9 +99,15 @@ struct JobListView: View {
                                 EnvironmentObjectModifier(object: machineStore)
                             ]
                         ),
-                        TabbedViewConfig(
+                        TabbedViewConfig( // TODO: Generic View überall benutzen!
                             title: "Projekte",
-                            view: ProjectManagerView(),
+                            view: ItemManagerView<ProjectData, ProjectFormView>(
+                                title: "Projekte",
+                                createItem: { ProjectData(name: "Neues Projekt") },
+                                buildForm: { binding in
+                                    ProjectFormView(data: binding)
+                                }
+                            ),
                             environmentObjects: [
                                 EnvironmentObjectModifier(object: projectStore),
                                 EnvironmentObjectModifier(object: jobStore)
