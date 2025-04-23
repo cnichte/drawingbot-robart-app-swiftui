@@ -5,11 +5,10 @@
 //  Created by Carsten Nichte on 22.04.25.
 //
 
-
 // ItemManagerView.swift
 import SwiftUI
 
-struct ItemManagerView<Item: TabManageable, FormView: View>: View {
+struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
     let title: String
     let createItem: () -> Item
     let buildForm: (Binding<Item>) -> FormView
@@ -73,6 +72,41 @@ struct ItemManagerView<Item: TabManageable, FormView: View>: View {
             .navigationTitle(title)
         }
     }
+    
+    private var listView: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(title)
+                    .font(.title2.bold())
+                Spacer()
+                Button(action: addNewItem) {
+                    Label("Hinzufügen", systemImage: "plus")
+                }
+            }
+            .padding()
+
+            List(selection: $selectedID) {
+                ForEach(store.items) { item in
+                    HStack {
+                        Text(item.displayName).bold()
+                        Spacer()
+                        Button(role: .destructive) {
+                            confirmDelete(item)
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                        .buttonStyle(.borderless)
+                    }
+                    .tag(item.id)
+                }
+            }
+        }
+        .frame(minWidth: 280, maxWidth: 320)
+        .background(ColorHelper.backgroundColor)
+        .padding(.trailing, 8)
+    }
+
+    
 
     // MARK: - Binding-Hilfen
     private var selectedItemBinding: Binding<Item>? {

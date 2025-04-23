@@ -11,6 +11,7 @@ import Foundation
 enum MachineType: String, Codable {
     case xyPlotter = ".xyPlotter"
     case omnidirektionalPlotter = ".omnidirektionalPlotter"
+    case vertikalPlotter = ".vertikalPlotter" // PolarGraph
 }
 
 struct MachineData: Codable, Equatable, Identifiable, ManageableItem {

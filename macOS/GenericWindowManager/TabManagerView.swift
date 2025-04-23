@@ -10,13 +10,13 @@
 import SwiftUI
 import AppKit
 
-protocol TabManageable: Identifiable, Codable, Equatable where ID == UUID {
-    var displayName: String { get }
-}
+// protocol TabManageable: Identifiable, Codable, Equatable where ID == UUID {
+//    var displayName: String { get }
+// }
 
 
-// alternative lösung:  struct TabManagerView<Item: TabManageable, FormView: View>: View where Item.ID == UUID {
-struct TabManagerView<Item: TabManageable & Identifiable<UUID>, FormView: View>: View {
+// alternative lösung:  struct TabManagerView<Item: ManageableItem, FormView: View>: View where Item.ID == UUID {
+struct TabManagerView<Item: ManageableItem & Identifiable<UUID>, FormView: View>: View {
 
     let title: String
     let formBuilder: (Binding<Item>) -> FormView

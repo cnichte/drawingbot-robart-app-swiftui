@@ -5,9 +5,6 @@
 //  Created by Carsten Nichte on 16.04.25.
 //
 
-// ProjectEditorView.swift
-import SwiftUI
-
 // ProjectManagerView.swift
 import SwiftUI
 
@@ -20,7 +17,7 @@ struct ProjectManagerView: View {
             title: "Projekte",
             createItem: { ProjectData(name: "Neues Projekt") },
             buildForm: { binding in
-                ProjectFormView(project: binding, onBack: {})
+                ProjectFormView(data: binding, onBack: {})
             }
         )
     }

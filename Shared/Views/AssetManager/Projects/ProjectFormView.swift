@@ -15,7 +15,7 @@ struct ProjectFormView: View {
     @Binding var data: ProjectData
     @State private var showJobPicker = false
 
-    var onBack: () -> Void
+    var onBack: () -> Void = {} // <- Defaultwert
 
     var body: some View {
         VStack(alignment: .leading) {

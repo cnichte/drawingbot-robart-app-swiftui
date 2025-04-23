@@ -19,6 +19,7 @@
 		D56C4E592DB1847400F09A0C /* WindowID.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E582DB1847400F09A0C /* WindowID.swift */; };
 		D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */; };
 		D575661A2DB9041000D95E3F /* ManageableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6202DB8349800020AEE /* ManageableItem.swift */; };
+		D575661B2DB91E5000D95E3F /* ItemManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6222DB834B900020AEE /* ItemManagerView.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -386,6 +387,7 @@
 		D5A084FC2DAFD89900332690 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D5F6C61F2DB8348600020AEE /* GenericItemManagerView */,
 				D57076D72DB5892000C277AF /* Deprecated */,
 				D57076D52DB57F4600C277AF /* AssetManager */,
 				D5A085B72DB02DBD00332690 /* JobListView */,
@@ -485,7 +487,6 @@
 		D5D104232DAEF34B00E8406E /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				D5F6C61F2DB8348600020AEE /* GenericItemManagerView */,
 				D5F6C61E2DB828E000020AEE /* GenericWindowManager */,
 				D5D104242DAEF38000E8406E /* USBSerialScanner.swift */,
 			);
@@ -725,6 +726,7 @@
 				D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
 				D5A085BD2DB02E2100332690 /* JobRowView.swift in Sources */,
 				D5A085B62DB02D7800332690 /* ProjectSectionView.swift in Sources */,
+				D575661B2DB91E5000D95E3F /* ItemManagerView.swift in Sources */,
 				D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
 				D5A0852F2DAFD8DE00332690 /* SVGTreeView.swift in Sources */,
 				D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */,
