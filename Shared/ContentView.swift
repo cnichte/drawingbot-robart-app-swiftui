@@ -140,7 +140,7 @@ struct ContentView: View {
                 AssetsView()
                     .tag(3)
                     .tabItem {
-                        Label("Assets", systemImage: "gear")
+                        Label("Settings", systemImage: "gear")
                     }
                 
                 AboutMeView()

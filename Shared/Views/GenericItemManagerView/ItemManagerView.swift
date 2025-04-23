@@ -41,7 +41,7 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
         .navigationTitle(title)
     }
 
-    // MARK: - iOS Layout (NavigationStack mit Push)
+    // MARK: - iOS Layout
     private var iOSLayout: some View {
         NavigationStack {
             List {
@@ -73,7 +73,6 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
         }
     }
 
-    // MARK: - Linke Liste (macOS)
     private var listView: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -107,7 +106,7 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
         .padding(.trailing, 8)
     }
 
-    // MARK: - Binding
+    // MARK: - Binding-Hilfen
     private var selectedItemBinding: Binding<Item>? {
         guard let id = selectedID else { return nil }
         return binding(for: id)
@@ -115,14 +114,7 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
 
     private func binding(for id: UUID) -> Binding<Item>? {
         guard let index = store.items.firstIndex(where: { $0.id == id }) else { return nil }
-        return Binding<Item>(
-            get: { store.items[index] },
-            set: { newValue in
-                Task {
-                    await store.save(item: newValue, fileName: newValue.id.uuidString)
-                }
-            }
-        )
+        return $store.items[index]
     }
 
     // MARK: - Aktionen
@@ -131,9 +123,8 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
         Task {
             _ = await store.createNewItem(defaultItem: newItem, fileName: newItem.id.uuidString)
 
-            // Auf iOS warten, bis es auftaucht (für NavigationLink)
             while !store.items.contains(where: { $0.id == newItem.id }) {
-                try? await Task.sleep(nanoseconds: 20_000_000) // 20ms
+                try? await Task.sleep(nanoseconds: 20_000_000)
             }
 
             await MainActor.run {

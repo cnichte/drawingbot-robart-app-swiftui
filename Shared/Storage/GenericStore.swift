@@ -13,7 +13,8 @@ import SwiftUI
 
 class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hashable {
     @Published var items: [T] = []
-    
+    @Published var refreshTrigger = UUID() // Nutzt UUID als Trigger für UI-Refresh
+
     private let fileManager = FileManager.default
     private let directory: URL
 
@@ -46,6 +47,7 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hash
 
             await MainActor.run {
                 self.items = loadedItems
+                self.refreshTrigger = UUID() // Refresh triggern
             }
 
         } catch {
@@ -80,6 +82,7 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hash
                 } else {
                     self.items.append(item)
                 }
+                self.refreshTrigger = UUID() // Refresh triggern
             }
         } catch {
             print("❌ Fehler beim Speichern: \(error.localizedDescription)")
@@ -102,6 +105,7 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hash
 
             await MainActor.run {
                 self.items.removeAll { $0.id == item.id }
+                self.refreshTrigger = UUID() // Refresh triggern
             }
         } catch {
             print("❌ Fehler beim Löschen: \(error.localizedDescription)")
