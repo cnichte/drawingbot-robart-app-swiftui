@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-#if os(macOS)
 struct PaperManagerView: View {
     var body: some View {
         ItemManagerView<PaperData, PaperFormView>(
@@ -18,4 +17,3 @@ struct PaperManagerView: View {
         )
     }
 }
-#endif
