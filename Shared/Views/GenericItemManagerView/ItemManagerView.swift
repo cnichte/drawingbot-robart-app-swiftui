@@ -24,7 +24,7 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
         #endif
     }
 
-    // MARK: - macOS Layout (unverändert)
+    // MARK: - macOS Layout
     private var macOSLayout: some View {
         HStack(spacing: 0) {
             listView
@@ -72,7 +72,8 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
             .navigationTitle(title)
         }
     }
-    
+
+    // MARK: - Linke Liste (macOS)
     private var listView: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -106,9 +107,7 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
         .padding(.trailing, 8)
     }
 
-    
-
-    // MARK: - Binding-Hilfen
+    // MARK: - Binding
     private var selectedItemBinding: Binding<Item>? {
         guard let id = selectedID else { return nil }
         return binding(for: id)
@@ -132,9 +131,9 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
         Task {
             _ = await store.createNewItem(defaultItem: newItem, fileName: newItem.id.uuidString)
 
-            // Warten, bis Item im Store auftaucht (für iOS Push Navigation nötig)
+            // Auf iOS warten, bis es auftaucht (für NavigationLink)
             while !store.items.contains(where: { $0.id == newItem.id }) {
-                try? await Task.sleep(nanoseconds: 20_000_000)
+                try? await Task.sleep(nanoseconds: 20_000_000) // 20ms
             }
 
             await MainActor.run {

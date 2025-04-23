@@ -7,7 +7,6 @@
 
 // PenManagerView.swift
 import SwiftUI
-#if os(macOS)
 struct PenManagerView: View {
     var body: some View {
         ItemManagerView<PenData, PenFormView>(
@@ -19,4 +18,3 @@ struct PenManagerView: View {
         )
     }
 }
-#endif

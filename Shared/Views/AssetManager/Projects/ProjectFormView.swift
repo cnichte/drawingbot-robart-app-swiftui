@@ -15,8 +15,6 @@ struct ProjectFormView: View {
     @Binding var data: ProjectData
     @State private var showJobPicker = false
 
-    var onBack: () -> Void = {} // <- Defaultwert
-
     var body: some View {
         VStack(alignment: .leading) {
             Form {
@@ -33,7 +31,6 @@ struct ProjectFormView: View {
                         )
                 }
             }
-
             Section {
                 HStack(alignment: .top) {
                     Text("Jobs")
@@ -60,6 +57,7 @@ struct ProjectFormView: View {
                                 }
                             )
                         }
+                        .buttonStyleLinkIfAvailable()
 
                         if data.jobs.isEmpty {
                             Text("Keine zugewiesen")
@@ -106,13 +104,6 @@ struct ProjectFormView: View {
             }
         }
         .navigationTitle("Projekt bearbeiten")
-        .toolbar {
-            #if os(iOS)
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Zurück", action: onBack)
-            }
-            #endif
-        }
     }
 
     private func removeJob(_ job: PlotJobData) {

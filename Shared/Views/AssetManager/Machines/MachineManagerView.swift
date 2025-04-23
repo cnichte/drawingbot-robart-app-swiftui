@@ -7,7 +7,6 @@
 
 // MachineManagerView.swift
 import SwiftUI
-#if os(macOS)
 struct MachineManagerView: View {
     var body: some View {
         ItemManagerView<MachineData, MachineFormView>(
@@ -19,4 +18,3 @@ struct MachineManagerView: View {
         )
     }
 }
-#endif

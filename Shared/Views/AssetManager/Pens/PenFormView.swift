@@ -7,7 +7,6 @@
 
 // PenFormView.swift
 import SwiftUI
-#if os(macOS)
 struct PenFormView: View {
     @Binding var data: PenData
     @EnvironmentObject var store: GenericStore<PenData>
@@ -42,4 +41,3 @@ struct PenFormView: View {
         }
     }
 }
-#endif

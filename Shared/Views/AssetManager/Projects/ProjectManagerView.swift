@@ -17,7 +17,7 @@ struct ProjectManagerView: View {
             title: "Projekte",
             createItem: { ProjectData(name: "Neues Projekt") },
             buildForm: { binding in
-                ProjectFormView(data: binding, onBack: {})
+                ProjectFormView(data: binding)
             }
         )
     }

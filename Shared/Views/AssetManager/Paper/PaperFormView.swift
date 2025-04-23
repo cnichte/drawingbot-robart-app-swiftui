@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-#if os(macOS)
 struct PaperFormView: View {
     @Binding var data: PaperData
     @EnvironmentObject var store: GenericStore<PaperData>
@@ -41,4 +40,3 @@ struct PaperFormView: View {
         }
     }
 }
-#endif

@@ -7,7 +7,6 @@
 
 // MachineFormView.swift
 import SwiftUI
-#if os(macOS)
 struct MachineFormView: View {
     @Binding var data: MachineData
     @EnvironmentObject var store: GenericStore<MachineData>
@@ -42,4 +41,3 @@ struct MachineFormView: View {
         }
     }
 }
-#endif

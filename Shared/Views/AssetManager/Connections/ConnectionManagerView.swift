@@ -7,7 +7,6 @@
 
 // ConnectionManagerView.swift
 import SwiftUI
-#if os(macOS)
 struct ConnectionManagerView: View {
     var body: some View {
         ItemManagerView<ConnectionData, ConnectionFormView>(
@@ -19,4 +18,3 @@ struct ConnectionManagerView: View {
         )
     }
 }
-#endif

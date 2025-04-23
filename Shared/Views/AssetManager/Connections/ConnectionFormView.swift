@@ -7,7 +7,6 @@
 
 // ConnectionFormView.swift
 import SwiftUI
-#if os(macOS)
 struct ConnectionFormView: View {
     @Binding var data: ConnectionData
     @EnvironmentObject var store: GenericStore<ConnectionData>
@@ -42,4 +41,3 @@ struct ConnectionFormView: View {
         }
     }
 }
-#endif

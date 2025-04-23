@@ -136,13 +136,13 @@ struct ContentView: View {
                     .tabItem {
                         Label("Plotter", systemImage: "printer")
                     }
-
-                SettingsView()
+                
+                AssetsView()
                     .tag(3)
                     .tabItem {
-                        Label("Settings", systemImage: "gear")
+                        Label("Assets", systemImage: "gear")
                     }
-
+                
                 AboutMeView()
                     .tag(4)
                     .tabItem {
