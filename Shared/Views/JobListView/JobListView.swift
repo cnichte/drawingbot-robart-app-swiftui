@@ -66,23 +66,8 @@ struct JobListView: View {
                 }
             }
             #if os(macOS)
-            Button("Projekte") {
-                WindowManager.shared.openWithEnvironmentObjects(
-                    ProjectManagerView(),
-                    id: .projectManager,
-                    title: "Projekte verwalten",
-                    width: 900,
-                    height: 600,
-                    environmentObjects: [
-                        EnvironmentObjectModifier(object: projectStore),
-                        EnvironmentObjectModifier(object: jobStore)
-                    ]
-                )
-            }
-            .buttonStyle(.borderedProminent)
-            
-            
-            Button("TEST") {
+
+            Button("Assets") {
                 
                 WindowManager.shared.openTabbedWindow(
                     id: .assetManager,
@@ -154,15 +139,18 @@ struct JobListView: View {
             }
             .buttonStyle(.borderedProminent)
             
-            
+            // https://developer.apple.com/videos/play/wwdc2022/10001
+            // Push Transition: drill into detail / hierarchie / modal / präsentiert von von rechts nach links /
+            // Modal presentation:  / multi-step / präsentiert von unten
+            // + action sheet
     
             #else
             Button("📁 Projekte") {
-                showProjectEditor = true
+                showProjectManager = true
             }
             .buttonStyle(.borderedProminent)
-            .sheet(isPresented: $showProjectEditor) {
-                ProjectEditorView()
+            .sheet(isPresented: $showProjectManager) {
+                ProjectManagerView()
             }
             #endif
 

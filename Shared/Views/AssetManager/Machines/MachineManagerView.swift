@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 22.04.25.
 //
 
+// MachineManagerView.swift
 import SwiftUI
 #if os(macOS)
 struct MachineManagerView: View {

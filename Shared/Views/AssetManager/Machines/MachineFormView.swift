@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 22.04.25.
 //
 
+// MachineFormView.swift
 import SwiftUI
 #if os(macOS)
 struct MachineFormView: View {

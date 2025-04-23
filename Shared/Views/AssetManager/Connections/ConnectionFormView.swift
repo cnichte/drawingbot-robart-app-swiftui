@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 23.04.25.
 //
 
+// ConnectionFormView.swift
 import SwiftUI
 #if os(macOS)
 struct ConnectionFormView: View {

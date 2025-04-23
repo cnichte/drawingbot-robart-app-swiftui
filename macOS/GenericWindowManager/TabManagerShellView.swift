@@ -1,9 +1,11 @@
 //
-//  TabManagerShellView.swift
+// TabManagerShellView.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 22.04.25.
 //
+
+// TabManagerShellView.swift
 #if os(macOS)
 import SwiftUI
 

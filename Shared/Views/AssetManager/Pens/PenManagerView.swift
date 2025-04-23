@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 22.04.25.
 //
 
+// PenManagerView.swift
 import SwiftUI
 #if os(macOS)
 struct PenManagerView: View {

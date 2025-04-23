@@ -117,7 +117,7 @@ struct ContentView: View {
             .frame(minHeight: 28, maxHeight: 32)
             // Header Ende
             
-            // TabView für verschiedene Ansichten
+            // TabBar, TabView für verschiedene Ansichten
             TabView(selection: $selectedTab) {
                 DeviceListView(bluetoothManager: bluetoothManager)
                     .tag(0)

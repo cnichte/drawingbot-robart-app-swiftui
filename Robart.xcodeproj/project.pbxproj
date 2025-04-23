@@ -18,6 +18,7 @@
 		D56C4E492DB1296700F09A0C /* DropZoneModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */; };
 		D56C4E592DB1847400F09A0C /* WindowID.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E582DB1847400F09A0C /* WindowID.swift */; };
 		D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */; };
+		D575661A2DB9041000D95E3F /* ManageableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6202DB8349800020AEE /* ManageableItem.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -709,6 +710,7 @@
 			files = (
 				D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */,
 				D5A0851B2DAFD8C900332690 /* JobSummaryView.swift in Sources */,
+				D575661A2DB9041000D95E3F /* ManageableItem.swift in Sources */,
 				D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */,
 				D5A0851D2DAFD8C900332690 /* PlotterWizardView.swift in Sources */,
 				D5A0851E2DAFD8C900332690 /* JobPreviewView.swift in Sources */,

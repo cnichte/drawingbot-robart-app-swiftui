@@ -4,6 +4,8 @@
 //
 //  Created by Carsten Nichte on 22.04.25.
 //
+
+// AssetListView.swift
 #if os(macOS)
 import SwiftUI
 

@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 22.04.25.
 //
 
+// PenFormView.swift
 import SwiftUI
 #if os(macOS)
 struct PenFormView: View {
