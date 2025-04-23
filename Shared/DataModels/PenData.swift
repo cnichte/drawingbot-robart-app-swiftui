@@ -5,15 +5,19 @@
 //  Created by Carsten Nichte on 15.04.25.
 //
 
+// PenData.swift
 import Foundation
 
-struct PenData: Codable, Equatable, Identifiable, ManageableItem {
+struct PenData: Codable, Equatable, Identifiable, Hashable, ManageableItem {
     
     var id: UUID
     var name: String
     var description: String
 
-    var displayName: String
+    // Computed Property
+    var displayName: String {
+        name
+    }
     
     init(
         id: UUID = UUID(),
@@ -23,6 +27,13 @@ struct PenData: Codable, Equatable, Identifiable, ManageableItem {
         self.id = id
         self.name = name
         self.description = description
-        self.displayName = name
+    }
+    
+    static func == (lhs: PenData, rhs: PenData) -> Bool {
+        lhs.id == rhs.id // oder vollständiger Vergleich
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

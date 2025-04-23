@@ -14,12 +14,15 @@ enum MachineType: String, Codable {
     case vertikalPlotter = ".vertikalPlotter" // PolarGraph
 }
 
-struct MachineData: Codable, Equatable, Identifiable, ManageableItem {
+struct MachineData: Codable, Equatable, Identifiable, Hashable, ManageableItem {
     var id: UUID
     var name: String
     var description: String
     var typ: MachineType
-    var displayName: String
+    // Computed Property
+    var displayName: String {
+        name
+    }
     
     init(
         id: UUID = UUID(),
@@ -31,6 +34,13 @@ struct MachineData: Codable, Equatable, Identifiable, ManageableItem {
         self.name = name
         self.description = description
         self.typ = typ
-        self.displayName = name
+    }
+    
+    static func == (lhs: MachineData, rhs: MachineData) -> Bool {
+        lhs.id == rhs.id // oder vollständiger Vergleich
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

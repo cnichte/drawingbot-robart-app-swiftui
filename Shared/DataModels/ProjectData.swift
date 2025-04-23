@@ -14,7 +14,10 @@ struct ProjectData: Codable, Identifiable, Hashable, ManageableItem {
     var description: String
     var jobs: [PlotJobData] = []
     
-    var displayName: String
+    // Computed Property
+    var displayName: String {
+        name
+    }
 
     init(
         id: UUID = UUID(),
@@ -26,7 +29,6 @@ struct ProjectData: Codable, Identifiable, Hashable, ManageableItem {
         self.name = name
         self.description = description
         self.jobs = jobs
-        self.displayName = name
     }
     
     static func == (lhs: ProjectData, rhs: ProjectData) -> Bool {

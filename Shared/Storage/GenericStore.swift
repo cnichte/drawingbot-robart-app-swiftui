@@ -12,8 +12,12 @@ import Foundation
 import SwiftUI
 
 class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hashable {
-    @Published var items: [T] = []
-    @Published var refreshTrigger = UUID() // Nutzt UUID als Trigger für UI-Refresh
+    @Published var items: [T] = [] {
+        didSet {
+            refreshTrigger += 1
+        }
+    }
+    @Published var refreshTrigger: Int = 0 // Zur Neurenderung von Views
 
     private let fileManager = FileManager.default
     private let directory: URL
@@ -47,7 +51,6 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hash
 
             await MainActor.run {
                 self.items = loadedItems
-                self.refreshTrigger = UUID() // Refresh triggern
             }
 
         } catch {
@@ -78,11 +81,12 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hash
 
             await MainActor.run {
                 if let index = self.items.firstIndex(where: { $0.id == item.id }) {
-                    self.items[index] = item
+                    var updated = self.items
+                    updated[index] = item
+                    self.items = updated // ✅ neue Referenz erzwingen
                 } else {
                     self.items.append(item)
                 }
-                self.refreshTrigger = UUID() // Refresh triggern
             }
         } catch {
             print("❌ Fehler beim Speichern: \(error.localizedDescription)")
@@ -105,10 +109,18 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hash
 
             await MainActor.run {
                 self.items.removeAll { $0.id == item.id }
-                self.refreshTrigger = UUID() // Refresh triggern
             }
         } catch {
             print("❌ Fehler beim Löschen: \(error.localizedDescription)")
+        }
+    }
+}
+
+// MARK: - Hilfsmethode (optional, nützlich für Erweiterungen)
+extension Array where Element: Identifiable {
+    mutating func replace(_ element: Element) {
+        if let index = firstIndex(where: { $0.id == element.id }) {
+            self[index] = element
         }
     }
 }

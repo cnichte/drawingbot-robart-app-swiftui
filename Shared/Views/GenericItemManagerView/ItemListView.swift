@@ -9,6 +9,7 @@
 #if os(macOS)
 import SwiftUI
 
+// deprecated
 struct ItemListView<Item: ManageableItem>: View {
     let items: [Item]
     @Binding var selectedID: Item.ID?

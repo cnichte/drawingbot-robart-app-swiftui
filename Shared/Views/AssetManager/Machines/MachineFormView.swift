@@ -33,6 +33,10 @@ struct MachineFormView: View {
         }
         .platformFormPadding()
         .navigationTitle("Maschine bearbeiten")
+        .onReceive(store.$refreshTrigger) { _ in
+            // Re-render wird automatisch ausgelöst – bei Bedarf kannst du hier z.B. loggen
+            // print("🔄 FormView: Refresh getriggert")
+        }
     }
 
     private func save() {

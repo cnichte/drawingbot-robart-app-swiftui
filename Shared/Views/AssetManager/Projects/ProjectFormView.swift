@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct ProjectFormView: View {
+    
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
     @EnvironmentObject var plotJobStore: GenericStore<PlotJobData>
 
@@ -103,7 +104,12 @@ struct ProjectFormView: View {
                 .padding(.vertical, 4)
             }
         }
+        .platformFormPadding()
         .navigationTitle("Projekt bearbeiten")
+        .onReceive(projectStore.$refreshTrigger) { _ in
+            // Re-render wird automatisch ausgelöst – bei Bedarf kannst du hier z.B. loggen
+            // print("🔄 FormView: Refresh getriggert")
+        }
     }
 
     private func removeJob(_ job: PlotJobData) {

@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 15.04.25.
 //
 
+// ConnectionsData.swift
 import Foundation
 
 enum ConnectionType: String, Codable {
@@ -12,13 +13,16 @@ enum ConnectionType: String, Codable {
     case bluetooth = ".bluetooth"
 }
 
-struct ConnectionData: Codable, Equatable, Identifiable, ManageableItem  {
+struct ConnectionData: Codable, Equatable, Identifiable, Hashable, ManageableItem {
     
     var id: UUID
     var name: String
     var description: String
     var typ: ConnectionType
-    var displayName: String
+    // Computed Property
+    var displayName: String {
+        name
+    }
     
     init(
         id: UUID = UUID(),
@@ -30,6 +34,13 @@ struct ConnectionData: Codable, Equatable, Identifiable, ManageableItem  {
         self.name = name
         self.description = description
         self.typ = typ
-        self.displayName = name
+    }
+    
+    static func == (lhs: ConnectionData, rhs: ConnectionData) -> Bool {
+        lhs.id == rhs.id // oder vollständiger Vergleich
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

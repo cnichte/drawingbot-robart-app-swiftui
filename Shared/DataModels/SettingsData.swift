@@ -8,7 +8,7 @@
 // SettingsData.swift
 import Foundation
 
-struct SettingsData: Identifiable, Codable, Equatable {
+struct SettingsData: Identifiable, Codable, Equatable, Hashable {
     let id: UUID
     var name: String
     var description: String
@@ -21,5 +21,13 @@ struct SettingsData: Identifiable, Codable, Equatable {
         self.id = id
         self.name = name
         self.description = description
+    }
+    
+    static func == (lhs: SettingsData, rhs: SettingsData) -> Bool {
+        lhs.id == rhs.id // oder vollständiger Vergleich
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

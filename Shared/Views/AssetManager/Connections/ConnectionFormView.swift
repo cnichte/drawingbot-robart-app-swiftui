@@ -10,14 +10,14 @@ import SwiftUI
 struct ConnectionFormView: View {
     @Binding var data: ConnectionData
     @EnvironmentObject var store: GenericStore<ConnectionData>
-
+    
     var body: some View {
         Form {
             Section {
                 TextField("Name", text: $data.name)
                     .platformTextFieldModifiers()
                     .onChange(of: data.name) { save() }
-
+                
                 TextEditor(text: $data.description)
                     .frame(minHeight: 100)
                     .onChange(of: data.description) { save() }
@@ -28,13 +28,17 @@ struct ConnectionFormView: View {
             } header: {
                 Text("Details")
             }
-
+            
             // Weitere Pen-spezifische Felder kannst du hier hinzufügen…
         }
         .platformFormPadding()
         .navigationTitle("Maschine bearbeiten")
+        .onReceive(store.$refreshTrigger) { _ in
+            // Re-render wird automatisch ausgelöst – bei Bedarf kannst du hier z.B. loggen
+            // print("🔄 FormView: Refresh getriggert")
+        }
     }
-
+    
     private func save() {
         Task {
             await store.save(item: data, fileName: data.id.uuidString)

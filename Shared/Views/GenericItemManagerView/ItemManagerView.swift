@@ -8,7 +8,7 @@
 // ItemManagerView.swift
 import SwiftUI
 
-struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
+struct ItemManagerView<Item: ManageableItem & Hashable, FormView: View>: View {
     let title: String
     let createItem: () -> Item
     let buildForm: (Binding<Item>) -> FormView
@@ -29,13 +29,7 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
         HStack(spacing: 0) {
             listView
             Divider()
-            if let binding = selectedItemBinding {
-                buildForm(binding)
-                    .frame(minWidth: 500, maxWidth: .infinity)
-                    .padding()
-            } else {
-                emptyDetailView
-            }
+            formView
         }
         .frame(minWidth: 800, minHeight: 500)
         .navigationTitle(title)
@@ -45,7 +39,7 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
     private var iOSLayout: some View {
         NavigationStack {
             List {
-                ForEach(store.items) { item in
+                ForEach(store.items, id: \ .self) { item in
                     NavigationLink {
                         if let binding = binding(for: item.id) {
                             buildForm(binding)
@@ -86,7 +80,7 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
             .padding()
 
             List(selection: $selectedID) {
-                ForEach(store.items) { item in
+                ForEach(store.items, id: \ .self) { item in
                     HStack {
                         Text(item.displayName).bold()
                         Spacer()
@@ -104,6 +98,28 @@ struct ItemManagerView<Item: ManageableItem, FormView: View>: View {
         .frame(minWidth: 280, maxWidth: 320)
         .background(ColorHelper.backgroundColor)
         .padding(.trailing, 8)
+    }
+
+    private var formView: some View {
+        Group {
+            if let id = selectedID,
+               let index = store.items.firstIndex(where: { $0.id == id }) {
+                let binding = Binding(
+                    get: { store.items[index] },
+                    set: { newValue in
+                        store.items[index] = newValue // ✅ stabiler Wert
+                        Task {
+                            await store.save(item: newValue, fileName: newValue.id.uuidString)
+                        }
+                    }
+                )
+                buildForm(binding)
+                    .frame(minWidth: 500, maxWidth: .infinity)
+                    .padding()
+            } else {
+                emptyDetailView
+            }
+        }
     }
 
     // MARK: - Binding-Hilfen
