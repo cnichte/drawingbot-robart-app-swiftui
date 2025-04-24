@@ -1,5 +1,12 @@
 [
     {
+        "id": "abe1dc3b-76a2-4fa5-ac4f-d8ff1ebb8a2e",
+        "name": "custom",
+        "width": 0,
+        "height":0,
+        "unit":"mm"
+    },
+    {
         "id": "ab66dc24-b920-429c-a1f5-041d8bf05e80",
         "name": "DIN A0",
         "width": 841,

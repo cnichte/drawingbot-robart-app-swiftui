@@ -12,6 +12,10 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     var id: UUID
     var name: String
     var description: String
+    
+    // var paperFormat: PaperFormat
+    var width:Double = 210
+    var height:Double = 297
 
     init(
         id: UUID = UUID(),
@@ -21,6 +25,9 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
         self.id = id
         self.name = name
         self.description = description
+        self.width = 210
+        self.height = 297
+        // self.paperFormat = nil
     }
     
     static func == (lhs: PaperData, rhs: PaperData) -> Bool {

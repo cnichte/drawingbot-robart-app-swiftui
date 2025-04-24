@@ -121,6 +121,8 @@
 		D5A085BD2DB02E2100332690 /* JobRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085BB2DB02E2100332690 /* JobRowView.swift */; };
 		D5A085BF2DB0348D00332690 /* JobRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085BE2DB0348D00332690 /* JobRow.swift */; };
 		D5A085C02DB0348D00332690 /* JobRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085BE2DB0348D00332690 /* JobRow.swift */; };
+		D5A341042DBAF323005FF05A /* units.json in Resources */ = {isa = PBXBuildFile; fileRef = D5A341032DBAF31A005FF05A /* units.json */; };
+		D5A341052DBAF323005FF05A /* units.json in Resources */ = {isa = PBXBuildFile; fileRef = D5A341032DBAF31A005FF05A /* units.json */; };
 		D5D104092DAEF2E600E8406E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
 		D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104242DAEF38000E8406E /* USBSerialScanner.swift */; platformFilters = (macos, ); };
 		D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104262DAEF39000E8406E /* USBSerialScanner.swift */; platformFilter = ios; };
@@ -205,6 +207,7 @@
 		D5A085B82DB02DFD00332690 /* UnassignedSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnassignedSectionView.swift; sourceTree = "<group>"; };
 		D5A085BB2DB02E2100332690 /* JobRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRowView.swift; sourceTree = "<group>"; };
 		D5A085BE2DB0348D00332690 /* JobRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRow.swift; sourceTree = "<group>"; };
+		D5A341032DBAF31A005FF05A /* units.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = units.json; sourceTree = "<group>"; };
 		D5D104032DAEF2E600E8406E /* Robart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Robart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D104082DAEF2E600E8406E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D5D104162DAEF30700E8406E /* Robart-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Robart-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -298,6 +301,7 @@
 		D52C0AED2DBA654600F57746 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5A341032DBAF31A005FF05A /* units.json */,
 				D52C0AEE2DBA655000F57746 /* paper-formats.json */,
 			);
 			path = Resources;
@@ -677,6 +681,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5A341042DBAF323005FF05A /* units.json in Resources */,
 				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -685,6 +690,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5A341052DBAF323005FF05A /* units.json in Resources */,
 				D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
