@@ -21,13 +21,16 @@ struct RobartApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(bluetoothManager: BluetoothManager(), usbScanner: USBSerialScanner())
+                .environmentObject(assetStores) // ← Das ist entscheidend. Wichtig für SettingsView.
+                .environmentObject(settingsStore)
+            
                 .environmentObject(assetStores.connectionsStore)
                 .environmentObject(assetStores.machineStore)
                 .environmentObject(assetStores.projectStore)
                 .environmentObject(assetStores.plotJobStore)
                 .environmentObject(assetStores.pensStore)
                 .environmentObject(assetStores.paperStore)
-                .environmentObject(settingsStore)
+            
                 .preferredColorScheme(.dark)
                 .onAppear {
                     Task {

@@ -20,6 +20,8 @@
 		D52C0AF92DBA820300F57746 /* AssetsAndSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */; };
 		D52C0AFB2DBA823D00F57746 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */; };
 		D52C0AFC2DBA823D00F57746 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */; };
+		D52D48E02DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
+		D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
 		D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E442DB1275C00F09A0C /* View+DropZone.swift */; };
@@ -155,6 +157,7 @@
 		D52C0AF42DBA72DF00F57746 /* AssetStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStores.swift; sourceTree = "<group>"; };
 		D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsAndSettingsView.swift; sourceTree = "<group>"; };
 		D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudHelper.swift; sourceTree = "<group>"; };
 		D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropHandling.swift; sourceTree = "<group>"; };
 		D56C4E442DB1275C00F09A0C /* View+DropZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DropZone.swift"; sourceTree = "<group>"; };
 		D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneModifier.swift; sourceTree = "<group>"; };
@@ -394,6 +397,7 @@
 				D5A084DC2DAFD85300332690 /* FileManagerService.swift */,
 				D5A084DD2DAFD85300332690 /* SettingsMigrator.swift */,
 				D5A084DE2DAFD85300332690 /* Tools.swift */,
+				D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -706,6 +710,7 @@
 				D5A084D92DAFD84000332690 /* PenData.swift in Sources */,
 				D5A085262DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */,
 				D5A085B92DB02E0000332690 /* UnassignedSectionView.swift in Sources */,
+				D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */,
 				D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
 				D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
 				D52C0AEC2DBA613400F57746 /* PaperFormats.swift in Sources */,
@@ -803,6 +808,7 @@
 				D5A085052DAFD8AD00332690 /* AboutMeView.swift in Sources */,
 				D57566222DB9256000D95E3F /* MachineFormView.swift in Sources */,
 				D5A085AF2DB0248000332690 /* ProjectManagerView.swift in Sources */,
+				D52D48E02DBAA926000B6E5F /* iCloudHelper.swift in Sources */,
 				D5A085062DAFD8AD00332690 /* ToastView.swift in Sources */,
 				D575661F2DB9254E00D95E3F /* ConnectionManagerView.swift in Sources */,
 				D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */,
@@ -1024,6 +1030,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Robart-iOS/Robart-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9CZ58X9A4W;
@@ -1059,6 +1066,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Robart-iOS/Robart-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9CZ58X9A4W;

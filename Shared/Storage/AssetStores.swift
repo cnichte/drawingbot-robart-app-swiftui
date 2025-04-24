@@ -33,11 +33,41 @@ class AssetStores: ObservableObject {
         paperStore       = .init(directoryName: "papers")
     }
 
-    func applyInitialStorageTypeAndMigrations(using newStorage: StorageType) {
-        let old = storageType
-        storageType = newStorage
-        migrateAllStores(from: old, to: newStorage)
+    func applyInitialStorageTypeAndMigrations(using preferred: StorageType) {
+        storageType = preferred
         performOneTimeMigrations()
+    }
+
+    func deleteAllData() {
+        let fileManager = FileManager.default
+        let directories = [
+            "connections", "machines", "projects", "jobs", "pens", "papers"
+        ]
+
+        for dir in directories {
+            if let baseURL = FileManagerService().getDirectoryURL(for: storageType)?.appendingPathComponent(dir),
+               fileManager.fileExists(atPath: baseURL.path) {
+                do {
+                    let files = try fileManager.contentsOfDirectory(atPath: baseURL.path)
+                    for file in files where file.hasSuffix(".json") {
+                        try fileManager.removeItem(at: baseURL.appendingPathComponent(file))
+                    }
+                } catch {
+                    print("❌ Fehler beim Löschen von Daten in \(dir): \(error)")
+                }
+            }
+        }
+    }
+
+    func reinitializeStores() {
+        Task {
+            await connectionsStore.loadItems()
+            await machineStore.loadItems()
+            await projectStore.loadItems()
+            await plotJobStore.loadItems()
+            await pensStore.loadItems()
+            await paperStore.loadItems()
+        }
     }
 
     private func migrateAllStores(from old: StorageType, to new: StorageType) {
@@ -73,7 +103,7 @@ class AssetStores: ObservableObject {
         do {
             try FileManagerService.migrateOnce(
                 resourceName: "paper-format",
-                to: "paperformats",
+                to: "papers",
                 as: PaperData.self
             )
         } catch {
