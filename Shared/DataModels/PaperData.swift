@@ -13,11 +13,6 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     var name: String
     var description: String
 
-    // Computed Property
-    var displayName: String {
-        name
-    }
-    
     init(
         id: UUID = UUID(),
         name: String,

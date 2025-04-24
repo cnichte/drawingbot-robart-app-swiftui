@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ManageableItem: Identifiable, Codable, Equatable where ID == UUID {
-    var displayName: String { get }
+    var name: String { get }
 }

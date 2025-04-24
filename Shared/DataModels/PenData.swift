@@ -13,11 +13,6 @@ struct PenData: Codable, Equatable, Identifiable, Hashable, ManageableItem {
     var id: UUID
     var name: String
     var description: String
-
-    // Computed Property
-    var displayName: String {
-        name
-    }
     
     init(
         id: UUID = UUID(),

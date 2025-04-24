@@ -11,7 +11,7 @@ import SwiftUI
 import AppKit
 
 // protocol TabManageable: Identifiable, Codable, Equatable where ID == UUID {
-//    var displayName: String { get }
+//    var name: String { get }
 // }
 
 
@@ -50,7 +50,7 @@ struct TabManagerView<Item: ManageableItem & Identifiable<UUID>, FormView: View>
             List(selection: $selectedID) {
                 ForEach(store.items) { item in
                     HStack {
-                        Text(item.displayName).bold()
+                        Text(item.name).bold()
                         Spacer()
                         Button(role: .destructive) {
                             delete(item)

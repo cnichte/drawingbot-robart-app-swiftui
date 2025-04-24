@@ -7,11 +7,23 @@
 //  /Users/cnichte/Library/Containers/de.nichte.Drawingbot-RobArt/Data/Documents/svgs
 // Shift+command + c - Öffnet Konsole
 
-// GenericStore.swift
+// GenericStore.swift – mit StorageType-Unterstützung (lokal / iCloud)
 import Foundation
 import SwiftUI
+import Combine
 
-class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hashable {
+extension UserDefaults {
+    @objc dynamic var currentStorageType: String {
+        get { string(forKey: "currentStorageType") ?? StorageType.local.rawValue }
+        set { set(newValue, forKey: "currentStorageType") }
+    }
+}
+
+protocol ReloadableStore {
+    func loadItems() async
+}
+
+class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore where T.ID: Hashable {
     @Published var items: [T] = [] {
         didSet {
             refreshTrigger += 1
@@ -20,21 +32,35 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject where T.ID: Hash
     @Published var refreshTrigger: Int = 0 // Zur Neurenderung von Views
 
     private let fileManager = FileManager.default
-    private let directory: URL
+    private var directory: URL {
+        FileManagerService().getDirectoryURL(for: currentStorageType)!
+    }
+
+    // MARK: - Reagiert auf Speicherortwechsel
+    @AppStorage("currentStorageType") private var currentStorageTypeRaw: String = StorageType.local.rawValue
+    private var currentStorageType: StorageType {
+        get { StorageType(rawValue: currentStorageTypeRaw) ?? .local }
+        set { currentStorageTypeRaw = newValue.rawValue }
+    }
 
     init(directoryName: String) {
-        let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        self.directory = documentDirectory.appendingPathComponent(directoryName)
-
-        if !fileManager.fileExists(atPath: directory.path) {
-            try? fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
-        }
-
         Task {
-            await self.loadItems()
+            await loadItems()
+        }
+    }
+    
+    init(directoryName: String, storageType: StorageType) {
+        self._currentStorageTypeRaw = AppStorage(wrappedValue: storageType.rawValue, "currentStorageType")
+        Task {
+            await loadItems()
         }
     }
 
+    var storageType: StorageType {
+        get { StorageType(rawValue: currentStorageTypeRaw) ?? .local }
+        set { currentStorageTypeRaw = newValue.rawValue }
+    }
+    
     // MARK: - Laden aller gültigen .json Dateien
     func loadItems() async {
         do {

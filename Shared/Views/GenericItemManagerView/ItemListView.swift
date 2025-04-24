@@ -31,7 +31,7 @@ struct ItemListView<Item: ManageableItem>: View {
             List(selection: $selectedID) {
                 ForEach(items) { item in
                     HStack {
-                        Text(item.displayName).bold()
+                        Text(item.name).bold()
                         Spacer()
                         Button(role: .destructive) {
                             onDelete(item)

@@ -16,58 +16,29 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var settingsStore: GenericStore<SettingsData> // Verwenden des neuen SettingsStore (GenericStore<SettingsData>)
+    @EnvironmentObject var settingsStore: GenericStore<SettingsData>
+    @AppStorage("currentStorageType")
+    private var currentStorageRaw: String = StorageType.local.rawValue
 
     var body: some View {
-        platformNavigationWrapper {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    
-                    // 👤 Benutzer
-                    VStack(alignment: .leading, spacing: 12) {
-                        SectionHeader("Name")
-
-                        HStack {
-                            Image(systemName: "person")
-                                .foregroundColor(.accentColor)
-
-                            TextField("Name", text: $settingsStore.items.first?.name ?? .constant("User"))
-                                .platformTextFieldModifiers()
-                        }
-                        .platformVerticalFormSpacing()
+        VStack(alignment: .leading, spacing: 20) {
+            Form {
+                Section(header: SectionHeader("Allgemein")) {
+                    Picker("Speicherort", selection: $currentStorageRaw) {
+                        Text("Lokal").tag(StorageType.local.rawValue)
+                        Text("iCloud").tag(StorageType.iCloud.rawValue)
                     }
-
+                    .pickerStyle(.segmented)
                 }
-                .padding()
+
+                // Weitere Sektionen oder Einstellungen können hier ergänzt werden
             }
-            .navigationTitle("Settings")
-            .platformFormPadding()
+            Spacer()
         }
-    }
-}
-
-// MARK: - Section Header View
-
-private struct SectionHeader: View {
-    let title: String
-
-    init(_ title: String) {
-        self.title = title
-    }
-
-    var body: some View {
-        Text(title)
-            .font(.headline)
-            .padding(8)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.accentColor.opacity(0.1))
-            .cornerRadius(8)
+        .padding()
+        .navigationTitle("Einstellungen")
     }
 }
 
 
-#Preview {
-    SettingsView()
-}
-
-//             .toast(message: "Bitte zwei mal klicken, oder neu starten damit der System-DarkMode aktiviert - bzw. sauber dargetellt - wird!", isPresented: $showToast, position: .top, duration: 3, type: .info)
+// .toast(message: "Bitte zwei mal klicken, oder neu starten damit der System-DarkMode aktiviert - bzw. sauber dargetellt - wird!", isPresented: $showToast, position: .top, duration: 3, type: .info)

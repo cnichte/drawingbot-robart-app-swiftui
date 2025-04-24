@@ -13,11 +13,6 @@ struct ProjectData: Codable, Identifiable, Hashable, ManageableItem {
     var name: String
     var description: String
     var jobs: [PlotJobData] = []
-    
-    // Computed Property
-    var displayName: String {
-        name
-    }
 
     init(
         id: UUID = UUID(),

@@ -19,10 +19,6 @@ struct ConnectionData: Codable, Equatable, Identifiable, Hashable, ManageableIte
     var name: String
     var description: String
     var typ: ConnectionType
-    // Computed Property
-    var displayName: String {
-        name
-    }
     
     init(
         id: UUID = UUID(),

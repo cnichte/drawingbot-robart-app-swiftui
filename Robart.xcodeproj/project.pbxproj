@@ -10,6 +10,16 @@
 		D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
+		D52C0AEB2DBA613400F57746 /* PaperFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormats.swift */; };
+		D52C0AEC2DBA613400F57746 /* PaperFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormats.swift */; };
+		D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */ = {isa = PBXBuildFile; fileRef = D52C0AEE2DBA655000F57746 /* paper-formats.json */; };
+		D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */ = {isa = PBXBuildFile; fileRef = D52C0AEE2DBA655000F57746 /* paper-formats.json */; };
+		D52C0AF52DBA72DF00F57746 /* AssetStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AF42DBA72DF00F57746 /* AssetStores.swift */; };
+		D52C0AF62DBA72DF00F57746 /* AssetStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AF42DBA72DF00F57746 /* AssetStores.swift */; };
+		D52C0AF82DBA820300F57746 /* AssetsAndSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */; };
+		D52C0AF92DBA820300F57746 /* AssetsAndSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */; };
+		D52C0AFB2DBA823D00F57746 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */; };
+		D52C0AFC2DBA823D00F57746 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */; };
 		D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E442DB1275C00F09A0C /* View+DropZone.swift */; };
@@ -20,8 +30,6 @@
 		D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */; };
 		D575661A2DB9041000D95E3F /* ManageableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6202DB8349800020AEE /* ManageableItem.swift */; };
 		D575661B2DB91E5000D95E3F /* ItemManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6222DB834B900020AEE /* ItemManagerView.swift */; };
-		D575661D2DB922FD00D95E3F /*  AssetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D575661C2DB922FD00D95E3F /*  AssetsView.swift */; };
-		D575661E2DB924E600D95E3F /*  AssetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D575661C2DB922FD00D95E3F /*  AssetsView.swift */; };
 		D575661F2DB9254E00D95E3F /* ConnectionManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6432DB8498700020AEE /* ConnectionManagerView.swift */; };
 		D57566202DB9255400D95E3F /* ConnectionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6462DB8499900020AEE /* ConnectionFormView.swift */; };
 		D57566212DB9255A00D95E3F /* MachineManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C63D2DB8480200020AEE /* MachineManagerView.swift */; };
@@ -142,13 +150,17 @@
 
 /* Begin PBXFileReference section */
 		D50A30632DAEFA9100859908 /* RobartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobartApp.swift; sourceTree = "<group>"; };
+		D52C0AEA2DBA613400F57746 /* PaperFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperFormats.swift; sourceTree = "<group>"; };
+		D52C0AEE2DBA655000F57746 /* paper-formats.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "paper-formats.json"; sourceTree = "<group>"; };
+		D52C0AF42DBA72DF00F57746 /* AssetStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStores.swift; sourceTree = "<group>"; };
+		D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsAndSettingsView.swift; sourceTree = "<group>"; };
+		D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropHandling.swift; sourceTree = "<group>"; };
 		D56C4E442DB1275C00F09A0C /* View+DropZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DropZone.swift"; sourceTree = "<group>"; };
 		D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneModifier.swift; sourceTree = "<group>"; };
 		D56C4E582DB1847400F09A0C /* WindowID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowID.swift; sourceTree = "<group>"; };
 		D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WindowManager+Extensions.swift"; sourceTree = "<group>"; };
 		D56C4E5C2DB188C100F09A0C /* WindowManager+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WindowManager+Examples.swift"; sourceTree = "<group>"; };
-		D575661C2DB922FD00D95E3F /*  AssetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " AssetsView.swift"; sourceTree = "<group>"; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -272,6 +284,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D52C0AE92DBA611B00F57746 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				D52C0AEA2DBA613400F57746 /* PaperFormats.swift */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		D52C0AED2DBA654600F57746 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D52C0AEE2DBA655000F57746 /* paper-formats.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D52C0AFD2DBA87C100F57746 /* PartialViews */ = {
+			isa = PBXGroup;
+			children = (
+				D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */,
+				D5A085322DAFE17000332690 /* CollapsibleSection.swift */,
+			);
+			path = PartialViews;
+			sourceTree = "<group>";
+		};
 		D56C4E3D2DB118A600F09A0C /* ViewExtensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,7 +327,6 @@
 				D57076D92DB58A3F00C277AF /* Paper */,
 				D57076D82DB58A2300C277AF /* Pens */,
 				D57076D62DB57F5000C277AF /* Projects */,
-				D575661C2DB922FD00D95E3F /*  AssetsView.swift */,
 			);
 			path = AssetManager;
 			sourceTree = "<group>";
@@ -380,6 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				D5A084E62DAFD86700332690 /* GenericStore.swift */,
+				D52C0AF42DBA72DF00F57746 /* AssetStores.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -400,6 +437,7 @@
 		D5A084FC2DAFD89900332690 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D52C0AFD2DBA87C100F57746 /* PartialViews */,
 				D5F6C61F2DB8348600020AEE /* GenericItemManagerView */,
 				D57076D72DB5892000C277AF /* Deprecated */,
 				D57076D52DB57F4600C277AF /* AssetManager */,
@@ -412,8 +450,8 @@
 				D5A085012DAFD8AD00332690 /* RemoteControlView.swift */,
 				D5A085022DAFD8AD00332690 /* SettingsView.swift */,
 				D5A085032DAFD8AD00332690 /* ToastView.swift */,
-				D5A085322DAFE17000332690 /* CollapsibleSection.swift */,
 				D56C4E3D2DB118A600F09A0C /* ViewExtensions */,
+				D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -478,6 +516,8 @@
 		D5D104212DAEF32D00E8406E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				D52C0AED2DBA654600F57746 /* Resources */,
+				D52C0AE92DBA611B00F57746 /* Templates */,
 				D5A084FC2DAFD89900332690 /* Views */,
 				D5A084E92DAFD87E00332690 /* SVGParser */,
 				D5A084E52DAFD85E00332690 /* Storage */,
@@ -633,6 +673,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +681,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -664,9 +706,9 @@
 				D5A084D92DAFD84000332690 /* PenData.swift in Sources */,
 				D5A085262DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */,
 				D5A085B92DB02E0000332690 /* UnassignedSectionView.swift in Sources */,
-				D575661D2DB922FD00D95E3F /*  AssetsView.swift in Sources */,
 				D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
 				D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
+				D52C0AEC2DBA613400F57746 /* PaperFormats.swift in Sources */,
 				D5F6C6212DB8349B00020AEE /* ManageableItem.swift in Sources */,
 				D5A085BC2DB02E2100332690 /* JobRowView.swift in Sources */,
 				D5A085B52DB02D7800332690 /* ProjectSectionView.swift in Sources */,
@@ -686,6 +728,7 @@
 				D57566232DB9256600D95E3F /* PaperManagerView.swift in Sources */,
 				D5F4DE052DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
 				D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */,
+				D52C0AF82DBA820300F57746 /* AssetsAndSettingsView.swift in Sources */,
 				D5A0850B2DAFD8AD00332690 /* SettingsView.swift in Sources */,
 				D5A0850C2DAFD8AD00332690 /* AboutMeView.swift in Sources */,
 				D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */,
@@ -694,6 +737,7 @@
 				D56C4E462DB1275C00F09A0C /* View+DropZone.swift in Sources */,
 				D5A0850E2DAFD8AD00332690 /* DeviceListView.swift in Sources */,
 				D5A0850F2DAFD8AD00332690 /* RemoteControlView.swift in Sources */,
+				D52C0AF52DBA72DF00F57746 /* AssetStores.swift in Sources */,
 				D5F4DE072DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */,
 				D5A085102DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
 				D5F6C6472DB8499900020AEE /* ConnectionFormView.swift in Sources */,
@@ -714,6 +758,7 @@
 				D5A084E72DAFD86700332690 /* GenericStore.swift in Sources */,
 				D5A085342DAFE17000332690 /* CollapsibleSection.swift in Sources */,
 				D5F4DE0A2DB5ACEF00C9FE57 /* TabbedViewConfig.swift in Sources */,
+				D52C0AFC2DBA823D00F57746 /* SectionHeader.swift in Sources */,
 				D5A084E32DAFD85300332690 /* Tools.swift in Sources */,
 				D5F6C62D2DB8361000020AEE /* PenFormView.swift in Sources */,
 				D5A084E42DAFD85300332690 /* SettingsMigrator.swift in Sources */,
@@ -732,6 +777,7 @@
 				D5A0851E2DAFD8C900332690 /* JobPreviewView.swift in Sources */,
 				D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
 				D5A084D12DAFD84000332690 /* SettingsData.swift in Sources */,
+				D52C0AFB2DBA823D00F57746 /* SectionHeader.swift in Sources */,
 				D5A084D22DAFD84000332690 /* MachineData.swift in Sources */,
 				D5A084D32DAFD84000332690 /* PenData.swift in Sources */,
 				D5F6C61D2DB825C100020AEE /* PaperData.swift in Sources */,
@@ -741,7 +787,6 @@
 				D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
 				D5A085BD2DB02E2100332690 /* JobRowView.swift in Sources */,
 				D5A085B62DB02D7800332690 /* ProjectSectionView.swift in Sources */,
-				D575661E2DB924E600D95E3F /*  AssetsView.swift in Sources */,
 				D575661B2DB91E5000D95E3F /* ItemManagerView.swift in Sources */,
 				D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
 				D5A0852F2DAFD8DE00332690 /* SVGTreeView.swift in Sources */,
@@ -753,6 +798,7 @@
 				D5A084D52DAFD84000332690 /* ConnectionData.swift in Sources */,
 				D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */,
 				D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */,
+				D52C0AEB2DBA613400F57746 /* PaperFormats.swift in Sources */,
 				D5A085042DAFD8AD00332690 /* SettingsView.swift in Sources */,
 				D5A085052DAFD8AD00332690 /* AboutMeView.swift in Sources */,
 				D57566222DB9256000D95E3F /* MachineFormView.swift in Sources */,
@@ -766,6 +812,7 @@
 				D5F4DE082DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */,
 				D5A085092DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
 				D5A0850A2DAFD8AD00332690 /* Joystick_View.swift in Sources */,
+				D52C0AF62DBA72DF00F57746 /* AssetStores.swift in Sources */,
 				D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */,
 				D57566272DB9257400D95E3F /* PenFormView.swift in Sources */,
 				D5A084F02DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
@@ -785,6 +832,7 @@
 				D5A084E02DAFD85300332690 /* Tools.swift in Sources */,
 				D57566212DB9255A00D95E3F /* MachineManagerView.swift in Sources */,
 				D5A084E12DAFD85300332690 /* SettingsMigrator.swift in Sources */,
+				D52C0AF92DBA820300F57746 /* AssetsAndSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

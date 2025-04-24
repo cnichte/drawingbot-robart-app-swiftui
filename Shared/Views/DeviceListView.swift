@@ -13,7 +13,7 @@ import ORSSerial
 
 extension ORSSerialPort: @retroactive Identifiable {
     public var id: String {
-        self.name // or use self.path or self.displayName if more unique
+        self.name // or use self.path or self.name if more unique
     }
 }
 #endif
@@ -185,7 +185,7 @@ struct DeviceListView: View {
             List(selection: $scanner.selectedDevice) {
                 ForEach(scanner.devices) { device in
                     VStack(alignment: .leading) {
-                        Text(device.displayName)
+                        Text(device.name)
                         if let vendor = device.vendorID, let product = device.productID {
                             Text("Vendor ID: \(vendor), Product ID: \(product)")
                                 .font(.caption)

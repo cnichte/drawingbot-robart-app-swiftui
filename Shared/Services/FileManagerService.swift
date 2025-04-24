@@ -12,15 +12,14 @@
 // listJSONFiles()
 // getDirectoryURL() als public verwendbar für Debug View
 
-//  FileManagerService.swift
+// FileManagerService.swift
 import Foundation
 
 // Definiere StorageType direkt in FileManagerService.swift
-enum StorageType: String {
+enum StorageType: String, Codable {
     case local = ".local"
     case iCloud = ".iCloud"
 }
-
 
 class FileManagerService {
     private let fileManager = FileManager.default
@@ -76,5 +75,47 @@ class FileManagerService {
         }
         let files = try fileManager.contentsOfDirectory(atPath: dirURL.path)
         return files.filter { $0.hasSuffix(".json") }
+    }
+
+    // MARK: - One-time Migration
+    static func migrateOnce<T: Codable & Identifiable>(
+        resourceName: String,
+        to directoryName: String,
+        as type: T.Type // ← Wichtig: dieser Parameter stellt den Bezug her
+    ) throws {
+        // Prüfen, ob Migration bereits erfolgt ist
+        let migrationKey = "migrated_\(resourceName)"
+        if UserDefaults.standard.bool(forKey: migrationKey) {
+            return
+        }
+
+        // JSON-Datei aus Ressourcen laden
+        guard let url = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
+            throw NSError(domain: "Resource \(resourceName).json nicht gefunden", code: 1)
+        }
+
+        let data = try Data(contentsOf: url)
+        let decoder = JSONDecoder()
+        let items = try decoder.decode([T].self, from: data)
+
+        let fileManager = FileManager.default
+        let service = FileManagerService()
+
+        guard let targetDir = service.getDirectoryURL(for: .local)?.appendingPathComponent(directoryName) else {
+            throw NSError(domain: "Zielverzeichnis nicht gefunden", code: 2)
+        }
+
+        if !fileManager.fileExists(atPath: targetDir.path) {
+            try fileManager.createDirectory(at: targetDir, withIntermediateDirectories: true)
+        }
+
+        let encoder = JSONEncoder()
+        for item in items {
+            let fileURL = targetDir.appendingPathComponent("\(item.id).json")
+            let itemData = try encoder.encode(item)
+            try itemData.write(to: fileURL)
+        }
+
+        UserDefaults.standard.set(true, forKey: migrationKey)
     }
 }

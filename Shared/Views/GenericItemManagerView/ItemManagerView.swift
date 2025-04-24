@@ -45,7 +45,7 @@ struct ItemManagerView<Item: ManageableItem & Hashable, FormView: View>: View {
                             buildForm(binding)
                         }
                     } label: {
-                        Text(item.displayName)
+                        Text(item.name)
                     }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
@@ -82,7 +82,7 @@ struct ItemManagerView<Item: ManageableItem & Hashable, FormView: View>: View {
             List(selection: $selectedID) {
                 ForEach(store.items, id: \ .self) { item in
                     HStack {
-                        Text(item.displayName).bold()
+                        Text(item.name).bold()
                         Spacer()
                         Button(role: .destructive) {
                             confirmDelete(item)
@@ -153,7 +153,7 @@ struct ItemManagerView<Item: ManageableItem & Hashable, FormView: View>: View {
         #if os(macOS)
         let alert = NSAlert()
         alert.messageText = "Eintrag löschen?"
-        alert.informativeText = "\"\(item.displayName)\" wirklich löschen?"
+        alert.informativeText = "\"\(item.name)\" wirklich löschen?"
         alert.alertStyle = .warning
         alert.addButton(withTitle: "Löschen")
         alert.addButton(withTitle: "Abbrechen")

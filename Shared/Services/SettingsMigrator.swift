@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 10.04.25.
 //
 
+// SettingsMigrator.swift
 import Foundation
 
 class SettingsMigrator {

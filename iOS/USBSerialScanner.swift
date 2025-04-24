@@ -19,7 +19,7 @@ struct USBSerialDevice: Identifiable, Hashable {
     let productID: Int?
     let description: String
     
-    var displayName: String {
+    var name: String {
         "\(description) (\(path))"
     }
 }
