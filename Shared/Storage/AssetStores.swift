@@ -110,4 +110,30 @@ class AssetStores: ObservableObject {
             print("❌ Fehler bei einmaliger Migration: \(error)")
         }
     }
+    
+    /// Prüft ob iCloud bereit ist, und wendet dann die Speicher-Konfiguration an.
+    func ensureICloudReadyAndApply(using preferred: StorageType) {
+        iCloudHelper.checkAvailability { url in
+            guard preferred == .iCloud else {
+                self.storageType = preferred
+                return
+            }
+
+            guard let iCloudURL = url else {
+                print("⚠️ iCloud nicht bereit, bleibe bei lokalem Speicher")
+                self.storageType = .local
+                return
+            }
+
+            print("✅ iCloud bereit: \(iCloudURL)")
+
+            // optional: direkt Papers-Ordner anlegen
+            let papersDir = iCloudURL.appendingPathComponent("Documents/papers")
+            if !FileManager.default.fileExists(atPath: papersDir.path) {
+                try? FileManager.default.createDirectory(at: papersDir, withIntermediateDirectories: true)
+            }
+
+            self.storageType = .iCloud
+        }
+    }
 }
