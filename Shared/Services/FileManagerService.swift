@@ -15,7 +15,6 @@
 // FileManagerService.swift
 import Foundation
 
-// Definiere StorageType direkt in FileManagerService.swift
 enum StorageType: String, Codable {
     case local = ".local"
     case iCloud = ".iCloud"
@@ -27,69 +26,33 @@ class FileManagerService {
 
     // MARK: - Get Directory URL
     func getDirectoryURL(for type: StorageType) -> URL? {
-        let base: URL? = {
-            switch type {
-            case .local:
-                return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-            case .iCloud:
-                return fileManager.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
+        switch type {
+        case .local:
+            let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+            return url?.appendingPathComponent(settingsSubdirectory)
+
+        case .iCloud:
+            guard let cloudURL = fileManager.url(forUbiquityContainerIdentifier: nil) else {
+                print("⚠️ iCloud NICHT verfügbar oder nicht aktiviert.")
+                return nil
             }
-        }()
-
-        return base?.appendingPathComponent(settingsSubdirectory)
-    }
-
-    // MARK: - Sync Methods
-    func writeSync<T: Codable>(fileName: String, object: T, to storage: StorageType) throws {
-        guard let dirURL = getDirectoryURL(for: storage) else {
-            throw NSError(domain: "Directory not found", code: 1)
+            let finalURL = cloudURL.appendingPathComponent("Documents").appendingPathComponent(settingsSubdirectory)
+            print("✅ iCloud verfügbar: \(finalURL.path)")
+            return finalURL
         }
-        let fileURL = dirURL.appendingPathComponent(fileName)
-        let data = try JSONEncoder().encode(object)
-        try data.write(to: fileURL, options: .atomic)
-    }
-
-    func readSync<T: Codable>(fileName: String, from storage: StorageType) throws -> T {
-        guard let dirURL = getDirectoryURL(for: storage) else {
-            throw NSError(domain: "Directory not found", code: 2)
-        }
-        let fileURL = dirURL.appendingPathComponent(fileName)
-        let data = try Data(contentsOf: fileURL)
-        return try JSONDecoder().decode(T.self, from: data)
-    }
-
-    func deleteSync(fileName: String, from storage: StorageType) throws {
-        guard let dirURL = getDirectoryURL(for: storage) else {
-            throw NSError(domain: "Directory not found", code: 3)
-        }
-        let fileURL = dirURL.appendingPathComponent(fileName)
-        if fileManager.fileExists(atPath: fileURL.path) {
-            try fileManager.removeItem(at: fileURL)
-        }
-    }
-
-    // MARK: - Helper Functions
-    func listJSONFiles(in storage: StorageType) throws -> [String] {
-        guard let dirURL = getDirectoryURL(for: storage) else {
-            throw NSError(domain: "Directory not found", code: 4)
-        }
-        let files = try fileManager.contentsOfDirectory(atPath: dirURL.path)
-        return files.filter { $0.hasSuffix(".json") }
     }
 
     // MARK: - One-time Migration
     static func migrateOnce<T: Codable & Identifiable>(
         resourceName: String,
         to directoryName: String,
-        as type: T.Type // ← Wichtig: dieser Parameter stellt den Bezug her
+        as type: T.Type
     ) throws {
-        // Prüfen, ob Migration bereits erfolgt ist
         let migrationKey = "migrated_\(resourceName)"
         if UserDefaults.standard.bool(forKey: migrationKey) {
             return
         }
 
-        // JSON-Datei aus Ressourcen laden
         guard let url = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
             throw NSError(domain: "Resource \(resourceName).json nicht gefunden", code: 1)
         }
@@ -101,7 +64,7 @@ class FileManagerService {
         let fileManager = FileManager.default
         let service = FileManagerService()
 
-        guard let targetDir = service.getDirectoryURL(for: .local)?.appendingPathComponent(directoryName) else {
+        guard let targetDir = service.getDirectoryURL(for: .local)?.deletingLastPathComponent().appendingPathComponent(directoryName) else {
             throw NSError(domain: "Zielverzeichnis nicht gefunden", code: 2)
         }
 

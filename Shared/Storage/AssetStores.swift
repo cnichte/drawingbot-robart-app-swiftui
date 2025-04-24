@@ -20,54 +20,22 @@ class AssetStores: ObservableObject {
         didSet {
             migrateAllStores(from: oldValue, to: storageType)
             performOneTimeMigrations()
+            ensureTargetDirectoriesExist(for: storageType)
         }
     }
 
     init(initialStorage: StorageType) {
         self.storageType = initialStorage
+        
         connectionsStore = .init(directoryName: "connections")
         machineStore     = .init(directoryName: "machines")
         projectStore     = .init(directoryName: "projects")
         plotJobStore     = .init(directoryName: "jobs")
         pensStore        = .init(directoryName: "pens")
         paperStore       = .init(directoryName: "papers")
-    }
 
-    func applyInitialStorageTypeAndMigrations(using preferred: StorageType) {
-        storageType = preferred
-        performOneTimeMigrations()
-    }
-
-    func deleteAllData() {
-        let fileManager = FileManager.default
-        let directories = [
-            "connections", "machines", "projects", "jobs", "pens", "papers"
-        ]
-
-        for dir in directories {
-            if let baseURL = FileManagerService().getDirectoryURL(for: storageType)?.appendingPathComponent(dir),
-               fileManager.fileExists(atPath: baseURL.path) {
-                do {
-                    let files = try fileManager.contentsOfDirectory(atPath: baseURL.path)
-                    for file in files where file.hasSuffix(".json") {
-                        try fileManager.removeItem(at: baseURL.appendingPathComponent(file))
-                    }
-                } catch {
-                    print("❌ Fehler beim Löschen von Daten in \(dir): \(error)")
-                }
-            }
-        }
-    }
-
-    func reinitializeStores() {
-        Task {
-            await connectionsStore.loadItems()
-            await machineStore.loadItems()
-            await projectStore.loadItems()
-            await plotJobStore.loadItems()
-            await pensStore.loadItems()
-            await paperStore.loadItems()
-        }
+        // FileManagerService().debugPrintICloudStatus() // <– Debugausgabe
+        ensureTargetDirectoriesExist(for: initialStorage)
     }
 
     private func migrateAllStores(from old: StorageType, to new: StorageType) {
@@ -81,7 +49,7 @@ class AssetStores: ObservableObject {
             ("papers", paperStore)
         ]
 
-        for (name, store) in directories {
+        for (name, _) in directories {
             do {
                 try migrator.migrate(from: old, to: new, deleteOriginal: true)
             } catch {
@@ -110,30 +78,47 @@ class AssetStores: ObservableObject {
             print("❌ Fehler bei einmaliger Migration: \(error)")
         }
     }
-    
-    /// Prüft ob iCloud bereit ist, und wendet dann die Speicher-Konfiguration an.
-    func ensureICloudReadyAndApply(using preferred: StorageType) {
-        iCloudHelper.checkAvailability { url in
-            guard preferred == .iCloud else {
-                self.storageType = preferred
-                return
+
+    private func ensureTargetDirectoriesExist(for type: StorageType) {
+        let fileManager = FileManager.default
+        let service = FileManagerService()
+        let subdirs = ["connections", "machines", "projects", "jobs", "pens", "papers"]
+
+        for subdir in subdirs {
+            if let targetDir = service.getDirectoryURL(for: type)?.appendingPathComponent(subdir),
+               !fileManager.fileExists(atPath: targetDir.path) {
+                do {
+                    try fileManager.createDirectory(at: targetDir, withIntermediateDirectories: true)
+                } catch {
+                    print("❌ Fehler beim Erstellen des Verzeichnisses \(targetDir): \(error)")
+                }
             }
+        }
+    }
 
-            guard let iCloudURL = url else {
-                print("⚠️ iCloud nicht bereit, bleibe bei lokalem Speicher")
-                self.storageType = .local
-                return
+    func applyInitialStorageTypeAndMigrations(using preferred: StorageType) {
+        self.storageType = preferred
+    }
+
+    func deleteAllData() {
+        let service = FileManagerService()
+        let subdirs = ["connections", "machines", "projects", "jobs", "pens", "papers"]
+
+        for subdir in subdirs {
+            if let dirURL = service.getDirectoryURL(for: storageType)?.appendingPathComponent(subdir) {
+                try? FileManager.default.removeItem(at: dirURL)
             }
+        }
+    }
 
-            print("✅ iCloud bereit: \(iCloudURL)")
-
-            // optional: direkt Papers-Ordner anlegen
-            let papersDir = iCloudURL.appendingPathComponent("Documents/papers")
-            if !FileManager.default.fileExists(atPath: papersDir.path) {
-                try? FileManager.default.createDirectory(at: papersDir, withIntermediateDirectories: true)
-            }
-
-            self.storageType = .iCloud
+    func reinitializeStores() {
+        Task {
+            await connectionsStore.loadItems()
+            await machineStore.loadItems()
+            await projectStore.loadItems()
+            await plotJobStore.loadItems()
+            await pensStore.loadItems()
+            await paperStore.loadItems()
         }
     }
 }

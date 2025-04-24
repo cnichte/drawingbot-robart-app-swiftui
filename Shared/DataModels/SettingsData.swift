@@ -10,20 +10,30 @@ import Foundation
 
 struct SettingsData: Identifiable, Codable, Equatable, Hashable {
     let id: UUID
-    var storageType: StorageType = .local
-    var preferredStorage: StorageType = .local
+    var storageType: StorageType
+    var preferredStorage: StorageType
     
     init(
         id: UUID = UUID(),
+        storageType: StorageType = .local,
+        preferredStorage: StorageType = .local
     ) {
         self.id = id
+        self.storageType = storageType
+        self.preferredStorage = preferredStorage
     }
     
+    // Equatable: Compare all properties for equality
     static func == (lhs: SettingsData, rhs: SettingsData) -> Bool {
-        lhs.id == rhs.id // oder vollständiger Vergleich
+        return lhs.id == rhs.id &&
+               lhs.storageType == rhs.storageType &&
+               lhs.preferredStorage == rhs.preferredStorage
     }
     
+    // Hashable: Include all properties in hash
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+        hasher.combine(storageType)
+        hasher.combine(preferredStorage)
     }
 }

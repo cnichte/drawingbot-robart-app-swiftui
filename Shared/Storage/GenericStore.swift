@@ -23,45 +23,52 @@ protocol ReloadableStore {
     func loadItems() async
 }
 
-class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore where T.ID: Hashable {
-    @Published var items: [T] = [] {
-        didSet {
-            refreshTrigger += 1
+extension Array where Element: Identifiable {
+    mutating func replace(_ element: Element) {
+        if let index = firstIndex(where: { $0.id == element.id }) {
+            self[index] = element
         }
     }
-    @Published var refreshTrigger: Int = 0 // Zur Neurenderung von Views
+}
+
+class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore where T.ID: Hashable {
+    @Published var items: [T] = [] {
+        didSet { refreshTrigger += 1 }
+    }
+    @Published var refreshTrigger: Int = 0
 
     private let fileManager = FileManager.default
-    private var directory: URL {
-        FileManagerService().getDirectoryURL(for: currentStorageType)!
-    }
+    private let directoryName: String
 
-    // MARK: - Reagiert auf Speicherortwechsel
     @AppStorage("currentStorageType") private var currentStorageTypeRaw: String = StorageType.local.rawValue
     private var currentStorageType: StorageType {
         get { StorageType(rawValue: currentStorageTypeRaw) ?? .local }
         set { currentStorageTypeRaw = newValue.rawValue }
     }
 
-    init(directoryName: String) {
-        Task {
-            await loadItems()
+    private var directory: URL {
+        guard let dir = FileManagerService().getDirectoryURL(for: currentStorageType)?.appendingPathComponent(directoryName) else {
+            fatalError("❌ Verzeichnis für \(currentStorageType) / \(directoryName) nicht gefunden")
         }
+        return dir
     }
-    
+
+    init(directoryName: String) {
+        self.directoryName = directoryName
+        Task { await loadItems() }
+    }
+
     init(directoryName: String, storageType: StorageType) {
+        self.directoryName = directoryName
         self._currentStorageTypeRaw = AppStorage(wrappedValue: storageType.rawValue, "currentStorageType")
-        Task {
-            await loadItems()
-        }
+        Task { await loadItems() }
     }
 
     var storageType: StorageType {
         get { StorageType(rawValue: currentStorageTypeRaw) ?? .local }
         set { currentStorageTypeRaw = newValue.rawValue }
     }
-    
-    // MARK: - Laden aller gültigen .json Dateien
+
     func loadItems() async {
         do {
             let files = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
@@ -80,73 +87,48 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
             }
 
         } catch {
-            print("Fehler beim Laden der Items: \(error.localizedDescription)")
+            print("Fehler beim Laden der Items aus \(directory): \(error)")
         }
     }
 
     private func loadItem(from file: URL) throws -> T {
-        print("📂 Lade: \(file.lastPathComponent)")
         let data = try Data(contentsOf: file)
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
+        return try JSONDecoder().decode(T.self, from: data)
     }
 
-    // MARK: - Speichern eines Items
     func save(item: T, fileName: String) async {
         let encoder = JSONEncoder()
-        guard let data = try? encoder.encode(item) else {
-            print("❌ Fehler beim Kodieren von \(fileName)")
-            return
-        }
+        guard let data = try? encoder.encode(item) else { return }
 
         let itemFilePath = directory.appendingPathComponent("\(fileName).json")
-        print("💾 Speichere: \(itemFilePath.lastPathComponent)")
-
         do {
             try data.write(to: itemFilePath)
-
             await MainActor.run {
                 if let index = self.items.firstIndex(where: { $0.id == item.id }) {
-                    var updated = self.items
-                    updated[index] = item
-                    self.items = updated // ✅ neue Referenz erzwingen
+                    self.items[index] = item
                 } else {
                     self.items.append(item)
                 }
             }
         } catch {
-            print("❌ Fehler beim Speichern: \(error.localizedDescription)")
+            print("❌ Fehler beim Speichern: \(error)")
         }
     }
 
-    // MARK: - Neuen Eintrag anlegen
     func createNewItem(defaultItem: T, fileName: String) async -> T {
         await save(item: defaultItem, fileName: fileName)
         return defaultItem
     }
 
-    // MARK: - Löschen eines Items
     func delete(item: T, fileName: String) async {
         let path = directory.appendingPathComponent("\(fileName).json")
-        print("🗑️ Lösche: \(path.lastPathComponent)")
-
         do {
             try fileManager.removeItem(at: path)
-
             await MainActor.run {
                 self.items.removeAll { $0.id == item.id }
             }
         } catch {
-            print("❌ Fehler beim Löschen: \(error.localizedDescription)")
-        }
-    }
-}
-
-// MARK: - Hilfsmethode (optional, nützlich für Erweiterungen)
-extension Array where Element: Identifiable {
-    mutating func replace(_ element: Element) {
-        if let index = firstIndex(where: { $0.id == element.id }) {
-            self[index] = element
+            print("❌ Fehler beim Löschen: \(error)")
         }
     }
 }
