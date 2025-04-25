@@ -6,6 +6,7 @@
 
 //  /Users/cnichte/Library/Containers/de.nichte.Drawingbot-RobArt/Data/Documents/svgs
 // Shift+command + c - Öffnet Konsole
+// ❌✅⚠️
 
 // GenericStore.swift – mit StorageType-Unterstützung (lokal / iCloud)
 import Foundation
@@ -19,10 +20,6 @@ extension UserDefaults {
     }
 }
 
-protocol ReloadableStore {
-    func loadItems() async
-}
-
 extension Array where Element: Identifiable {
     mutating func replace(_ element: Element) {
         if let index = firstIndex(where: { $0.id == element.id }) {
@@ -31,14 +28,26 @@ extension Array where Element: Identifiable {
     }
 }
 
-class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore where T.ID: Hashable {
+protocol ReloadableStore {
+    func loadItems() async
+}
+
+// ReloadableStore gibt es ja schon
+protocol MigratableStore: ReloadableStore {
+    var directoryName: String { get }
+}
+
+class GenericStore<T: Codable & Identifiable>: ObservableObject, MigratableStore where T.ID: Hashable {
     @Published var items: [T] = [] {
-        didSet { refreshTrigger += 1 }
+        didSet {
+            refreshTrigger += 1
+        }
     }
     @Published var refreshTrigger: Int = 0
 
     private let fileManager = FileManager.default
-    private let directoryName: String
+    private var service = FileManagerService()
+    internal let directoryName: String // Name wie "settings", "papers", etc.
 
     @AppStorage("currentStorageType") private var currentStorageTypeRaw: String = StorageType.local.rawValue
     private var currentStorageType: StorageType {
@@ -46,29 +55,47 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
         set { currentStorageTypeRaw = newValue.rawValue }
     }
 
-    private var directory: URL {
-        guard let dir = FileManagerService().getDirectoryURL(for: currentStorageType)?.appendingPathComponent(directoryName) else {
-            fatalError("❌ Verzeichnis für \(currentStorageType) / \(directoryName) nicht gefunden")
-        }
-        return dir
-    }
-
     init(directoryName: String) {
         self.directoryName = directoryName
-        Task { await loadItems() }
+        Task {
+            await loadItems()
+        }
     }
-
+    
     init(directoryName: String, storageType: StorageType) {
         self.directoryName = directoryName
         self._currentStorageTypeRaw = AppStorage(wrappedValue: storageType.rawValue, "currentStorageType")
-        Task { await loadItems() }
+        Task {
+            await loadItems()
+        }
     }
 
-    var storageType: StorageType {
-        get { StorageType(rawValue: currentStorageTypeRaw) ?? .local }
-        set { currentStorageTypeRaw = newValue.rawValue }
+    // MARK: - Directory URL
+    private var directory: URL {
+        let service = FileManagerService()
+        guard let dir = service.getDirectoryURL(for: currentStorageType) else {
+            fatalError("❌ Verzeichnis für \(currentStorageType) nicht gefunden")
+        }
+
+        // Verzeichnis sicherstellen (wenn noch nicht existiert)
+        if !FileManager.default.fileExists(atPath: dir.path) {
+            do {
+                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+                print("📁 Subdirectory erstellt: \(dir.path)")
+            } catch {
+                fatalError("❌ Fehler beim Erstellen von \(dir.path): \(error)")
+            }
+        }
+
+        return dir
     }
 
+    func createNewItem(defaultItem: T, fileName: String) async -> T {
+        await save(item: defaultItem, fileName: fileName)
+        return defaultItem
+    }
+    
+    // MARK: - Load Items
     func loadItems() async {
         do {
             let files = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
@@ -78,16 +105,15 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
                 if let item = try? loadItem(from: file) {
                     loadedItems.append(item)
                 } else {
-                    print("⚠️ Ungültige Datei übersprungen: \(file.lastPathComponent)")
+                    print("❌ Ungültige Datei \(file.lastPathComponent) übersprungen!")
                 }
             }
 
             await MainActor.run {
                 self.items = loadedItems
             }
-
         } catch {
-            print("Fehler beim Laden der Items aus \(directory): \(error)")
+            print("Fehler beim Laden: \(error.localizedDescription)")
         }
     }
 
@@ -96,13 +122,18 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
         return try JSONDecoder().decode(T.self, from: data)
     }
 
+    // MARK: - Save Item
     func save(item: T, fileName: String) async {
         let encoder = JSONEncoder()
-        guard let data = try? encoder.encode(item) else { return }
+        guard let data = try? encoder.encode(item) else {
+            print("Fehler beim Kodieren von \(fileName)")
+            return
+        }
 
-        let itemFilePath = directory.appendingPathComponent("\(fileName).json")
+        let fileURL = directory.appendingPathComponent("\(fileName).json")
+
         do {
-            try data.write(to: itemFilePath)
+            try data.write(to: fileURL)
             await MainActor.run {
                 if let index = self.items.firstIndex(where: { $0.id == item.id }) {
                     self.items[index] = item
@@ -111,24 +142,21 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
                 }
             }
         } catch {
-            print("❌ Fehler beim Speichern: \(error)")
+            print("Fehler beim Speichern: \(error.localizedDescription)")
         }
     }
 
-    func createNewItem(defaultItem: T, fileName: String) async -> T {
-        await save(item: defaultItem, fileName: fileName)
-        return defaultItem
-    }
-
+    // MARK: - Delete Item
     func delete(item: T, fileName: String) async {
-        let path = directory.appendingPathComponent("\(fileName).json")
+        let fileURL = directory.appendingPathComponent("\(fileName).json")
+
         do {
-            try fileManager.removeItem(at: path)
+            try fileManager.removeItem(at: fileURL)
             await MainActor.run {
                 self.items.removeAll { $0.id == item.id }
             }
         } catch {
-            print("❌ Fehler beim Löschen: \(error)")
+            print("Fehler beim Löschen: \(error.localizedDescription)")
         }
     }
 }

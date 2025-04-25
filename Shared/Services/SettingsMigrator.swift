@@ -8,16 +8,33 @@
 // SettingsMigrator.swift
 import Foundation
 
+import Foundation
+
 class SettingsMigrator {
     private let fileManager = FileManager.default
     private let service = FileManagerService()
 
     func migrate(from source: StorageType,
                  to target: StorageType,
+                 subdirectory: String,
                  deleteOriginal: Bool = false) throws {
         
-        let sourceDir = try requireDirectory(for: source)
-        let targetDir = try requireDirectory(for: target)
+        guard let sourceBase = service.getDirectoryURL(for: source),
+              let targetBase = service.getDirectoryURL(for: target) else {
+            throw NSError(domain: "Directory not found", code: 42)
+        }
+        
+        let sourceDir = sourceBase.appendingPathComponent(subdirectory)
+        let targetDir = targetBase.appendingPathComponent(subdirectory)
+
+        if !fileManager.fileExists(atPath: sourceDir.path) {
+            print("⚠️ Quelle \(sourceDir.lastPathComponent) existiert nicht. Migration übersprungen.")
+            return
+        }
+
+        if !fileManager.fileExists(atPath: targetDir.path) {
+            try fileManager.createDirectory(at: targetDir, withIntermediateDirectories: true)
+        }
 
         let files = try fileManager.contentsOfDirectory(atPath: sourceDir.path)
         let jsonFiles = files.filter { $0.hasSuffix(".json") }
@@ -34,17 +51,4 @@ class SettingsMigrator {
             }
         }
     }
-
-    private func requireDirectory(for storage: StorageType) throws -> URL {
-        guard let url = service.getDirectoryURL(for: storage) else {
-            throw NSError(domain: "Directory not found", code: 42)
-        }
-
-        if !fileManager.fileExists(atPath: url.path) {
-            try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
-        }
-
-        return url
-    }
 }
-

@@ -8,7 +8,20 @@
 // AssetStores.swift
 import Foundation
 
-class AssetStores: ObservableObject {
+protocol AutoMigratable: AnyObject {
+    var allMigratableStores: [MigratableStore] { get }
+}
+
+extension AutoMigratable {
+    var allMigratableStores: [MigratableStore] {
+        Mirror(reflecting: self)
+            .children
+            .compactMap { $0.value as? MigratableStore }
+    }
+}
+
+class AssetStores: ObservableObject, AutoMigratable {
+    
     @Published var connectionsStore: GenericStore<ConnectionData>
     @Published var machineStore: GenericStore<MachineData>
     @Published var projectStore: GenericStore<ProjectData>
@@ -20,50 +33,38 @@ class AssetStores: ObservableObject {
         didSet {
             migrateAllStores(from: oldValue, to: storageType)
             performOneTimeMigrations()
-            ensureTargetDirectoriesExist(for: storageType)
+            AssetStores.ensureTargetDirectoriesExist(for: storageType)
         }
     }
 
     init(initialStorage: StorageType) {
         self.storageType = initialStorage
         
-        connectionsStore = .init(directoryName: "connections")
-        machineStore     = .init(directoryName: "machines")
-        projectStore     = .init(directoryName: "projects")
-        plotJobStore     = .init(directoryName: "jobs")
-        pensStore        = .init(directoryName: "pens")
-        paperStore       = .init(directoryName: "papers")
-
-        // FileManagerService().debugPrintICloudStatus() // <– Debugausgabe
-        ensureTargetDirectoriesExist(for: initialStorage)
+        AssetStores.ensureTargetDirectoriesExist(for: initialStorage)
+        
+        connectionsStore = GenericStore(directoryName: "connections")
+        machineStore     = GenericStore(directoryName: "machines")
+        projectStore     = GenericStore(directoryName: "projects")
+        plotJobStore     = GenericStore(directoryName: "jobs")
+        pensStore        = GenericStore(directoryName: "pens")
+        paperStore       = GenericStore(directoryName: "papers")
     }
 
     private func migrateAllStores(from old: StorageType, to new: StorageType) {
         let migrator = SettingsMigrator()
-        let directories: [(String, any ReloadableStore)] = [
-            ("connections", connectionsStore),
-            ("machines", machineStore),
-            ("projects", projectStore),
-            ("jobs", plotJobStore),
-            ("pens", pensStore),
-            ("papers", paperStore)
-        ]
 
-        for (name, _) in directories {
+        for store in allMigratableStores {
             do {
-                try migrator.migrate(from: old, to: new, deleteOriginal: true)
+                try migrator.migrate(from: old, to: new, subdirectory: store.directoryName, deleteOriginal: true)
             } catch {
-                print("❌ Fehler bei Migration von \(name): \(error)")
+                print("❌ Fehler bei Migration von \(store.directoryName): \(error)")
             }
         }
 
         Task {
-            await connectionsStore.loadItems()
-            await machineStore.loadItems()
-            await projectStore.loadItems()
-            await plotJobStore.loadItems()
-            await pensStore.loadItems()
-            await paperStore.loadItems()
+            for store in allMigratableStores {
+                await store.loadItems()
+            }
         }
     }
 
@@ -79,18 +80,33 @@ class AssetStores: ObservableObject {
         }
     }
 
-    private func ensureTargetDirectoriesExist(for type: StorageType) {
+    private static func ensureTargetDirectoriesExist(for type: StorageType) {
         let fileManager = FileManager.default
         let service = FileManagerService()
         let subdirs = ["connections", "machines", "projects", "jobs", "pens", "papers"]
 
+        guard let baseDir = service.getDirectoryURL(for: type) else {
+            print("❌ Basisverzeichnis für \(type) konnte nicht ermittelt werden.")
+            return
+        }
+
+        if !fileManager.fileExists(atPath: baseDir.path) {
+            do {
+                try fileManager.createDirectory(at: baseDir, withIntermediateDirectories: true)
+                print("📂 Basisverzeichnis erstellt: \(baseDir.path)")
+            } catch {
+                print("❌ Fehler beim Erstellen des Basisverzeichnisses: \(error.localizedDescription)")
+            }
+        }
+
         for subdir in subdirs {
-            if let targetDir = service.getDirectoryURL(for: type)?.appendingPathComponent(subdir),
-               !fileManager.fileExists(atPath: targetDir.path) {
+            let targetDir = baseDir.appendingPathComponent(subdir)
+            if !fileManager.fileExists(atPath: targetDir.path) {
                 do {
                     try fileManager.createDirectory(at: targetDir, withIntermediateDirectories: true)
+                    print("📁 Subdirectory erstellt: \(targetDir.path)")
                 } catch {
-                    print("❌ Fehler beim Erstellen des Verzeichnisses \(targetDir): \(error)")
+                    print("❌ Fehler beim Erstellen des Subdirectorys \(subdir): \(error.localizedDescription)")
                 }
             }
         }
@@ -102,10 +118,9 @@ class AssetStores: ObservableObject {
 
     func deleteAllData() {
         let service = FileManagerService()
-        let subdirs = ["connections", "machines", "projects", "jobs", "pens", "papers"]
 
-        for subdir in subdirs {
-            if let dirURL = service.getDirectoryURL(for: storageType)?.appendingPathComponent(subdir) {
+        for store in allMigratableStores {
+            if let dirURL = service.getDirectoryURL(for: storageType)?.appendingPathComponent(store.directoryName) {
                 try? FileManager.default.removeItem(at: dirURL)
             }
         }
@@ -113,12 +128,9 @@ class AssetStores: ObservableObject {
 
     func reinitializeStores() {
         Task {
-            await connectionsStore.loadItems()
-            await machineStore.loadItems()
-            await projectStore.loadItems()
-            await plotJobStore.loadItems()
-            await pensStore.loadItems()
-            await paperStore.loadItems()
+            for store in allMigratableStores {
+                await store.loadItems()
+            }
         }
     }
 }

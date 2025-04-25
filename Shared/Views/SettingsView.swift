@@ -41,6 +41,11 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Einstellungen")
+        .onChange(of: currentStorageRaw) {
+            if let newType = StorageType(rawValue: currentStorageRaw) {
+                assetStores.applyInitialStorageTypeAndMigrations(using: newType)
+            }
+        }
     }
 
     private func confirmDeleteAllData() {

@@ -17,10 +17,12 @@ struct ContentView: View {
 #if os(macOS)
     @ObservedObject var usbScanner: USBSerialScanner
 #endif
+    @EnvironmentObject var assetStores: AssetStores
+    
     @State private var selectedTab = 0
     @State private var selectedJob: PlotJobData
     @State private var currentStep: Int = 1
-
+    
     init(bluetoothManager: BluetoothManager, usbScanner: USBSerialScanner) {
         self.bluetoothManager = bluetoothManager
 #if os(macOS)
@@ -37,7 +39,7 @@ struct ContentView: View {
             origin: CGPoint(x: 0, y: 0)
         ))
     }
-
+    
     var body: some View {
         VStack(spacing: 0) {
             // Header mit Verbindungsstatus und Disconnect-Button für Bluetooth und USB
@@ -68,12 +70,12 @@ struct ContentView: View {
                             .fixedSize()
                     }
                 }
-
+                
                 Divider()
                     .frame(height: 20)
-
+                
                 // USB-Status
-                #if os(macOS)
+#if os(macOS)
                 HStack(spacing: 6) {
                     Image(systemName: "externaldrive.connected.to.line.below")
                         .foregroundColor(.blue)
@@ -100,14 +102,39 @@ struct ContentView: View {
                             .fixedSize()
                     }
                 }
-                #else
+#else
                 Text("USB nicht unterstützt")
                     .foregroundColor(.gray)
                     .help("USB-Verbindungen sind auf iOS nicht verfügbar")
                     .lineLimit(1)
                     .fixedSize()
-                #endif
-
+#endif
+                
+                Divider()
+                    .frame(height: 20)
+                
+                // Speicherort und Reset-Buttons
+                HStack(spacing: 8) {
+                    let currentStorage = assetStores.storageType
+                    Text("store: \(currentStorage.rawValue)")
+                        .foregroundColor(.gray)
+                        .font(.footnote)
+#if DEBUG
+                    Button(action: AppResetHelper.resetLocalOnly) {
+                        Image(systemName: "arrow.counterclockwise.circle")
+                    }.help("Nur lokalen Speicher leeren")
+                    
+                    Button(action: AppResetHelper.resetICloudOnly) {
+                        Image(systemName: "icloud.slash")
+                    }.help("Nur iCloud Speicher leeren")
+                    
+                    Button(action: AppResetHelper.fullResetAll) {
+                        Image(systemName: "trash.circle")
+                    }.help("Alles komplett zurücksetzen")
+#endif
+                }
+                
+                
                 Spacer()
             }
             .padding(.horizontal, 12)
@@ -124,13 +151,13 @@ struct ContentView: View {
                     .tabItem {
                         Label("Verbindung", systemImage: "dot.radiowaves.left.and.right")
                     }
-
+                
                 RemoteControlView(bluetoothManager: bluetoothManager)
                     .tag(1)
                     .tabItem {
                         Label("Fernsteuerung", systemImage: "gamecontroller")
                     }
-
+                
                 PlotterWizardView(goToStep: $currentStep, selectedJob: $selectedJob)
                     .tag(2)
                     .tabItem {
@@ -142,19 +169,12 @@ struct ContentView: View {
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }
-                /*
-                AssetsView()
-                    .tag(3)
-                    .tabItem {
-                        Label("Assets", systemImage: "gear")
-                    }
-
+                
                 AboutMeView()
                     .tag(4)
                     .tabItem {
                         Label("Über mich", systemImage: "person.circle")
                     }
-                */
             }
         }
     }
@@ -171,9 +191,9 @@ class MockBluetoothManager: BluetoothManager {
 }
 
 /*
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView(bluetoothManager: MockBluetoothManager())
-    }
-}
-*/
+ struct ContentView_Previews: PreviewProvider {
+ static var previews: some View {
+ ContentView(bluetoothManager: MockBluetoothManager())
+ }
+ }
+ */

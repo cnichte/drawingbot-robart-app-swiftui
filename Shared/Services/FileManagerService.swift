@@ -25,20 +25,22 @@ class FileManagerService {
     private let settingsSubdirectory = "settings"
 
     // MARK: - Get Directory URL
-    func getDirectoryURL(for type: StorageType) -> URL? {
-        switch type {
-        case .local:
-            let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-            return url?.appendingPathComponent(settingsSubdirectory)
-
-        case .iCloud:
-            guard let cloudURL = fileManager.url(forUbiquityContainerIdentifier: nil) else {
-                print("⚠️ iCloud NICHT verfügbar oder nicht aktiviert.")
-                return nil
+    func getDirectoryURL(for type: StorageType, subdirectory: String? = nil) -> URL? {
+        let base: URL? = {
+            switch type {
+            case .local:
+                return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+            case .iCloud:
+                return fileManager.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
             }
-            let finalURL = cloudURL.appendingPathComponent("Documents").appendingPathComponent(settingsSubdirectory)
-            print("✅ iCloud verfügbar: \(finalURL.path)")
-            return finalURL
+        }()
+
+        guard let baseURL = base else { return nil }
+
+        if let sub = subdirectory {
+            return baseURL.appendingPathComponent(sub)
+        } else {
+            return baseURL
         }
     }
 

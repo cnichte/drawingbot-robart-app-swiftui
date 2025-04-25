@@ -33,6 +33,9 @@ struct RobartApp: App {
             
                 .preferredColorScheme(.dark)
                 .onAppear {
+                    if CommandLine.arguments.contains("-ResetApp") {
+                        AppResetHelper.fullResetAll()
+                    }
                     Task {
                         // Stelle sicher, dass ein Settings-Datensatz vorhanden ist
                         if settingsStore.items.isEmpty {

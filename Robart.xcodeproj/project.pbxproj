@@ -41,6 +41,10 @@
 		D57566252DB9256B00D95E3F /* PaperFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C63A2DB8469A00020AEE /* PaperFormView.swift */; };
 		D57566262DB9256F00D95E3F /* PenManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6282DB8358C00020AEE /* PenManagerView.swift */; };
 		D57566272DB9257400D95E3F /* PenFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C62B2DB8361000020AEE /* PenFormView.swift */; };
+		D581AF772DBB9E9B00821A7E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF762DBB9E9B00821A7E /* Math.swift */; };
+		D581AF782DBB9E9B00821A7E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF762DBB9E9B00821A7E /* Math.swift */; };
+		D581AF7A2DBBFCD500821A7E /* AppResetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF792DBBFCD500821A7E /* AppResetHelper.swift */; };
+		D581AF7B2DBBFCD500821A7E /* AppResetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF792DBBFCD500821A7E /* AppResetHelper.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -166,6 +170,8 @@
 		D56C4E582DB1847400F09A0C /* WindowID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowID.swift; sourceTree = "<group>"; };
 		D56C4E5A2DB1857300F09A0C /* WindowManager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WindowManager+Extensions.swift"; sourceTree = "<group>"; };
 		D56C4E5C2DB188C100F09A0C /* WindowManager+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WindowManager+Examples.swift"; sourceTree = "<group>"; };
+		D581AF762DBB9E9B00821A7E /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		D581AF792DBBFCD500821A7E /* AppResetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppResetHelper.swift; sourceTree = "<group>"; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -402,6 +408,7 @@
 				D5A084DD2DAFD85300332690 /* SettingsMigrator.swift */,
 				D5A084DE2DAFD85300332690 /* Tools.swift */,
 				D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */,
+				D581AF792DBBFCD500821A7E /* AppResetHelper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -438,6 +445,7 @@
 				D5A084ED2DAFD88A00332690 /* PathParser.swift */,
 				D5A084EE2DAFD88A00332690 /* SVGParser.swift */,
 				D5A084EF2DAFD88A00332690 /* SVGParser-Dokumentation.md */,
+				D581AF762DBB9E9B00821A7E /* Math.swift */,
 			);
 			path = SVGParser;
 			sourceTree = "<group>";
@@ -749,6 +757,7 @@
 				D5A0850E2DAFD8AD00332690 /* DeviceListView.swift in Sources */,
 				D5A0850F2DAFD8AD00332690 /* RemoteControlView.swift in Sources */,
 				D52C0AF52DBA72DF00F57746 /* AssetStores.swift in Sources */,
+				D581AF772DBB9E9B00821A7E /* Math.swift in Sources */,
 				D5F4DE072DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */,
 				D5A085102DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
 				D5F6C6472DB8499900020AEE /* ConnectionFormView.swift in Sources */,
@@ -771,6 +780,7 @@
 				D5F4DE0A2DB5ACEF00C9FE57 /* TabbedViewConfig.swift in Sources */,
 				D52C0AFC2DBA823D00F57746 /* SectionHeader.swift in Sources */,
 				D5A084E32DAFD85300332690 /* Tools.swift in Sources */,
+				D581AF7B2DBBFCD500821A7E /* AppResetHelper.swift in Sources */,
 				D5F6C62D2DB8361000020AEE /* PenFormView.swift in Sources */,
 				D5A084E42DAFD85300332690 /* SettingsMigrator.swift in Sources */,
 			);
@@ -787,6 +797,7 @@
 				D5A0851D2DAFD8C900332690 /* PlotterWizardView.swift in Sources */,
 				D5A0851E2DAFD8C900332690 /* JobPreviewView.swift in Sources */,
 				D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
+				D581AF7A2DBBFCD500821A7E /* AppResetHelper.swift in Sources */,
 				D5A084D12DAFD84000332690 /* SettingsData.swift in Sources */,
 				D52C0AFB2DBA823D00F57746 /* SectionHeader.swift in Sources */,
 				D5A084D22DAFD84000332690 /* MachineData.swift in Sources */,
@@ -815,6 +826,7 @@
 				D57566222DB9256000D95E3F /* MachineFormView.swift in Sources */,
 				D5A085AF2DB0248000332690 /* ProjectManagerView.swift in Sources */,
 				D52D48E02DBAA926000B6E5F /* iCloudHelper.swift in Sources */,
+				D581AF782DBB9E9B00821A7E /* Math.swift in Sources */,
 				D5A085062DAFD8AD00332690 /* ToastView.swift in Sources */,
 				D575661F2DB9254E00D95E3F /* ConnectionManagerView.swift in Sources */,
 				D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */,
