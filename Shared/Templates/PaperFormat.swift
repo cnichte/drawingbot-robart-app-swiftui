@@ -1,5 +1,5 @@
 //
-//  PaperFormats.swift
+//  PaperFormat.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 24.04.25.
@@ -35,7 +35,7 @@ import Foundation
  
  */
 
-// PaperFormats.swift
+// PaperFormat.swift
 import Foundation
 
 struct PaperFormat: Codable, Equatable, Identifiable, Hashable, ManageableItem  {

@@ -75,7 +75,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         centralManager = CBCentralManager(delegate: self, queue: nil)
         print("BluetoothManager init wurde aufgerufen ✅")
     }
-
+    
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         
         switch central.state {

@@ -15,25 +15,19 @@ struct SettingsPanel: View {
     @Binding var showingFileImporter: Bool
     @Binding var showSourcePreview: Bool
 
+    @EnvironmentObject var store: GenericStore<PlotJobData>
+    @EnvironmentObject var paperStore: GenericStore<PaperData>
     @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormat>
-
-    var store: GenericStore<PlotJobData>
+    
     var showBottomBar: Bool = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 JobSectionView(currentJob: $currentJob)
-                SvgSectionView(
-                    currentJob: $currentJob,
-                    svgFileName: $svgFileName,
-                    showingFileImporter: $showingFileImporter,
-                    showSourcePreview: $showSourcePreview,
-                    store: store
-                )
+                SVGSectionView(currentJob: $currentJob, svgFileName: $svgFileName, showingFileImporter: $showingFileImporter, showSourcePreview: $showSourcePreview)
                 SignatureSectionView()
-                PaperSectionView(currentJob: $currentJob)
-                    .environmentObject(paperFormatsStore)
+                PaperSectionView(currentJob: $currentJob, onUpdate: updateJob)
                 PenSectionView()
                 MachineSectionView(currentJob: $currentJob)
             }
@@ -42,22 +36,29 @@ struct SettingsPanel: View {
         }
         .safeAreaInset(edge: .bottom) {
             if showBottomBar {
-                bottomNavigationBar
+                bottomButtons
             }
         }
     }
 
-    private var bottomNavigationBar: some View {
+    @ViewBuilder
+    private var bottomButtons: some View {
         HStack {
-            Button("Zurück") {
+            Button("◀︎ Zurück") {
                 goToStep = 1
             }
             Spacer()
-            Button("Weiter") {
+            Button("Weiter ▶︎") {
                 goToStep = 3
             }
         }
         .padding()
         .background(.ultraThinMaterial)
+    }
+
+    private func updateJob() {
+        Task {
+            await store.save(item: currentJob, fileName: currentJob.id.uuidString)
+        }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 22.04.25.
 //
 
+// PaperFormView.swift
 import SwiftUI
 struct PaperFormView: View {
     @Binding var data: PaperData
