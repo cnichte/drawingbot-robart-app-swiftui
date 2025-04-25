@@ -31,6 +31,8 @@ struct RobartApp: App {
                 .environmentObject(assetStores.pensStore)
                 .environmentObject(assetStores.paperStore)
             
+                .environmentObject(assetStores.paperFormatsStore)
+            
                 .preferredColorScheme(.dark)
                 .onAppear {
                     if CommandLine.arguments.contains("-ResetApp") {

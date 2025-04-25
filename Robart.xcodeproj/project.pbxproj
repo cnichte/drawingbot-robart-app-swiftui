@@ -10,8 +10,8 @@
 		D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
-		D52C0AEB2DBA613400F57746 /* PaperFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormats.swift */; };
-		D52C0AEC2DBA613400F57746 /* PaperFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormats.swift */; };
+		D52C0AEB2DBA613400F57746 /* PaperFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormat.swift */; };
+		D52C0AEC2DBA613400F57746 /* PaperFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormat.swift */; };
 		D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */ = {isa = PBXBuildFile; fileRef = D52C0AEE2DBA655000F57746 /* paper-formats.json */; };
 		D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */ = {isa = PBXBuildFile; fileRef = D52C0AEE2DBA655000F57746 /* paper-formats.json */; };
 		D52C0AF52DBA72DF00F57746 /* AssetStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AF42DBA72DF00F57746 /* AssetStores.swift */; };
@@ -22,6 +22,18 @@
 		D52C0AFC2DBA823D00F57746 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */; };
 		D52D48E02DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
 		D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
+		D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */; };
+		D53EA2372DBC31B300C23B17 /* robart-dev-check-v1.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2362DBC31AC00C23B17 /* robart-dev-check-v1.sh */; };
+		D53EA23C2DBC328D00C23B17 /* robart-dev-check-v2.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA23B2DBC328000C23B17 /* robart-dev-check-v2.sh */; };
+		D53EA23E2DBC331D00C23B17 /* robart-dev-check-v3.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA23D2DBC331500C23B17 /* robart-dev-check-v3.sh */; };
+		D53EA2402DBC337400C23B17 /* robart-dev-check-v4.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA23F2DBC336E00C23B17 /* robart-dev-check-v4.sh */; };
+		D53EA2422DBC33D800C23B17 /* robart-dev-check-v5.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2412DBC33D200C23B17 /* robart-dev-check-v5.sh */; };
+		D53EA2442DBC342800C23B17 /* robart-dev-check-v6.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2432DBC342000C23B17 /* robart-dev-check-v6.sh */; };
+		D53EA2462DBC346A00C23B17 /* robart-dev-check-v7.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2452DBC346500C23B17 /* robart-dev-check-v7.sh */; };
+		D53EA2482DBC34AB00C23B17 /* robart-dev-check-v8.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2472DBC34A500C23B17 /* robart-dev-check-v8.sh */; };
+		D53EA24A2DBC34E800C23B17 /* robart-dev-check-v9.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2492DBC34E100C23B17 /* robart-dev-check-v9.sh */; };
+		D53EA24C2DBC353600C23B17 /* robart-dev-check-v10.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA24B2DBC352F00C23B17 /* robart-dev-check-v10.sh */; };
+		D53EA24E2DBC357600C23B17 /* robart-dev-check-v11.sh in Resources */ = {isa = PBXBuildFile; fileRef = D53EA24D2DBC357000C23B17 /* robart-dev-check-v11.sh */; };
 		D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E442DB1275C00F09A0C /* View+DropZone.swift */; };
@@ -47,6 +59,8 @@
 		D581AF7B2DBBFCD500821A7E /* AppResetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF792DBBFCD500821A7E /* AppResetHelper.swift */; };
 		D581AF882DBC139100821A7E /* Bundle+DebugTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */; };
 		D581AF892DBC139100821A7E /* Bundle+DebugTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */; };
+		D581AFA62DBC216900821A7E /* UUID+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AFA52DBC216600821A7E /* UUID+Helpers.swift */; };
+		D581AFA72DBC216900821A7E /* UUID+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AFA52DBC216600821A7E /* UUID+Helpers.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -158,14 +172,43 @@
 		D5F6C6472DB8499900020AEE /* ConnectionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6462DB8499900020AEE /* ConnectionFormView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D581AFB02DBC236A00821A7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D5D103FB2DAEF2E600E8406E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D5D104152DAEF30700E8406E;
+			remoteInfo = "Robart-iOS";
+		};
+		D581AFC62DBC24F100821A7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D5D103FB2DAEF2E600E8406E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D5D104022DAEF2E600E8406E;
+			remoteInfo = Robart;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		D50A30632DAEFA9100859908 /* RobartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobartApp.swift; sourceTree = "<group>"; };
-		D52C0AEA2DBA613400F57746 /* PaperFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperFormats.swift; sourceTree = "<group>"; };
+		D52C0AEA2DBA613400F57746 /* PaperFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperFormat.swift; sourceTree = "<group>"; };
 		D52C0AEE2DBA655000F57746 /* paper-formats.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "paper-formats.json"; sourceTree = "<group>"; };
 		D52C0AF42DBA72DF00F57746 /* AssetStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStores.swift; sourceTree = "<group>"; };
 		D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsAndSettingsView.swift; sourceTree = "<group>"; };
 		D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudHelper.swift; sourceTree = "<group>"; };
+		D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "robart-dev-checks.md"; sourceTree = "<group>"; };
+		D53EA2362DBC31AC00C23B17 /* robart-dev-check-v1.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v1.sh"; sourceTree = "<group>"; };
+		D53EA23B2DBC328000C23B17 /* robart-dev-check-v2.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v2.sh"; sourceTree = "<group>"; };
+		D53EA23D2DBC331500C23B17 /* robart-dev-check-v3.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v3.sh"; sourceTree = "<group>"; };
+		D53EA23F2DBC336E00C23B17 /* robart-dev-check-v4.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v4.sh"; sourceTree = "<group>"; };
+		D53EA2412DBC33D200C23B17 /* robart-dev-check-v5.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v5.sh"; sourceTree = "<group>"; };
+		D53EA2432DBC342000C23B17 /* robart-dev-check-v6.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v6.sh"; sourceTree = "<group>"; };
+		D53EA2452DBC346500C23B17 /* robart-dev-check-v7.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v7.sh"; sourceTree = "<group>"; };
+		D53EA2472DBC34A500C23B17 /* robart-dev-check-v8.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v8.sh"; sourceTree = "<group>"; };
+		D53EA2492DBC34E100C23B17 /* robart-dev-check-v9.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v9.sh"; sourceTree = "<group>"; };
+		D53EA24B2DBC352F00C23B17 /* robart-dev-check-v10.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v10.sh"; sourceTree = "<group>"; };
+		D53EA24D2DBC357000C23B17 /* robart-dev-check-v11.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "robart-dev-check-v11.sh"; sourceTree = "<group>"; };
 		D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropHandling.swift; sourceTree = "<group>"; };
 		D56C4E442DB1275C00F09A0C /* View+DropZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DropZone.swift"; sourceTree = "<group>"; };
 		D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneModifier.swift; sourceTree = "<group>"; };
@@ -175,6 +218,9 @@
 		D581AF762DBB9E9B00821A7E /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		D581AF792DBBFCD500821A7E /* AppResetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppResetHelper.swift; sourceTree = "<group>"; };
 		D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+DebugTools.swift"; sourceTree = "<group>"; };
+		D581AFA52DBC216600821A7E /* UUID+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UUID+Helpers.swift"; sourceTree = "<group>"; };
+		D581AFAC2DBC236A00821A7E /* Robart-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Robart-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D581AFC22DBC24F100821A7E /* Robart-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Robart-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -260,6 +306,16 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		D581AFAD2DBC236A00821A7E /* Robart-iOSTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Robart-iOSTests";
+			sourceTree = "<group>";
+		};
+		D581AFC32DBC24F100821A7E /* Robart-macOSTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Robart-macOSTests";
+			sourceTree = "<group>";
+		};
 		D5D104052DAEF2E600E8406E /* Robart */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -279,6 +335,20 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D581AFA92DBC236A00821A7E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D581AFBF2DBC24F100821A7E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5D104002DAEF2E600E8406E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -302,7 +372,7 @@
 		D52C0AE92DBA611B00F57746 /* Templates */ = {
 			isa = PBXGroup;
 			children = (
-				D52C0AEA2DBA613400F57746 /* PaperFormats.swift */,
+				D52C0AEA2DBA613400F57746 /* PaperFormat.swift */,
 			);
 			path = Templates;
 			sourceTree = "<group>";
@@ -323,6 +393,25 @@
 				D5A085322DAFE17000332690 /* CollapsibleSection.swift */,
 			);
 			path = PartialViews;
+			sourceTree = "<group>";
+		};
+		D53EA24F2DBC35C300C23B17 /* bash-scripte */ = {
+			isa = PBXGroup;
+			children = (
+				D53EA24D2DBC357000C23B17 /* robart-dev-check-v11.sh */,
+				D53EA24B2DBC352F00C23B17 /* robart-dev-check-v10.sh */,
+				D53EA2492DBC34E100C23B17 /* robart-dev-check-v9.sh */,
+				D53EA2472DBC34A500C23B17 /* robart-dev-check-v8.sh */,
+				D53EA2452DBC346500C23B17 /* robart-dev-check-v7.sh */,
+				D53EA2432DBC342000C23B17 /* robart-dev-check-v6.sh */,
+				D53EA2412DBC33D200C23B17 /* robart-dev-check-v5.sh */,
+				D53EA23F2DBC336E00C23B17 /* robart-dev-check-v4.sh */,
+				D53EA23D2DBC331500C23B17 /* robart-dev-check-v3.sh */,
+				D53EA23B2DBC328000C23B17 /* robart-dev-check-v2.sh */,
+				D53EA2362DBC31AC00C23B17 /* robart-dev-check-v1.sh */,
+				D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */,
+			);
+			path = "bash-scripte";
 			sourceTree = "<group>";
 		};
 		D56C4E3D2DB118A600F09A0C /* ViewExtensions */ = {
@@ -412,9 +501,17 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
+		D581AFA12DBC204300821A7E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		D5A084C02DAFD58B00332690 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D581AFA52DBC216600821A7E /* UUID+Helpers.swift */,
 				D5A084C12DAFD59B00332690 /* BluetoothManager.swift */,
 				D5A084DC2DAFD85300332690 /* FileManagerService.swift */,
 				D5A084DD2DAFD85300332690 /* SettingsMigrator.swift */,
@@ -477,7 +574,6 @@
 				D5A085012DAFD8AD00332690 /* RemoteControlView.swift */,
 				D5A085022DAFD8AD00332690 /* SettingsView.swift */,
 				D5A085032DAFD8AD00332690 /* ToastView.swift */,
-				D56C4E3D2DB118A600F09A0C /* ViewExtensions */,
 				D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */,
 			);
 			path = Views;
@@ -521,11 +617,14 @@
 		D5D103FA2DAEF2E600E8406E = {
 			isa = PBXGroup;
 			children = (
+				D53EA24F2DBC35C300C23B17 /* bash-scripte */,
 				D5D104232DAEF34B00E8406E /* macOS */,
 				D5D104222DAEF33D00E8406E /* iOS */,
 				D5D104212DAEF32D00E8406E /* Shared */,
 				D5D104052DAEF2E600E8406E /* Robart */,
 				D5D104172DAEF30700E8406E /* Robart-iOS */,
+				D581AFAD2DBC236A00821A7E /* Robart-iOSTests */,
+				D581AFC32DBC24F100821A7E /* Robart-macOSTests */,
 				D5D1042C2DAEF44B00E8406E /* Frameworks */,
 				D5D104042DAEF2E600E8406E /* Products */,
 			);
@@ -536,6 +635,8 @@
 			children = (
 				D5D104032DAEF2E600E8406E /* Robart.app */,
 				D5D104162DAEF30700E8406E /* Robart-iOS.app */,
+				D581AFAC2DBC236A00821A7E /* Robart-iOSTests.xctest */,
+				D581AFC22DBC24F100821A7E /* Robart-macOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -553,6 +654,8 @@
 				D5A084C02DAFD58B00332690 /* Services */,
 				D50A30632DAEFA9100859908 /* RobartApp.swift */,
 				D5D104082DAEF2E600E8406E /* ContentView.swift */,
+				D581AFA12DBC204300821A7E /* Extensions */,
+				D56C4E3D2DB118A600F09A0C /* ViewExtensions */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -607,6 +710,52 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D581AFAB2DBC236A00821A7E /* Robart-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D581AFB22DBC236A00821A7E /* Build configuration list for PBXNativeTarget "Robart-iOSTests" */;
+			buildPhases = (
+				D581AFA82DBC236A00821A7E /* Sources */,
+				D581AFA92DBC236A00821A7E /* Frameworks */,
+				D581AFAA2DBC236A00821A7E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D581AFB12DBC236A00821A7E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D581AFAD2DBC236A00821A7E /* Robart-iOSTests */,
+			);
+			name = "Robart-iOSTests";
+			packageProductDependencies = (
+			);
+			productName = "Robart-iOSTests";
+			productReference = D581AFAC2DBC236A00821A7E /* Robart-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D581AFC12DBC24F100821A7E /* Robart-macOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D581AFC82DBC24F100821A7E /* Build configuration list for PBXNativeTarget "Robart-macOSTests" */;
+			buildPhases = (
+				D581AFBE2DBC24F100821A7E /* Sources */,
+				D581AFBF2DBC24F100821A7E /* Frameworks */,
+				D581AFC02DBC24F100821A7E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D581AFC72DBC24F100821A7E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D581AFC32DBC24F100821A7E /* Robart-macOSTests */,
+			);
+			name = "Robart-macOSTests";
+			packageProductDependencies = (
+			);
+			productName = "Robart-macOSTests";
+			productReference = D581AFC22DBC24F100821A7E /* Robart-macOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D5D104022DAEF2E600E8406E /* Robart */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D5D1040F2DAEF2E800E8406E /* Build configuration list for PBXNativeTarget "Robart" */;
@@ -664,6 +813,14 @@
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
+					D581AFAB2DBC236A00821A7E = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = D5D104152DAEF30700E8406E;
+					};
+					D581AFC12DBC24F100821A7E = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = D5D104022DAEF2E600E8406E;
+					};
 					D5D104022DAEF2E600E8406E = {
 						CreatedOnToolsVersion = 16.3;
 					};
@@ -692,17 +849,45 @@
 			targets = (
 				D5D104022DAEF2E600E8406E /* Robart */,
 				D5D104152DAEF30700E8406E /* Robart-iOS */,
+				D581AFAB2DBC236A00821A7E /* Robart-iOSTests */,
+				D581AFC12DBC24F100821A7E /* Robart-macOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D581AFAA2DBC236A00821A7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D581AFC02DBC24F100821A7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5D104012DAEF2E600E8406E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D53EA2422DBC33D800C23B17 /* robart-dev-check-v5.sh in Resources */,
+				D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */,
+				D53EA2482DBC34AB00C23B17 /* robart-dev-check-v8.sh in Resources */,
 				D5A341042DBAF323005FF05A /* units.json in Resources */,
+				D53EA2462DBC346A00C23B17 /* robart-dev-check-v7.sh in Resources */,
+				D53EA23C2DBC328D00C23B17 /* robart-dev-check-v2.sh in Resources */,
 				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
+				D53EA2372DBC31B300C23B17 /* robart-dev-check-v1.sh in Resources */,
+				D53EA24E2DBC357600C23B17 /* robart-dev-check-v11.sh in Resources */,
+				D53EA24C2DBC353600C23B17 /* robart-dev-check-v10.sh in Resources */,
+				D53EA24A2DBC34E800C23B17 /* robart-dev-check-v9.sh in Resources */,
+				D53EA2442DBC342800C23B17 /* robart-dev-check-v6.sh in Resources */,
+				D53EA23E2DBC331D00C23B17 /* robart-dev-check-v3.sh in Resources */,
+				D53EA2402DBC337400C23B17 /* robart-dev-check-v4.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,6 +903,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D581AFA82DBC236A00821A7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D581AFBE2DBC24F100821A7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5D103FF2DAEF2E600E8406E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -740,7 +939,8 @@
 				D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */,
 				D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
 				D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
-				D52C0AEC2DBA613400F57746 /* PaperFormats.swift in Sources */,
+				D581AFA72DBC216900821A7E /* UUID+Helpers.swift in Sources */,
+				D52C0AEC2DBA613400F57746 /* PaperFormat.swift in Sources */,
 				D5F6C6212DB8349B00020AEE /* ManageableItem.swift in Sources */,
 				D5A085BC2DB02E2100332690 /* JobRowView.swift in Sources */,
 				D5A085B52DB02D7800332690 /* ProjectSectionView.swift in Sources */,
@@ -833,11 +1033,12 @@
 				D5A084D52DAFD84000332690 /* ConnectionData.swift in Sources */,
 				D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */,
 				D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */,
-				D52C0AEB2DBA613400F57746 /* PaperFormats.swift in Sources */,
+				D52C0AEB2DBA613400F57746 /* PaperFormat.swift in Sources */,
 				D581AF882DBC139100821A7E /* Bundle+DebugTools.swift in Sources */,
 				D5A085042DAFD8AD00332690 /* SettingsView.swift in Sources */,
 				D5A085052DAFD8AD00332690 /* AboutMeView.swift in Sources */,
 				D57566222DB9256000D95E3F /* MachineFormView.swift in Sources */,
+				D581AFA62DBC216900821A7E /* UUID+Helpers.swift in Sources */,
 				D5A085AF2DB0248000332690 /* ProjectManagerView.swift in Sources */,
 				D52D48E02DBAA926000B6E5F /* iCloudHelper.swift in Sources */,
 				D581AF782DBB9E9B00821A7E /* Math.swift in Sources */,
@@ -876,7 +1077,95 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D581AFB12DBC236A00821A7E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D5D104152DAEF30700E8406E /* Robart-iOS */;
+			targetProxy = D581AFB02DBC236A00821A7E /* PBXContainerItemProxy */;
+		};
+		D581AFC72DBC24F100821A7E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D5D104022DAEF2E600E8406E /* Robart */;
+			targetProxy = D581AFC62DBC24F100821A7E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		D581AFB32DBC236A00821A7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.nichte.Robart-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Robart-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Robart-iOS";
+			};
+			name = Debug;
+		};
+		D581AFB42DBC236A00821A7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.nichte.Robart-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Robart-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Robart-iOS";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D581AFC92DBC24F100821A7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.nichte.Robart-macOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Robart.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Robart";
+			};
+			name = Debug;
+		};
+		D581AFCA2DBC24F100821A7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9CZ58X9A4W;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.nichte.Robart-macOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Robart.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Robart";
+			};
+			name = Release;
+		};
 		D5D1040D2DAEF2E800E8406E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1077,6 +1366,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9CZ58X9A4W;
 				ENABLE_PREVIEWS = YES;
@@ -1118,6 +1408,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9CZ58X9A4W;
 				ENABLE_PREVIEWS = YES;
@@ -1153,6 +1444,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D581AFB22DBC236A00821A7E /* Build configuration list for PBXNativeTarget "Robart-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D581AFB32DBC236A00821A7E /* Debug */,
+				D581AFB42DBC236A00821A7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D581AFC82DBC24F100821A7E /* Build configuration list for PBXNativeTarget "Robart-macOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D581AFC92DBC24F100821A7E /* Debug */,
+				D581AFCA2DBC24F100821A7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D5D103FE2DAEF2E600E8406E /* Build configuration list for PBXProject "Robart" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

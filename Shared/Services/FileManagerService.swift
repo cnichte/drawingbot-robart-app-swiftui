@@ -67,49 +67,51 @@ class FileManagerService {
         as type: T.Type
     ) throws {
         let migrationKey = "migrated_\(resourceName)"
-        
         if UserDefaults.standard.bool(forKey: migrationKey) {
-            print("ℹ️ Migration \(resourceName) wurde bereits durchgeführt. Überspringe.")
+            print("ℹ️ Migration für \(resourceName) wurde bereits durchgeführt.")
             return
         }
 
         guard let url = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
-            print("⚠️ Resource \(resourceName).json wurde im Bundle nicht gefunden. Migration wird übersprungen.")
-            return
+            throw NSError(domain: "Resource \(resourceName).json nicht gefunden", code: 1)
         }
 
-        do {
-            let data = try Data(contentsOf: url)
-            let decoder = JSONDecoder()
-            let items = try decoder.decode([T].self, from: data)
+        let data = try Data(contentsOf: url)
 
-            let fileManager = FileManager.default
-            let service = FileManagerService()
-
-            guard let targetDir = service.getDirectoryURL(for: .local)?.appendingPathComponent(directoryName) else {
-                print("❌ Zielverzeichnis für Migration nicht gefunden: \(directoryName)")
-                return
-            }
-
-            if !fileManager.fileExists(atPath: targetDir.path) {
-                try fileManager.createDirectory(at: targetDir, withIntermediateDirectories: true)
-                print("📁 Subdirectory erstellt: \(targetDir.path)")
-            }
-
-            let encoder = JSONEncoder()
-            for item in items {
-                let fileURL = targetDir.appendingPathComponent("\(item.id).json")
-                let itemData = try encoder.encode(item)
-                try itemData.write(to: fileURL)
-                print("💾 Migriert: \(fileURL.lastPathComponent)")
-            }
-
-            UserDefaults.standard.set(true, forKey: migrationKey)
-            print("✅ Migration von \(resourceName) abgeschlossen.")
-
-        } catch {
-            print("❌ Fehler bei Migration \(resourceName): \(error.localizedDescription)")
+        guard !data.isEmpty else {
+            throw NSError(domain: "Resource \(resourceName).json ist leer", code: 2)
         }
+
+        print("📄 Geladener Inhalt von \(resourceName).json:")
+        if let contentString = String(data: data, encoding: .utf8) {
+            print(contentString)
+        } else {
+            print("⚠️ Inhalt konnte nicht als UTF-8 gelesen werden.")
+        }
+
+        let decoder = JSONDecoder()
+        let items = try decoder.decode([T].self, from: data)
+
+        let fileManager = FileManager.default
+        let service = FileManagerService()
+
+        guard let targetDir = service.getDirectoryURL(for: .local)?.appendingPathComponent(directoryName) else {
+            throw NSError(domain: "Zielverzeichnis nicht gefunden", code: 3)
+        }
+
+        if !fileManager.fileExists(atPath: targetDir.path) {
+            try fileManager.createDirectory(at: targetDir, withIntermediateDirectories: true)
+        }
+
+        let encoder = JSONEncoder()
+        for item in items {
+            let fileURL = targetDir.appendingPathComponent("\(item.id).json")
+            let itemData = try encoder.encode(item)
+            try itemData.write(to: fileURL)
+        }
+
+        UserDefaults.standard.set(true, forKey: migrationKey)
+        print("✅ Migration von \(resourceName) abgeschlossen.")
     }
 
     // MARK: - Rollback Migration

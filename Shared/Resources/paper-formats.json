@@ -3,88 +3,96 @@
         "id": "abe1dc3b-76a2-4fa5-ac4f-d8ff1ebb8a2e",
         "name": "custom",
         "width": 0,
-        "height":0,
-        "unit":"mm"
+        "height": 0,
+        "unit": "mm",
+        "description": "Benutzerdefiniertes Papierformat"
     },
     {
         "id": "ab66dc24-b920-429c-a1f5-041d8bf05e80",
         "name": "DIN A0",
         "width": 841,
-        "height":1189,
-        "unit":"mm"
+        "height": 1189,
+        "unit": "mm",
+        "description": "DIN A0 – Sehr großes Posterformat"
     },
     {
         "id": "df509af8-e58d-4765-9ad8-e309048f7cba",
         "name": "DIN A1",
         "width": 594,
-        "height":841,
-        "unit":"mm"
+        "height": 841,
+        "unit": "mm",
+        "description": "DIN A1 – Großformatige Poster, Pläne"
     },
     {
         "id": "f3888671-b048-498d-8270-20b91ca2ada9",
         "name": "DIN A2",
         "width": 420,
-        "height":594,
-        "unit":"mm"
+        "height": 594,
+        "unit": "mm",
+        "description": "DIN A2 – Poster, Flipcharts"
     },
     {
         "id": "559dd299-9fb7-4f75-aacb-bcbf205a9cd6",
         "name": "DIN A3",
         "width": 297,
-        "height":420,
-        "unit":"mm"
+        "height": 420,
+        "unit": "mm",
+        "description": "DIN A3 – Zeichnungen, Präsentationen"
     },
     {
         "id": "7e3eb341-cee9-4da6-8acb-677d5cb19e13",
         "name": "DIN A4",
         "width": 210,
-        "height":297,
-        "unit":"mm"
+        "height": 297,
+        "unit": "mm",
+        "description": "DIN A4 – Standard-Briefformate, Drucker"
     },
     {
         "id": "5e25ef39-5ce7-4531-adda-13568a8eb537",
         "name": "DIN A5",
         "width": 148,
-        "height":210,
-        "unit":"mm"
+        "height": 210,
+        "unit": "mm",
+        "description": "DIN A5 – kleine Flyer, Notizblöcke"
     },
-    
     {
         "id": "b1043007-b69a-4561-8ae7-11dfcedd7c84",
         "name": "DIN A6",
         "width": 105,
-        "height":148,
-        "unit":"mm"
+        "height": 148,
+        "unit": "mm",
+        "description": "DIN A6 – Postkartenformat"
     },
-    
     {
         "id": "2f76b761-f4f7-4a8c-b7ec-ef73d9f146fd",
         "name": "DIN A7",
         "width": 74,
-        "height":105,
-        "unit":"mm"
+        "height": 105,
+        "unit": "mm",
+        "description": "DIN A7 – kleine Notizzettel, Etiketten"
     },
-    
     {
         "id": "2a08c485-59a8-4d3e-b1a2-63dd4f05cde5",
         "name": "DIN A8",
         "width": 52,
-        "height":74,
-        "unit":"mm"
+        "height": 74,
+        "unit": "mm",
+        "description": "DIN A8 – Visitenkartenähnliche Formate"
     },
-    
     {
         "id": "39f75080-294b-405a-868c-f29e70989a08",
         "name": "DIN A9",
         "width": 37,
-        "height":52,
-        "unit":"mm"
+        "height": 52,
+        "unit": "mm",
+        "description": "DIN A9 – sehr kleine Anhänger, Etiketten"
     },
     {
         "id": "b4689b81-422d-47c4-81c3-ff8e5c95335a",
         "name": "DIN A10",
         "width": 26,
-        "height":37,
-        "unit":"mm"
-    },
+        "height": 37,
+        "unit": "mm",
+        "description": "DIN A10 – sehr kleines Papierformat"
+    }
 ]

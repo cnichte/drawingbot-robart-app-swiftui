@@ -8,17 +8,17 @@
 import Foundation
 /*
  Die Formate der A-Reihe sind die Grundlage aller weiteren Papiernormen. Man spricht dabei auch von den beschnittenen Formaten:
-DIN A0: 841 x 1189 mm
-DIN A1: 594 x 841 mm
-DIN A2: 420 x 594 mm
-DIN A3: 297 x 420 mm
-DIN A4: 210 x 297 mm
-DIN A5: 148 x 210 mm
-DIN A6: 105 x 148 mm
-DIN A7: 74 x 105 mm
-DIN A8: 52 x 74 mm
-DIN A9: 37 x 52 mm
-DIN A10: 26 x 37 mm
+ DIN A0: 841 x 1189 mm
+ DIN A1: 594 x 841 mm
+ DIN A2: 420 x 594 mm
+ DIN A3: 297 x 420 mm
+ DIN A4: 210 x 297 mm
+ DIN A5: 148 x 210 mm
+ DIN A6: 105 x 148 mm
+ DIN A7: 74 x 105 mm
+ DIN A8: 52 x 74 mm
+ DIN A9: 37 x 52 mm
+ DIN A10: 26 x 37 mm
  
  Die B-Reihe enthält die Formate für die sogenannten unbeschnittenen Druckbogenformate; sie haben die größten Abmessungen:
  DIN B0: 1000 x 1414 mm
@@ -32,32 +32,39 @@ DIN A10: 26 x 37 mm
  DIN B8: 62 x 88 mm
  DIN B9: 44 x 62 mm
  DIN B10: 31 x 44 mm
+ 
+ */
 
-*/
-
+// PaperFormats.swift
 import Foundation
 
 struct PaperFormat: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
-
+    
     var id: UUID
     var name: String
     var description: String
     var width:Double
     var height:Double
-
+    var unit:String
+    
+    static var `default`: PaperFormat {
+        PaperFormat(id: UUID.force("7e3eb341-cee9-4da6-8acb-677d5cb19e13"), name: "DIN A4", width: 210, height: 297, unit: "mm")
+    }
     
     init(
         id: UUID = UUID(),
         name: String,
         description: String = "",
         width:Double = 0,
-        height:Double = 0
+        height:Double = 0,
+        unit:String = ""
     ) {
         self.id = id
         self.name = name
         self.description = description
         self.width = width
         self.height = height
+        self.unit = unit
     }
     
     static func == (lhs: PaperFormat, rhs: PaperFormat) -> Bool {

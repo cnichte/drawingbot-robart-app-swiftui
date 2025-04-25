@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 22.04.25.
 //
 
+// PaperData.swift
 import Foundation
 
 struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
@@ -13,7 +14,7 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     var name: String
     var description: String
     
-    // var paperFormat: PaperFormat
+    var paperFormat: PaperFormat = .default
     var width:Double = 210
     var height:Double = 297
 
@@ -27,7 +28,6 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
         self.description = description
         self.width = 210
         self.height = 297
-        // self.paperFormat = nil
     }
     
     static func == (lhs: PaperData, rhs: PaperData) -> Bool {

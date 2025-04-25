@@ -66,7 +66,7 @@ struct JobListView: View {
                 }
             }
             #if os(macOS)
-
+/*
             Button("Assets") {
                 
                 WindowManager.shared.openTabbedWindow(
@@ -144,7 +144,7 @@ struct JobListView: View {
                 )
             }
             .buttonStyle(.borderedProminent)
-            
+*/
             // https://developer.apple.com/videos/play/wwdc2022/10001
             // Push Transition: drill into detail / hierarchie / modal / präsentiert von von rechts nach links /
             // Modal presentation:  / multi-step / präsentiert von unten

@@ -28,6 +28,8 @@ class AssetStores: ObservableObject, AutoMigratable {
     @Published var plotJobStore: GenericStore<PlotJobData>
     @Published var pensStore: GenericStore<PenData>
     @Published var paperStore: GenericStore<PaperData>
+    
+    @Published var paperFormatsStore: GenericStore<PaperFormat>
 
     var storageType: StorageType {
         didSet {
@@ -48,6 +50,9 @@ class AssetStores: ObservableObject, AutoMigratable {
         plotJobStore     = GenericStore(directoryName: "jobs")
         pensStore        = GenericStore(directoryName: "pens")
         paperStore       = GenericStore(directoryName: "papers")
+        
+        // Additional Suggestion Dropdown Lists
+        paperFormatsStore = GenericStore(directoryName: "paperformats")
     }
 
     private func migrateAllStores(from old: StorageType, to new: StorageType) {
@@ -72,8 +77,8 @@ class AssetStores: ObservableObject, AutoMigratable {
         do {
             try FileManagerService.migrateOnce(
                 resourceName: "paper-formats",
-                to: "papers",
-                as: PaperData.self
+                to: "paperformats",
+                as: PaperFormat.self
             )
         } catch {
             print("❌ Fehler bei einmaliger Migration: \(error)")
