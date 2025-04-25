@@ -52,7 +52,7 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
         do {
             return try FileManagerService().requireDirectory(for: currentStorageType, subdirectory: directoryName)
         } catch {
-            fatalError("❌ Verzeichnis konnte nicht erstellt werden: \(error)")
+            fatalError("❌ Verzeichnis \(directoryName) konnte nicht erstellt werden: \(error)")
         }
     }
 
@@ -86,22 +86,24 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
     func loadItems() async {
         do {
             let files = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
-            var loadedItems: [T] = []
+            var tempLoadedItems: [T] = []
 
             for file in files where file.pathExtension == "json" {
                 if let item = try? loadItem(from: file) {
-                    loadedItems.append(item)
+                    tempLoadedItems.append(item)
                 } else {
-                    print("⚠️ Ungültige Datei übersprungen in \(directoryName): \(file.lastPathComponent)")
+                    print("⚠️ Ungültige Datei in \(directoryName) übersprungen: \(file.lastPathComponent)")
                 }
             }
 
+            let safeLoadedItems = tempLoadedItems
+
             await MainActor.run {
-                self.items = loadedItems
+                self.items = safeLoadedItems
             }
 
         } catch {
-            print("Fehler beim Laden der Items: \(error.localizedDescription)")
+            print("Fehler beim Laden der Items in \(directoryName): \(error.localizedDescription)")
         }
     }
 
