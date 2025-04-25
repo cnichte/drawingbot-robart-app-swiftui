@@ -71,7 +71,7 @@ class AssetStores: ObservableObject, AutoMigratable {
     private func performOneTimeMigrations() {
         do {
             try FileManagerService.migrateOnce(
-                resourceName: "paper-format",
+                resourceName: "paper-formats",
                 to: "papers",
                 as: PaperData.self
             )

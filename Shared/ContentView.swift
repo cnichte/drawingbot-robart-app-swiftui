@@ -117,13 +117,18 @@ struct ContentView: View {
                 HStack(spacing: 8) {
                     let currentStorage = assetStores.storageType
                     HStack(spacing: 4) {
+                        // Animated Icon
                         Image(systemName: currentStorage == .local ? "internaldrive" : "icloud")
                             .foregroundColor(.gray)
+                            .transition(.opacity)
+                            .id(currentStorage) // << wichtig für Animation
                         Text("store: \(currentStorage.rawValue)")
                             .foregroundColor(.gray)
                             .font(.footnote)
                     }
+                    .animation(.easeInOut(duration: 0.3), value: currentStorage) // << Animation    .font(.footnote)
 #if DEBUG
+                    // Debug Menü: reset stores (auch in SettingsView.swift)
                     Button(action: AppResetHelper.resetLocalOnly) {
                         Image(systemName: "arrow.counterclockwise.circle")
                     }.help("Nur lokalen Speicher leeren")
@@ -135,6 +140,12 @@ struct ContentView: View {
                     Button(action: AppResetHelper.fullResetAll) {
                         Image(systemName: "trash.circle")
                     }.help("Alles komplett zurücksetzen")
+                    Button(action: {
+                        _ = Bundle.main.listAllJSONResources()
+                    }) {
+                        Image(systemName: "doc.text.magnifyingglass")
+                    }
+                    .help("JSON-Dateien im Bundle anzeigen")
 #endif
                 }
                 

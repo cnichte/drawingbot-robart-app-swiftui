@@ -45,6 +45,8 @@
 		D581AF782DBB9E9B00821A7E /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF762DBB9E9B00821A7E /* Math.swift */; };
 		D581AF7A2DBBFCD500821A7E /* AppResetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF792DBBFCD500821A7E /* AppResetHelper.swift */; };
 		D581AF7B2DBBFCD500821A7E /* AppResetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF792DBBFCD500821A7E /* AppResetHelper.swift */; };
+		D581AF882DBC139100821A7E /* Bundle+DebugTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */; };
+		D581AF892DBC139100821A7E /* Bundle+DebugTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -172,6 +174,7 @@
 		D56C4E5C2DB188C100F09A0C /* WindowManager+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WindowManager+Examples.swift"; sourceTree = "<group>"; };
 		D581AF762DBB9E9B00821A7E /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		D581AF792DBBFCD500821A7E /* AppResetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppResetHelper.swift; sourceTree = "<group>"; };
+		D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+DebugTools.swift"; sourceTree = "<group>"; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -400,6 +403,15 @@
 			path = Connections;
 			sourceTree = "<group>";
 		};
+		D581AF862DBC137B00821A7E /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				D581AF792DBBFCD500821A7E /* AppResetHelper.swift */,
+				D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
 		D5A084C02DAFD58B00332690 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,7 +420,6 @@
 				D5A084DD2DAFD85300332690 /* SettingsMigrator.swift */,
 				D5A084DE2DAFD85300332690 /* Tools.swift */,
 				D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */,
-				D581AF792DBBFCD500821A7E /* AppResetHelper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -532,6 +543,7 @@
 		D5D104212DAEF32D00E8406E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				D581AF862DBC137B00821A7E /* Debug */,
 				D52C0AED2DBA654600F57746 /* Resources */,
 				D52C0AE92DBA611B00F57746 /* Templates */,
 				D5A084FC2DAFD89900332690 /* Views */,
@@ -715,6 +727,7 @@
 				D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */,
 				D5A085172DAFD8C900332690 /* JobSummaryView.swift in Sources */,
 				D5A085182DAFD8C900332690 /* JobListView.swift in Sources */,
+				D581AF892DBC139100821A7E /* Bundle+DebugTools.swift in Sources */,
 				D5F6C61C2DB825C100020AEE /* PaperData.swift in Sources */,
 				D5A085192DAFD8C900332690 /* PlotterWizardView.swift in Sources */,
 				D5A0851A2DAFD8C900332690 /* JobPreviewView.swift in Sources */,
@@ -821,6 +834,7 @@
 				D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */,
 				D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */,
 				D52C0AEB2DBA613400F57746 /* PaperFormats.swift in Sources */,
+				D581AF882DBC139100821A7E /* Bundle+DebugTools.swift in Sources */,
 				D5A085042DAFD8AD00332690 /* SettingsView.swift in Sources */,
 				D5A085052DAFD8AD00332690 /* AboutMeView.swift in Sources */,
 				D57566222DB9256000D95E3F /* MachineFormView.swift in Sources */,

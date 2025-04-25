@@ -60,7 +60,7 @@ class FileManagerService {
     }
     
     // MARK: - One-time Migration
-    // Im Debug-Menu oder als versteckter Button: FileManagerService.rollbackMigration(for: "paper-format")
+    // Im Debug-Menu oder als versteckter Button: FileManagerService.rollbackMigration(for: "paper-formats")
     static func migrateOnce<T: Codable & Identifiable>(
         resourceName: String,
         to directoryName: String,
