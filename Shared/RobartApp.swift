@@ -36,6 +36,13 @@ struct RobartApp: App {
                     if CommandLine.arguments.contains("-ResetApp") {
                         AppResetHelper.fullResetAll()
                     }
+                    if UserDefaults.standard.bool(forKey: "forceResetOnLaunch") {
+                        print("🚨 Starte mit vollständigem Reset...")
+                        UserDefaults.standard.set(false, forKey: "forceResetOnLaunch") // Zurücksetzen, damit es nur einmal wirkt
+
+                        assetStores.deleteAllData()
+                        assetStores.reinitializeStores()
+                    }
                     Task {
                         // Stelle sicher, dass ein Settings-Datensatz vorhanden ist
                         if settingsStore.items.isEmpty {

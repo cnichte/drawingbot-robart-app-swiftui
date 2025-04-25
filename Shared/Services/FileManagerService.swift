@@ -23,7 +23,7 @@ enum StorageType: String, Codable {
 class FileManagerService {
     private let fileManager = FileManager.default
     private let settingsSubdirectory = "settings"
-
+    
     // MARK: - Get Directory URL
     func getDirectoryURL(for type: StorageType, subdirectory: String? = nil) -> URL? {
         let base: URL? = {
@@ -34,53 +34,88 @@ class FileManagerService {
                 return fileManager.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
             }
         }()
-
+        
         guard let baseURL = base else { return nil }
-
+        
         if let sub = subdirectory {
             return baseURL.appendingPathComponent(sub)
         } else {
             return baseURL
         }
     }
-
+    
+    func requireDirectory(for storage: StorageType, subdirectory: String) throws -> URL {
+        guard let baseDir = getDirectoryURL(for: storage) else {
+            throw NSError(domain: "Directory not found for \(storage)", code: 42)
+        }
+        
+        let dir = baseDir.appendingPathComponent(subdirectory)
+        
+        if !FileManager.default.fileExists(atPath: dir.path) {
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            print("📁 Subdirectory erstellt: \(dir.path)")
+        }
+        
+        return dir
+    }
+    
     // MARK: - One-time Migration
+    // Im Debug-Menu oder als versteckter Button: FileManagerService.rollbackMigration(for: "paper-format")
     static func migrateOnce<T: Codable & Identifiable>(
         resourceName: String,
         to directoryName: String,
         as type: T.Type
     ) throws {
         let migrationKey = "migrated_\(resourceName)"
+        
         if UserDefaults.standard.bool(forKey: migrationKey) {
+            print("ℹ️ Migration \(resourceName) wurde bereits durchgeführt. Überspringe.")
             return
         }
 
         guard let url = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
-            throw NSError(domain: "Resource \(resourceName).json nicht gefunden", code: 1)
+            print("⚠️ Resource \(resourceName).json wurde im Bundle nicht gefunden. Migration wird übersprungen.")
+            return
         }
 
-        let data = try Data(contentsOf: url)
-        let decoder = JSONDecoder()
-        let items = try decoder.decode([T].self, from: data)
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            let items = try decoder.decode([T].self, from: data)
 
-        let fileManager = FileManager.default
-        let service = FileManagerService()
+            let fileManager = FileManager.default
+            let service = FileManagerService()
 
-        guard let targetDir = service.getDirectoryURL(for: .local)?.deletingLastPathComponent().appendingPathComponent(directoryName) else {
-            throw NSError(domain: "Zielverzeichnis nicht gefunden", code: 2)
+            guard let targetDir = service.getDirectoryURL(for: .local)?.appendingPathComponent(directoryName) else {
+                print("❌ Zielverzeichnis für Migration nicht gefunden: \(directoryName)")
+                return
+            }
+
+            if !fileManager.fileExists(atPath: targetDir.path) {
+                try fileManager.createDirectory(at: targetDir, withIntermediateDirectories: true)
+                print("📁 Subdirectory erstellt: \(targetDir.path)")
+            }
+
+            let encoder = JSONEncoder()
+            for item in items {
+                let fileURL = targetDir.appendingPathComponent("\(item.id).json")
+                let itemData = try encoder.encode(item)
+                try itemData.write(to: fileURL)
+                print("💾 Migriert: \(fileURL.lastPathComponent)")
+            }
+
+            UserDefaults.standard.set(true, forKey: migrationKey)
+            print("✅ Migration von \(resourceName) abgeschlossen.")
+
+        } catch {
+            print("❌ Fehler bei Migration \(resourceName): \(error.localizedDescription)")
         }
+    }
 
-        if !fileManager.fileExists(atPath: targetDir.path) {
-            try fileManager.createDirectory(at: targetDir, withIntermediateDirectories: true)
-        }
-
-        let encoder = JSONEncoder()
-        for item in items {
-            let fileURL = targetDir.appendingPathComponent("\(item.id).json")
-            let itemData = try encoder.encode(item)
-            try itemData.write(to: fileURL)
-        }
-
-        UserDefaults.standard.set(true, forKey: migrationKey)
+    // MARK: - Rollback Migration
+    static func rollbackMigration(for resourceName: String) {
+        let migrationKey = "migrated_\(resourceName)"
+        UserDefaults.standard.set(false, forKey: migrationKey)
+        print("🔄 Migrationseintrag zurückgesetzt: \(migrationKey)")
     }
 }

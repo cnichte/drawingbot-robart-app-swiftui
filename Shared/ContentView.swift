@@ -116,9 +116,13 @@ struct ContentView: View {
                 // Speicherort und Reset-Buttons
                 HStack(spacing: 8) {
                     let currentStorage = assetStores.storageType
-                    Text("store: \(currentStorage.rawValue)")
-                        .foregroundColor(.gray)
-                        .font(.footnote)
+                    HStack(spacing: 4) {
+                        Image(systemName: currentStorage == .local ? "internaldrive" : "icloud")
+                            .foregroundColor(.gray)
+                        Text("store: \(currentStorage.rawValue)")
+                            .foregroundColor(.gray)
+                            .font(.footnote)
+                    }
 #if DEBUG
                     Button(action: AppResetHelper.resetLocalOnly) {
                         Image(systemName: "arrow.counterclockwise.circle")

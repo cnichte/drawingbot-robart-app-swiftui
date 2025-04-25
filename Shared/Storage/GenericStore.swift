@@ -20,6 +20,7 @@ extension UserDefaults {
     }
 }
 
+// MARK: - Hilfsmethode (optional)
 extension Array where Element: Identifiable {
     mutating func replace(_ element: Element) {
         if let index = firstIndex(where: { $0.id == element.id }) {
@@ -32,12 +33,11 @@ protocol ReloadableStore {
     func loadItems() async
 }
 
-// ReloadableStore gibt es ja schon
 protocol MigratableStore: ReloadableStore {
     var directoryName: String { get }
 }
 
-class GenericStore<T: Codable & Identifiable>: ObservableObject, MigratableStore where T.ID: Hashable {
+class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore where T.ID: Hashable {
     @Published var items: [T] = [] {
         didSet {
             refreshTrigger += 1
@@ -46,8 +46,15 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, MigratableStore
     @Published var refreshTrigger: Int = 0
 
     private let fileManager = FileManager.default
-    private var service = FileManagerService()
-    internal let directoryName: String // Name wie "settings", "papers", etc.
+    private var directoryName: String
+    
+    private var directory: URL {
+        do {
+            return try FileManagerService().requireDirectory(for: currentStorageType, subdirectory: directoryName)
+        } catch {
+            fatalError("❌ Verzeichnis konnte nicht erstellt werden: \(error)")
+        }
+    }
 
     @AppStorage("currentStorageType") private var currentStorageTypeRaw: String = StorageType.local.rawValue
     private var currentStorageType: StorageType {
@@ -61,41 +68,21 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, MigratableStore
             await loadItems()
         }
     }
-    
+
     init(directoryName: String, storageType: StorageType) {
-        self.directoryName = directoryName
+        self.directoryName = directoryName 
         self._currentStorageTypeRaw = AppStorage(wrappedValue: storageType.rawValue, "currentStorageType")
         Task {
             await loadItems()
         }
     }
 
-    // MARK: - Directory URL
-    private var directory: URL {
-        let service = FileManagerService()
-        guard let dir = service.getDirectoryURL(for: currentStorageType) else {
-            fatalError("❌ Verzeichnis für \(currentStorageType) nicht gefunden")
-        }
-
-        // Verzeichnis sicherstellen (wenn noch nicht existiert)
-        if !FileManager.default.fileExists(atPath: dir.path) {
-            do {
-                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-                print("📁 Subdirectory erstellt: \(dir.path)")
-            } catch {
-                fatalError("❌ Fehler beim Erstellen von \(dir.path): \(error)")
-            }
-        }
-
-        return dir
+    var storageType: StorageType {
+        get { StorageType(rawValue: currentStorageTypeRaw) ?? .local }
+        set { currentStorageTypeRaw = newValue.rawValue }
     }
 
-    func createNewItem(defaultItem: T, fileName: String) async -> T {
-        await save(item: defaultItem, fileName: fileName)
-        return defaultItem
-    }
-    
-    // MARK: - Load Items
+    // MARK: - Laden aller gültigen .json Dateien
     func loadItems() async {
         do {
             let files = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
@@ -105,58 +92,73 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, MigratableStore
                 if let item = try? loadItem(from: file) {
                     loadedItems.append(item)
                 } else {
-                    print("❌ Ungültige Datei \(file.lastPathComponent) übersprungen!")
+                    print("⚠️ Ungültige Datei übersprungen in \(directoryName): \(file.lastPathComponent)")
                 }
             }
 
             await MainActor.run {
                 self.items = loadedItems
             }
+
         } catch {
-            print("Fehler beim Laden: \(error.localizedDescription)")
+            print("Fehler beim Laden der Items: \(error.localizedDescription)")
         }
     }
 
     private func loadItem(from file: URL) throws -> T {
+        print("📂 Lade von \(directoryName): \(file.lastPathComponent)")
         let data = try Data(contentsOf: file)
-        return try JSONDecoder().decode(T.self, from: data)
+        let decoder = JSONDecoder()
+        return try decoder.decode(T.self, from: data)
     }
 
-    // MARK: - Save Item
+    // MARK: - Speichern eines Items
     func save(item: T, fileName: String) async {
         let encoder = JSONEncoder()
         guard let data = try? encoder.encode(item) else {
-            print("Fehler beim Kodieren von \(fileName)")
+            print("❌ Fehler beim Kodieren von \(fileName) in \(directoryName)")
             return
         }
 
-        let fileURL = directory.appendingPathComponent("\(fileName).json")
+        let itemFilePath = directory.appendingPathComponent("\(fileName).json")
+        print("💾 Speichere: \(itemFilePath.lastPathComponent)")
 
         do {
-            try data.write(to: fileURL)
+            try data.write(to: itemFilePath)
+
             await MainActor.run {
                 if let index = self.items.firstIndex(where: { $0.id == item.id }) {
-                    self.items[index] = item
+                    var updated = self.items
+                    updated[index] = item
+                    self.items = updated
                 } else {
                     self.items.append(item)
                 }
             }
         } catch {
-            print("Fehler beim Speichern: \(error.localizedDescription)")
+            print("❌ Fehler beim Speichern: \(error.localizedDescription) in \(directoryName)")
         }
     }
 
-    // MARK: - Delete Item
+    // MARK: - Neuen Eintrag anlegen
+    func createNewItem(defaultItem: T, fileName: String) async -> T {
+        await save(item: defaultItem, fileName: fileName)
+        return defaultItem
+    }
+
+    // MARK: - Löschen eines Items
     func delete(item: T, fileName: String) async {
-        let fileURL = directory.appendingPathComponent("\(fileName).json")
+        let path = directory.appendingPathComponent("\(fileName).json")
+        print("🗑️ Lösche in \(directoryName): \(path.lastPathComponent)")
 
         do {
-            try fileManager.removeItem(at: fileURL)
+            try fileManager.removeItem(at: path)
+
             await MainActor.run {
                 self.items.removeAll { $0.id == item.id }
             }
         } catch {
-            print("Fehler beim Löschen: \(error.localizedDescription)")
+            print("❌ Fehler beim Löschen in \(directoryName): \(error.localizedDescription)")
         }
     }
 }
