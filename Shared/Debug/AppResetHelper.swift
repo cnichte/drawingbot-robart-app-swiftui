@@ -4,10 +4,12 @@
 //
 //  Created by Carsten Nichte on 25.04.25.
 //
+
 // rm -rf ~/Library/Developer/Xcode/DerivedData
 //  ⇧ + ⌘ + G (Gehe zu Ordner) -> suche de.nichte.Robart
 // Menü: Xcode > Window > Devices and Simulators. Wähle deinen Simulator → Rechtsklick → Erase All Content and Settings
 //  iCloud-Daten: ~/Library/Mobile Documents/iCloud~de~nichte~robart/Documents/
+
 // Nur im Developer Modus nutzen.
 
 // AppResetHelper.swift

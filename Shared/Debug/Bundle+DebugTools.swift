@@ -5,21 +5,24 @@
 //  Created by Carsten Nichte on 25.04.25.
 //
 
+// Bundle+DebugTools.swift
 import Foundation
 
 extension Bundle {
-    /// Listet alle `.json`-Dateien im Haupt-Bundle auf.
     func listAllJSONResources() -> [String] {
-        guard let resourceURLs = urls(forResourcesWithExtension: "json", subdirectory: nil) else {
-            print("📭 Keine JSON-Dateien im Bundle gefunden.")
-            return []
+        let resourcePaths = paths(forResourcesOfType: "json", inDirectory: nil)
+
+        if resourcePaths.isEmpty {
+            print("⚠️ Keine JSON-Dateien im Bundle gefunden.")
+        } else {
+            print("\n🔎 Gefundene JSON-Dateien im Bundle:")
+            for path in resourcePaths {
+                let fileName = (path as NSString).lastPathComponent
+                print("✅ \(fileName)")
+            }
+            print("📦 Insgesamt \(resourcePaths.count) JSON-Datei(en) gefunden.\n")
         }
 
-        let fileNames = resourceURLs.map { $0.lastPathComponent }
-        print("📦 JSON-Dateien im Bundle:")
-        for name in fileNames {
-            print("  • \(name)")
-        }
-        return fileNames
+        return resourcePaths.map { ($0 as NSString).lastPathComponent }
     }
 }
