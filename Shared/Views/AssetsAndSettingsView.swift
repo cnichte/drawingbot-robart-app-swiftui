@@ -42,7 +42,7 @@ struct AssetsAndSettingsView: View {
                     tab.view
                 }
             }
-            .navigationTitle("Einstellungen & Assets")
+            .navigationTitle("Settings & Assets")
         }
     }
     #endif

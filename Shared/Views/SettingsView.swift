@@ -101,7 +101,7 @@ struct SettingsView: View {
 #endif
             
         }
-        .navigationTitle("Einstellungen")
+        .navigationTitle("Settings")
         .onChange(of: currentStorageRaw) {
             if let newType = StorageType(rawValue: currentStorageRaw) {
                 assetStores.applyInitialStorageTypeAndMigrations(using: newType)
