@@ -10,33 +10,52 @@ import SwiftUI
 
 struct AssetStoresDebugToolbar: View {
     @EnvironmentObject var assetStores: AssetStores
+    @State private var isProcessing = false
 
     var body: some View {
         VStack(spacing: 10) {
-            Button("🧹 Soft Reset (nur RAM)") {
-                assetStores.resetStoresInMemory()
+            if isProcessing {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
             }
-            
-            Button("🗑️ Hard Reset (löschen + neu laden)") {
+
+            Button("🧹 Soft Reset (nur RAM)") {
                 Task {
-                    assetStores.resetStoresCompletely(deleteFiles: true)
+                    await run {
+                        assetStores.manager.resetStoresInMemory()
+                    }
                 }
             }
-            
-            Divider()
-            
+
+            Button("🗑️ Hard Reset (Dateien löschen)") {
+                Task {
+                    await run {
+                        await assetStores.manager.resetStoresCompletely(deleteFiles: true)
+                    }
+                }
+            }
+
             Button("📦 Standarddaten wiederherstellen") {
                 Task {
-                    await assetStores.restoreDefaultResourcesIfNeeded()
+                    await run {
+                        await assetStores.manager.restoreDefaultResourcesIfNeeded()
+                    }
                 }
             }
-            
+
             Divider()
-            
+                .padding(.vertical, 8)
+
             Button("📝 Zusammenfassung drucken") {
-                assetStores.printSummary()
+                assetStores.manager.printSummary()
             }
         }
         .padding()
+    }
+
+    private func run(_ operation: @escaping () async -> Void) async {
+        isProcessing = true
+        await operation()
+        isProcessing = false
     }
 }

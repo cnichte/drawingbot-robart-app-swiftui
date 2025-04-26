@@ -43,7 +43,7 @@ struct RobartApp: App {
                         UserDefaults.standard.set(false, forKey: "forceResetOnLaunch") // Zurücksetzen, damit es nur einmal wirkt
 
                         assetStores.deleteAllData()
-                        assetStores.reinitializeStores()
+                        assetStores.resetStoresInMemory()
                     }
                     Task {
                         // Stelle sicher, dass ein Settings-Datensatz vorhanden ist

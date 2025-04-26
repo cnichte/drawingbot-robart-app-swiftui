@@ -51,8 +51,8 @@ class FileManagerService {
         
         let dir = baseDir.appendingPathComponent(subdirectory)
         
-        if !FileManager.default.fileExists(atPath: dir.path) {
-            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        if !fileManager.fileExists(atPath: dir.path) {
+            try fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
             print("📁 Subdirectory erstellt: \(dir.path)")
         }
         
@@ -60,15 +60,16 @@ class FileManagerService {
     }
     
     // MARK: - One-time Migration
-    // Im Debug-Menu oder als versteckter Button: FileManagerService.rollbackMigration(for: "paper-formats")
     static func migrateOnce<T: Codable & Identifiable>(
         resourceName: String,
         to directoryName: String,
         as type: T.Type
     ) throws {
         let migrationKey = "migrated_\(resourceName)"
+        
+        // Prüfen, ob Migration laut UserDefaults schon gemacht wurde
         if UserDefaults.standard.bool(forKey: migrationKey) {
-            print("ℹ️ Migration für \(resourceName) wurde bereits durchgeführt.")
+            print("ℹ️ Migration für \(resourceName) wurde bereits durchgeführt (laut UserDefaults).")
             return
         }
 
@@ -77,7 +78,7 @@ class FileManagerService {
         }
 
         let data = try Data(contentsOf: url)
-
+        
         guard !data.isEmpty else {
             throw NSError(domain: "Resource \(resourceName).json ist leer", code: 2)
         }
@@ -110,8 +111,13 @@ class FileManagerService {
             try itemData.write(to: fileURL)
         }
 
+        // 🔥 Nach Migration sowohl Marker-File als auch UserDefaults setzen
         UserDefaults.standard.set(true, forKey: migrationKey)
-        print("✅ Migration von \(resourceName) abgeschlossen.")
+        
+        let migrationMarker = targetDir.deletingLastPathComponent().appendingPathComponent("\(resourceName).migrated")
+        fileManager.createFile(atPath: migrationMarker.path, contents: nil)
+
+        print("✅ Migration von \(resourceName) abgeschlossen und Marker gesetzt.")
     }
 
     // MARK: - Rollback Migration
@@ -119,5 +125,23 @@ class FileManagerService {
         let migrationKey = "migrated_\(resourceName)"
         UserDefaults.standard.set(false, forKey: migrationKey)
         print("🔄 Migrationseintrag zurückgesetzt: \(migrationKey)")
+
+        // Zusätzlich: Marker-Datei löschen, falls vorhanden
+        if let localDirectory = FileManagerService().getDirectoryURL(for: .local) {
+            let markerFile = localDirectory.appendingPathComponent("\(resourceName).migrated")
+            if FileManager.default.fileExists(atPath: markerFile.path) {
+                try? FileManager.default.removeItem(at: markerFile)
+                print("🗑️ Migration-Marker-Datei gelöscht: \(markerFile.lastPathComponent)")
+            }
+        }
+    }
+    
+    // MARK: - Check Migration Status
+    static func hasMigrated(resourceName: String, storageType: StorageType) -> Bool {
+        guard let directory = FileManagerService().getDirectoryURL(for: storageType) else {
+            return false
+        }
+        let migrationMarker = directory.appendingPathComponent("\(resourceName).migrated")
+        return FileManager.default.fileExists(atPath: migrationMarker.path)
     }
 }

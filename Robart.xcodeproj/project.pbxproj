@@ -196,6 +196,8 @@
 		D5F896F22DBCFB2D00397561 /* papers.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896F02DBCFB2300397561 /* papers.json */; };
 		D5F896F42DBD012D00397561 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F32DBD012900397561 /* Units.swift */; };
 		D5F896F52DBD012D00397561 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F32DBD012900397561 /* Units.swift */; };
+		D5F896F72DBD56BA00397561 /* AssetStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */; };
+		D5F896F82DBD56BA00397561 /* AssetStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -326,6 +328,7 @@
 		D5F896ED2DBCF7F400397561 /* AssetStoresDebugToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStoresDebugToolbar.swift; sourceTree = "<group>"; };
 		D5F896F02DBCFB2300397561 /* papers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = papers.json; sourceTree = "<group>"; };
 		D5F896F32DBD012900397561 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
+		D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStoreManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -589,6 +592,7 @@
 			children = (
 				D5A084E62DAFD86700332690 /* GenericStore.swift */,
 				D52C0AF42DBA72DF00F57746 /* AssetStores.swift */,
+				D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1057,6 +1061,7 @@
 				D5F6C6472DB8499900020AEE /* ConnectionFormView.swift in Sources */,
 				D5A085112DAFD8AD00332690 /* Joystick_View.swift in Sources */,
 				D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */,
+				D5F896F72DBD56BA00397561 /* AssetStoreManager.swift in Sources */,
 				D5A084F72DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
 				D5A084F82DAFD88A00332690 /* PathParser.swift in Sources */,
 				D5A084F92DAFD88A00332690 /* SVGParser.swift in Sources */,
@@ -1099,6 +1104,7 @@
 				D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
 				D509C0B02DBC4B81009B0233 /* SettingsPanel.swift in Sources */,
 				D581AF7A2DBBFCD500821A7E /* AppResetHelper.swift in Sources */,
+				D5F896F82DBD56BA00397561 /* AssetStoreManager.swift in Sources */,
 				D5A084D12DAFD84000332690 /* SettingsData.swift in Sources */,
 				D52C0AFB2DBA823D00F57746 /* SectionHeader.swift in Sources */,
 				D5A084D22DAFD84000332690 /* MachineData.swift in Sources */,

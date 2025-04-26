@@ -47,7 +47,8 @@ protocol GenericStoreProtocol: AnyObject {
 }
 
 // MARK: - GenericStore
-class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStoreProtocol, MigratableStore where T.ID: Hashable {
+class GenericStore<T>: ObservableObject, MigratableStore
+where T: Codable & Identifiable, T.ID: Hashable {
     
     @Published var items: [T] = [] {
         didSet { refreshTrigger += 1 }
@@ -56,7 +57,7 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStorePro
 
     private let fileManager = FileManager.default
     internal var directoryName: String
-    private let initialResourceName: String?
+    var initialResourceName: String?
 
     @AppStorage("currentStorageType") private var currentStorageTypeRaw: String = StorageType.local.rawValue
 
@@ -85,22 +86,14 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStorePro
         self._currentStorageTypeRaw = AppStorage(wrappedValue: storageType.rawValue, "currentStorageType")
     }
 
-    // Muss nach Konstruktor aufgerufen werden
     func afterInit() {
         Task {
             await loadItems()
-            if items.isEmpty, let resource = initialResourceName {
-                do {
-                    try FileManagerService.migrateOnce(resourceName: resource, to: directoryName, as: T.self)
-                    await loadItems()
-                } catch {
-                    print("⚠️ Fehler bei einmaliger Migration von Ressource \(resource): \(error)")
-                }
-            }
+            await restoreDefaultResourceIfNeeded()
         }
     }
 
-    // MARK: - Laden aller gültigen .json Dateien (mit besserem Fehlerprotokoll)
+    // MARK: - Laden
     func loadItems() async {
         do {
             let files = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
@@ -116,10 +109,8 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStorePro
                 }
             }
 
-            let safeLoadedItems = tempLoadedItems
-
             await MainActor.run {
-                self.items = safeLoadedItems
+                self.items = tempLoadedItems
             }
 
             if !failedFiles.isEmpty {
@@ -128,12 +119,11 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStorePro
                     print("  → \(file.lastPathComponent): \(error.localizedDescription)")
                 }
             }
-
         } catch {
             print("❌ Fehler beim Lesen des Verzeichnisses \(directoryName): \(error.localizedDescription)")
         }
     }
-    
+
     private func loadItem(from file: URL) throws -> T {
         print("📂 Lade Datei \(file.lastPathComponent) aus \(directoryName)")
         let data = try Data(contentsOf: file)
@@ -163,13 +153,11 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStorePro
         }
     }
 
-    // MARK: - Neuen Eintrag anlegen
     func createNewItem(defaultItem: T, fileName: String) async -> T {
         await save(item: defaultItem, fileName: fileName)
         return defaultItem
     }
 
-    // MARK: - Löschen
     func delete(item: T, fileName: String) async {
         let path = directory.appendingPathComponent("\(fileName).json")
 
@@ -186,8 +174,6 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStorePro
         }
     }
     
-    // MARK: - Hilfsmethoden für AssetStores (optional)
-
     var itemCount: Int {
         items.count
     }
@@ -195,41 +181,34 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStorePro
     func clearItems() {
         items.removeAll()
     }
-    
+
     func restoreDefaultResource() async throws {
         guard let resourceName = initialResourceName else {
             throw NSError(domain: "GenericStore", code: 404, userInfo: [NSLocalizedDescriptionKey: "Kein initialResourceName vorhanden."])
         }
-        
+
+        if FileManagerService.hasMigrated(resourceName: resourceName, storageType: storageType) {
+            print("ℹ️ Migration für \(resourceName) wurde bereits durchgeführt.")
+            return
+        }
+
         try FileManagerService.migrateOnce(
             resourceName: resourceName,
             to: directoryName,
             as: T.self
         )
-        
+
         await loadItems()
     }
-    
-    static func forceCopyResource<T: Codable>(resourceName: String, to targetDirectory: String, as type: T.Type) throws {
-        guard let bundleURL = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
-            throw NSError(domain: "FileManagerService", code: 404, userInfo: [NSLocalizedDescriptionKey: "Resource \(resourceName).json nicht gefunden."])
+
+    private func restoreDefaultResourceIfNeeded() async {
+        if items.isEmpty, let resource = initialResourceName {
+            do {
+                try await restoreDefaultResource()
+                print("✅ Standarddaten geladen für \(directoryName)")
+            } catch {
+                print("⚠️ Fehler bei Standard-Restore für \(directoryName): \(error.localizedDescription)")
+            }
         }
-        
-        let data = try Data(contentsOf: bundleURL)
-        let decoder = JSONDecoder()
-        let decoded = try decoder.decode([T].self, from: data)
-        
-        let directory = try requireDirectory(for: currentStorageType, subdirectory: targetDirectory)
-        
-        for item in decoded {
-            let encoder = JSONEncoder()
-            let itemData = try encoder.encode(item)
-            let id = (item as? Identifiable)?.id ?? UUID()
-            let fileName = "\(id).json"
-            let path = directory.appendingPathComponent(fileName)
-            try itemData.write(to: path)
-        }
-        
-        print("✅ Force Copy abgeschlossen für \(resourceName) ➔ \(targetDirectory)")
     }
 }

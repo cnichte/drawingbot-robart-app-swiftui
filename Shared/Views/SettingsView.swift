@@ -146,7 +146,7 @@ struct SettingsView: View {
     private func performDeleteAllData() {
         print("🗑️ Lösche alle gespeicherten Dokumente...")
         assetStores.deleteAllData()
-        assetStores.reinitializeStores()
+        assetStores.resetStoresInMemory()
     }
 #endif
     
