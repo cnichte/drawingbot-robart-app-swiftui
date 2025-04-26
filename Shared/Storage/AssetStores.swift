@@ -8,7 +8,6 @@
 // AssetStores.swift
 import Foundation
 
-// MARK: - AssetStoreType
 enum AssetStoreType: String, CaseIterable, Identifiable {
     case connections
     case machines
@@ -23,9 +22,7 @@ enum AssetStoreType: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-// MARK: - AssetStores
 class AssetStores: ObservableObject {
-
     // MARK: - User-Assets
     @Published var connectionsStore: GenericStore<ConnectionData>
     @Published var machineStore: GenericStore<MachineData>
@@ -34,12 +31,11 @@ class AssetStores: ObservableObject {
     @Published var pensStore: GenericStore<PenData>
     @Published var paperStore: GenericStore<PaperData>
 
-    // MARK: - Internal-Assets
+    // MARK: - Internal-Assets (mit Initial-Ressourcen)
     @Published var paperFormatsStore: GenericStore<PaperFormat>
     @Published var aspectRatiosStore: GenericStore<AspectRatio>
     @Published var unitsStore: GenericStore<Units>
 
-    // MARK: - Interne Verwaltung
     internal(set) var storeList: [(key: String, store: any MigratableStore)] = []
 
     var allMigratableStores: [any MigratableStore] {
@@ -59,20 +55,16 @@ class AssetStores: ObservableObject {
 
         AssetStores.ensureTargetDirectoriesExist(for: initialStorage)
 
-        // User-Assets
         self.connectionsStore = GenericStore(directoryName: "connections")
         self.machineStore     = GenericStore(directoryName: "machines")
         self.projectStore     = GenericStore(directoryName: "projects")
         self.plotJobStore     = GenericStore(directoryName: "jobs")
         self.pensStore        = GenericStore(directoryName: "pens")
         self.paperStore       = GenericStore(directoryName: "papers", initialResourceName: "papers")
-
-        // Internal-Assets
         self.paperFormatsStore = GenericStore(directoryName: "paperformats", initialResourceName: "paper-formats")
         self.aspectRatiosStore = GenericStore(directoryName: "aspectratios", initialResourceName: "aspect-ratios")
         self.unitsStore        = GenericStore(directoryName: "units", initialResourceName: "units")
 
-        // StoreList aufbauen
         storeList = [
             ("connections", connectionsStore),
             ("machines", machineStore),
@@ -93,11 +85,34 @@ class AssetStores: ObservableObject {
             for store in allMigratableStores {
                 await store.loadItems()
             }
+            await restoreDefaultResourcesIfNeeded()
         }
     }
 
-    // MARK: - Migration & Restore
+    // MARK: - Restore falls Verzeichnis leer
+    public func restoreDefaultResourcesIfNeeded() async {
+        print("🛠 Überprüfe Standarddaten bei allen Stores...")
 
+        for store in allMigratableStores {
+            do {
+                let dirURL = try FileManagerService().requireDirectory(for: storageType, subdirectory: store.directoryName)
+                let files = try FileManager.default.contentsOfDirectory(at: dirURL, includingPropertiesForKeys: nil)
+
+                if files.filter({ $0.pathExtension == "json" }).isEmpty {
+                    print("➕ Kein Inhalt in \(store.directoryName), versuche Restore...")
+                    try await store.restoreDefaultResource()
+                    print("✅ Standarddaten in \(store.directoryName) wiederhergestellt!")
+                } else {
+                    print("✅ \(store.directoryName) enthält bereits Daten, kein Restore nötig.")
+                }
+
+            } catch {
+                print("⚠️ Fehler beim Überprüfen/Wiederherstellen in \(store.directoryName): \(error)")
+            }
+        }
+    }
+
+    // MARK: - Migration und Reset
     private func migrateAllStores(from old: StorageType, to new: StorageType) {
         let migrator = SettingsMigrator()
 
@@ -116,21 +131,6 @@ class AssetStores: ObservableObject {
         }
     }
 
-    func restoreDefaultResources() {
-        print("🚀 Starte Restore Default Resources...")
-
-        Task {
-            for store in allMigratableStores {
-                do {
-                    try await store.restoreDefaultResource()
-                    print("✅ Standarddaten wiederhergestellt für \(store.directoryName)")
-                } catch {
-                    print("⚠️ Fehler oder kein Restore nötig für \(store.directoryName): \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-
     func resetStoreCompletely(_ store: any MigratableStore, deleteFiles: Bool = false) {
         Task {
             if deleteFiles {
@@ -140,15 +140,16 @@ class AssetStores: ObservableObject {
                         for file in files where file.pathExtension == "json" {
                             try FileManager.default.removeItem(at: file)
                         }
-                        print("🗑️ Alle Dateien in \(store.directoryName) gelöscht.")
+                        print("🗑️ Dateien gelöscht in \(store.directoryName)")
                     } catch {
-                        print("❌ Fehler beim Löschen von Dateien in \(store.directoryName): \(error)")
+                        print("❌ Fehler beim Löschen in \(store.directoryName): \(error)")
                     }
                 }
             }
             
             await store.loadItems()
-            print(deleteFiles ? "🔁 Hard Reset abgeschlossen für \(store.directoryName)" : "🔁 Soft Reset abgeschlossen für \(store.directoryName)")
+            
+            print(deleteFiles ? "🔁 Store \(store.directoryName) Hard Reset abgeschlossen!" : "🔁 Store \(store.directoryName) Soft Reset abgeschlossen!")
         }
     }
     
@@ -162,9 +163,9 @@ class AssetStores: ObservableObject {
                             for file in files where file.pathExtension == "json" {
                                 try FileManager.default.removeItem(at: file)
                             }
-                            print("🗑️ Alle Dateien in \(store.directoryName) gelöscht.")
+                            print("🗑️ Dateien in \(store.directoryName) gelöscht.")
                         } catch {
-                            print("❌ Fehler beim Löschen von Dateien in \(store.directoryName): \(error)")
+                            print("❌ Fehler beim Löschen in \(store.directoryName): \(error)")
                         }
                     }
                 }
@@ -177,8 +178,6 @@ class AssetStores: ObservableObject {
             print(deleteFiles ? "🔁 Hard Reset abgeschlossen!" : "🔁 Soft Reset abgeschlossen!")
         }
     }
-
-    // MARK: - Utilities
 
     func applyInitialStorageTypeAndMigrations(using preferred: StorageType) {
         self.storageType = preferred
@@ -208,22 +207,6 @@ class AssetStores: ObservableObject {
         print("🧹 Alle Stores im Speicher geleert.")
     }
 
-    func printSummary() {
-        print("📝 AssetStores Zusammenfassung:")
-        listAllItems()
-        print("🔢 Gesamtanzahl aller Einträge: \(totalItemCount())")
-    }
-
-    func listAllItems() {
-        for store in allMigratableStores {
-            print("📂 \(store.directoryName): \(store.itemCount) Einträge")
-        }
-    }
-
-    func totalItemCount() -> Int {
-        allMigratableStores.reduce(0) { $0 + $1.itemCount }
-    }
-
     private static func ensureTargetDirectoriesExist(for type: StorageType) {
         let service = FileManagerService()
         let subdirs = ["connections", "machines", "projects", "jobs", "pens", "papers", "paperformats", "aspectratios", "units"]
@@ -247,10 +230,22 @@ class AssetStores: ObservableObject {
                 print("📁 Subdirectory erstellt: \(targetDir.path)")
             }
         }
+    }
 
-        // 👉 Nach dem Erstellen: initiale Daten restoren
-        DispatchQueue.main.async {
-            AssetStores.shared?.restoreDefaultResourcesIfNeeded()
+    // 📝 Zusammenfassung
+    func printSummary() {
+        print("📝 AssetStores Zusammenfassung:")
+        listAllItems()
+        print("🔢 Gesamtanzahl aller Einträge: \(totalItemCount())")
+    }
+
+    func listAllItems() {
+        for store in allMigratableStores {
+            print("📂 \(store.directoryName): \(store.itemCount) Einträge")
         }
+    }
+
+    func totalItemCount() -> Int {
+        allMigratableStores.reduce(0) { $0 + $1.itemCount }
     }
 }

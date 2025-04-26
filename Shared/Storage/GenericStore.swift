@@ -209,4 +209,27 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStorePro
         
         await loadItems()
     }
+    
+    static func forceCopyResource<T: Codable>(resourceName: String, to targetDirectory: String, as type: T.Type) throws {
+        guard let bundleURL = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
+            throw NSError(domain: "FileManagerService", code: 404, userInfo: [NSLocalizedDescriptionKey: "Resource \(resourceName).json nicht gefunden."])
+        }
+        
+        let data = try Data(contentsOf: bundleURL)
+        let decoder = JSONDecoder()
+        let decoded = try decoder.decode([T].self, from: data)
+        
+        let directory = try requireDirectory(for: currentStorageType, subdirectory: targetDirectory)
+        
+        for item in decoded {
+            let encoder = JSONEncoder()
+            let itemData = try encoder.encode(item)
+            let id = (item as? Identifiable)?.id ?? UUID()
+            let fileName = "\(id).json"
+            let path = directory.appendingPathComponent(fileName)
+            try itemData.write(to: path)
+        }
+        
+        print("✅ Force Copy abgeschlossen für \(resourceName) ➔ \(targetDirectory)")
+    }
 }
