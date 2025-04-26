@@ -1,0 +1,58 @@
+[
+    {
+        "id":"4b34dc07-a722-4a40-8bbf-8503739db801",
+        "name":"From Paper",
+        "factor":1.0
+    },
+    {
+        "id":"8d84b48a-c041-4a84-9bf8-496b2c36dc40",
+        "name":"1:1 - Square",
+        "factor":1.0
+    },
+    {
+        "id":"75bf986c-7cf5-4632-a620-68c3328f8168",
+        "name":"4:3 - Monitor",
+        "factor":0.75
+    },
+    {
+        "id":"0d911eb3-a79d-4749-962d-f1f584209963",
+        "name":"1:√2 - DIN A",
+        "factor":0.70710678118
+    },
+    {
+        "id":"f6ff241c-f710-4c38-9d77-ce6048e60de7",
+        "name":"3:2 - Phone",
+        "factor":0.66666666666
+    },
+    {
+        "id":"f46dc13d-52ca-4dac-9d8c-6ec3c9a6b02a",
+        "name":"16:10 - Widesceeen WXGA",
+        "factor":0.625
+    },
+    {
+        "id":"a825cba3-66bb-4a2a-b29e-8aae75699c9d",
+        "name":"5:3 - 16mm Film",
+        "factor":0.6
+    },
+    {
+        "id":"23bae9e2-c79b-4b04-a144-29d2055a67a5",
+        "name":"16:9 - Widescreen TV",
+        "factor":0.5625
+    },
+    {
+        "id":"8139e4cc-a597-4c1f-b5fc-e745d7e13c09",
+        "name":"2:1 - Dominoes",
+        "factor":0.5
+    },
+    {
+        "id":"697b4324-2304-4baf-a703-91d5443af9c1",
+        "name":"64:27 - Ultra Widescreen",
+        "factor": 0.421875
+    },
+    {
+        "id":"6f6c024c-110f-41ae-b627-bc7164c008a4",
+        "name":"32:9 - Super Ultra Widescreen",
+        "factor":0.28125
+    },
+
+]

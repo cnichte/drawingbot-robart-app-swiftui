@@ -93,6 +93,10 @@ struct SettingsView: View {
                 Toggle(isOn: $resetOnNextLaunch) {
                     Label("Reset beim nächsten Start erzwingen", systemImage: "exclamationmark.triangle")
                 }
+                
+                
+                AssetStoresDebugToolbar()
+                    .environmentObject(assetStores)
             }
 #endif
             
