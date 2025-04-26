@@ -88,7 +88,7 @@ struct JobSummaryView: View {
                     .font(.title2)
                 Text("Job Name: \(currentJob.name)")
                     .font(.headline)
-                Text("Papiergröße: \(currentJob.paperSize.name) - \(currentJob.paperSize.width) x \(currentJob.paperSize.height) mm")
+                Text("Papiergröße: \(currentJob.paper.paperFormat.name) - \(currentJob.paper.paperFormat.width) x \(currentJob.paper.paperFormat.height) mm")
                 Text("Beschreibung: \(currentJob.description)")
                 
                 Button("Drucken starten") {

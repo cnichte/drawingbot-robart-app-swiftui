@@ -32,7 +32,7 @@ struct ContentView: View {
             id: UUID(),
             name: "Neuer Job",
             description: "",
-            paperSize: PaperSize(name: "A4", width: 210, height: 297, orientation: 0, note: ""),
+            paper: .default,
             svgFilePath: "",
             pitch: 0.0,
             zoom: 1.0,

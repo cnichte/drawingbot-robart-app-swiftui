@@ -1,0 +1,22 @@
+[
+    {
+        "id": "9c47941f-e774-4ca2-a2ca-e917d16932a5",
+        "name": "Axidraw",
+        "description": "",
+        "typ": "xy",
+        "size": {x:1000,y:500},
+        "protokoll":"egg",
+        "penCount":1,
+        "connection":{}
+    }, {
+        "id": "af986168-0a1c-4f38-972f-0ac73434cd5d",
+        "name": "Robart",
+        "description": "",
+        "typ": "omnidirektional",
+        "size": {x:-1,y:-1},
+        "protokoll":"gcode",
+        "penCount":5,
+        "connection":{}
+    }
+    
+]

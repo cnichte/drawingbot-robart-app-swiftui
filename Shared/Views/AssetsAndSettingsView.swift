@@ -15,13 +15,7 @@ struct AssetTab: Identifiable {
 }
 
 struct AssetsAndSettingsView: View {
-    @EnvironmentObject var connectionsStore: GenericStore<ConnectionData>
-    @EnvironmentObject var machineStore: GenericStore<MachineData>
-    @EnvironmentObject var projectStore: GenericStore<ProjectData>
-    @EnvironmentObject var jobStore: GenericStore<PlotJobData>
-    @EnvironmentObject var pensStore: GenericStore<PenData>
-    @EnvironmentObject var paperStore: GenericStore<PaperData>
-    @EnvironmentObject var settingsStore: GenericStore<SettingsData>
+    @EnvironmentObject var assetStores: AssetStores
 
     @State private var selectedIndex = 0
 
@@ -71,7 +65,7 @@ struct AssetsAndSettingsView: View {
                 title: "Settings",
                 view: AnyView(
                     SettingsView()
-                        .environmentObject(settingsStore)
+                        .environmentObject(assetStores)
                 )
             ),
             AssetTab(
@@ -82,7 +76,7 @@ struct AssetsAndSettingsView: View {
                         createItem: { ConnectionData(name: "Neue Connection") },
                         buildForm: { ConnectionFormView(data: $0) }
                     )
-                    .environmentObject(connectionsStore)
+                    .environmentObject(assetStores)
                 )
             ),
             AssetTab(
@@ -93,7 +87,7 @@ struct AssetsAndSettingsView: View {
                         createItem: { MachineData(name: "Neue Maschine") },
                         buildForm: { MachineFormView(data: $0) }
                     )
-                    .environmentObject(machineStore)
+                    .environmentObject(assetStores)
                 )
             ),
             AssetTab(
@@ -104,8 +98,7 @@ struct AssetsAndSettingsView: View {
                         createItem: { ProjectData(name: "Neues Projekt") },
                         buildForm: { ProjectFormView(data: $0) }
                     )
-                    .environmentObject(projectStore)
-                    .environmentObject(jobStore)
+                    .environmentObject(assetStores)
                 )
             ),
             AssetTab(
@@ -116,14 +109,14 @@ struct AssetsAndSettingsView: View {
                         createItem: { PenData(name: "Neuer Stift") },
                         buildForm: { PenFormView(data: $0) }
                     )
-                    .environmentObject(pensStore)
+                    .environmentObject(assetStores)
                 )
             ),
             AssetTab(
                 title: "Papier",
                 view: AnyView(
                     PaperManagerView()
-                        .environmentObject(paperStore)
+                        .environmentObject(assetStores)
                 )
             )
         ]

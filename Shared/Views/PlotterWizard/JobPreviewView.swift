@@ -24,6 +24,7 @@
 // TODO: Auf iOS und iPad wird beim öffnen des Jobs die Vorschau nicht geladen. Bei MacOS funktionierts.
 // TODO: Wiederverwendbare SplitPanelView oder FormScaffold
 
+// JobPreviewView.swift (aktualisiert mit Sidebar- und Inspector-Steuerung)
 // JobPreviewView.swift
 import SwiftUI
 import SVGView
@@ -38,15 +39,16 @@ struct JobPreviewView: View {
     
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
+    @State private var isInspectorVisible: Bool = true
     @State private var zoom: Double = 1.0
     @State private var pitch: Double = 0.0
     @State private var origin: CGPoint = .zero
     @State private var svgFileName: String? = nil
     @State private var showingFileImporter = false
     @State private var selectedTab: Int = 0
-    @State private var showSourcePreview: Bool = false
     @State private var previewMode: PreviewMode = .svgPreview
-    
+
     enum PreviewMode: String, CaseIterable, Identifiable {
         case svgPreview = "SVG Preview"
         case svgSource = "SVG Quellcode"
@@ -64,7 +66,7 @@ struct JobPreviewView: View {
                 if isCompactLayout {
                     VStack(spacing: 0) {
                         topMenuBar
-                        
+
                         Picker("Ansicht wählen", selection: $selectedTab) {
                             Text("Einstellungen").tag(0)
                             Text("Vorschau").tag(1)
@@ -73,17 +75,7 @@ struct JobPreviewView: View {
                         .padding()
                         
                         if selectedTab == 0 {
-                            SettingsPanel(
-                                goToStep: $goToStep,
-                                currentJob: $currentJob,
-                                svgFileName: $svgFileName,
-                                showingFileImporter: $showingFileImporter,
-                                showSourcePreview: $showSourcePreview,
-                                showBottomBar: false
-                            )
-                            .environmentObject(plotJobStore) // wichtig!
-                            .environmentObject(paperStore)
-                            .environmentObject(paperFormatsStore)
+                            settingsPanel
                         } else {
                             previewContent
                         }
@@ -91,27 +83,22 @@ struct JobPreviewView: View {
                         bottomButtonBar
                     }
                 } else {
-                    NavigationSplitView {
-                        VStack(spacing: 0) {
-                            topMenuBar
-                            
-                            SettingsPanel(
-                                goToStep: $goToStep,
-                                currentJob: $currentJob,
-                                svgFileName: $svgFileName,
-                                showingFileImporter: $showingFileImporter,
-                                showSourcePreview: $showSourcePreview,
-                                showBottomBar: false
-                            )
-                            .environmentObject(plotJobStore) // wichtig!
-                            .environmentObject(paperStore)
-                            .environmentObject(paperFormatsStore)
-                            .padding(.horizontal, 12)
-                            .frame(maxWidth: .infinity)
-                            .environmentObject(paperFormatsStore) // HIER wichtig!
-                        }
+                    NavigationSplitView(columnVisibility: $columnVisibility) {
+                        settingsPanel
                     } detail: {
                         previewContent
+                    }
+                    .toolbar {
+                        ToolbarItemGroup {
+                            Button(action: { toggleSidebar() }) {
+                                Image(systemName: "sidebar.leading")
+                            }
+                        }
+                        ToolbarItemGroup {
+                            Button(action: { isInspectorVisible.toggle() }) {
+                                Image(systemName: "sidebar.trailing")
+                            }
+                        }
                     }
                 }
             }
@@ -141,19 +128,44 @@ struct JobPreviewView: View {
     }
     
     @ViewBuilder
+    var settingsPanel: some View {
+        VStack(spacing: 0) {
+            SettingsPanel(
+                goToStep: $goToStep,
+                currentJob: $currentJob,
+                svgFileName: $svgFileName,
+                showingFileImporter: $showingFileImporter,
+                showSourcePreview: .constant(false),
+                showBottomBar: false
+            )
+            .environmentObject(plotJobStore)
+            .environmentObject(paperStore)
+            .environmentObject(paperFormatsStore)
+            .padding(.horizontal, 12)
+            .frame(maxWidth: .infinity)
+        }
+    }
+    
+    @ViewBuilder
     var previewContent: some View {
         Group {
-            switch previewMode {
-            case .svgPreview:
-                PaperPreview(zoom: $zoom, pitch: $pitch, origin: $origin, job: currentJob)
-            case .svgSource:
-                PaperSourcePreview(job: currentJob)
-            case .codePreview:
-                Text("Code Preview kommt hier hin")
-                    .foregroundColor(.gray)
-            case .plotSimulation:
-                Text("Plot-Simulation kommt hier hin")
-                    .foregroundColor(.gray)
+            if isInspectorVisible {
+                switch previewMode {
+                case .svgPreview:
+                    PaperPreview(zoom: $zoom, pitch: $pitch, origin: $origin, job: currentJob)
+                case .svgSource:
+                    PaperSourcePreview(job: currentJob)
+                case .codePreview:
+                    Text("Code Preview kommt hier hin")
+                        .foregroundColor(.gray)
+                case .plotSimulation:
+                    Text("Plot-Simulation kommt hier hin")
+                        .foregroundColor(.gray)
+                }
+            } else {
+                Text("🧩 Inspector ist ausgeblendet.")
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .padding()
@@ -178,5 +190,11 @@ struct JobPreviewView: View {
     
     private func loadActiveJob() {
         svgFileName = URL(fileURLWithPath: currentJob.svgFilePath).lastPathComponent
+    }
+    
+    private func toggleSidebar() {
+        #if os(macOS)
+        NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+        #endif
     }
 }

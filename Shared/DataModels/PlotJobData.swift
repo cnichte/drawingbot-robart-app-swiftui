@@ -15,6 +15,10 @@ extension UTType {
     static let plotJob = UTType(exportedAs: "de.nichte.plotjob")
 }
 
+enum PaperOrientation: String, Codable {
+    case landscape = ".landscape"
+    case portrait = ".portrait"
+}
 
 
 struct PlotJobData: Identifiable, Codable, Equatable, Transferable {
@@ -22,7 +26,10 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable {
     var name: String
     var description: String
     // alt. noch zu überarbeiten
-    var paperSize: PaperSize
+    
+    var paper: PaperData
+    var paperOrientation:PaperOrientation = .portrait
+    
     var svgFilePath: String
     var gcodeCommands: [String]
     var currentCommandIndex: Int
@@ -38,7 +45,7 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable {
         id: UUID = UUID(),
         name: String,
         description: String = "",
-        paperSize: PaperSize,
+        paper: PaperData,
         svgFilePath: String = "",
         gcodeCommands: [String] = [],
         currentCommandIndex: Int = 0,
@@ -50,7 +57,7 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable {
         self.id = id
         self.name = name
         self.description = description
-        self.paperSize = paperSize
+        self.paper = paper
         self.svgFilePath = svgFilePath
         self.gcodeCommands = gcodeCommands
         self.currentCommandIndex = currentCommandIndex
@@ -73,13 +80,4 @@ struct PenConfiguration: Codable, Equatable, Identifiable {
     var color: String
     var layer: String
     var angle: Int // 45° oder 90°
-}
-
-struct PaperSize: Codable, Equatable, Identifiable, Hashable {
-    var id = UUID()
-    var name: String
-    var width: Double
-    var height: Double
-    var orientation: Double
-    var note: String?
 }

@@ -8,6 +8,7 @@
 // PaperData.swift
 import Foundation
 
+
 struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     
     var id: UUID
@@ -19,7 +20,12 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     var description: String
     
     var paperFormat: PaperFormat = .default
-
+    // TODO: var orientation: ".landscape" .portait
+    
+    static var `default`: PaperData {
+        PaperData(id: UUID.force("1951e531-e879-4171-8d9f-5ad6320fe4d0"), name: "ZackZack")
+    }
+    
     init(
         id: UUID = UUID(),
         name: String,

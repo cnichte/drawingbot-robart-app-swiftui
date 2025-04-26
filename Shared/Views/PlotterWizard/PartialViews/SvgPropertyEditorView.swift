@@ -15,7 +15,7 @@ public struct SvgPropertyEditorView: View {
     // Zugriff auf Papierformat-Vorlagen aus Settings
     @EnvironmentObject var settingsModel: GenericStore<SettingsData>  // Verwendung von GenericStore für SettingsData
     
-    @State private var selectedPaperSize: PaperSize
+    @State private var selectedPaper: PaperData
     @State private var isCustomSize: Bool = false
     @State private var customWidth: Double = 210.0
     @State private var customHeight: Double = 297.0
@@ -23,9 +23,9 @@ public struct SvgPropertyEditorView: View {
     // interner Initializer
     internal init(currentJob: Binding<PlotJobData>) {
         _currentJob = currentJob
-        _selectedPaperSize = State(initialValue: currentJob.wrappedValue.paperSize)
-        _customWidth = State(initialValue: currentJob.wrappedValue.paperSize.width)
-        _customHeight = State(initialValue: currentJob.wrappedValue.paperSize.height)
+        _selectedPaper = State(initialValue: currentJob.wrappedValue.paper)
+        _customWidth = State(initialValue: currentJob.wrappedValue.paper.paperFormat.width)
+        _customHeight = State(initialValue: currentJob.wrappedValue.paper.paperFormat.height)
     }
 
     public var body: some View {
@@ -88,12 +88,13 @@ public struct SvgPropertyEditorView: View {
     
     private func updateJob() {
         // Wenn benutzerdefiniertes Format gewählt wurde, speichern wir es
+ /* TODO: Wieder einbauen???
         if isCustomSize {
-            currentJob.paperSize = PaperSize(name: "Custom", width: customWidth, height: customHeight, orientation: 0, note: "")
+            currentJob.paper.paperFormat.width = PaperSize(name: "Custom", width: customWidth, height: customHeight, orientation: 0, note: "")
         } else {
             currentJob.paperSize = selectedPaperSize
         }
-
+*/
         // Speichern der Änderungen
         Task {
             await store.save(item: currentJob, fileName: currentJob.id.uuidString)

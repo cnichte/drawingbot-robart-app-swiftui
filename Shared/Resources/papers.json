@@ -7,7 +7,7 @@
         "hersteller": "Canson",
         "description": "Block mit 40 Blatt",
         "shoplink": "",
-        "paperFormat": {
+        "paperFormat":     {
             "id": "559dd299-9fb7-4f75-aacb-bcbf205a9cd6",
             "name": "DIN A3",
             "width": 297,
@@ -16,17 +16,22 @@
                 "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
                 "name": "mm"
             },
-            "description": "DIN A3 – Zeichnungen, Präsentationen"
+            "description": "DIN A3 – Zeichnungen, Präsentationen",
+            "aspectRatio": {
+                "id": "0d911eb3-a79d-4749-962d-f1f584209963",
+                "name": "1:√2 - DIN A",
+                "factor": 0.70710678118
+            }
         }
     },
     {
-        "id": "1951e531-e879-4171-8d9f-5ad6320fe4d0",
+        "id": "d029afc1-798d-4c38-94e4-96be96a39d6b",
         "name": "Artway Studio",
         "weight": "170gsm",
         "color": "white",
         "hersteller": "ARTWAY",
         "description": "100 Blätter",
-        "shoplink": "https://www.amazon.de/dp/B014T0DRHE",
+        "shoplink": "",
         "paperFormat": {
             "id": "df509af8-e58d-4765-9ad8-e309048f7cba",
             "name": "DIN A1",
@@ -36,7 +41,37 @@
                 "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
                 "name": "mm"
             },
-            "description": "DIN A1 – Großformatige Poster, Pläne"
+            "description": "DIN A1 – Großformatige Poster, Pläne",
+            "aspectRatio": {
+                "id": "0d911eb3-a79d-4749-962d-f1f584209963",
+                "name": "1:√2 - DIN A",
+                "factor": 0.70710678118
+            }
+        }
+    },
+    {
+        "id": "1951e531-e879-4171-8d9f-5ad6320fe4d0",
+        "name": "ZackZack",
+        "weight": "170gsm",
+        "color": "white",
+        "hersteller": "ZackZack",
+        "description": "",
+        "shoplink": "https://www.artservice-tube.de/de/DTP-Drucken-und-Kopieren-Farbkommunikation/Papiere-und-Folien-fuer-Inkjet-Drucker/Zack-Zack-Ink-Jet-Papier",
+        "paperFormat": {
+            "id": "7e3eb341-cee9-4da6-8acb-677d5cb19e13",
+            "name": "DIN A4",
+            "width": 210,
+            "height": 297,
+            "unit": {
+                "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
+                "name": "mm"
+            },
+            "description": "DIN A4 – Standard-Briefformate, Drucker",
+            "aspectRatio": {
+                "id": "0d911eb3-a79d-4749-962d-f1f584209963",
+                "name": "1:√2 - DIN A",
+                "factor": 0.70710678118
+            }
         }
     }
 ]

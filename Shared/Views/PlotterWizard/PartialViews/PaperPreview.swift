@@ -19,8 +19,8 @@ struct PaperPreview: View {
         GeometryReader { geo in
             ZStack {
                 if let job = job {
-                    let paperWidth = CGFloat(job.paperSize.width)
-                    let paperHeight = CGFloat(job.paperSize.height)
+                    let paperWidth = CGFloat(job.paper.paperFormat.width)
+                    let paperHeight = CGFloat(job.paper.paperFormat.height)
                     let scaleFactor = min(geo.size.width / paperWidth, geo.size.height / paperHeight)
 
                     let paperFrame = CGSize(width: paperWidth * scaleFactor, height: paperHeight * scaleFactor)

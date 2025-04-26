@@ -118,13 +118,11 @@
 		D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085132DAFD8C900332690 /* JobListView.swift */; };
 		D5A0851D2DAFD8C900332690 /* PlotterWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085162DAFD8C900332690 /* PlotterWizardView.swift */; };
 		D5A0851E2DAFD8C900332690 /* JobPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085142DAFD8C900332690 /* JobPreviewView.swift */; };
-		D5A085262DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085212DAFD8DE00332690 /* PaperSizeSettigsView.swift */; };
 		D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */; };
 		D5A085282DAFD8DE00332690 /* Speedometer_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085232DAFD8DE00332690 /* Speedometer_View.swift */; };
 		D5A085292DAFD8DE00332690 /* SVGTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085252DAFD8DE00332690 /* SVGTreeView.swift */; };
 		D5A0852A2DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */; };
 		D5A0852B2DAFD8DE00332690 /* PaperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085202DAFD8DE00332690 /* PaperPreview.swift */; };
-		D5A0852C2DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085212DAFD8DE00332690 /* PaperSizeSettigsView.swift */; };
 		D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */; };
 		D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085232DAFD8DE00332690 /* Speedometer_View.swift */; };
 		D5A0852F2DAFD8DE00332690 /* SVGTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085252DAFD8DE00332690 /* SVGTreeView.swift */; };
@@ -198,6 +196,12 @@
 		D5F896F52DBD012D00397561 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F32DBD012900397561 /* Units.swift */; };
 		D5F896F72DBD56BA00397561 /* AssetStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */; };
 		D5F896F82DBD56BA00397561 /* AssetStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */; };
+		D5F896FA2DBD7C0400397561 /* pens.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896F92DBD7BFC00397561 /* pens.json */; };
+		D5F896FB2DBD7C0400397561 /* pens.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896F92DBD7BFC00397561 /* pens.json */; };
+		D5F896FD2DBD7F3900397561 /* machines.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896FC2DBD7F2E00397561 /* machines.json */; };
+		D5F896FE2DBD7F3900397561 /* machines.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896FC2DBD7F2E00397561 /* machines.json */; };
+		D5F897002DBD84CA00397561 /* connections.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896FF2DBD84C200397561 /* connections.json */; };
+		D5F897012DBD84CA00397561 /* connections.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896FF2DBD84C200397561 /* connections.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -274,7 +278,6 @@
 		D5A085152DAFD8C900332690 /* JobSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSummaryView.swift; sourceTree = "<group>"; };
 		D5A085162DAFD8C900332690 /* PlotterWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotterWizardView.swift; sourceTree = "<group>"; };
 		D5A085202DAFD8DE00332690 /* PaperPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperPreview.swift; sourceTree = "<group>"; };
-		D5A085212DAFD8DE00332690 /* PaperSizeSettigsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperSizeSettigsView.swift; sourceTree = "<group>"; };
 		D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperSourcePreview.swift; sourceTree = "<group>"; };
 		D5A085232DAFD8DE00332690 /* Speedometer_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speedometer_View.swift; sourceTree = "<group>"; };
 		D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgPropertyEditorView.swift; sourceTree = "<group>"; };
@@ -329,6 +332,9 @@
 		D5F896F02DBCFB2300397561 /* papers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = papers.json; sourceTree = "<group>"; };
 		D5F896F32DBD012900397561 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
 		D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStoreManager.swift; sourceTree = "<group>"; };
+		D5F896F92DBD7BFC00397561 /* pens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pens.json; sourceTree = "<group>"; };
+		D5F896FC2DBD7F2E00397561 /* machines.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = machines.json; sourceTree = "<group>"; };
+		D5F896FF2DBD84C200397561 /* connections.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = connections.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -429,6 +435,9 @@
 		D52C0AED2DBA654600F57746 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5F896FF2DBD84C200397561 /* connections.json */,
+				D5F896FC2DBD7F2E00397561 /* machines.json */,
+				D5F896F92DBD7BFC00397561 /* pens.json */,
 				D5F896F02DBCFB2300397561 /* papers.json */,
 				D5F896E72DBCDF3C00397561 /* aspect-ratios.json */,
 				D5A341032DBAF31A005FF05A /* units.json */,
@@ -648,7 +657,6 @@
 			isa = PBXGroup;
 			children = (
 				D5A085202DAFD8DE00332690 /* PaperPreview.swift */,
-				D5A085212DAFD8DE00332690 /* PaperSizeSettigsView.swift */,
 				D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */,
 				D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */,
 				D5A085252DAFD8DE00332690 /* SVGTreeView.swift */,
@@ -954,6 +962,7 @@
 				D5F896DC2DBCD2DF00397561 /* robart-dev-check-quickrun.sh in Resources */,
 				D5F896D62DBCD05000397561 /* robart-dev-check-v4.0.sh in Resources */,
 				D5F896F22DBCFB2D00397561 /* papers.json in Resources */,
+				D5F896FD2DBD7F3900397561 /* machines.json in Resources */,
 				D5F896E02DBCD63A00397561 /* robart-dev-testbuildrun-all.sh in Resources */,
 				D5A341042DBAF323005FF05A /* units.json in Resources */,
 				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
@@ -962,8 +971,10 @@
 				D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */,
 				D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */,
 				D5F896DA2DBCD27500397561 /* robart-dev-check-mini.sh in Resources */,
+				D5F896FB2DBD7C0400397561 /* pens.json in Resources */,
 				D5F896D42DBCCFA100397561 /* robart-dev-check-v3.5.sh in Resources */,
 				D5F896CC2DBCCB9600397561 /* robart-dev-check-v3.0.sh in Resources */,
+				D5F897012DBD84CA00397561 /* connections.json in Resources */,
 				D5F896D82DBCD12C00397561 /* robart-dev-check-v5.0.sh in Resources */,
 				D5F896E82DBCDF4800397561 /* aspect-ratios.json in Resources */,
 			);
@@ -973,10 +984,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5F896FE2DBD7F3900397561 /* machines.json in Resources */,
 				D5F896E92DBCDF4800397561 /* aspect-ratios.json in Resources */,
+				D5F897002DBD84CA00397561 /* connections.json in Resources */,
 				D5A341052DBAF323005FF05A /* units.json in Resources */,
 				D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */,
 				D5F896F12DBCFB2D00397561 /* papers.json in Resources */,
+				D5F896FA2DBD7C0400397561 /* pens.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1015,7 +1029,6 @@
 				D5A084D72DAFD84000332690 /* SettingsData.swift in Sources */,
 				D5A084D82DAFD84000332690 /* MachineData.swift in Sources */,
 				D5A084D92DAFD84000332690 /* PenData.swift in Sources */,
-				D5A085262DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */,
 				D5A085B92DB02E0000332690 /* UnassignedSectionView.swift in Sources */,
 				D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */,
 				D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
@@ -1110,7 +1123,6 @@
 				D5A084D22DAFD84000332690 /* MachineData.swift in Sources */,
 				D5A084D32DAFD84000332690 /* PenData.swift in Sources */,
 				D5F6C61D2DB825C100020AEE /* PaperData.swift in Sources */,
-				D5A0852C2DAFD8DE00332690 /* PaperSizeSettigsView.swift in Sources */,
 				D5F4DE042DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
 				D5A085BA2DB02E0000332690 /* UnassignedSectionView.swift in Sources */,
 				D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,

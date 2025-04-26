@@ -27,6 +27,8 @@ struct JobListView: View {
     @Binding var goToStep: Int
     @Binding var selectedJob: PlotJobData
     
+    @EnvironmentObject var assetStores: AssetStores
+    
     @EnvironmentObject var jobStore: GenericStore<PlotJobData>
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
     
@@ -59,7 +61,7 @@ struct JobListView: View {
             Button("Neuer Job") {
                 Task {
                     // Neuer Job wird sofort im Dateisystem gespeichert
-                    let job = PlotJobData(name: "Neuer Job", paperSize: PaperSize(name: "A4", width: 210, height: 297, orientation: 0, note: ""))
+                    let job = PlotJobData(name: "Neuer Job", paper: .default)
                     let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)
                     selectedJob = newJob // Wählt den neuen Job aus
                     goToStep = 2

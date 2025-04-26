@@ -13,7 +13,10 @@
 #if os(macOS)
 import Foundation
 import IOKit
+// import IOKit.usb
 import ORSSerial
+
+
 
 struct USBSerialDevice: Identifiable, Hashable {
     let id = UUID()

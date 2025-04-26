@@ -10,28 +10,24 @@ import SwiftUI
 
 struct PaperSectionView: View {
     @Binding var currentJob: PlotJobData
-    @EnvironmentObject var paperStore: GenericStore<PaperData>
+    @EnvironmentObject var assetStores: AssetStores
     var onUpdate: () -> Void
 
     var body: some View {
         CollapsibleSection(title: "Papier", systemImage: "doc.plaintext") {
             VStack(alignment: .leading, spacing: 10) {
-                Picker("Papier auswählen", selection: Binding(
-                    get: {
-                        currentJob.paperFormatID
-                    },
+                Picker("Papier auswählen", selection: Binding<UUID?>(
+                    get: { currentJob.paperFormatID },
                     set: { newID in
-                        if let id = newID, let selectedPaper = paperStore.items.first(where: { $0.id == id }) {
-                            currentJob.paperSize.name = selectedPaper.name
-                            currentJob.paperSize.width = selectedPaper.paperFormat.width
-                            currentJob.paperSize.height = selectedPaper.paperFormat.height
-                            currentJob.paperFormatID = id
+                        currentJob.paperFormatID = newID
+                        if let id = newID, let selectedPaper = assetStores.paperStore.items.first(where: { $0.id == id }) {
+                            currentJob.paper = selectedPaper
                             onUpdate()
                         }
                     }
                 )) {
-                    ForEach(paperStore.items) { paper in
-                        Text(paper.name).tag(paper.id as UUID?)
+                    ForEach(assetStores.paperStore.items) { paper in
+                        Text(paper.name).tag(Optional(paper.id))
                     }
                 }
                 .pickerStyle(.menu)
@@ -40,30 +36,33 @@ struct PaperSectionView: View {
                 Divider()
 
                 HStack {
-                    Text("Papiergröße-Name")
-                    Tools.textField(label: "Papiergröße-Name", value: $currentJob.paperSize.name)
+                    Text("Papier")
+                    Tools.textField(label: "Papier Name", value: $currentJob.paper.name)
                 }
-                .onChange(of: currentJob.paperSize.name) { onUpdate() }
+                .onChange(of: currentJob.paper.name) { onUpdate() }
 
                 HStack {
-                    Text("Papiergröße-Breite")
-                    Tools.doubleTextField(label: "Papiergröße-Breite", value: $currentJob.paperSize.width)
+                    Text("Breite")
+                    Tools.doubleTextField(label: "Breite", value: $currentJob.paper.paperFormat.width)
                 }
-                .onChange(of: currentJob.paperSize.width) { onUpdate() }
+                .onChange(of: currentJob.paper.paperFormat.width) { onUpdate() }
 
                 HStack {
-                    Text("Papiergröße-Höhe")
-                    Tools.doubleTextField(label: "Papiergröße-Höhe", value: $currentJob.paperSize.height)
+                    Text("Höhe")
+                    Tools.doubleTextField(label: "Höhe", value: $currentJob.paper.paperFormat.height)
                 }
-                .onChange(of: currentJob.paperSize.height) { onUpdate() }
+                .onChange(of: currentJob.paper.paperFormat.height) { onUpdate() }
 
                 HStack {
-                    Text("Papier-Orientierung")
-                    Tools.doubleTextField(label: "Papier-Orientierung", value: $currentJob.paperSize.orientation)
+                    Text("Orientierung")
+                    Picker("Orientierung", selection: $currentJob.paperOrientation) {
+                        Text("Hochformat").tag(PaperOrientation.portrait)
+                        Text("Querformat").tag(PaperOrientation.landscape)
+                    }
+                    .pickerStyle(.segmented)
                 }
-                .onChange(of: currentJob.paperSize.orientation) { onUpdate() }
+                .onChange(of: currentJob.paperOrientation) { onUpdate() }
             }
         }
     }
 }
-

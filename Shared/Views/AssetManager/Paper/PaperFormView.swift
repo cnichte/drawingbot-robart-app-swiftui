@@ -10,9 +10,7 @@ import SwiftUI
 
 struct PaperFormView: View {
     @Binding var data: PaperData
-    @EnvironmentObject var store: GenericStore<PaperData>
-    @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormat>
-    @EnvironmentObject var unitsStore: GenericStore<Units>
+    @EnvironmentObject var assetStores: AssetStores
 
     private var isCustomFormat: Bool {
         data.paperFormat.name.lowercased() == "custom"
@@ -56,13 +54,13 @@ struct PaperFormView: View {
                 Picker(selection: Binding(
                         get: { data.paperFormat.id },
                         set: { newID in
-                            if let format = paperFormatsStore.items.first(where: { $0.id == newID }) {
+                            if let format = assetStores.paperFormatsStore.items.first(where: { $0.id == newID }) {
                                 data.paperFormat = format
                                 save()
                             }
                         }
                     ), label: Text("Papierformat")) {
-                        ForEach(paperFormatsStore.items) { format in
+                        ForEach(assetStores.paperFormatsStore.items) { format in
                             Text(format.name).tag(format.id)
                         }
                     }
@@ -81,7 +79,7 @@ struct PaperFormView: View {
                             .onChange(of: data.paperFormat.height) { save() }
 
                         Picker("Einheit", selection: $data.paperFormat.unit) {
-                            ForEach(unitsStore.items) { unit in
+                            ForEach(assetStores.unitsStore.items) { unit in
                                 Text(unit.name).tag(unit)
                             }
                         }
@@ -102,14 +100,14 @@ struct PaperFormView: View {
         }
         .platformFormPadding()
         .navigationTitle("Papier bearbeiten")
-        .onReceive(store.$refreshTrigger) { _ in
+        .onReceive(assetStores.paperStore.$refreshTrigger) { _ in
             // Automatisches Re-Rendern
         }
     }
 
     private func save() {
         Task {
-            await store.save(item: data, fileName: data.id.uuidString)
+            await assetStores.paperStore.save(item: data, fileName: data.id.uuidString)
         }
     }
 }

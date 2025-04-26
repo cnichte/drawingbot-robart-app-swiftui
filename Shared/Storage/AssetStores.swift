@@ -7,6 +7,23 @@
 
 // AssetStores.swift
 import Foundation
+import SwiftUI
+
+extension View {
+    func environmentObjects(from assetStores: AssetStores) -> some View {
+        self
+            .environmentObject(assetStores.connectionsStore)
+            .environmentObject(assetStores.machineStore)
+            .environmentObject(assetStores.projectStore)
+            .environmentObject(assetStores.plotJobStore)
+            .environmentObject(assetStores.pensStore)
+            .environmentObject(assetStores.paperStore)
+            .environmentObject(assetStores.paperFormatsStore)
+            .environmentObject(assetStores.aspectRatiosStore)
+            .environmentObject(assetStores.unitsStore)
+            .environmentObject(assetStores) // wichtig, AssetStores selbst auch
+    }
+}
 
 // MARK: - MigrationError für bessere Fehlerunterscheidung
 enum MigrationError: Error {
