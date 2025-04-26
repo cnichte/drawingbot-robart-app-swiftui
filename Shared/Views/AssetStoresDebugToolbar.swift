@@ -10,40 +10,58 @@ import SwiftUI
 
 struct AssetStoresDebugToolbar: View {
     @EnvironmentObject var assetStores: AssetStores
-
+    @State private var selectedStoreKey: String = ""
+    
     var body: some View {
-        VStack(spacing: 8) {
-            Text("🛠️ AssetStores Debug Toolbar")
-                .font(.headline)
-                .padding(.bottom, 4)
-
-            HStack(spacing: 12) {
-                Button("🧹 Soft Reset") {
-                    assetStores.resetStoresCompletely(deleteFiles: false)
+        VStack(spacing: 10) {
+            
+            // 🛠 Dropdown-Menü für Einzel-Reset
+            Picker("Store auswählen", selection: $selectedStoreKey) {
+                ForEach(assetStores.storeList.map { $0.key }, id: \.self) { key in
+                    Text(key).tag(key)
                 }
-                .buttonStyle(.bordered)
-
-                Button("🗑️ Hard Reset") {
-                    assetStores.resetStoresCompletely(deleteFiles: true)
+            }
+            .pickerStyle(.menu)
+            .padding(.bottom, 8)
+            
+            HStack {
+                Button("🔁 Nur RAM neu laden") {
+                    if let store = assetStores.storeList.first(where: { $0.key == selectedStoreKey })?.store {
+                        assetStores.resetStoreCompletely(store, deleteFiles: false)
+                    }
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.red)
+                
+                Button("🗑️ Dateien löschen + neu laden") {
+                    if let store = assetStores.storeList.first(where: { $0.key == selectedStoreKey })?.store {
+                        assetStores.resetStoreCompletely(store, deleteFiles: true)
+                    }
+                }
             }
             
-            Button("♻️ restore Standarddaten") {
+            Divider()
+            
+            // 🛠 Buttons für alle Stores
+            Button("🧹 Soft Reset (nur RAM)") {
+                assetStores.resetStoresInMemory()
+            }
+            
+            Button("🗑️ Hard Reset (löschen + neu laden)") {
+                assetStores.resetStoresCompletely(deleteFiles: true)
+            }
+            
+            Button("📦 Standarddaten wiederherstellen") {
                 assetStores.restoreDefaultResources()
             }
-            .buttonStyle(.bordered)
-            .padding(.top, 8)
-
-            Button("📝 Übersicht drucken") {
+            
+            Button("📝 Zusammenfassung drucken") {
                 assetStores.printSummary()
             }
-            .padding(.top, 8)
         }
         .padding()
-        .background(.ultraThinMaterial)
-        .cornerRadius(12)
-        .padding()
+        .onAppear {
+            if selectedStoreKey.isEmpty, let firstKey = assetStores.storeList.first?.key {
+                selectedStoreKey = firstKey
+            }
+        }
     }
 }

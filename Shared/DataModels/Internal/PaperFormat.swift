@@ -32,7 +32,6 @@ import Foundation
  DIN B8: 62 x 88 mm
  DIN B9: 44 x 62 mm
  DIN B10: 31 x 44 mm
- 
  */
 
 // PaperFormat.swift
@@ -45,10 +44,10 @@ struct PaperFormat: Codable, Equatable, Identifiable, Hashable, ManageableItem  
     var description: String
     var width:Double
     var height:Double
-    var unit:String
+    var unit:Units
     
     static var `default`: PaperFormat {
-        PaperFormat(id: UUID.force("7e3eb341-cee9-4da6-8acb-677d5cb19e13"), name: "DIN A4", width: 210, height: 297, unit: "mm")
+        PaperFormat(id: UUID.force("7e3eb341-cee9-4da6-8acb-677d5cb19e13"), name: "DIN A4", width: 210, height: 297, unit: .default)
     }
     
     init(
@@ -57,7 +56,7 @@ struct PaperFormat: Codable, Equatable, Identifiable, Hashable, ManageableItem  
         description: String = "",
         width:Double = 0,
         height:Double = 0,
-        unit:String = ""
+        unit:Units = .default
     ) {
         self.id = id
         self.name = name

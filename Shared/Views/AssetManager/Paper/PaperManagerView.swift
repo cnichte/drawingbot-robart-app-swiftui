@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 22.04.25.
 //
 
+// PaperManagerView.swift
 import SwiftUI
 struct PaperManagerView: View {
     var body: some View {

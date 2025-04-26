@@ -192,6 +192,10 @@
 		D5F896EC2DBCE24D00397561 /* AspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896EA2DBCE24500397561 /* AspectRatio.swift */; };
 		D5F896EE2DBCF7F700397561 /* AssetStoresDebugToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896ED2DBCF7F400397561 /* AssetStoresDebugToolbar.swift */; };
 		D5F896EF2DBCF7F700397561 /* AssetStoresDebugToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896ED2DBCF7F400397561 /* AssetStoresDebugToolbar.swift */; };
+		D5F896F12DBCFB2D00397561 /* papers.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896F02DBCFB2300397561 /* papers.json */; };
+		D5F896F22DBCFB2D00397561 /* papers.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896F02DBCFB2300397561 /* papers.json */; };
+		D5F896F42DBD012D00397561 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F32DBD012900397561 /* Units.swift */; };
+		D5F896F52DBD012D00397561 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F32DBD012900397561 /* Units.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -320,6 +324,8 @@
 		D5F896E72DBCDF3C00397561 /* aspect-ratios.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "aspect-ratios.json"; sourceTree = "<group>"; };
 		D5F896EA2DBCE24500397561 /* AspectRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectRatio.swift; sourceTree = "<group>"; };
 		D5F896ED2DBCF7F400397561 /* AssetStoresDebugToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStoresDebugToolbar.swift; sourceTree = "<group>"; };
+		D5F896F02DBCFB2300397561 /* papers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = papers.json; sourceTree = "<group>"; };
+		D5F896F32DBD012900397561 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -420,6 +426,7 @@
 		D52C0AED2DBA654600F57746 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5F896F02DBCFB2300397561 /* papers.json */,
 				D5F896E72DBCDF3C00397561 /* aspect-ratios.json */,
 				D5A341032DBAF31A005FF05A /* units.json */,
 				D52C0AEE2DBA655000F57746 /* paper-formats.json */,
@@ -751,6 +758,7 @@
 		D5F896E52DBCDDB800397561 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				D5F896F32DBD012900397561 /* Units.swift */,
 				D5F896EA2DBCE24500397561 /* AspectRatio.swift */,
 				D52C0AEA2DBA613400F57746 /* PaperFormat.swift */,
 			);
@@ -941,6 +949,7 @@
 				D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */,
 				D5F896DC2DBCD2DF00397561 /* robart-dev-check-quickrun.sh in Resources */,
 				D5F896D62DBCD05000397561 /* robart-dev-check-v4.0.sh in Resources */,
+				D5F896F22DBCFB2D00397561 /* papers.json in Resources */,
 				D5F896E02DBCD63A00397561 /* robart-dev-testbuildrun-all.sh in Resources */,
 				D5A341042DBAF323005FF05A /* units.json in Resources */,
 				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
@@ -963,6 +972,7 @@
 				D5F896E92DBCDF4800397561 /* aspect-ratios.json in Resources */,
 				D5A341052DBAF323005FF05A /* units.json in Resources */,
 				D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */,
+				D5F896F12DBCFB2D00397561 /* papers.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1055,6 +1065,7 @@
 				D5A084FB2DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
 				D5F6C62A2DB8358C00020AEE /* PenManagerView.swift in Sources */,
 				D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */,
+				D5F896F52DBD012D00397561 /* Units.swift in Sources */,
 				D509C0AA2DBC4AED009B0233 /* PenSectionView.swift in Sources */,
 				D5A085AD2DB023DA00332690 /* NewProjectSheet.swift in Sources */,
 				D5F896EB2DBCE24D00397561 /* AspectRatio.swift in Sources */,
@@ -1140,6 +1151,7 @@
 				D5A084F22DAFD88A00332690 /* SVGParser.swift in Sources */,
 				D5A084F32DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
 				D509C0A32DBC4A20009B0233 /* PaperSectionView.swift in Sources */,
+				D5F896F42DBD012D00397561 /* Units.swift in Sources */,
 				D57566202DB9255400D95E3F /* ConnectionFormView.swift in Sources */,
 				D5A084F42DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
 				D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */,

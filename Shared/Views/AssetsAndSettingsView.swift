@@ -122,12 +122,8 @@ struct AssetsAndSettingsView: View {
             AssetTab(
                 title: "Papier",
                 view: AnyView(
-                    ItemManagerView<PaperData, PaperFormView>(
-                        title: "Papier",
-                        createItem: { PaperData(name: "Neues Papier") },
-                        buildForm: { PaperFormView(data: $0) }
-                    )
-                    .environmentObject(paperStore)
+                    PaperManagerView()
+                        .environmentObject(paperStore)
                 )
             )
         ]

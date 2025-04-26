@@ -21,6 +21,7 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable {
     let id: UUID
     var name: String
     var description: String
+    // alt. noch zu überarbeiten
     var paperSize: PaperSize
     var svgFilePath: String
     var gcodeCommands: [String]
@@ -30,7 +31,9 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable {
     var origin: CGPoint
     var penSettings: [PenConfiguration]
     var isActive: Bool = false
-
+    
+    var paperFormatID: UUID? = nil // <-- NEU für Picker-Anbindung
+    
     init(
         id: UUID = UUID(),
         name: String,

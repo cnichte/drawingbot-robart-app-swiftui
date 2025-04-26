@@ -1,0 +1,42 @@
+[
+    {
+        "id": "73bbe5a7-d455-4b60-9b62-5dc4834ef439",
+        "name": "Canson Dessin Noir",
+        "weight": "150g/m2",
+        "color": "black",
+        "hersteller": "Canson",
+        "description": "Block mit 40 Blatt",
+        "shoplink": "",
+        "paperFormat": {
+            "id": "559dd299-9fb7-4f75-aacb-bcbf205a9cd6",
+            "name": "DIN A3",
+            "width": 297,
+            "height": 420,
+            "unit": {
+                "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
+                "name": "mm"
+            },
+            "description": "DIN A3 – Zeichnungen, Präsentationen"
+        }
+    },
+    {
+        "id": "1951e531-e879-4171-8d9f-5ad6320fe4d0",
+        "name": "Artway Studio",
+        "weight": "170gsm",
+        "color": "white",
+        "hersteller": "ARTWAY",
+        "description": "100 Blätter",
+        "shoplink": "https://www.amazon.de/dp/B014T0DRHE",
+        "paperFormat": {
+            "id": "df509af8-e58d-4765-9ad8-e309048f7cba",
+            "name": "DIN A1",
+            "width": 594,
+            "height": 841,
+            "unit": {
+                "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
+                "name": "mm"
+            },
+            "description": "DIN A1 – Großformatige Poster, Pläne"
+        }
+    }
+]

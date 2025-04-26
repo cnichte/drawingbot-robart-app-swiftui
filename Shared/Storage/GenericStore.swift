@@ -39,10 +39,15 @@ protocol MigratableStore: ReloadableStore {
     var directoryName: String { get }
     var itemCount: Int { get }
     func clearItems()
+    func restoreDefaultResource() async throws
+}
+
+protocol GenericStoreProtocol: AnyObject {
+    var directoryName: String { get }
 }
 
 // MARK: - GenericStore
-class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore where T.ID: Hashable {
+class GenericStore<T: Codable & Identifiable>: ObservableObject, GenericStoreProtocol, MigratableStore where T.ID: Hashable {
     
     @Published var items: [T] = [] {
         didSet { refreshTrigger += 1 }
@@ -50,7 +55,7 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
     @Published var refreshTrigger: Int = 0
 
     private let fileManager = FileManager.default
-    private var directoryName: String
+    internal var directoryName: String
     private let initialResourceName: String?
 
     @AppStorage("currentStorageType") private var currentStorageTypeRaw: String = StorageType.local.rawValue
@@ -95,28 +100,37 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
         }
     }
 
-    // MARK: - Laden
+    // MARK: - Laden aller gültigen .json Dateien (mit besserem Fehlerprotokoll)
     func loadItems() async {
         do {
             let files = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
-            var tempLoaded: [T] = []
+            var tempLoadedItems: [T] = []
+            var failedFiles: [(URL, Error)] = []
 
             for file in files where file.pathExtension == "json" {
-                if let item = try? loadItem(from: file) {
-                    tempLoaded.append(item)
-                } else {
-                    print("⚠️ Ungültige Datei in \(directoryName) übersprungen: \(file.lastPathComponent)")
+                do {
+                    let item = try loadItem(from: file)
+                    tempLoadedItems.append(item)
+                } catch {
+                    failedFiles.append((file, error))
                 }
             }
 
-            // Übergabe an MainActor
-            let safeItems = tempLoaded
+            let safeLoadedItems = tempLoadedItems
 
             await MainActor.run {
-                self.items = safeItems
+                self.items = safeLoadedItems
             }
+
+            if !failedFiles.isEmpty {
+                print("⚠️ \(failedFiles.count) Dateien konnten nicht geladen werden:")
+                for (file, error) in failedFiles {
+                    print("  → \(file.lastPathComponent): \(error.localizedDescription)")
+                }
+            }
+
         } catch {
-            print("❌ Fehler beim Laden der Items aus \(directoryName): \(error.localizedDescription)")
+            print("❌ Fehler beim Lesen des Verzeichnisses \(directoryName): \(error.localizedDescription)")
         }
     }
     
@@ -180,5 +194,19 @@ class GenericStore<T: Codable & Identifiable>: ObservableObject, ReloadableStore
 
     func clearItems() {
         items.removeAll()
+    }
+    
+    func restoreDefaultResource() async throws {
+        guard let resourceName = initialResourceName else {
+            throw NSError(domain: "GenericStore", code: 404, userInfo: [NSLocalizedDescriptionKey: "Kein initialResourceName vorhanden."])
+        }
+        
+        try FileManagerService.migrateOnce(
+            resourceName: resourceName,
+            to: directoryName,
+            as: T.self
+        )
+        
+        await loadItems()
     }
 }

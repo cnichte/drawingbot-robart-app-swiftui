@@ -19,6 +19,10 @@ struct SettingsView: View {
     @EnvironmentObject var settingsStore: GenericStore<SettingsData>
     @EnvironmentObject var assetStores: AssetStores
     
+    init() {
+            print("🛠 SettingsView init wurde aufgerufen")
+        }
+    
     @AppStorage("currentStorageType")
     private var currentStorageRaw: String = StorageType.local.rawValue
     
