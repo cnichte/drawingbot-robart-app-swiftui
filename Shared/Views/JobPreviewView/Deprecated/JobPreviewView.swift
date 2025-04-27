@@ -46,7 +46,6 @@ struct JobPreviewView: View {
     @State private var previewMode: PreviewMode = .svgPreview
     @State private var inspectorWidth: CGFloat = 300
 
-    // iOS SlideOver Steuerung
     @State private var showingSettings = false
     @State private var showingInspector = false
 
@@ -67,16 +66,21 @@ struct JobPreviewView: View {
                 isRightVisible: $isInspectorVisible,
                 rightPanelWidth: $inspectorWidth,
                 leftView: {
-                    settingsPanel
-                        .background(Color.gray.opacity(0.05))
+                    JobSettingsPanel(
+                        currentJob: $currentJob,
+                        svgFileName: $svgFileName,
+                        showingFileImporter: $showingFileImporter
+                    )
+                    .environmentObject(plotJobStore)
+                    .environmentObject(paperStore)
+                    .environmentObject(paperFormatsStore)
                 },
                 centerView: {
                     previewContent
                         .background(ColorHelper.backgroundColor)
                 },
                 rightView: {
-                    inspectorPanel
-                        .background(Color.gray.opacity(0.05))
+                    JobInspectorPanel()
                 }
             )
             #else
@@ -86,7 +90,6 @@ struct JobPreviewView: View {
         }
         .toolbar {
             #if os(macOS)
-            // macOS: Sidebar- und Inspector-Button
             ToolbarItem(placement: .navigation) {
                 Button {
                     withAnimation { isSidebarVisible.toggle() }
@@ -104,7 +107,6 @@ struct JobPreviewView: View {
                 }
             }
             #else
-            // iOS: Zurück + Settings/Inspector-Buttons
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                     saveCurrentJob()
@@ -128,12 +130,19 @@ struct JobPreviewView: View {
             #endif
         }
         .sheet(isPresented: $showingSettings) {
-            settingsPanel
-                .presentationDetents([.fraction(0.5)])
-                .presentationDragIndicator(.visible)
+            JobSettingsPanel(
+                currentJob: $currentJob,
+                svgFileName: $svgFileName,
+                showingFileImporter: $showingFileImporter
+            )
+            .environmentObject(plotJobStore)
+            .environmentObject(paperStore)
+            .environmentObject(paperFormatsStore)
+            .presentationDetents([.fraction(0.5)])
+            .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showingInspector) {
-            inspectorPanel
+            JobInspectorPanel()
                 .presentationDetents([.fraction(0.5)])
                 .presentationDragIndicator(.visible)
         }
@@ -146,28 +155,8 @@ struct JobPreviewView: View {
         }
     }
 
-    // MARK: - Panels
-
     @ViewBuilder
-    var settingsPanel: some View {
-        VStack(spacing: 0) {
-            SettingsPanel(
-                currentJob: $currentJob,
-                svgFileName: $svgFileName,
-                showingFileImporter: $showingFileImporter,
-                showSourcePreview: .constant(false),
-                showBottomBar: false
-            )
-            .environmentObject(plotJobStore)
-            .environmentObject(paperStore)
-            .environmentObject(paperFormatsStore)
-            .padding(.vertical, 8) // << nur oben/unten ein bisschen Luft
-            .padding(.horizontal, 0) // << minimal links/rechts
-        }
-    }
-
-    @ViewBuilder
-    var previewContent: some View {
+    private var previewContent: some View {
         VStack {
             switch previewMode {
             case .svgPreview:
@@ -183,20 +172,6 @@ struct JobPreviewView: View {
             }
         }
         .padding()
-    }
-
-    @ViewBuilder
-    var inspectorPanel: some View {
-        VStack {
-            Text("Inspector")
-                .font(.title)
-            Spacer()
-            Text("Hier könnten Optionen kommen.")
-                .foregroundColor(.secondary)
-            Spacer()
-        }
-        .padding(.vertical, 8) // << nur oben/unten
-        .padding(.horizontal, 0) // << minimal links/rechts
     }
 
     private func loadActiveJob() {

@@ -53,6 +53,6 @@ struct CollapsibleSection<Content: View>: View {
                 .stroke(Color.gray.opacity(0.2))
         )
         .padding(.horizontal)
-        .padding(.bottom, 12) // mehr Abstand unten
+        .padding(.bottom, 0) // Abstand unten
     }
 }

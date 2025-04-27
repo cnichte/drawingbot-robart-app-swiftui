@@ -6,6 +6,7 @@
 //
 
 // CustomSplitView.swift
+#if os(macOS)
 import SwiftUI
 import AppKit
     
@@ -146,3 +147,4 @@ struct CustomSplitView<Left: View, Center: View, Right: View>: View {
         }
     }
 }
+#endif

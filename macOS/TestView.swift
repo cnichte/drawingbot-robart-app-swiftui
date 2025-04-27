@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 27.04.25.
 //
 
+#if os(macOS)
 import SwiftUI
 import AppKit
 
@@ -244,3 +245,4 @@ struct TestView_Previews: PreviewProvider {
         TestView()
     }
 }
+#endif
