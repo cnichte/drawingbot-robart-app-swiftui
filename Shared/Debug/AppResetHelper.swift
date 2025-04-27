@@ -26,12 +26,12 @@ struct AppResetHelper {
     }
 
     private static func resetFiles(for storageType: StorageType) {
-        let service = FileManagerService()
+        let service = FileManagerService.shared
         let subdirs = ["settings", "connections", "machines", "projects", "jobs", "pens", "papers"]
         let fm = FileManager.default
 
         for subdir in subdirs {
-            if let dirURL = service.getDirectoryURL(for: storageType)?.appendingPathComponent(subdir),
+            if let dirURL = service.directory(for: storageType, subdirectory: subdir),
                fm.fileExists(atPath: dirURL.path) {
                 do {
                     try fm.removeItem(at: dirURL)
@@ -42,7 +42,6 @@ struct AppResetHelper {
             }
         }
     }
-    
     
     static func resetLocalOnly() {
         print("🔁 Lokalen Speicher löschen...")
@@ -62,12 +61,12 @@ struct AppResetHelper {
     }
 
     private static func deleteAll(in storage: StorageType) {
-        let service = FileManagerService()
+        let service = FileManagerService.shared
         let fileManager = FileManager.default
         let subdirs = ["connections", "machines", "projects", "jobs", "pens", "papers", "settings"]
 
         for subdir in subdirs {
-            if let dirURL = service.getDirectoryURL(for: storage)?.appendingPathComponent(subdir) {
+            if let dirURL = service.directory(for: storage, subdirectory: subdir) {
                 if fileManager.fileExists(atPath: dirURL.path) {
                     do {
                         try fileManager.removeItem(at: dirURL)

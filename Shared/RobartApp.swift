@@ -16,7 +16,7 @@ import SwiftUI
 struct RobartApp: App {
     
     @StateObject private var settingsStore = GenericStore<SettingsData>(directoryName: "settings")
-    @StateObject private var assetStores = AssetStores(initialStorage: .local)
+    @StateObject private var assetStores = AssetStores(initialStorageType: .local)
     
     var body: some Scene {
         WindowGroup {
@@ -41,9 +41,12 @@ struct RobartApp: App {
                     if UserDefaults.standard.bool(forKey: "forceResetOnLaunch") {
                         print("🚨 Starte mit vollständigem Reset...")
                         UserDefaults.standard.set(false, forKey: "forceResetOnLaunch") // Zurücksetzen, damit es nur einmal wirkt
-
-                        assetStores.deleteAllData()
-                        assetStores.resetStoresInMemory()
+                        
+                        Task {
+                            await assetStores.deleteAllLocalData()
+                            assetStores.resetAllStoresInMemory()
+                        }
+                        
                     }
                     Task {
                         // Stelle sicher, dass ein Settings-Datensatz vorhanden ist

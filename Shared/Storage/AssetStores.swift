@@ -71,7 +71,10 @@ class AssetStores: ObservableObject {
     @Published var unitsStore: GenericStore<Units>
 
     private(set) var storageType: StorageType
+    
+    lazy var manager: AssetStoreManager = AssetStoreManager(stores: self.allStores, initialStorage: self.storageType)
 
+    
     // Alle Stores für Utility-Funktionen
     var allStores: [any MigratableStore] {
         [
@@ -97,13 +100,15 @@ class AssetStores: ObservableObject {
         self.projectStore     = GenericStore(directoryName: "projects", resourceType: .user)
         self.plotJobStore     = GenericStore(directoryName: "jobs", resourceType: .user)
         self.pensStore        = GenericStore(directoryName: "pens", resourceType: .user)
-        self.paperStore       = GenericStore(directoryName: "papers", initialResourceName: "papers", resourceType: .user)
+        self.paperStore       = GenericStore(directoryName: "papers", resourceType: .user, initialResourceName: "papers")
 
         // System Stores
-        self.paperFormatsStore = GenericStore(directoryName: "paperformats", initialResourceName: "paper-formats", resourceType: .system)
-        self.aspectRatiosStore = GenericStore(directoryName: "aspectratios", initialResourceName: "aspect-ratios", resourceType: .system)
-        self.unitsStore        = GenericStore(directoryName: "units", initialResourceName: "units", resourceType: .system)
+        self.paperFormatsStore = GenericStore(directoryName: "paperformats", resourceType: .system, initialResourceName: "paper-formats")
+        self.aspectRatiosStore = GenericStore(directoryName: "aspectratios", resourceType: .system, initialResourceName: "aspect-ratios")
+        self.unitsStore        = GenericStore(directoryName: "units", resourceType: .system, initialResourceName: "units")
         
+        self.manager = AssetStoreManager(stores: allStores, initialStorage: initialStorageType)
+
         Task {
             await FileManagerService.shared.ensureAllDirectoriesExist(for: allStores, storageType: initialStorageType)
             await loadAllStores()
@@ -145,5 +150,21 @@ class AssetStores: ObservableObject {
             print("- \(store.directoryName): \(store.itemCount) Einträge")
         }
         print("🔢 Gesamtanzahl: \(allStores.map(\.itemCount).reduce(0, +))")
+    }
+}
+
+extension AssetStores {
+    func applyInitialStorageTypeAndMigrations(using preferredStorageType: StorageType) {
+        Task {
+            do {
+                if self.storageType != preferredStorageType {
+                    try await self.migrateTo(storageType: preferredStorageType)
+                }
+                await self.loadAllStores()
+                print("✅ Speicherort angepasst auf \(preferredStorageType.rawValue)")
+            } catch {
+                print("❌ Fehler beim Anwenden des bevorzugten Speicherorts: \(error)")
+            }
+        }
     }
 }

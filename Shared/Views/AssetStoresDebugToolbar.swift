@@ -30,7 +30,7 @@ struct AssetStoresDebugToolbar: View {
             Button("🗑️ Hard Reset (Dateien löschen)") {
                 Task {
                     await run {
-                        await assetStores.manager.resetStoresCompletely(deleteFiles: true)
+                        await assetStores.manager.resetAllData(deleteFiles: true)
                     }
                 }
             }

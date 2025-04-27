@@ -82,7 +82,7 @@ struct SettingsView: View {
                 }
 
                 Button {
-                    FileManagerService.rollbackAllMigrations(storageType: currentStorageType)
+                    FileManagerService.shared.rollbackAllKnownUserResources(for: currentStorageType)
                     showSuccess("Alle Migrationen erfolgreich zurückgesetzt ✅")
                 } label: {
                     Label("Alle Migrationen zurücksetzen", systemImage: "arrow.uturn.backward.square")
@@ -143,16 +143,18 @@ struct SettingsView: View {
     private func performRollbackMigrations() {
         print("🔄 Rolle einmalige Migrationen zurück...")
 
-        FileManagerService.rollbackMigration(resourceName: "papers", storageType: currentStorageType)
-        FileManagerService.rollbackMigration(resourceName: "paper-formats", storageType: currentStorageType)
-        FileManagerService.rollbackMigration(resourceName: "aspect-ratios", storageType: currentStorageType)
-        FileManagerService.rollbackMigration(resourceName: "units", storageType: currentStorageType)
+        FileManagerService.shared.rollbackUserResource(for: "papers", storageType: currentStorageType)
+        FileManagerService.shared.rollbackUserResource(for: "paper-formats", storageType: currentStorageType)
+        FileManagerService.shared.rollbackUserResource(for: "aspect-ratios", storageType: currentStorageType)
+        FileManagerService.shared.rollbackUserResource(for: "units", storageType: currentStorageType)
     }
 
     private func performDeleteAllData() {
         print("🗑️ Lösche alle gespeicherten Dokumente...")
-        assetStores.deleteAllData()
-        assetStores.resetStoresInMemory()
+        Task {
+            await assetStores.deleteAllLocalData()
+            assetStores.resetAllStoresInMemory()
+        }
     }
 
 #endif

@@ -8,37 +8,31 @@
 // Shift+command + c - Öffnet Konsole
 // ❌✅⚠️
 
-// GenericStore.swift – mit StorageType-Unterstützung (lokal / iCloud)
+// GenericStore.swift
 import Foundation
 import SwiftUI
-
-// === GenericStoreProtocol.swift ===
+import Combine
 
 // MARK: - Protokolle
+protocol ReloadableStore {
+    func loadItems() async
+}
+
+protocol MigratableStore: ReloadableStore {
+    var directoryName: String { get }
+    var resourceType: ResourceType { get }
+    var initialResourceName: String? { get }
+    var itemCount: Int { get }
+    func clearItems()
+    func restoreDefaults() async throws
+}
 
 protocol GenericStoreProtocol: AnyObject {
     var directoryName: String { get }
-}
-
-protocol MigratableStore: GenericStoreProtocol {
-    var initialResourceName: String? { get }
     var resourceType: ResourceType { get }
-
-    func loadItems() async
-    func clearItems()
-    func restoreDefaultResource() async throws
-    var itemCount: Int { get }
 }
-
-// MARK: - Migration Error
-enum MigrationError: Error {
-    case noInitialResource
-    case alreadyMigrated
-}
-
 
 // MARK: - GenericStore
-
 class GenericStore<T>: ObservableObject, MigratableStore
 where T: Codable & Identifiable, T.ID: Hashable {
     
@@ -47,25 +41,57 @@ where T: Codable & Identifiable, T.ID: Hashable {
     }
     @Published var refreshTrigger: Int = 0
     
+    var directoryName: String
+    var resourceType: ResourceType
+    var initialResourceName: String?
+    
+    @AppStorage("currentStorageType")
+    private var currentStorageTypeRaw: String = StorageType.local.rawValue
+    
     private let fileManager = FileManager.default
     
-    // MARK: - Eigenschaften
-    internal var directoryName: String
-    var initialResourceName: String?
-    var resourceType: ResourceType
-    
-    @AppStorage("currentStorageType") private var currentStorageTypeRaw: String = StorageType.local.rawValue
-    
-    var storageType: StorageType {
-        get { StorageType(rawValue: currentStorageTypeRaw) ?? .local }
-        set { currentStorageTypeRaw = newValue.rawValue }
+    private var storageType: StorageType {
+        StorageType(rawValue: currentStorageTypeRaw) ?? .local
     }
     
-    private var directory: URL {
+    private var directoryURL: URL {
+        guard let dir = FileManagerService.shared.directory(for: storageType, subdirectory: directoryName) else {
+            fatalError("❌ Verzeichnis \(directoryName) konnte nicht ermittelt werden!")
+        }
+        return dir
+    }
+    
+    // MARK: - Initializer
+    init(directoryName: String, resourceType: ResourceType = .user, initialResourceName: String? = nil) {
+        self.directoryName = directoryName
+        self.resourceType = resourceType
+        self.initialResourceName = initialResourceName
+    }
+    
+    // MARK: - Laden
+    func loadItems() async {
         do {
-            return try FileManagerService().requireDirectory(for: storageType, subdirectory: directoryName)
+            let files = try fileManager.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil)
+            
+            var tempItems: [T] = []
+            
+            for file in files where file.pathExtension == "json" {
+                do {
+                    let data = try Data(contentsOf: file)
+                    let item = try JSONDecoder().decode(T.self, from: data)
+                    tempItems.append(item)
+                } catch {
+                    print("⚠️ Fehler beim Laden von \(file.lastPathComponent): \(error.localizedDescription)")
+                }
+            }
+            
+            let result = tempItems // <-- Hier "kopieren", innerhalb async Kontext bleibt stabil
+            
+            await MainActor.run {
+                self.items = result
+            }
         } catch {
-            fatalError("❌ Verzeichnis \(directoryName) konnte nicht erstellt werden: \(error)")
+            print("❌ Fehler beim Lesen von \(directoryName): \(error.localizedDescription)")
         }
     }
     
@@ -73,59 +99,41 @@ where T: Codable & Identifiable, T.ID: Hashable {
         items.count
     }
     
-    // MARK: - Initializer
-    init(directoryName: String, initialResourceName: String? = nil, resourceType: ResourceType) {
-        self.directoryName = directoryName
-        self.initialResourceName = initialResourceName
-        self.resourceType = resourceType
+    func clearItems() {
+        items.removeAll()
     }
     
-    // MARK: - Laden
-    func loadItems() async {
-        do {
-            let files = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
-            var tempLoadedItems: [T] = []
-            var failedFiles: [(URL, Error)] = []
-            
-            for file in files where file.pathExtension == "json" {
-                do {
-                    let item = try loadItem(from: file)
-                    tempLoadedItems.append(item)
-                } catch {
-                    failedFiles.append((file, error))
-                }
-            }
-            
-            await MainActor.run {
-                self.items = tempLoadedItems
-            }
-            
-            if !failedFiles.isEmpty {
-                print("⚠️ \(failedFiles.count) Dateien konnten nicht geladen werden:")
-                for (file, error) in failedFiles {
-                    print("  → \(file.lastPathComponent): \(error.localizedDescription)")
-                }
-            }
-        } catch {
-            print("❌ Fehler beim Lesen von \(directoryName): \(error.localizedDescription)")
+    // MARK: - Restore Defaults
+    func restoreDefaults() async throws {
+        guard let resource = initialResourceName else {
+            throw NSError(domain: "GenericStore", code: 404, userInfo: [NSLocalizedDescriptionKey: "Kein initialResourceName vorhanden."])
         }
-    }
-    
-    private func loadItem(from file: URL) throws -> T {
-        print("📂 Lade Datei \(file.lastPathComponent) aus \(directoryName)")
-        let data = try Data(contentsOf: file)
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
+        
+        switch resourceType {
+        case .system:
+            try FileManagerService.shared.restoreSystemResource(
+                T.self, // <-- Typ übergeben!
+                resourceName: resource,
+                subdirectory: directoryName,
+                storageType: storageType
+            )
+        case .user:
+            try FileManagerService.shared.copyUserResourceIfNeeded(
+                T.self, // <-- Typ übergeben!
+                resourceName: resource,
+                subdirectory: directoryName,
+                storageType: storageType
+            )
+        }
+        
+        await loadItems()
     }
     
     // MARK: - Speichern
     func save(item: T, fileName: String) async {
-        let encoder = JSONEncoder()
         do {
-            let data = try encoder.encode(item)
-            let path = directory.appendingPathComponent("\(fileName).json")
-            
-            print("💾 Speichere: \(path.lastPathComponent)")
+            let data = try JSONEncoder().encode(item)
+            let path = directoryURL.appendingPathComponent("\(fileName).json")
             try data.write(to: path)
             
             await MainActor.run {
@@ -135,56 +143,40 @@ where T: Codable & Identifiable, T.ID: Hashable {
                     self.items.append(item)
                 }
             }
+            
+            print("💾 Gespeichert: \(path.lastPathComponent)")
         } catch {
-            print("❌ Fehler beim Speichern \(fileName) in \(directoryName): \(error.localizedDescription)")
+            print("❌ Fehler beim Speichern: \(error.localizedDescription)")
         }
     }
+    
+    func delete(item: T, fileName: String) async {
+        let path = directoryURL.appendingPathComponent("\(fileName).json")
+        
+        do {
+            try fileManager.removeItem(at: path)
+            await MainActor.run {
+                self.items.removeAll { $0.id == item.id }
+            }
+            print("🗑️ Gelöscht: \(fileName)")
+        } catch {
+            print("❌ Fehler beim Löschen: \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - Convenience Funktionen
     
     func createNewItem(defaultItem: T, fileName: String) async -> T {
         await save(item: defaultItem, fileName: fileName)
         return defaultItem
     }
     
-    func delete(item: T, fileName: String) async {
-        let path = directory.appendingPathComponent("\(fileName).json")
-        
-        do {
-            try fileManager.removeItem(at: path)
-            
-            await MainActor.run {
-                self.items.removeAll { $0.id == item.id }
-            }
-            
-            print("🗑️ Gelöscht: \(path.lastPathComponent)")
-        } catch {
-            print("❌ Fehler beim Löschen \(fileName): \(error.localizedDescription)")
-        }
-    }
-    
-    // MARK: - Standard Restore
-    
-    func clearItems() {
-        items.removeAll()
-    }
-    
-    func restoreDefaultResource() async throws {
-        guard let resourceName = initialResourceName else {
-            throw MigrationError.noInitialResource
-        }
-        
-        if FileManagerService.hasMigrated(resourceName: resourceName, storageType: storageType) {
-            print("ℹ️ Migration für \(resourceName) wurde bereits durchgeführt.")
-            return
-        }
-        
-        try FileManagerService.migrateOnce(
-            resourceName: resourceName,
-            to: directoryName,
-            as: T.self,
-            storageType: storageType
-        )
-        
-        await loadItems()
-        print("✅ Standarddaten geladen für \(directoryName)")
+}
+
+
+extension GenericStore where T.ID == UUID {
+    func createNewItem(defaultItem: T) async -> T {
+        await save(item: defaultItem, fileName: defaultItem.id.uuidString)
+        return defaultItem
     }
 }

@@ -12,7 +12,7 @@
 // listJSONFiles()
 // getDirectoryURL() als public verwendbar für Debug View
 
-// FileManagerService.swift – jetzt mit Migrations-Marker im Dateisystem
+// FileManagerService.swift
 import Foundation
 
 // MARK: - Enums
@@ -79,6 +79,7 @@ class FileManagerService {
     // MARK: - Ressourcen Handling
 
     func restoreSystemResource<T: Codable & Identifiable>(
+        _ type: T.Type,
         resourceName: String,
         subdirectory: String,
         storageType: StorageType
@@ -104,6 +105,7 @@ class FileManagerService {
     }
 
     func copyUserResourceIfNeeded<T: Codable & Identifiable>(
+        _ type: T.Type,
         resourceName: String,
         subdirectory: String,
         storageType: StorageType
@@ -170,5 +172,14 @@ class FileManagerService {
         let key = "migrated_\(resourceName)_\(storageType.rawValue)"
         UserDefaults.standard.removeObject(forKey: key)
         print("🔄 Rollback Migration: \(resourceName)")
+    }
+}
+
+extension FileManagerService {
+    func rollbackAllKnownUserResources(for storageType: StorageType) {
+        let resourceNames = ["papers", "paper-formats", "aspect-ratios", "units"]
+        for name in resourceNames {
+            rollbackUserResource(for: name, storageType: storageType)
+        }
     }
 }

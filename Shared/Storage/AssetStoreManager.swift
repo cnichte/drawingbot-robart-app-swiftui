@@ -30,9 +30,9 @@ class AssetStoreManager {
     // MARK: - Create Directories
     
     private func createDirectories() async {
-        let service = FileManagerService()
+        let service = FileManagerService.shared
         
-        guard let baseDir = service.getDirectoryURL(for: storageType) else {
+        guard let baseDir = service.baseDirectory(for: storageType) else {
             print("❌ Basisverzeichnis konnte nicht ermittelt werden für \(storageType)")
             return
         }
@@ -68,7 +68,7 @@ class AssetStoreManager {
             if genericStore.resourceType == .system {
                 if store.itemCount == 0 {
                     do {
-                        try await store.restoreDefaultResource()
+                        try await store.restoreDefaults()
                         print("✅ System-Ressource wiederhergestellt: \(store.directoryName)")
                     } catch {
                         print("⚠️ Fehler beim Wiederherstellen von \(store.directoryName): \(error.localizedDescription)")
@@ -87,7 +87,7 @@ class AssetStoreManager {
             if genericStore.resourceType == .user {
                 if store.itemCount == 0 {
                     do {
-                        try await store.restoreDefaultResource()
+                        try await store.restoreDefaults()
                         print("✅ User-Resource kopiert: \(store.directoryName)")
                     } catch {
                         print("⚠️ Fehler beim Kopieren von \(store.directoryName): \(error.localizedDescription)")
@@ -143,13 +143,35 @@ class AssetStoreManager {
     
     private func deleteAllFiles() {
         print("🗑️ Lösche alle Asset-Daten...")
-        let service = FileManagerService()
+        let service = FileManagerService.shared
         
         for store in stores {
-            if let baseDir = service.getDirectoryURL(for: storageType) {
+            if let baseDir = service.baseDirectory(for: storageType) {
                 let dir = baseDir.appendingPathComponent(store.directoryName)
                 try? FileManager.default.removeItem(at: dir)
             }
         }
+    }
+    
+    // MARK: - Reset In-Memory (nur Speicher leeren)
+    func resetStoresInMemory() {
+        print("🧹 Leere alle Stores im RAM...")
+        for store in stores {
+            store.clearItems()
+        }
+    }
+    
+    func restoreDefaultResourcesIfNeeded() async {
+        await restoreSystemDefaultsIfNeeded()
+        await copyUserDefaultsIfNeeded()
+    }
+    
+    func printSummary() {
+        print("📦 AssetStoreManager Zusammenfassung:")
+        for store in stores {
+            print("- \(store.directoryName): \(store.itemCount) Einträge")
+        }
+        let total = stores.map(\.itemCount).reduce(0, +)
+        print("🔢 Gesamtanzahl: \(total)")
     }
 }

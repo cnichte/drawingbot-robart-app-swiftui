@@ -8,19 +8,17 @@
 // SettingsMigrator.swift
 import Foundation
 
-import Foundation
-
 class SettingsMigrator {
     private let fileManager = FileManager.default
-    private let service = FileManagerService()
+    private let service = FileManagerService.shared
 
     func migrate(from source: StorageType,
                  to target: StorageType,
                  subdirectory: String,
                  deleteOriginal: Bool = false) throws {
         
-        guard let sourceBase = service.getDirectoryURL(for: source),
-              let targetBase = service.getDirectoryURL(for: target) else {
+        guard let sourceBase = service.baseDirectory(for: source),
+              let targetBase = service.baseDirectory(for: target) else {
             throw NSError(domain: "Directory not found", code: 42)
         }
         
