@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct SettingsPanel: View {
-    @Binding var goToStep: Int
     @Binding var currentJob: PlotJobData
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool
@@ -18,7 +17,7 @@ struct SettingsPanel: View {
     @EnvironmentObject var store: GenericStore<PlotJobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
     @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormat>
-    
+
     var showBottomBar: Bool = false
 
     var body: some View {
@@ -36,21 +35,18 @@ struct SettingsPanel: View {
         }
         .safeAreaInset(edge: .bottom) {
             if showBottomBar {
-                bottomButtons
+                bottomBarPlaceholder
             }
         }
     }
 
     @ViewBuilder
-    private var bottomButtons: some View {
+    private var bottomBarPlaceholder: some View {
         HStack {
-            Button("◀︎ Zurück") {
-                goToStep = 1
-            }
             Spacer()
-            Button("Weiter ▶︎") {
-                goToStep = 3
-            }
+            Text("Optionale Bottom Bar")
+                .foregroundColor(.secondary)
+            Spacer()
         }
         .padding()
         .background(.ultraThinMaterial)

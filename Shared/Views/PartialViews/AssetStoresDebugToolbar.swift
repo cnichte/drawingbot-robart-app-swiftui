@@ -21,18 +21,14 @@ struct AssetStoresDebugToolbar: View {
 
             Button("🧹 Soft Reset (nur RAM)") {
                 Task {
-                    await run {
-                        assetStores.manager.resetStoresInMemory()
-                    }
+                    AssetManagerHelper.resetAllInMemory(in: assetStores)
                 }
             }
 
             Button("🗑️ Hard Reset (Dateien löschen)") {
                 Task {
-                    await run {
-                        await assetStores.manager.resetAllData(deleteFiles: true)
-                    }
-                }
+                       await AssetManagerHelper.deleteAllData(in: assetStores)
+                   }
             }
 
             Button("📦 Standarddaten wiederherstellen") {
@@ -47,7 +43,7 @@ struct AssetStoresDebugToolbar: View {
                 .padding(.vertical, 8)
 
             Button("📝 Zusammenfassung drucken") {
-                assetStores.manager.printSummary()
+                AssetManagerHelper.printSummary(of: assetStores)
             }
         }
         .padding()
