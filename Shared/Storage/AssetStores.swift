@@ -7,31 +7,11 @@
 
 // AssetStores.swift
 import Foundation
-import SwiftUI
 
-extension View {
-    func environmentObjects(from assetStores: AssetStores) -> some View {
-        self
-            .environmentObject(assetStores.connectionsStore)
-            .environmentObject(assetStores.machineStore)
-            .environmentObject(assetStores.projectStore)
-            .environmentObject(assetStores.plotJobStore)
-            .environmentObject(assetStores.pensStore)
-            .environmentObject(assetStores.paperStore)
-            .environmentObject(assetStores.paperFormatsStore)
-            .environmentObject(assetStores.aspectRatiosStore)
-            .environmentObject(assetStores.unitsStore)
-            .environmentObject(assetStores) // wichtig, AssetStores selbst auch
-    }
-}
-
-// MARK: - MigrationError für bessere Fehlerunterscheidung
-enum MigrationError: Error {
-    case noInitialResource
-    case alreadyMigrated
-}
-
+/// Definiert alle unterstützten Asset-Typen in der App.
 enum AssetStoreType: String, CaseIterable, Identifiable {
+    
+    // MARK: - Alle bekannten Typen
     case connections
     case machines
     case projects
@@ -41,14 +21,43 @@ enum AssetStoreType: String, CaseIterable, Identifiable {
     case paperformats
     case aspectratios
     case units
-
+    
     var id: String { rawValue }
+    
+    // MARK: - Resource Typ (System / User)
+
+    /// Gibt zurück, ob es sich um eine System- oder User-Resource handelt
+    var resourceType: ResourceType {
+        switch self {
+        case .papers:
+            return .user
+        default:
+            return .system
+        }
+    }
+    
+    /// Gibt den initialResourceName an (nur falls es einen gibt)
+    var initialResourceName: String? {
+        switch self {
+        case .papers:
+            return "papers"
+        case .paperformats:
+            return "paper-formats"
+        case .aspectratios:
+            return "aspect-ratios"
+        case .units:
+            return "units"
+        default:
+            return nil
+        }
+    }
 }
 
-import Foundation
+// MARK: - AssetStores
 
 class AssetStores: ObservableObject {
-    // MARK: - User-Assets
+    
+    // MARK: - User Stores
     @Published var connectionsStore: GenericStore<ConnectionData>
     @Published var machineStore: GenericStore<MachineData>
     @Published var projectStore: GenericStore<ProjectData>
@@ -56,20 +65,14 @@ class AssetStores: ObservableObject {
     @Published var pensStore: GenericStore<PenData>
     @Published var paperStore: GenericStore<PaperData>
 
-    // MARK: - Internal-Assets (mit Initial-Ressourcen)
+    // MARK: - System Stores
     @Published var paperFormatsStore: GenericStore<PaperFormat>
     @Published var aspectRatiosStore: GenericStore<AspectRatio>
     @Published var unitsStore: GenericStore<Units>
 
-    // MARK: - Migration Manager
-    private(set) var manager: AssetStoreManager
+    private(set) var storageType: StorageType
 
-    var storageType: StorageType {
-        didSet {
-            manager.updateStorageType(to: storageType)
-        }
-    }
-
+    // Alle Stores für Utility-Funktionen
     var allStores: [any MigratableStore] {
         [
             connectionsStore,
@@ -84,79 +87,63 @@ class AssetStores: ObservableObject {
         ]
     }
 
-    // MARK: - Initialisierung
-    init(initialStorage: StorageType) {
-        self.storageType = initialStorage
+    // MARK: - Initializer
+    init(initialStorageType: StorageType) {
+        self.storageType = initialStorageType
 
-        // Lokale Stores anlegen
-        let connectionsStore = GenericStore<ConnectionData>(directoryName: "connections")
-        let machineStore     = GenericStore<MachineData>(directoryName: "machines")
-        let projectStore     = GenericStore<ProjectData>(directoryName: "projects")
-        let plotJobStore     = GenericStore<PlotJobData>(directoryName: "jobs")
-        let pensStore        = GenericStore<PenData>(directoryName: "pens")
-        let paperStore       = GenericStore<PaperData>(directoryName: "papers", initialResourceName: "papers")
-        let paperFormatsStore = GenericStore<PaperFormat>(directoryName: "paperformats", initialResourceName: "paper-formats")
-        let aspectRatiosStore = GenericStore<AspectRatio>(directoryName: "aspectratios", initialResourceName: "aspect-ratios")
-        let unitsStore        = GenericStore<Units>(directoryName: "units", initialResourceName: "units")
+        // User Stores
+        self.connectionsStore = GenericStore(directoryName: "connections", resourceType: .user)
+        self.machineStore     = GenericStore(directoryName: "machines", resourceType: .user)
+        self.projectStore     = GenericStore(directoryName: "projects", resourceType: .user)
+        self.plotJobStore     = GenericStore(directoryName: "jobs", resourceType: .user)
+        self.pensStore        = GenericStore(directoryName: "pens", resourceType: .user)
+        self.paperStore       = GenericStore(directoryName: "papers", initialResourceName: "papers", resourceType: .user)
 
-        // Manager anlegen mit diesen lokalen Stores
-        self.manager = AssetStoreManager(
-            stores: [
-                connectionsStore,
-                machineStore,
-                projectStore,
-                plotJobStore,
-                pensStore,
-                paperStore,
-                paperFormatsStore,
-                aspectRatiosStore,
-                unitsStore
-            ],
-            initialStorage: initialStorage
+        // System Stores
+        self.paperFormatsStore = GenericStore(directoryName: "paperformats", initialResourceName: "paper-formats", resourceType: .system)
+        self.aspectRatiosStore = GenericStore(directoryName: "aspectratios", initialResourceName: "aspect-ratios", resourceType: .system)
+        self.unitsStore        = GenericStore(directoryName: "units", initialResourceName: "units", resourceType: .system)
+        
+        Task {
+            await FileManagerService.shared.ensureAllDirectoriesExist(for: allStores, storageType: initialStorageType)
+            await loadAllStores()
+        }
+    }
+
+    // MARK: - Laden
+    private func loadAllStores() async {
+        for store in allStores {
+            await store.loadItems()
+        }
+    }
+
+    // MARK: - Utilities
+    func deleteAllLocalData() async {
+        for store in allStores {
+            try? FileManagerService.shared.deleteDirectory(storage: storageType, subdirectory: store.directoryName)
+        }
+    }
+
+    func resetAllStoresInMemory() {
+        for store in allStores {
+            store.clearItems()
+        }
+    }
+
+    func migrateTo(storageType newStorageType: StorageType) async throws {
+        try await FileManagerService.shared.migrateAllStores(
+            from: storageType,
+            to: newStorageType,
+            stores: allStores
         )
-
-        // Jetzt Zuweisung an self.xxx
-        self.connectionsStore = connectionsStore
-        self.machineStore     = machineStore
-        self.projectStore     = projectStore
-        self.plotJobStore     = plotJobStore
-        self.pensStore        = pensStore
-        self.paperStore       = paperStore
-        self.paperFormatsStore = paperFormatsStore
-        self.aspectRatiosStore = aspectRatiosStore
-        self.unitsStore        = unitsStore
-
-        afterInit()
+        self.storageType = newStorageType
     }
-
-    private func afterInit() {
-        Task {
-            await manager.ensureDirectoriesExist()
-            await manager.restoreDefaultResourcesIfNeeded()
-        }
-    }
-
-    // MARK: - Utilities (nur durchreichen)
-
-    func applyInitialStorageTypeAndMigrations(using preferred: StorageType) {
-        storageType = preferred
-    }
-
-    func deleteAllData() {
-        manager.deleteAllData()
-    }
-
-    func resetStoresInMemory() {
-        manager.resetStoresInMemory()
-    }
-
-    func resetStoresCompletely(deleteFiles: Bool = false) {
-        Task {
-            await manager.resetStoresCompletely(deleteFiles: deleteFiles)
-        }
-    }
-
+    
     func printSummary() {
-        manager.printSummary()
+        print("📦 AssetStores Zusammenfassung:")
+        for store in allStores {
+            print("- \(store.directoryName): \(store.itemCount) Einträge")
+        }
+        print("🔢 Gesamtanzahl: \(allStores.map(\.itemCount).reduce(0, +))")
     }
 }

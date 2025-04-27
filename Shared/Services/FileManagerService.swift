@@ -15,144 +15,160 @@
 // FileManagerService.swift – jetzt mit Migrations-Marker im Dateisystem
 import Foundation
 
+// MARK: - Enums
+
 enum StorageType: String, Codable {
     case local = ".local"
     case iCloud = ".iCloud"
 }
 
+enum ResourceType: String, Codable {
+    case system
+    case user
+}
+
+// MARK: - FileManagerService
+
 class FileManagerService {
+    
+    static let shared = FileManagerService()
     private let fileManager = FileManager.default
 
+    private init() { }
+
+    // MARK: - Basisverzeichnis
+    func baseDirectory(for storage: StorageType) -> URL? {
+        switch storage {
+        case .local:
+            return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        case .iCloud:
+            return fileManager.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
+        }
+    }
+
+    func directory(for storage: StorageType, subdirectory: String) -> URL? {
+        baseDirectory(for: storage)?.appendingPathComponent(subdirectory)
+    }
+
     // MARK: - Directory Management
-
-    func getDirectoryURL(for type: StorageType, subdirectory: String? = nil) -> URL? {
-        let base: URL? = {
-            switch type {
-            case .local:
-                return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-            case .iCloud:
-                return fileManager.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
-            }
-        }()
-
-        guard let baseURL = base else { return nil }
-
-        if let sub = subdirectory {
-            return baseURL.appendingPathComponent(sub)
-        } else {
-            return baseURL
-        }
-    }
-
-    func requireDirectory(for storage: StorageType, subdirectory: String) throws -> URL {
-        guard let baseDir = getDirectoryURL(for: storage) else {
-            throw NSError(domain: "Directory not found for \(storage)", code: 42)
-        }
-
-        let dir = baseDir.appendingPathComponent(subdirectory)
-
-        if !fileManager.fileExists(atPath: dir.path) {
-            try fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
-            print("📁 Subdirectory erstellt: \(dir.path)")
-        }
-
-        return dir
-    }
-
-    // MARK: - Migration Handling
-
-    static func migrateOnce<T: Codable & Identifiable>(
-        resourceName: String,
-        to directoryName: String,
-        as type: T.Type,
-        storageType: StorageType = .local
-    ) throws {
-        if hasMigrated(resourceName: resourceName, storageType: storageType) {
-            print("ℹ️ Migration für \(resourceName) wurde bereits durchgeführt.")
+    func ensureAllDirectoriesExist(for stores: [any MigratableStore], storageType: StorageType) async {
+        guard let base = baseDirectory(for: storageType) else {
+            print("❌ Basisverzeichnis nicht gefunden für \(storageType)")
             return
         }
-
-        guard let url = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
-            throw NSError(domain: "Resource \(resourceName).json nicht gefunden", code: 1)
+        if !fileManager.fileExists(atPath: base.path) {
+            try? fileManager.createDirectory(at: base, withIntermediateDirectories: true)
         }
-
-        let data = try Data(contentsOf: url)
-
-        guard !data.isEmpty else {
-            throw NSError(domain: "Resource \(resourceName).json ist leer", code: 2)
+        for store in stores {
+            let dir = base.appendingPathComponent(store.directoryName)
+            if !fileManager.fileExists(atPath: dir.path) {
+                try? fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
+                print("📁 Verzeichnis erstellt: \(dir.lastPathComponent)")
+            }
         }
+    }
 
-        print("📄 Geladener Inhalt von \(resourceName).json:")
-        if let contentString = String(data: data, encoding: .utf8) {
-            print(contentString)
-        } else {
-            print("⚠️ Inhalt konnte nicht als UTF-8 gelesen werden.")
+    func deleteDirectory(storage: StorageType, subdirectory: String) throws {
+        guard let dir = directory(for: storage, subdirectory: subdirectory) else { return }
+        if fileManager.fileExists(atPath: dir.path) {
+            try fileManager.removeItem(at: dir)
+            print("🗑️ Gelöscht: \(dir.lastPathComponent)")
         }
+    }
 
+    // MARK: - Ressourcen Handling
+
+    func restoreSystemResource<T: Codable & Identifiable>(
+        resourceName: String,
+        subdirectory: String,
+        storageType: StorageType
+    ) throws {
+        guard let baseURL = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
+            throw NSError(domain: "Bundle resource not found: \(resourceName)", code: 1)
+        }
+        let data = try Data(contentsOf: baseURL)
         let decoder = JSONDecoder()
         let items = try decoder.decode([T].self, from: data)
 
-        let fileManager = FileManager.default
-        let service = FileManagerService()
-
-        guard let targetDir = service.getDirectoryURL(for: storageType)?.appendingPathComponent(directoryName) else {
-            throw NSError(domain: "Zielverzeichnis nicht gefunden", code: 3)
+        guard let dirURL = directory(for: storageType, subdirectory: subdirectory) else {
+            throw NSError(domain: "Directory not found for restore", code: 2)
         }
 
-        if !fileManager.fileExists(atPath: targetDir.path) {
-            try fileManager.createDirectory(at: targetDir, withIntermediateDirectories: true)
-        }
-
-        let encoder = JSONEncoder()
         for item in items {
-            let fileURL = targetDir.appendingPathComponent("\(item.id).json")
+            let itemURL = dirURL.appendingPathComponent("\(item.id).json")
+            let encoder = JSONEncoder()
             let itemData = try encoder.encode(item)
-            try itemData.write(to: fileURL)
+            try itemData.write(to: itemURL)
+            print("✅ System-Item gespeichert: \(itemURL.lastPathComponent)")
+        }
+    }
+
+    func copyUserResourceIfNeeded<T: Codable & Identifiable>(
+        resourceName: String,
+        subdirectory: String,
+        storageType: StorageType
+    ) throws {
+        let key = "migrated_\(resourceName)_\(storageType.rawValue)"
+        if UserDefaults.standard.bool(forKey: key) {
+            print("ℹ️ UserResource \(resourceName) wurde bereits kopiert.")
+            return
         }
 
-        markMigrated(resourceName: resourceName, storageType: storageType)
-        print("✅ Migration von \(resourceName) abgeschlossen und Marker gesetzt.")
-    }
-
-    // MARK: - Migration Marker Filesystem
-
-    static func migratedFileURL(for resourceName: String, storageType: StorageType) -> URL? {
-        guard let systemDir = FileManagerService().getDirectoryURL(for: storageType, subdirectory: "system") else {
-            return nil
+        guard let baseURL = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
+            throw NSError(domain: "Bundle resource not found: \(resourceName)", code: 3)
         }
-        return systemDir.appendingPathComponent("\(resourceName).migrated")
-    }
+        let data = try Data(contentsOf: baseURL)
+        let decoder = JSONDecoder()
+        let items = try decoder.decode([T].self, from: data)
 
-    static func hasMigrated(resourceName: String, storageType: StorageType) -> Bool {
-        guard let url = migratedFileURL(for: resourceName, storageType: storageType) else {
-            return false
+        guard let dirURL = directory(for: storageType, subdirectory: subdirectory) else {
+            throw NSError(domain: "Directory not found for user resource", code: 4)
         }
-        return FileManager.default.fileExists(atPath: url.path)
-    }
 
-    static func markMigrated(resourceName: String, storageType: StorageType) {
-        guard let url = migratedFileURL(for: resourceName, storageType: storageType) else { return }
-        try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-        FileManager.default.createFile(atPath: url.path, contents: nil)
-    }
-
-    static func rollbackMigration(resourceName: String, storageType: StorageType) {
-        guard let url = migratedFileURL(for: resourceName, storageType: storageType) else { return }
-        try? FileManager.default.removeItem(at: url)
-        print("🔄 Migrationseintrag zurückgesetzt: \(resourceName)")
-    }
-
-    static func rollbackAllMigrations(storageType: StorageType = .local) {
-        let allResourceNames = [
-            "papers",
-            "paper-formats",
-            "aspect-ratios",
-            "units"
-        ]
-
-        for resource in allResourceNames {
-            rollbackMigration(resourceName: resource, storageType: storageType)
+        for item in items {
+            let itemURL = dirURL.appendingPathComponent("\(item.id).json")
+            let encoder = JSONEncoder()
+            let itemData = try encoder.encode(item)
+            try itemData.write(to: itemURL)
+            print("✅ User-Item gespeichert: \(itemURL.lastPathComponent)")
         }
-        print("🔄 Alle Migrationseinträge wurden zurückgesetzt!")
+
+        UserDefaults.standard.set(true, forKey: key)
+    }
+
+    // MARK: - Migration
+
+    func migrateAllStores(
+        from oldStorage: StorageType,
+        to newStorage: StorageType,
+        stores: [any MigratableStore]
+    ) async throws {
+        for store in stores {
+            guard let oldDir = directory(for: oldStorage, subdirectory: store.directoryName),
+                  let newDir = directory(for: newStorage, subdirectory: store.directoryName) else {
+                continue
+            }
+
+            if !fileManager.fileExists(atPath: newDir.path) {
+                try fileManager.createDirectory(at: newDir, withIntermediateDirectories: true)
+            }
+
+            let files = try fileManager.contentsOfDirectory(at: oldDir, includingPropertiesForKeys: nil)
+            for file in files where file.pathExtension == "json" {
+                let dest = newDir.appendingPathComponent(file.lastPathComponent)
+                if !fileManager.fileExists(atPath: dest.path) {
+                    try fileManager.copyItem(at: file, to: dest)
+                    print("📦 Migriert: \(file.lastPathComponent)")
+                }
+            }
+        }
+    }
+
+    // MARK: - Debugging
+
+    func rollbackUserResource(for resourceName: String, storageType: StorageType) {
+        let key = "migrated_\(resourceName)_\(storageType.rawValue)"
+        UserDefaults.standard.removeObject(forKey: key)
+        print("🔄 Rollback Migration: \(resourceName)")
     }
 }

@@ -6,6 +6,12 @@
         "typ": "xy",
         "size": {x:1000,y:500},
         "protokoll":"egg",
+        "codeTemplates"[
+            {
+                "command":"",
+                "description":""
+            }
+        ],
         "penCount":1,
         "connection":{}
     }, {
@@ -15,6 +21,12 @@
         "typ": "omnidirektional",
         "size": {x:-1,y:-1},
         "protokoll":"gcode",
+        "codeTemplates"[
+            {
+                "command":"",
+                "description":""
+            }
+        ],
         "penCount":5,
         "connection":{}
     }
