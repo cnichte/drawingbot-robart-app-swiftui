@@ -64,6 +64,14 @@
 		D581AF892DBC139100821A7E /* Bundle+DebugTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */; };
 		D581AFA62DBC216900821A7E /* UUID+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AFA52DBC216600821A7E /* UUID+Helpers.swift */; };
 		D581AFA72DBC216900821A7E /* UUID+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AFA52DBC216600821A7E /* UUID+Helpers.swift */; };
+		D587A4312DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */; };
+		D587A4322DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */; };
+		D587A4372DBEA9F90072D83C /* CustomSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4362DBEA9F10072D83C /* CustomSplitView.swift */; };
+		D587A4382DBEA9F90072D83C /* CustomSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4362DBEA9F10072D83C /* CustomSplitView.swift */; };
+		D587A43A2DBEAE620072D83C /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4392DBEAE5D0072D83C /* TestView.swift */; };
+		D587A43B2DBEAE620072D83C /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4392DBEAE5D0072D83C /* TestView.swift */; };
+		D587A43D2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A43C2DBEB9A20072D83C /* ConnectionStatusHeader.swift */; };
+		D587A43E2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A43C2DBEB9A20072D83C /* ConnectionStatusHeader.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -112,11 +120,9 @@
 		D5A085112DAFD8AD00332690 /* Joystick_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085002DAFD8AD00332690 /* Joystick_View.swift */; };
 		D5A085172DAFD8C900332690 /* JobSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085152DAFD8C900332690 /* JobSummaryView.swift */; };
 		D5A085182DAFD8C900332690 /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085132DAFD8C900332690 /* JobListView.swift */; };
-		D5A085192DAFD8C900332690 /* PlotterWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085162DAFD8C900332690 /* PlotterWizardView.swift */; };
 		D5A0851A2DAFD8C900332690 /* JobPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085142DAFD8C900332690 /* JobPreviewView.swift */; };
 		D5A0851B2DAFD8C900332690 /* JobSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085152DAFD8C900332690 /* JobSummaryView.swift */; };
 		D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085132DAFD8C900332690 /* JobListView.swift */; };
-		D5A0851D2DAFD8C900332690 /* PlotterWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085162DAFD8C900332690 /* PlotterWizardView.swift */; };
 		D5A0851E2DAFD8C900332690 /* JobPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085142DAFD8C900332690 /* JobPreviewView.swift */; };
 		D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */; };
 		D5A085282DAFD8DE00332690 /* Speedometer_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085232DAFD8DE00332690 /* Speedometer_View.swift */; };
@@ -247,6 +253,10 @@
 		D581AFA52DBC216600821A7E /* UUID+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UUID+Helpers.swift"; sourceTree = "<group>"; };
 		D581AFAC2DBC236A00821A7E /* Robart-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Robart-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D581AFC22DBC24F100821A7E /* Robart-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Robart-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManagerHelper.swift; sourceTree = "<group>"; };
+		D587A4362DBEA9F10072D83C /* CustomSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSplitView.swift; sourceTree = "<group>"; };
+		D587A4392DBEAE5D0072D83C /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		D587A43C2DBEB9A20072D83C /* ConnectionStatusHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusHeader.swift; sourceTree = "<group>"; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -274,7 +284,6 @@
 		D5A085132DAFD8C900332690 /* JobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListView.swift; sourceTree = "<group>"; };
 		D5A085142DAFD8C900332690 /* JobPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobPreviewView.swift; sourceTree = "<group>"; };
 		D5A085152DAFD8C900332690 /* JobSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSummaryView.swift; sourceTree = "<group>"; };
-		D5A085162DAFD8C900332690 /* PlotterWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotterWizardView.swift; sourceTree = "<group>"; };
 		D5A085202DAFD8DE00332690 /* PaperPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperPreview.swift; sourceTree = "<group>"; };
 		D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperSourcePreview.swift; sourceTree = "<group>"; };
 		D5A085232DAFD8DE00332690 /* Speedometer_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speedometer_View.swift; sourceTree = "<group>"; };
@@ -415,10 +424,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D509C0982DBC4979009B0233 /* JobPreviewSectionViews */ = {
+		D509C0982DBC4979009B0233 /* JobSectionViews */ = {
 			isa = PBXGroup;
 			children = (
-				D509C0AE2DBC4B7E009B0233 /* SettingsPanel.swift */,
 				D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */,
 				D509C0A82DBC4AEA009B0233 /* PenSectionView.swift */,
 				D509C0A52DBC4AA8009B0233 /* SignatureSectionView.swift */,
@@ -426,7 +434,7 @@
 				D509C09F2DBC49EF009B0233 /* SVGSectionView.swift */,
 				D509C09C2DBC49D5009B0233 /* JobSectionView.swift */,
 			);
-			path = JobPreviewSectionViews;
+			path = JobSectionViews;
 			sourceTree = "<group>";
 		};
 		D52C0AED2DBA654600F57746 /* Resources */ = {
@@ -450,6 +458,8 @@
 				D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */,
 				D5A085322DAFE17000332690 /* CollapsibleSection.swift */,
 				D5A085032DAFD8AD00332690 /* ToastView.swift */,
+				D587A43C2DBEB9A20072D83C /* ConnectionStatusHeader.swift */,
+				D5F896ED2DBCF7F400397561 /* AssetStoresDebugToolbar.swift */,
 			);
 			path = PartialViews;
 			sourceTree = "<group>";
@@ -561,9 +571,33 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		D587A43F2DBEBFA40072D83C /* JobPreviewView */ = {
+			isa = PBXGroup;
+			children = (
+				D587A4402DBEBFFA0072D83C /* Deprecated */,
+				D509C0982DBC4979009B0233 /* JobSectionViews */,
+				D5A085202DAFD8DE00332690 /* PaperPreview.swift */,
+				D509C0AE2DBC4B7E009B0233 /* SettingsPanel.swift */,
+			);
+			path = JobPreviewView;
+			sourceTree = "<group>";
+		};
+		D587A4402DBEBFFA0072D83C /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */,
+				D5A085152DAFD8C900332690 /* JobSummaryView.swift */,
+				D5A085252DAFD8DE00332690 /* SVGTreeView.swift */,
+				D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */,
+				D5A085142DAFD8C900332690 /* JobPreviewView.swift */,
+			);
+			path = Deprecated;
+			sourceTree = "<group>";
+		};
 		D5A084C02DAFD58B00332690 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */,
 				D581AFA52DBC216600821A7E /* UUID+Helpers.swift */,
 				D5A084C12DAFD59B00332690 /* BluetoothManager.swift */,
 				D5A084DC2DAFD85300332690 /* FileManagerService.swift */,
@@ -612,12 +646,13 @@
 		D5A084FC2DAFD89900332690 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D5F896ED2DBCF7F400397561 /* AssetStoresDebugToolbar.swift */,
+				D587A43F2DBEBFA40072D83C /* JobPreviewView */,
+				D587A4392DBEAE5D0072D83C /* TestView.swift */,
+				D587A4362DBEA9F10072D83C /* CustomSplitView.swift */,
 				D52C0AFD2DBA87C100F57746 /* PartialViews */,
 				D5F6C61F2DB8348600020AEE /* GenericItemManagerView */,
 				D57076D52DB57F4600C277AF /* AssetManager */,
 				D5A085B72DB02DBD00332690 /* JobListView */,
-				D5A085122DAFD8BC00332690 /* PlotterWizard */,
 				D5A084FD2DAFD8AD00332690 /* AboutMeView.swift */,
 				D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */,
 				D5A084FF2DAFD8AD00332690 /* DeviceListView.swift */,
@@ -627,29 +662,6 @@
 				D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		D5A085122DAFD8BC00332690 /* PlotterWizard */ = {
-			isa = PBXGroup;
-			children = (
-				D509C0982DBC4979009B0233 /* JobPreviewSectionViews */,
-				D5A0851F2DAFD8D300332690 /* PartialViews */,
-				D5A085142DAFD8C900332690 /* JobPreviewView.swift */,
-				D5A085152DAFD8C900332690 /* JobSummaryView.swift */,
-				D5A085162DAFD8C900332690 /* PlotterWizardView.swift */,
-			);
-			path = PlotterWizard;
-			sourceTree = "<group>";
-		};
-		D5A0851F2DAFD8D300332690 /* PartialViews */ = {
-			isa = PBXGroup;
-			children = (
-				D5A085202DAFD8DE00332690 /* PaperPreview.swift */,
-				D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */,
-				D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */,
-				D5A085252DAFD8DE00332690 /* SVGTreeView.swift */,
-			);
-			path = PartialViews;
 			sourceTree = "<group>";
 		};
 		D5A085B72DB02DBD00332690 /* JobListView */ = {
@@ -1006,13 +1018,14 @@
 				D5A084D62DAFD84000332690 /* ProjectData.swift in Sources */,
 				D5F6C63B2DB8469A00020AEE /* PaperFormView.swift in Sources */,
 				D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */,
+				D587A43A2DBEAE620072D83C /* TestView.swift in Sources */,
 				D5A085172DAFD8C900332690 /* JobSummaryView.swift in Sources */,
 				D5A085182DAFD8C900332690 /* JobListView.swift in Sources */,
 				D581AF892DBC139100821A7E /* Bundle+DebugTools.swift in Sources */,
 				D509C0A42DBC4A20009B0233 /* PaperSectionView.swift in Sources */,
 				D5F6C61C2DB825C100020AEE /* PaperData.swift in Sources */,
-				D5A085192DAFD8C900332690 /* PlotterWizardView.swift in Sources */,
 				D5A0851A2DAFD8C900332690 /* JobPreviewView.swift in Sources */,
+				D587A4312DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */,
 				D5F6C61A2DB8230200020AEE /* TabManagerShellView.swift in Sources */,
 				D5A084D72DAFD84000332690 /* SettingsData.swift in Sources */,
 				D5A084D82DAFD84000332690 /* MachineData.swift in Sources */,
@@ -1034,6 +1047,7 @@
 				D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */,
 				D5A0852A2DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */,
 				D5A0852B2DAFD8DE00332690 /* PaperPreview.swift in Sources */,
+				D587A4372DBEA9F90072D83C /* CustomSplitView.swift in Sources */,
 				D5A084DA2DAFD84000332690 /* PlotJobData.swift in Sources */,
 				D5A084DB2DAFD84000332690 /* ConnectionData.swift in Sources */,
 				D5D104092DAEF2E600E8406E /* ContentView.swift in Sources */,
@@ -1065,6 +1079,7 @@
 				D5F896F72DBD56BA00397561 /* AssetStoreManager.swift in Sources */,
 				D5A084F72DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
 				D5A084F82DAFD88A00332690 /* PathParser.swift in Sources */,
+				D587A43D2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */,
 				D5A084F92DAFD88A00332690 /* SVGParser.swift in Sources */,
 				D5A084FA2DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
 				D509C0A12DBC49F2009B0233 /* SVGSectionView.swift in Sources */,
@@ -1098,7 +1113,6 @@
 				D5A0851B2DAFD8C900332690 /* JobSummaryView.swift in Sources */,
 				D575661A2DB9041000D95E3F /* ManageableItem.swift in Sources */,
 				D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */,
-				D5A0851D2DAFD8C900332690 /* PlotterWizardView.swift in Sources */,
 				D5A0851E2DAFD8C900332690 /* JobPreviewView.swift in Sources */,
 				D509C0A02DBC49F2009B0233 /* SVGSectionView.swift in Sources */,
 				D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
@@ -1112,11 +1126,14 @@
 				D5F6C61D2DB825C100020AEE /* PaperData.swift in Sources */,
 				D5F4DE042DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
 				D5A085BA2DB02E0000332690 /* UnassignedSectionView.swift in Sources */,
+				D587A4382DBEA9F90072D83C /* CustomSplitView.swift in Sources */,
 				D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
 				D5A085BD2DB02E2100332690 /* JobRowView.swift in Sources */,
 				D5A085B62DB02D7800332690 /* ProjectSectionView.swift in Sources */,
 				D575661B2DB91E5000D95E3F /* ItemManagerView.swift in Sources */,
 				D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
+				D587A43B2DBEAE620072D83C /* TestView.swift in Sources */,
+				D587A4322DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */,
 				D5A0852F2DAFD8DE00332690 /* SVGTreeView.swift in Sources */,
 				D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */,
 				D57566242DB9256600D95E3F /* PaperManagerView.swift in Sources */,
@@ -1150,6 +1167,7 @@
 				D52C0AF62DBA72DF00F57746 /* AssetStores.swift in Sources */,
 				D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */,
 				D509C0A62DBC4AD2009B0233 /* SignatureSectionView.swift in Sources */,
+				D587A43E2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */,
 				D57566272DB9257400D95E3F /* PenFormView.swift in Sources */,
 				D5A084F02DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
 				D5A084F12DAFD88A00332690 /* PathParser.swift in Sources */,

@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 26.04.25.
 //
 
+// TODO: Umbenennen in JobView
 // SettingsPanel.swift
 import SwiftUI
 

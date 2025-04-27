@@ -21,7 +21,7 @@ enum PaperOrientation: String, Codable {
 }
 
 
-struct PlotJobData: Identifiable, Codable, Equatable, Transferable {
+struct PlotJobData: Identifiable, Codable, Equatable, Transferable, Hashable  {
     let id: UUID
     var name: String
     var description: String
@@ -66,6 +66,16 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable {
         self.origin = origin
         self.penSettings = penSettings
     }
+    
+    
+    static func == (lhs: PlotJobData, rhs: PlotJobData) -> Bool {
+        lhs.id == rhs.id // oder vollständiger Vergleich
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     
     // Custom UTI for Drag and Drop
     static let customUTI = UTType(exportedAs: "de.nichte.plotjob") // TODO: de.nichte.robart.plotjob

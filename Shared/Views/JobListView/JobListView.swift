@@ -24,24 +24,21 @@ import AppKit
 #endif
 
 struct JobListView: View {
-    @Binding var goToStep: Int
-    @Binding var selectedJob: PlotJobData
-    
     @EnvironmentObject var assetStores: AssetStores
-    
     @EnvironmentObject var jobStore: GenericStore<PlotJobData>
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
-    
+
     @EnvironmentObject var machineStore: GenericStore<MachineData>
     @EnvironmentObject var connectionsStore: GenericStore<ConnectionData>
-    
     @EnvironmentObject var pensStore: GenericStore<PenData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
-
+    @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormat>
     
+    @State private var selectedJob: PlotJobData? = nil
     @State private var isCopyMode = false
     @State private var searchText = ""
-    
+    @State private var showProjectManager = false
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -53,6 +50,15 @@ struct JobListView: View {
                 .padding()
             }
             .navigationTitle("Jobs")
+            .navigationDestination(item: $selectedJob) { job in
+                JobPreviewView(
+                    currentJob: binding(for: job),
+                    selectedJob: $selectedJob // << hier Binding übergeben
+                )
+                .environmentObject(jobStore)
+                .environmentObject(paperStore)
+                .environmentObject(paperFormatsStore)
+            }
         }
     }
 
@@ -60,20 +66,14 @@ struct JobListView: View {
         HStack(spacing: 16) {
             Button("Neuer Job") {
                 Task {
-                    // Neuer Job wird sofort im Dateisystem gespeichert
                     let job = PlotJobData(name: "Neuer Job", paper: .default)
                     let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)
-                    selectedJob = newJob // Wählt den neuen Job aus
-                    goToStep = 2
+                    selectedJob = newJob
                 }
             }
-            #if os(macOS)
-            // https://developer.apple.com/videos/play/wwdc2022/10001
-            // Push Transition: drill into detail / hierarchie / modal / präsentiert von von rechts nach links /
-            // Modal presentation:  / multi-step / präsentiert von unten
-            // + action sheet
-    
-            #else
+#if os(macOS)
+            // macOS spezifisch: weitere Buttons
+#else
             Button("📁 Projekte") {
                 showProjectManager = true
             }
@@ -81,34 +81,29 @@ struct JobListView: View {
             .sheet(isPresented: $showProjectManager) {
                 ProjectManagerView()
             }
-            #endif
-
+#endif
             Toggle("D&D Copy", isOn: $isCopyMode)
                 .toggleStyle(.switch)
 
-            // Suchfeld
             TextField("Suchen …", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(maxWidth: 400)
                 .padding(.top, 4)
-            
+
             Spacer()
         }
     }
 
-    @State private var showProjectManager = false
-
     private var projectSections: some View {
-        
         let filteredProjects = projectStore.items.filter {
-               searchText.isEmpty ||
-               $0.name.localizedCaseInsensitiveContains(searchText) ||
-               $0.jobs.contains(where: {
-                   $0.name.localizedCaseInsensitiveContains(searchText) ||
-                   $0.description.localizedCaseInsensitiveContains(searchText)
-               })
-           }
-        
+            searchText.isEmpty ||
+            $0.name.localizedCaseInsensitiveContains(searchText) ||
+            $0.jobs.contains(where: {
+                $0.name.localizedCaseInsensitiveContains(searchText) ||
+                $0.description.localizedCaseInsensitiveContains(searchText)
+            })
+        }
+
         return ForEach(filteredProjects) { project in
             ProjectSectionView(
                 project: project,
@@ -117,20 +112,6 @@ struct JobListView: View {
                 },
                 onJobSelected: { job in
                     selectedJob = job
-                    goToStep = job.isActive ? 4 : 2
-                    #if os(macOS)
-                    WindowManager.shared.openWithEnvironmentObjects(
-                        JobDetailView(job: job),
-                        id: .jobDetail,
-                        title: "Job-Details",
-                        width: 900,
-                        height: 600,
-                        environmentObjects: [
-                            EnvironmentObjectModifier(object: projectStore),
-                            EnvironmentObjectModifier(object: jobStore)
-                        ]
-                    )
-                    #endif
                 },
                 onDeleteJob: { job in
                     Task {
@@ -149,7 +130,7 @@ struct JobListView: View {
                 $0.name.localizedCaseInsensitiveContains(searchText) ||
                 $0.description.localizedCaseInsensitiveContains(searchText)
             }
-        
+
         return UnassignedSectionView(
             title: "Jobs ohne Projekt",
             jobs: unassignedJobs,
@@ -158,20 +139,6 @@ struct JobListView: View {
             },
             onJobSelected: { job in
                 selectedJob = job
-                goToStep = job.isActive ? 4 : 2
-                #if os(macOS)
-                WindowManager.shared.openWithEnvironmentObjects(
-                    JobDetailView(job: job),
-                    id: .jobDetail,
-                    title: "Job-Details",
-                    width: 900,
-                    height: 600,
-                    environmentObjects: [
-                        EnvironmentObjectModifier(object: projectStore),
-                        EnvironmentObjectModifier(object: jobStore)
-                    ]
-                )
-                #endif
             },
             onDeleteJob: { job in
                 Task {
@@ -223,6 +190,13 @@ struct JobListView: View {
                 }
             }
         }
+    }
+
+    private func binding(for job: PlotJobData) -> Binding<PlotJobData> {
+        guard let index = jobStore.items.firstIndex(where: { $0.id == job.id }) else {
+            fatalError("Job nicht gefunden")
+        }
+        return $jobStore.items[index]
     }
 }
 

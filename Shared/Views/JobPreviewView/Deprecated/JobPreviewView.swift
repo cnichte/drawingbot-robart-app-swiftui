@@ -107,6 +107,7 @@ struct JobPreviewView: View {
             // iOS: Zurück + Settings/Inspector-Buttons
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
+                    saveCurrentJob()
                     selectedJob = nil
                 } label: {
                     Label("Zurück", systemImage: "chevron.left")
@@ -137,7 +138,11 @@ struct JobPreviewView: View {
                 .presentationDragIndicator(.visible)
         }
         .onAppear {
+            print("Geladener SVG-Pfad:", currentJob.svgFilePath)
             loadActiveJob()
+        }
+        .onDisappear {
+            saveCurrentJob()
         }
     }
 
@@ -156,7 +161,8 @@ struct JobPreviewView: View {
             .environmentObject(plotJobStore)
             .environmentObject(paperStore)
             .environmentObject(paperFormatsStore)
-            .padding()
+            .padding(.vertical, 8) // << nur oben/unten ein bisschen Luft
+            .padding(.horizontal, 0) // << minimal links/rechts
         }
     }
 
@@ -165,7 +171,7 @@ struct JobPreviewView: View {
         VStack {
             switch previewMode {
             case .svgPreview:
-                PaperPreview(zoom: $zoom, pitch: $pitch, origin: $origin, job: currentJob)
+                PaperPreview(zoom: $zoom, pitch: $pitch, origin: $origin, job: $currentJob)
             case .svgSource:
                 PaperSourcePreview(job: currentJob)
             case .codePreview:
@@ -189,10 +195,17 @@ struct JobPreviewView: View {
                 .foregroundColor(.secondary)
             Spacer()
         }
-        .padding()
+        .padding(.vertical, 8) // << nur oben/unten
+        .padding(.horizontal, 0) // << minimal links/rechts
     }
 
     private func loadActiveJob() {
         svgFileName = URL(fileURLWithPath: currentJob.svgFilePath).lastPathComponent
+    }
+    
+    private func saveCurrentJob() {
+        Task {
+            await plotJobStore.save(item: currentJob, fileName: currentJob.id.uuidString)
+        }
     }
 }

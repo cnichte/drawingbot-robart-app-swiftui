@@ -20,146 +20,22 @@ struct ContentView: View {
     @EnvironmentObject var assetStores: AssetStores
     
     @State private var selectedTab = 0
-    @State private var selectedJob: PlotJobData
-    @State private var currentStep: Int = 1
     
     init(bluetoothManager: BluetoothManager, usbScanner: USBSerialScanner) {
         self.bluetoothManager = bluetoothManager
 #if os(macOS)
         self.usbScanner = usbScanner
 #endif
-        self._selectedJob = State(initialValue: PlotJobData(
-            id: UUID(),
-            name: "Neuer Job",
-            description: "",
-            paper: .default,
-            svgFilePath: "",
-            pitch: 0.0,
-            zoom: 1.0,
-            origin: CGPoint(x: 0, y: 0)
-        ))
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header mit Verbindungsstatus und Disconnect-Button für Bluetooth und USB
-            HStack(spacing: 12) {
-                // Bluetooth-Status
-                HStack(spacing: 6) {
-                    Image(systemName: "antenna.radiowaves.left.and.right")
-                        .foregroundColor(.green)
-                    if bluetoothManager.isConnected {
-                        Text("Bluetooth verbunden")
-                            .foregroundColor(.green)
-                            .help("Verbunden mit \(bluetoothManager.connectedPeripheralName)")
-                            .lineLimit(1)
-                            .fixedSize()
-                            .layoutPriority(1)
-                        Button {
-                            bluetoothManager.disconnect()
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.red)
-                        }
-                        .buttonStyle(.plain)
-                        .help("Bluetooth-Verbindung trennen")
-                    } else {
-                        Text("Bluetooth getrennt")
-                            .foregroundColor(.secondary)
-                            .lineLimit(1)
-                            .fixedSize()
-                    }
-                }
-                
-                Divider()
-                    .frame(height: 20)
-                
-                // USB-Status
+            ConnectionStatusHeader(bluetoothManager: bluetoothManager)
+                .environmentObject(assetStores)
 #if os(macOS)
-                HStack(spacing: 6) {
-                    Image(systemName: "externaldrive.connected.to.line.below")
-                        .foregroundColor(.blue)
-                    if let usbPort = usbScanner.currentPort, usbPort.isOpen {
-                        Text("USB verbunden")
-                            .foregroundColor(.blue)
-                            .help("Verbunden mit \(usbPort.name)")
-                            .lineLimit(1)
-                            .fixedSize()
-                            .layoutPriority(1)
-                        Button {
-                            usbPort.close()
-                            usbScanner.currentPort = nil
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.red)
-                        }
-                        .buttonStyle(.plain)
-                        .help("USB-Verbindung trennen")
-                    } else {
-                        Text("USB getrennt")
-                            .foregroundColor(.secondary)
-                            .lineLimit(1)
-                            .fixedSize()
-                    }
-                }
-#else
-                Text("USB nicht unterstützt")
-                    .foregroundColor(.gray)
-                    .help("USB-Verbindungen sind auf iOS nicht verfügbar")
-                    .lineLimit(1)
-                    .fixedSize()
+                .environmentObject(usbScanner)
 #endif
-                
-                Divider()
-                    .frame(height: 20)
-                
-                // Speicherort und Reset-Buttons
-                HStack(spacing: 8) {
-                    let currentStorage = assetStores.storageType
-                    HStack(spacing: 4) {
-                        // Animated Icon
-                        Image(systemName: currentStorage == .local ? "internaldrive" : "icloud")
-                            .foregroundColor(.gray)
-                            .transition(.opacity)
-                            .id(currentStorage) // << wichtig für Animation
-                        Text("store: \(currentStorage.rawValue)")
-                            .foregroundColor(.gray)
-                            .font(.footnote)
-                    }
-                    .animation(.easeInOut(duration: 0.3), value: currentStorage) // << Animation    .font(.footnote)
-#if DEBUG
-                    // Debug Menü: reset stores (auch in SettingsView.swift)
-                    Button(action: AppResetHelper.resetLocalOnly) {
-                        Image(systemName: "arrow.counterclockwise.circle")
-                    }.help("Nur lokalen Speicher leeren")
-                    
-                    Button(action: AppResetHelper.resetICloudOnly) {
-                        Image(systemName: "icloud.slash")
-                    }.help("Nur iCloud Speicher leeren")
-                    
-                    Button(action: AppResetHelper.fullResetAll) {
-                        Image(systemName: "trash.circle")
-                    }.help("Alles komplett zurücksetzen")
-                    Button(action: {
-                        _ = Bundle.main.listAllJSONResources()
-                    }) {
-                        Image(systemName: "doc.text.magnifyingglass")
-                    }
-                    .help("JSON-Dateien im Bundle anzeigen")
-#endif
-                }
-                
-                
-                Spacer()
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 4)
-            .background(ColorHelper.backgroundColor)
-            .font(.footnote)
-            .frame(minHeight: 28, maxHeight: 32)
-            // Header Ende
             
-            // TabBar, TabView für verschiedene Ansichten
             TabView(selection: $selectedTab) {
                 DeviceListView(bluetoothManager: bluetoothManager)
                     .tag(0)
@@ -173,7 +49,7 @@ struct ContentView: View {
                         Label("Fernsteuerung", systemImage: "gamecontroller")
                     }
                 
-                PlotterWizardView(goToStep: $currentStep, selectedJob: $selectedJob)
+                JobListView() // << Direkter Aufruf!
                     .tag(2)
                     .tabItem {
                         Label("Plotter", systemImage: "printer")
@@ -211,4 +87,10 @@ class MockBluetoothManager: BluetoothManager {
  ContentView(bluetoothManager: MockBluetoothManager())
  }
  }
+ */
+
+
+/*
+ 
+ 
  */

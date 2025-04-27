@@ -169,7 +169,7 @@ struct SettingsView: View {
         alert.addButton(withTitle: "Abbrechen")
         let response = alert.runModal()
         if response == .alertFirstButtonReturn {
-            performDeleteAllData()
+            // performDeleteAllData()
         }
 #else
         UIApplication.shared.windows.first?.rootViewController?.present(alertController(), animated: true, completion: nil)

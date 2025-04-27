@@ -8,7 +8,7 @@
 // AssetManagerHelper.swift
 import Foundation
 
-struct AssetStoreManagerHelper {
+struct AssetManagerHelper {
     
     // MARK: - Rollbacks
     
