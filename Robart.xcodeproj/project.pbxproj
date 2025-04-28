@@ -162,6 +162,8 @@
 		D5E55CBE2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */; };
 		D5E55CC02DBF6E95003806CF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBF2DBF6E93003806CF /* Logger.swift */; };
 		D5E55CC12DBF6E95003806CF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBF2DBF6E93003806CF /* Logger.swift */; };
+		D5E55CC32DBF7673003806CF /* JobsDataFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */; };
+		D5E55CC42DBF7673003806CF /* JobsDataFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -314,6 +316,7 @@
 		D5D104262DAEF39000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
 		D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGMigrationTester.swift; sourceTree = "<group>"; };
 		D5E55CBF2DBF6E93003806CF /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsDataFileManager.swift; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -616,6 +619,7 @@
 		D5A084C02DAFD58B00332690 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */,
 				D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */,
 				D581AFA52DBC216600821A7E /* UUID+Helpers.swift */,
 				D5A084C12DAFD59B00332690 /* BluetoothManager.swift */,
@@ -1098,6 +1102,7 @@
 				D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */,
 				D5F896F72DBD56BA00397561 /* AssetStoreManager.swift in Sources */,
 				D5A084F72DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
+				D5E55CC42DBF7673003806CF /* JobsDataFileManager.swift in Sources */,
 				D5A084F82DAFD88A00332690 /* PathParser.swift in Sources */,
 				D587A43D2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */,
 				D5A084F92DAFD88A00332690 /* SVGParser.swift in Sources */,
@@ -1161,6 +1166,7 @@
 				D57566242DB9256600D95E3F /* PaperManagerView.swift in Sources */,
 				D5A085302DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */,
 				D5A085312DAFD8DE00332690 /* PaperPreview.swift in Sources */,
+				D5E55CC32DBF7673003806CF /* JobsDataFileManager.swift in Sources */,
 				D5A084D42DAFD84000332690 /* PlotJobData.swift in Sources */,
 				D5A084D52DAFD84000332690 /* ConnectionData.swift in Sources */,
 				D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */,

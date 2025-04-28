@@ -21,8 +21,18 @@ struct SVGSectionView: View {
             VStack(alignment: .leading, spacing: 10) {
 
                 if let name = svgFileName, !name.isEmpty {
-                    Text("SVG: \(name)")
-                        .font(.subheadline)
+                    HStack {
+                        Text("SVG: \(name)")
+                            .font(.subheadline)
+                        Spacer()
+                        Button {
+                            deleteCurrentSVG()
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.red)
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
 
                 if let url = resolvedSVGURL() {
@@ -77,16 +87,14 @@ struct SVGSectionView: View {
                     defer { selectedURL.stopAccessingSecurityScopedResource() }
 
                     do {
-                        let destinationURL = try copyToAppSVGFolder(sourceURL: selectedURL)
-                        let relativePath = "svgs/" + destinationURL.lastPathComponent
+                        let destinationURL = try JobsDataFileManager.shared.copySVG(toJobID: currentJob.id, from: selectedURL)
+                        let relativePath = "jobs-data/\(currentJob.id.uuidString)/svg/\(destinationURL.lastPathComponent)"
                         currentJob.svgFilePath = relativePath
                         svgFileName = destinationURL.lastPathComponent
 
                         Task {
                             await store.save(item: currentJob, fileName: currentJob.id.uuidString)
                         }
-
-                        appLog("✅ SVG erfolgreich kopiert nach:", destinationURL.path)
                     } catch {
                         appLog("❌ Fehler beim Kopieren der SVG:", error.localizedDescription)
                     }
@@ -127,5 +135,15 @@ struct SVGSectionView: View {
         try fileData.write(to: destinationURL)
 
         return destinationURL
+    }
+    
+    private func deleteCurrentSVG() {
+        JobsDataFileManager.shared.deleteAllJobData(for: currentJob.id)
+        currentJob.svgFilePath = ""
+        svgFileName = nil
+
+        Task {
+            await store.save(item: currentJob, fileName: currentJob.id.uuidString)
+        }
     }
 }
