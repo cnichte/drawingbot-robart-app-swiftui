@@ -7,6 +7,7 @@
 
 // JobsDataFileManager.swift
 import Foundation
+import SwiftUI
 
 class JobsDataFileManager {
     static let shared = JobsDataFileManager()
@@ -24,17 +25,16 @@ class JobsDataFileManager {
             )
             self.jobsDataDirectory = documentsURL.appendingPathComponent("jobs-data", isDirectory: true)
 
-            // jobs-data Verzeichnis sicherstellen
             if !fileManager.fileExists(atPath: jobsDataDirectory.path) {
                 try fileManager.createDirectory(at: jobsDataDirectory, withIntermediateDirectories: true)
-                appLog("📂 jobs-data Ordner erstellt")
+                appLog("jobs-data Ordner erstellt")
             }
         } catch {
-            fatalError("❌ Konnte jobs-data-Verzeichnis nicht einrichten: \(error)")
+            fatalError("Konnte jobs-data-Verzeichnis nicht einrichten: \(error)")
         }
     }
 
-    // MARK: - Public Funktionen
+    // MARK: - Verzeichnis Pfade
 
     func jobFolder(for jobID: UUID) -> URL {
         jobsDataDirectory.appendingPathComponent(jobID.uuidString, isDirectory: true)
@@ -56,7 +56,8 @@ class JobsDataFileManager {
         jobFolder(for: jobID).appendingPathComponent("metadata", isDirectory: true)
     }
 
-    /// Erzeugt einen neuen Ordnerbaum für einen Job
+    // MARK: - Verwaltung
+
     func createFoldersForJob(jobID: UUID) throws {
         let folders = [
             svgFolder(for: jobID),
@@ -68,12 +69,11 @@ class JobsDataFileManager {
         for folder in folders {
             if !fileManager.fileExists(atPath: folder.path) {
                 try fileManager.createDirectory(at: folder, withIntermediateDirectories: true)
-                appLog("📁 Ordner erstellt: \(folder.lastPathComponent)")
+                appLog("Ordner erstellt: \(folder.lastPathComponent)")
             }
         }
     }
 
-    /// Kopiert eine Datei in den SVG-Ordner des Jobs
     func copySVG(toJobID jobID: UUID, from sourceURL: URL) throws -> URL {
         try createFoldersForJob(jobID: jobID)
 
@@ -87,21 +87,32 @@ class JobsDataFileManager {
         let data = try Data(contentsOf: sourceURL)
         try data.write(to: destinationURL)
 
-        appLog("✅ SVG kopiert: \(destinationURL.lastPathComponent)")
+        appLog("SVG kopiert: \(destinationURL.lastPathComponent)")
         return destinationURL
     }
 
-    /// Löscht ein komplettes Job-Verzeichnis
     func deleteAllJobData(for jobID: UUID) {
         let jobFolder = jobFolder(for: jobID)
 
         if fileManager.fileExists(atPath: jobFolder.path) {
             do {
                 try fileManager.removeItem(at: jobFolder)
-                appLog("🗑️ Job-Verzeichnis gelöscht: \(jobFolder.lastPathComponent)")
+                appLog("Job-Verzeichnis gelöscht: \(jobFolder.lastPathComponent)")
             } catch {
-                appLog("❌ Fehler beim Löschen des Job-Verzeichnisses: \(error.localizedDescription)")
+                appLog("Fehler beim Löschen des Job-Verzeichnisses: \(error.localizedDescription)")
             }
+        }
+    }
+
+    func saveThumbnail(_ image: PlatformImage, for jobID: UUID) throws {
+        try createFoldersForJob(jobID: jobID)
+        let previewURL = previewFolder(for: jobID).appendingPathComponent("thumbnail.png")
+
+        if let data = image.pngData() {
+            try data.write(to: previewURL)
+            appLog("🖼️ Thumbnail gespeichert für \(jobID)")
+        } else {
+            throw NSError(domain: "JobsDataFileManager", code: 500, userInfo: [NSLocalizedDescriptionKey: "Konnte Thumbnail nicht als PNG speichern."])
         }
     }
 }

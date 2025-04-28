@@ -164,6 +164,8 @@
 		D5E55CC12DBF6E95003806CF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBF2DBF6E93003806CF /* Logger.swift */; };
 		D5E55CC32DBF7673003806CF /* JobsDataFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */; };
 		D5E55CC42DBF7673003806CF /* JobsDataFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */; };
+		D5E55CC92DBF7B90003806CF /* SVGSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CC82DBF7B82003806CF /* SVGSnapshot.swift */; };
+		D5E55CCA2DBF7B90003806CF /* SVGSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CC82DBF7B82003806CF /* SVGSnapshot.swift */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -317,6 +319,7 @@
 		D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGMigrationTester.swift; sourceTree = "<group>"; };
 		D5E55CBF2DBF6E93003806CF /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsDataFileManager.swift; sourceTree = "<group>"; };
+		D5E55CC82DBF7B82003806CF /* SVGSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGSnapshot.swift; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -619,6 +622,7 @@
 		D5A084C02DAFD58B00332690 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D5E55CC82DBF7B82003806CF /* SVGSnapshot.swift */,
 				D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */,
 				D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */,
 				D581AFA52DBC216600821A7E /* UUID+Helpers.swift */,
@@ -1130,6 +1134,7 @@
 				D581AF7B2DBBFCD500821A7E /* AppResetHelper.swift in Sources */,
 				D5F6C62D2DB8361000020AEE /* PenFormView.swift in Sources */,
 				D5A084E42DAFD85300332690 /* SettingsMigrator.swift in Sources */,
+				D5E55CCA2DBF7B90003806CF /* SVGSnapshot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1169,6 +1174,7 @@
 				D5E55CC32DBF7673003806CF /* JobsDataFileManager.swift in Sources */,
 				D5A084D42DAFD84000332690 /* PlotJobData.swift in Sources */,
 				D5A084D52DAFD84000332690 /* ConnectionData.swift in Sources */,
+				D5E55CC92DBF7B90003806CF /* SVGSnapshot.swift in Sources */,
 				D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */,
 				D5F896EC2DBCE24D00397561 /* AspectRatio.swift in Sources */,
 				D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */,
