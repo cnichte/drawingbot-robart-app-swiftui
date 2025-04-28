@@ -45,8 +45,7 @@ struct JobListView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
-                    toolbar
-                    unassignedSection
+                    mainSection
                     projectSections
                 }
                 .padding()
@@ -64,51 +63,85 @@ struct JobListView: View {
         }
     }
 
-    private var toolbar: some View {
-        HStack(spacing: 16) {
-            Button("Neuer Job") {
-                Task {
-                    let job = PlotJobData(name: "Neuer Job", paper: .default)
-                    let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)
-                    selectedJob = newJob
+    // MARK: - Main Section (Toolbar + Unassigned Jobs)
+
+    private var mainSection: some View {
+        CollapsibleSection(
+            title: "Alle Jobs",
+            systemImage: "tray.full",
+            toolbar: {
+                HStack(spacing: 12) {
+                    Button {
+                        Task {
+                            let job = PlotJobData(name: "Neuer Job", paper: .default)
+                            let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)
+                            selectedJob = newJob
+                        }
+                    } label: {
+                        Label("Neu", systemImage: "plus")
+                    }
+                    .buttonStyle(.borderedProminent)
+
+                    Toggle("D&D Copy", isOn: $isCopyMode)
+                        .toggleStyle(.switch)
+                        .labelsHidden()
+
+                    Picker("", selection: $viewMode) {
+                        ForEach(JobListViewMode.allCases, id: \.self) { mode in
+                            Label(mode.label, systemImage: mode.systemImage)
+                                .tag(mode)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(width: 200)
+
+                    TextField("Suchen …", text: $searchText)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(maxWidth: 250)
+
+                    #if !os(macOS)
+                    Button("\u{1F4C1}") {
+                        showProjectManager = true
+                    }
+                    .buttonStyle(.bordered)
+                    .sheet(isPresented: $showProjectManager) {
+                        ProjectManagerView()
+                    }
+                    #endif
                 }
             }
-            Toggle("D&D Copy", isOn: $isCopyMode)
-                .toggleStyle(.switch)
-
-            Picker("Ansicht", selection: $viewMode) {
-                ForEach(JobListViewMode.allCases, id: \.self) { mode in
-                    Label(mode.label, systemImage: mode.systemImage)
-                        .tag(mode)
-                }
-            }
-            .pickerStyle(.segmented)
-            .frame(width: 200)
-            .onAppear {
-                // Sicherstellen, dass viewMode korrekt ist
-                if !JobListViewMode.allCases.contains(viewMode) {
-                    viewMode = .list
-                }
-            }
-
-            TextField("Suchen …", text: $searchText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(maxWidth: 400)
-                .padding(.top, 4)
-
-            Spacer()
-
-            #if !os(macOS)
-            Button("\u{1F4C1} Projekte") {
-                showProjectManager = true
-            }
-            .buttonStyle(.borderedProminent)
-            .sheet(isPresented: $showProjectManager) {
-                ProjectManagerView()
-            }
-            #endif
+        ) {
+            unassignedSection
         }
     }
+
+    // MARK: - Unassigned Section
+
+    private var unassignedSection: some View {
+        let assignedIDs = Set(projectStore.items.flatMap { $0.jobs.map { $0.id } })
+        let unassignedJobs = jobStore.items.filter { !assignedIDs.contains($0.id) }
+            .filter {
+                searchText.isEmpty ||
+                $0.name.localizedCaseInsensitiveContains(searchText) ||
+                $0.description.localizedCaseInsensitiveContains(searchText)
+            }
+
+        return JobListUnassignedSectionView(
+            title: "Jobs ohne Projekt",
+            jobs: unassignedJobs,
+            viewMode: viewMode,
+            thumbnailProvider: { thumbnail(for: $0) },
+            onDrop: { droppedItems, _ in handleUnassign(jobs: droppedItems) },
+            onJobSelected: { job in selectedJob = job },
+            onDeleteJob: { job in
+                Task {
+                    await jobStore.delete(item: job, fileName: job.id.uuidString)
+                }
+            }
+        )
+    }
+
+    // MARK: - Project Sections
 
     private var projectSections: some View {
         let filteredProjects = projectStore.items.filter {
@@ -136,29 +169,7 @@ struct JobListView: View {
         }
     }
 
-    private var unassignedSection: some View {
-        let assignedIDs = Set(projectStore.items.flatMap { $0.jobs.map { $0.id } })
-        let unassignedJobs = jobStore.items.filter { !assignedIDs.contains($0.id) }
-            .filter {
-                searchText.isEmpty ||
-                $0.name.localizedCaseInsensitiveContains(searchText) ||
-                $0.description.localizedCaseInsensitiveContains(searchText)
-            }
-
-        return JobListUnassignedSectionView(
-            title: "Jobs ohne Projekt",
-            jobs: unassignedJobs,
-            viewMode: viewMode,
-            thumbnailProvider: { thumbnail(for: $0) },
-            onDrop: { droppedItems, _ in handleUnassign(jobs: droppedItems) },
-            onJobSelected: { job in selectedJob = job },
-            onDeleteJob: { job in
-                Task {
-                    await jobStore.delete(item: job, fileName: job.id.uuidString)
-                }
-            }
-        )
-    }
+    // MARK: - Helpers
 
     private func thumbnail(for job: PlotJobData) -> Image? {
         let url = JobsDataFileManager.shared.previewFolder(for: job.id).appendingPathComponent("thumbnail.png")

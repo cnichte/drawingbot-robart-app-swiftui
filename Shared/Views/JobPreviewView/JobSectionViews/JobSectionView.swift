@@ -13,7 +13,7 @@ struct JobSectionView: View {
     @EnvironmentObject var store: GenericStore<PlotJobData>
 
     var body: some View {
-        CollapsibleSection(title: "Job", systemImage: "doc.plaintext") {
+        CollapsibleSection(title: "Job", systemImage: "doc.plaintext", toolbar: { EmptyView() }) {
             VStack(alignment: .leading) {
                 TextField("Name", text: $currentJob.name)
                 TextEditor(text: $currentJob.description)

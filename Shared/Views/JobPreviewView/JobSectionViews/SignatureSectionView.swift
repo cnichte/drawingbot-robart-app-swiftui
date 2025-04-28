@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SignatureSectionView: View {
     var body: some View {
-        CollapsibleSection(title: "Signatur", systemImage: "signature") {
+        CollapsibleSection(title: "Signatur", systemImage: "signature", toolbar: { EmptyView() }) {
             Text("Signatur-Einstellungen folgen...")
                 .foregroundColor(.secondary)
         }

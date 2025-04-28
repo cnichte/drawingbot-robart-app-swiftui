@@ -17,7 +17,7 @@ struct SVGSectionView: View {
     @EnvironmentObject var store: GenericStore<PlotJobData>
 
     var body: some View {
-        CollapsibleSection(title: "SVG", systemImage: "photo") {
+        CollapsibleSection(title: "SVG", systemImage: "photo", toolbar: { EmptyView() }) {
             VStack(alignment: .leading, spacing: 10) {
 
                 if let name = svgFileName, !name.isEmpty {

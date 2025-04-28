@@ -13,7 +13,7 @@ struct MachineSectionView: View {
     @EnvironmentObject var store: GenericStore<PlotJobData>
 
     var body: some View {
-        CollapsibleSection(title: "Maschine", systemImage: "gearshape.2") {
+        CollapsibleSection(title: "Maschine", systemImage: "gearshape.2", toolbar: { EmptyView() }) {
             VStack(alignment: .leading) {
                 HStack {
                     Text("Origin X")

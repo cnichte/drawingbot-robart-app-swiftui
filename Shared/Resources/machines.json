@@ -3,32 +3,193 @@
         "id": "9c47941f-e774-4ca2-a2ca-e917d16932a5",
         "name": "Axidraw",
         "description": "",
-        "typ": "xy",
-        "size": {x:1000,y:500},
-        "protokoll":"egg",
-        "codeTemplates"[
+        "typ": ".xyPlotter",
+        "size": {
+            "x": 1000,
+            "y": 500
+        },
+        "protokoll": "egg",
+        "codeTemplates": [
             {
-                "command":"",
-                "description":""
+                "id":"b9b9cdfc-ccbf-403e-bf25-f929b41b9388",
+                "command": "",
+                "description": ""
             }
         ],
-        "penCount":1,
-        "connection":{}
-    }, {
+        "penCount": 1,
+        "connection": {},
+        "options": [
+            {
+                "id":"e3ec767b-0398-435c-81b6-d2de63961265",
+                "option": "copiesToPlot",
+                "value": 1,
+                "description": ""
+            },
+            {
+                "id":"3b7179e7-bb3c-4bea-b1c3-4249eff3f218",
+                "option": "pageDelay",
+                "value": 15,
+                "description": ""
+            },
+            {
+                "id":"199a39b6-1c53-4e1d-93cf-6c515f993d6d",
+                "option": "penHeightUp",
+                "value": 60,
+                "description": ""
+            },
+            {
+                "id":"d8b4f04e-5b00-406c-a89e-565e32158a04",
+                "option": "penHeightDown",
+                "value": 30,
+                "description": ""
+            },
+            {
+                "id":"26318b5c-68b7-4203-8598-e081b5b1a132",
+                "option": "actionOnApply",
+                "value": "cycle pen dowwn when up, raise pen & turn off motors, toggle pen between up, down|",
+                "description": ""
+            },
+            {
+                "id":"9220bb63-f5e8-4f73-8614-d020ff134829",
+                "option": "drawingSpeed",
+                "value": 25,
+                "description": ""
+            },
+            {
+                "id":"63e31b6f-81d7-4b74-8e53-ed0d1396cdeb",
+                "option": "penUpMovementSpeed",
+                "value": 75,
+                "description": ""
+            },
+            {
+                "id":"cc3d644c-effb-4d87-80a7-407a44519db6",
+                "option": "penDownMovementSpeed",
+                "value": 25,
+                "description": ""
+            },
+            {
+                "id":"4f09fa5f-65d0-41a5-a714-fbca84350808",
+                "option": "acceleration",
+                "value": "Standard,Maximum,High,Slow,VerySlow|Standard",
+                "description": ""
+            },
+            {
+                "id":"6d3250c9-a8ae-4b19-9bfa-3e1d1bdadac8",
+                "option": "penRaisingSpeed",
+                "value": "Maximum, Standard, Slow, Very Slow, Dead Slow|Standard",
+                "description": ""
+            },
+            {
+                "id":"d5701177-afd8-41a4-a598-f14e8e28db88",
+                "option": "penLoweringSpeed",
+                "value": "Maximum, Standard, Slow, Very Slow, Dead Slow|Standard",
+                "description": ""
+            },
+            {
+                "id":"0cf92527-8a01-4499-81bf-d693613c0c72",
+                "option": "reportTimeElapsed",
+                "value": true,
+                "description": ""
+            },
+            {
+                "id":"2108267c-3a9e-435d-8ee2-063f7effb711",
+                "option": "previewModeRendering",
+                "value": "All Movement,Pen-down Movement,Pen-up Movement,keine|All Movement",
+                "description": ""
+            },
+            {
+                "id":"3405a97a-d810-4b37-ba3b-2d3aa1c200c6",
+                "option": "postToAWebhookWhenFinished",
+                "value": false,
+                "description": ""
+            },
+            {
+                "id":"4a80a58e-4de3-41dd-854f-27f5e722cc7c",
+                "option": "webhookURL",
+                "value": "",
+                "description": ""
+            },
+            {
+                "id":"af63964b-661f-4964-8bf3-ccaec876fb43",
+                "option": "AutorotatePageWhenPrinting",
+                "value": false,
+                "description": ""
+            },
+            {
+                "id":"3744b89f-1072-4c09-aa91-0236a57940da",
+                "option": "randomizeStartsOfClosedPaths",
+                "value": true,
+                "description": ""
+            },
+            {
+                "id":"0bb752d3-a42f-41cf-badd-a380baeaf5d1",
+                "option": "hideLineRemoval",
+                "value": true,
+                "description": ""
+            },
+            {
+                "id":"8cc8382c-9a3b-4526-8e9d-ad563126c32c",
+                "option": "plotOptimization",
+                "value": "Least,Basic,Full,None|",
+                "description": ""
+            },
+            {
+                "id":"468ca546-bfe4-404f-bc3b-793090bfa922",
+                "option": "motorResolution",
+                "value": "",
+                "description": ""
+            },
+            {
+                "id":"c42ed0b3-1537-4b37-afae-045b6666f918",
+                "option": "axidrawModel",
+                "value": "",
+                "description": ""
+            },
+            {
+                "id":"ff2a3d83-11b5-4226-baf2-47792bb5a062",
+                "option": "penLiftServo",
+                "value": "",
+                "description": ""
+            },
+            {
+                "id":"5db23cf3-a5ea-4de7-bd03-09c1a4dc4489",
+                "option": "machineSelection",
+                "value": "",
+                "description": ""
+            },
+            {
+                "id":"068249c6-ae95-45ba-94d0-069d14824cac",
+                "option": "axidrawNameOrPort",
+                "value": "",
+                "description": ""
+            },
+            {
+                "id":"121aad70-9f78-4d7d-9060-adb3346fb894",
+                "option": "plotOnlyLayersBeginningWith",
+                "value": 1,
+                "description": ""
+            },
+            {
+                "id":"abff69ce-47c7-439d-ab3c-4a3b44654cd2",
+                "option": "actionOnApply",
+                "value": "resume from home or where paused, return to home corner",
+                "description": ""
+            }
+        ]
+    },
+    {
         "id": "af986168-0a1c-4f38-972f-0ac73434cd5d",
         "name": "Robart",
         "description": "",
         "typ": "omnidirektional",
-        "size": {x:-1,y:-1},
-        "protokoll":"gcode",
-        "codeTemplates"[
-            {
-                "command":"",
-                "description":""
-            }
-        ],
-        "penCount":5,
-        "connection":{}
+        "size": {
+            "x": -1,
+            "y": -1
+        },
+        "protokoll": "gcode",
+        "penCount": 5,
+        "connection": {},
+        "codeTemplates": [],
+        "options": []
     }
-    
 ]

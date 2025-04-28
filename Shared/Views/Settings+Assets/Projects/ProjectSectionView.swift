@@ -17,7 +17,7 @@ struct ProjectSectionView: View {
     @State private var isTargeted = false
 
     var body: some View {
-        CollapsibleSection(title: project.name, systemImage: "folder") {
+        CollapsibleSection(title: project.name, systemImage: "folder", toolbar: { EmptyView() }) {
             VStack(alignment: .leading, spacing: 8) {
                 if !project.description.isEmpty {
                     Text(project.description)

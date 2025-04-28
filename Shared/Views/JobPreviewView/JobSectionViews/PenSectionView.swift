@@ -10,7 +10,11 @@ import SwiftUI
 
 struct PenSectionView: View {
     var body: some View {
-        CollapsibleSection(title: "Stift", systemImage: "pencil.tip") {
+        CollapsibleSection(
+            title: "Stift",
+            systemImage: "pencil.tip",
+            toolbar: { EmptyView() } // <- leere Toolbar explizit übergeben
+        ) {
             Text("Stift-Einstellungen folgen...")
                 .foregroundColor(.secondary)
         }

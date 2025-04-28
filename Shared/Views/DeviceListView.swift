@@ -13,175 +13,91 @@ import ORSSerial
 
 extension ORSSerialPort: @retroactive Identifiable {
     public var id: String {
-        self.name // or use self.path or self.name if more unique
+        self.name
     }
 }
 #endif
-
-// DeviceSectionView.swift
-struct DeviceSectionView<Content: View>: View {
-    let title: String
-    let content: () -> Content
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(title)
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.gray.opacity(0.8))
-
-            ScrollView {
-                content()
-                    .padding()
-            }
-        }
-        .cornerRadius(8)
-    }
-}
-
 
 struct DeviceListView: View {
     @ObservedObject var bluetoothManager: BluetoothManager
-    
+
 #if os(macOS)
     @StateObject private var scanner = USBSerialScanner()
 #endif
-    
+
     var body: some View {
         ScrollView {
-        CollapsibleSection(title: "Bluetooth Devices", systemImage: "wave.3.up") {
-            VStack(alignment: .leading, spacing: 8) {
+            CollapsibleSection(
+                title: "Bluetooth Devices",
+                systemImage: "wave.3.up",
+                toolbar: {
+                    HStack(spacing: 8) {
+                        Button("Scan RobArt") {
+                            bluetoothManager.startScan(filter: true)
+                        }
+                        .buttonStyle(.borderedProminent)
+
+                        Button("Alle Geräte") {
+                            bluetoothManager.startScan(filter: false)
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+            ) {
                 bluetoothSectionContent()
             }
-        }
-        
+
 #if os(macOS)
-        CollapsibleSection(title: "USB Devices", systemImage: "photo") {
-            usbSectionContent()
-        }
+            CollapsibleSection(
+                title: "USB Devices",
+                systemImage: "externaldrive",
+                toolbar: {
+                    HStack(spacing: 8) {
+                        Button("Scan USB") {
+                            scanner.scanSerialDevices()
+                        }
+                        Button("Verbinden") {
+                            scanner.connectToSelectedDevice()
+                        }
+                        .disabled(scanner.selectedDevice == nil)
+                    }
+                }
+            ) {
+                usbSectionContent()
+            }
 #endif
         }
         .navigationTitle("Geräte verbinden")
         .padding()
     }
-    
+
     // MARK: - Bluetooth Section
-    
     @ViewBuilder
     private func bluetoothSectionContent() -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 12) {
-                    Button("Scan nach RobArt (HM-10)") {
-                        bluetoothManager.startScan(filter: true)
-                    }
-                    .buttonStyle(.borderedProminent)
-
-                    Button("Alle Geräte scannen") {
-                        bluetoothManager.startScan(filter: false)
-                    }
-                    .buttonStyle(.bordered)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading) // fixierte Ausrichtung
-
-                if bluetoothManager.isScanning {
-                    HStack {
-                        ProgressView()
-                        Text("Suche nach Geräten...")
-                    }
-                }
-
-                if let last = bluetoothManager.lastScanDate {
-                    Text("Letzter Scan: \(last.formatted(.dateTime.hour().minute().second()))")
-                        .font(.caption)
-                        .foregroundColor(.gray)
+            if bluetoothManager.isScanning {
+                HStack {
+                    ProgressView()
+                    Text("Suche nach Geräten...")
                 }
             }
+            if let last = bluetoothManager.lastScanDate {
+                Text("Letzter Scan: \(last.formatted(.dateTime.hour().minute().second()))")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
 
-            VStack(alignment: .leading, spacing: 16) {
-                ForEach(bluetoothManager.peripherals) { discovered in
-                    let isConnectedDevice = bluetoothManager.connectedPeripheralID == discovered.peripheral.identifier
-                    let isFavorite = bluetoothManager.favoriteUUID == discovered.peripheral.identifier
-
-                    HStack(alignment: .top) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(discovered.peripheral.name ?? "Unbekannt")
-                                .font(.headline)
-                            Text("RSSI: \(discovered.rssi)")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-
-                            if isConnectedDevice {
-                                Text("✅ Verbunden")
-                                    .font(.caption2)
-                                    .foregroundColor(.green)
-                            }
-                        }
-
-                        Spacer()
-
-                        VStack(spacing: 6) {
-                            if isConnectedDevice {
-                                Button {
-                                    bluetoothManager.disconnect()
-                                } label: {
-                                    Label("Trennen", systemImage: "xmark.circle")
-                                }
-                                .buttonStyle(.bordered)
-                                .foregroundColor(.red)
-                                .help("Bluetooth-Verbindung trennen")
-                            } else {
-                                Button {
-                                    bluetoothManager.connect(to: discovered.peripheral)
-                                } label: {
-                                    Label("Verbinden", systemImage: "link.circle")
-                                }
-                                .buttonStyle(.borderedProminent)
-                            }
-
-                            Button {
-                                bluetoothManager.favoriteUUID = isFavorite ? nil : discovered.peripheral.identifier
-                            } label: {
-                                Image(systemName: isFavorite ? "star.fill" : "star")
-                                    .foregroundColor(.yellow)
-                            }
-                            .buttonStyle(.plain)
-                            .help(isFavorite ? "Favorit entfernen" : "Als Favorit markieren")
-                        }
-                    }
-                    .padding(8)
-                    .background(isConnectedDevice ? Color.green.opacity(0.1) : Color.clear)
-                    .cornerRadius(8)
-                    .frame(maxWidth: .infinity)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.2))
-                    )
-                }
+            ForEach(bluetoothManager.peripherals) { discovered in
+                deviceCard(for: discovered)
             }
         }
-        .frame(maxWidth: .infinity) // äußere View füllt die Breite
     }
-    
+
     // MARK: - USB Section
-    
     @ViewBuilder
     private func usbSectionContent() -> some View {
-    #if os(macOS)
+#if os(macOS)
         VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Button("Geräte scannen") {
-                    scanner.scanSerialDevices()
-                }
-
-                Button("Verbinden") {
-                    scanner.connectToSelectedDevice()
-                }
-                .disabled(scanner.selectedDevice == nil)
-            }
-
             List(selection: $scanner.selectedDevice) {
                 ForEach(scanner.devices) { device in
                     VStack(alignment: .leading) {
@@ -201,13 +117,71 @@ struct DeviceListView: View {
                     .foregroundColor(.blue)
             }
         }
-    #else
-        VStack {
-            Text("Sorry, USB-Serial wird auf iOS nicht unterstützt. Bitte bei Apple beschweren!")
-                .foregroundColor(.gray)
-                .padding()
+#else
+        Text("USB-Serial nicht unterstützt.")
+            .foregroundColor(.gray)
+            .padding()
+#endif
+    }
+
+    // MARK: - Device Card
+    @ViewBuilder
+    private func deviceCard(for discovered: DiscoveredPeripheral) -> some View {
+        let isConnected = bluetoothManager.connectedPeripheralID == discovered.peripheral.identifier
+        let isFavorite = bluetoothManager.favoriteUUID == discovered.peripheral.identifier
+
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                Text(discovered.peripheral.name ?? "Unbekannt")
+                    .font(.headline)
+                Text("RSSI: \(discovered.rssi)")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+
+                if isConnected {
+                    Text("✅ Verbunden")
+                        .font(.caption2)
+                        .foregroundColor(.green)
+                }
+            }
+
+            Spacer()
+
+            VStack(spacing: 6) {
+                if isConnected {
+                    Button {
+                        bluetoothManager.disconnect()
+                    } label: {
+                        Label("Trennen", systemImage: "xmark.circle")
+                    }
+                    .buttonStyle(.bordered)
+                    .foregroundColor(.red)
+                } else {
+                    Button {
+                        bluetoothManager.connect(to: discovered.peripheral)
+                    } label: {
+                        Label("Verbinden", systemImage: "link.circle")
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+
+                Button {
+                    bluetoothManager.favoriteUUID = isFavorite ? nil : discovered.peripheral.identifier
+                } label: {
+                    Image(systemName: isFavorite ? "star.fill" : "star")
+                        .foregroundColor(.yellow)
+                }
+                .buttonStyle(.plain)
+            }
         }
-    #endif
+        .padding(8)
+        .background(isConnected ? Color.green.opacity(0.1) : Color.clear)
+        .cornerRadius(8)
+        .frame(maxWidth: .infinity)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.gray.opacity(0.2))
+        )
     }
 }
 
