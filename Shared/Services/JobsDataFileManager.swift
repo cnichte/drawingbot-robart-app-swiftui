@@ -87,8 +87,27 @@ class JobsDataFileManager {
         let data = try Data(contentsOf: sourceURL)
         try data.write(to: destinationURL)
 
-        appLog("SVG kopiert: \(destinationURL.lastPathComponent)")
+        appLog("✅ SVG kopiert: \(destinationURL.lastPathComponent)")
+
+        // 👉 Thumbnail erzeugen
+        Task {
+            await generateThumbnail(for: jobID, svgURL: destinationURL)
+        }
+
         return destinationURL
+    }
+    
+    private func generateThumbnail(for jobID: UUID, svgURL: URL) async {
+        let thumbnailURL = previewFolder(for: jobID).appendingPathComponent("thumbnail.png")
+
+        if let image = await SVGSnapshot.generateThumbnail(from: svgURL, maxSize: CGSize(width: 200, height: 200)) {
+            do {
+                try SVGSnapshot.saveThumbnail(image, to: thumbnailURL)
+                appLog("🖼️ Thumbnail gespeichert: \(thumbnailURL.lastPathComponent)")
+            } catch {
+                appLog("❌ Fehler beim Speichern des Thumbnails: \(error)")
+            }
+        }
     }
 
     func deleteAllJobData(for jobID: UUID) {

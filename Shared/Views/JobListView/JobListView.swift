@@ -10,12 +10,9 @@
 // JobListView.swift – aktualisiert mit funktionierendem Drag & Drop, Copy-Modus und visuellem Feedback
 
 // TODO: Projekte als Favoriten markieren, oder mit Farbe.
-// TODO: Suche (Text)
-// TODO: Job anlegen fehlt!
 // TODO: Projekte bearbeiten schön machen!
 // TODO: Playhead: Job starten, und anhalten.
 // TODO: Delete mit Warnung und okay abfrage.
-// TODO: Drag&Drop Bereich bei leerer Liste nicht bereich ausfüllend. Text: Drop a Job!
 
 // JobListView.swift
 import SwiftUI
@@ -27,17 +24,14 @@ struct JobListView: View {
     @EnvironmentObject var assetStores: AssetStores
     @EnvironmentObject var jobStore: GenericStore<PlotJobData>
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
-
-    @EnvironmentObject var machineStore: GenericStore<MachineData>
-    @EnvironmentObject var connectionsStore: GenericStore<ConnectionData>
-    @EnvironmentObject var pensStore: GenericStore<PenData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
     @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormat>
-    
+
     @State private var selectedJob: PlotJobData? = nil
     @State private var isCopyMode = false
     @State private var searchText = ""
     @State private var showProjectManager = false
+    @State private var viewMode: JobListViewMode = .list
 
     var body: some View {
         NavigationStack {
@@ -53,7 +47,7 @@ struct JobListView: View {
             .navigationDestination(item: $selectedJob) { job in
                 JobPreviewView(
                     currentJob: binding(for: job),
-                    selectedJob: $selectedJob // << hier Binding übergeben
+                    selectedJob: $selectedJob
                 )
                 .environmentObject(jobStore)
                 .environmentObject(paperStore)
@@ -71,19 +65,17 @@ struct JobListView: View {
                     selectedJob = newJob
                 }
             }
-#if os(macOS)
-            // macOS spezifisch: weitere Buttons
-#else
-            Button("📁 Projekte") {
-                showProjectManager = true
-            }
-            .buttonStyle(.borderedProminent)
-            .sheet(isPresented: $showProjectManager) {
-                ProjectManagerView()
-            }
-#endif
             Toggle("D&D Copy", isOn: $isCopyMode)
                 .toggleStyle(.switch)
+
+            Picker("Ansicht", selection: $viewMode) {
+                ForEach(JobListViewMode.allCases, id: \.self) { mode in
+                    Label(mode.label, systemImage: mode.systemImage)
+                        .tag(mode)
+                }
+            }
+            .pickerStyle(.segmented)
+            .frame(width: 200)
 
             TextField("Suchen …", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -91,6 +83,16 @@ struct JobListView: View {
                 .padding(.top, 4)
 
             Spacer()
+
+            #if !os(macOS)
+            Button("\u{1F4C1} Projekte") {
+                showProjectManager = true
+            }
+            .buttonStyle(.borderedProminent)
+            .sheet(isPresented: $showProjectManager) {
+                ProjectManagerView()
+            }
+            #endif
         }
     }
 
@@ -105,14 +107,12 @@ struct JobListView: View {
         }
 
         return ForEach(filteredProjects) { project in
-            ProjectSectionView(
+            JobListProjectSectionView(
                 project: project,
-                onDrop: { droppedItems, _ in
-                    handleDrop(into: project, with: droppedItems)
-                },
-                onJobSelected: { job in
-                    selectedJob = job
-                },
+                viewMode: viewMode,
+                thumbnailProvider: { thumbnail(for: $0) },
+                onDrop: { droppedItems, _ in handleDrop(into: project, with: droppedItems) },
+                onJobSelected: { job in selectedJob = job },
                 onDeleteJob: { job in
                     Task {
                         await jobStore.delete(item: job, fileName: job.id.uuidString)
@@ -131,21 +131,35 @@ struct JobListView: View {
                 $0.description.localizedCaseInsensitiveContains(searchText)
             }
 
-        return UnassignedSectionView(
+        return JobListUnassignedSectionView(
             title: "Jobs ohne Projekt",
             jobs: unassignedJobs,
-            onDrop: { droppedItems, _ in
-                handleUnassign(jobs: droppedItems)
-            },
-            onJobSelected: { job in
-                selectedJob = job
-            },
+            viewMode: viewMode,
+            thumbnailProvider: { thumbnail(for: $0) },
+            onDrop: { droppedItems, _ in handleUnassign(jobs: droppedItems) },
+            onJobSelected: { job in selectedJob = job },
             onDeleteJob: { job in
                 Task {
                     await jobStore.delete(item: job, fileName: job.id.uuidString)
                 }
             }
         )
+    }
+
+    private func thumbnail(for job: PlotJobData) -> Image? {
+        let url = JobsDataFileManager.shared.previewFolder(for: job.id).appendingPathComponent("thumbnail.png")
+        if FileManager.default.fileExists(atPath: url.path) {
+            #if os(macOS)
+            if let nsImage = NSImage(contentsOf: url) {
+                return Image(nsImage: nsImage)
+            }
+            #else
+            if let uiImage = UIImage(contentsOfFile: url.path) {
+                return Image(uiImage: uiImage)
+            }
+            #endif
+        }
+        return nil
     }
 
     private func handleDrop(into project: ProjectData, with droppedItems: [PlotJobData]) -> Bool {
@@ -167,7 +181,6 @@ struct JobListView: View {
                 await projectStore.save(item: updated, fileName: updated.id.uuidString)
             }
         }
-
         return true
     }
 
@@ -197,20 +210,5 @@ struct JobListView: View {
             fatalError("Job nicht gefunden")
         }
         return $jobStore.items[index]
-    }
-}
-
-struct JobDetailView: View {
-    let job: PlotJobData
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Job: \(job.name)").font(.title2.bold())
-            Text("Beschreibung: \(job.description.isEmpty ? "-" : job.description)")
-            Text("Status: \(job.isActive ? "Aktiv" : "Inaktiv")")
-            Spacer()
-        }
-        .padding()
-        .frame(minWidth: 400, minHeight: 300)
     }
 }

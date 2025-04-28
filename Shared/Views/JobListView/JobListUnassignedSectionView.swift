@@ -1,16 +1,17 @@
 //
-//  UnassignedSectionView.swift
+//  JobListUnassignedSectionView.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 16.04.25.
 //
 
-// UnassignedSectionView.swift
+// JobListUnassignedSectionView.swift
 import SwiftUI
 
 struct JobListUnassignedSectionView: View {
     var title: String
     var jobs: [PlotJobData]
+    var viewMode: JobListViewMode
     var thumbnailProvider: (PlotJobData) -> Image?
     var onDrop: ([PlotJobData], CGPoint) -> Bool
     var onJobSelected: (PlotJobData) -> Void
@@ -20,54 +21,124 @@ struct JobListUnassignedSectionView: View {
 
     var body: some View {
         CollapsibleSection(title: title, systemImage: "tray") {
-            Group {
-                if jobs.isEmpty {
-                    VStack {
-                        Spacer()
-                        Text("Ziehe hierher, um Jobs zuzuordnen")
-                            .foregroundColor(.secondary)
-                            .padding()
-                        Spacer()
-                    }
-                    .frame(maxWidth: .infinity, minHeight: 120)
-                } else {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 16) {
-                        ForEach(jobs) { job in
-                            VStack {
-                                if let image = thumbnailProvider?(job) {
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 100)
-                                        .cornerRadius(8)
-                                } else {
-                                    Rectangle()
-                                        .fill(Color.secondary.opacity(0.2))
-                                        .frame(height: 100)
-                                        .overlay(
-                                            Image(systemName: "photo")
-                                                .foregroundColor(.secondary)
-                                                .font(.largeTitle)
-                                        )
+            content
+                .padding()
+                .background(isTargeted ? Color.accentColor.opacity(0.2) : Color.clear)
+                .animation(.easeInOut, value: isTargeted)
+                .dropZone(of: .plotJob, isTargeted: $isTargeted, onDrop: onDrop)
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if jobs.isEmpty {
+            VStack {
+                Spacer()
+                Text("Ziehe hierher, um Jobs zuzuordnen")
+                    .foregroundColor(.secondary)
+                    .padding()
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, minHeight: 120)
+        } else {
+            switch viewMode {
+            case .list:
+                LazyVStack(spacing: 12) {
+                    ForEach(jobs) { job in
+                        HStack(spacing: 12) {
+                            (thumbnailProvider(job) ?? Image(systemName: "photo"))
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 50)
+                                .cornerRadius(6)
+                                .clipped()
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(job.name)
+                                    .font(.headline)
+                                    .lineLimit(1)
+                                if !job.description.isEmpty {
+                                    Text(job.description)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .lineLimit(1)
                                 }
+                            }
+                            Spacer()
+                        }
+                        .padding(6)
+                        .background(ColorHelper.backgroundColor)
+                        .cornerRadius(8)
+                        .onTapGesture {
+                            onJobSelected(job)
+                        }
+                        .draggable(job)
+                    }
+                }
+            case .grid:
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 16) {
+                    ForEach(jobs) { job in
+                        if viewMode == .list {
+                            HStack(spacing: 12) {
+                                thumbnailProvider(job)?
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 50, height: 50)
+                                    .cornerRadius(6)
+                                    .clipped()
+
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(job.name)
+                                        .font(.headline)
+                                    if !job.description.isEmpty {
+                                        Text(job.description)
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                Spacer()
+                            }
+                            .padding(6)
+                            .background(ColorHelper.backgroundColor)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                onJobSelected(job)
+                            }
+                            .draggable(job)
+                        } else {
+                            VStack {
+                                thumbnailProvider(job)?
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 120)
+                                    .cornerRadius(8)
+                                    .clipped()
 
                                 Text(job.name)
                                     .font(.headline)
-                                    .padding(.top, 4)
+                                    .lineLimit(1)
+
+                                if !job.description.isEmpty {
+                                    Text(job.description)
+                                        .font(.caption2)
+                                        .foregroundColor(.secondary)
+                                        .lineLimit(2)
+                                        .padding(.horizontal, 4)
+                                }
                             }
+                            .frame(maxWidth: .infinity)
+                            .padding(8)
+                            .background(ColorHelper.backgroundColor)
+                            .cornerRadius(8)
                             .onTapGesture {
                                 onJobSelected(job)
                             }
                             .draggable(job)
                         }
                     }
-                    .padding(.vertical, 8)
                 }
+                .padding(.vertical, 8)
             }
-            .padding()
-            .background(isTargeted ? Color.accentColor.opacity(0.2) : Color.clear)
-            .animation(.easeInOut, value: isTargeted)
-            .dropZone(of: .plotJob, isTargeted: $isTargeted, onDrop: onDrop)
         }
     }
 }
