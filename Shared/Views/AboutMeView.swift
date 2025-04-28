@@ -15,11 +15,11 @@ struct AboutMeView: View {
                 .frame(width: 100, height: 100)
                 .foregroundColor(.blue)
 
-            Text("RobArt der Plobotter")
+            Text("Robart App")
                 .font(.title2)
                 .bold()
 
-            Text("Diese App dient zur Bluetooth Kommunikation mit dem DrawingBot RobArt, und zur Visualisierung der Roboteraktivitäten.\n\n© 2025 Carsten Nichte")
+            Text("Hi! Ich bin ein Asset Manager.\n\nIch organisiere, dokumentiere und drucke Plotter-Art Projekte im SVG-Format.\n\nIch kann über Bluetooth oder USB mit einem DrawingBot (zB. Axidraw oder Robart dem Ploboter) reden,\n\nund visualisiere die Roboteraktivitäten.\n\n© 2025 Carsten Nichte")
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
 

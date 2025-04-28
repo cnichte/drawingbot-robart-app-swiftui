@@ -52,7 +52,7 @@ struct ContentView: View {
                 JobListView() // << Direkter Aufruf!
                     .tag(2)
                     .tabItem {
-                        Label("Plotter", systemImage: "printer")
+                        Label("Plotter Jobs", systemImage: "printer")
                     }
                 
                 AssetsAndSettingsView()

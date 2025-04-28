@@ -31,18 +31,21 @@ struct JobSettingsPanel: View {
                 )
                 .padding(.horizontal, 0)
 
-                SignatureSectionView()
-                    .padding(.horizontal, 0)
-
                 PaperSectionView(currentJob: $currentJob, onUpdate: saveCurrentJob)
                     .padding(.horizontal, 0)
 
-                PenSectionView()
+                SignatureSectionView()
                     .padding(.horizontal, 0)
-
+                
                 MachineSectionView(currentJob: $currentJob)
                     .padding(.horizontal, 0)
-
+                
+                PenSectionView()
+                    .padding(.horizontal, 0)
+                
+                ActionsSectionView(currentJob: $currentJob)
+                    .padding(.horizontal, 0)
+                
                 Spacer()
             }
             .padding(.top, 12)

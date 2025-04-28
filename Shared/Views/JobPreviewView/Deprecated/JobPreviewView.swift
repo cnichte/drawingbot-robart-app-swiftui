@@ -24,6 +24,8 @@
 // TODO: Auf iOS und iPad wird beim öffnen des Jobs die Vorschau nicht geladen. Bei MacOS funktionierts.
 // TODO: Wiederverwendbare SplitPanelView oder FormScaffold
 
+// TODO: UUID-Relationen in JSON! https://x.com/i/grok/share/HJ7BTKeYeDGFm4NhUtrOyYWdp
+
 // JobPreviewView.swift (aktualisiert mit Sidebar- und Inspector-Steuerung)
 import SwiftUI
 

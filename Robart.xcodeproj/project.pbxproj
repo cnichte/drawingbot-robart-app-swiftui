@@ -74,6 +74,8 @@
 		D587A4432DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4412DBEDDD90072D83C /* JobSettingsPanel.swift */; };
 		D587A4452DBEDE0D0072D83C /* JobInspectorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */; };
 		D587A4462DBEDE0D0072D83C /* JobInspectorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */; };
+		D587A4482DBEED1C0072D83C /* ActionsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4472DBEED190072D83C /* ActionsSectionView.swift */; };
+		D587A4492DBEED1C0072D83C /* ActionsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4472DBEED190072D83C /* ActionsSectionView.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -261,6 +263,7 @@
 		D587A43C2DBEB9A20072D83C /* ConnectionStatusHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusHeader.swift; sourceTree = "<group>"; };
 		D587A4412DBEDDD90072D83C /* JobSettingsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSettingsPanel.swift; sourceTree = "<group>"; };
 		D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspectorPanel.swift; sourceTree = "<group>"; };
+		D587A4472DBEED190072D83C /* ActionsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsSectionView.swift; sourceTree = "<group>"; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -431,6 +434,7 @@
 		D509C0982DBC4979009B0233 /* JobSectionViews */ = {
 			isa = PBXGroup;
 			children = (
+				D587A4472DBEED190072D83C /* ActionsSectionView.swift */,
 				D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */,
 				D509C0A82DBC4AEA009B0233 /* PenSectionView.swift */,
 				D509C0A52DBC4AA8009B0233 /* SignatureSectionView.swift */,
@@ -1061,6 +1065,7 @@
 				D5F6C6262DB834E400020AEE /* ItemListView.swift in Sources */,
 				D57566232DB9256600D95E3F /* PaperManagerView.swift in Sources */,
 				D5F896EE2DBCF7F700397561 /* AssetStoresDebugToolbar.swift in Sources */,
+				D587A4482DBEED1C0072D83C /* ActionsSectionView.swift in Sources */,
 				D5F4DE052DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
 				D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */,
 				D509C09D2DBC49D9009B0233 /* JobSectionView.swift in Sources */,
@@ -1137,6 +1142,7 @@
 				D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
 				D5A085BD2DB02E2100332690 /* JobRowView.swift in Sources */,
 				D5A085B62DB02D7800332690 /* ProjectSectionView.swift in Sources */,
+				D587A4492DBEED1C0072D83C /* ActionsSectionView.swift in Sources */,
 				D575661B2DB91E5000D95E3F /* ItemManagerView.swift in Sources */,
 				D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
 				D587A4322DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */,
