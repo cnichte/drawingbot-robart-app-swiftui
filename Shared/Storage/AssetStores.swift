@@ -106,12 +106,11 @@ class AssetStores: ObservableObject {
         self.paperFormatsStore = GenericStore(directoryName: "paperformats", resourceType: .system, initialResourceName: "paper-formats")
         self.aspectRatiosStore = GenericStore(directoryName: "aspectratios", resourceType: .system, initialResourceName: "aspect-ratios")
         self.unitsStore        = GenericStore(directoryName: "units", resourceType: .system, initialResourceName: "units")
-        
+
         self.manager = AssetStoreManager(stores: allStores, initialStorage: initialStorageType)
 
         Task {
-            await FileManagerService.shared.ensureAllDirectoriesExist(for: allStores, storageType: initialStorageType)
-            await loadAllStores()
+            await manager.initialize()  // ⬅️ NEU! statt manuell dirs und loadAllStores
         }
     }
 

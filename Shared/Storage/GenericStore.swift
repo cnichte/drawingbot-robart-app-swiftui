@@ -72,9 +72,9 @@ where T: Codable & Identifiable, T.ID: Hashable {
     func loadItems() async {
         do {
             let files = try fileManager.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil)
-            
+
             var tempItems: [T] = []
-            
+
             for file in files where file.pathExtension == "json" {
                 do {
                     let data = try Data(contentsOf: file)
@@ -84,12 +84,13 @@ where T: Codable & Identifiable, T.ID: Hashable {
                     print("⚠️ Fehler beim Laden von \(file.lastPathComponent): \(error.localizedDescription)")
                 }
             }
-            
-            let result = tempItems // <-- Hier "kopieren", innerhalb async Kontext bleibt stabil
-            
+
+            let result = tempItems
             await MainActor.run {
                 self.items = result
             }
+            print("📚 Geladen: \(items.count) Elemente in \(directoryName)")
+
         } catch {
             print("❌ Fehler beim Lesen von \(directoryName): \(error.localizedDescription)")
         }
@@ -106,20 +107,21 @@ where T: Codable & Identifiable, T.ID: Hashable {
     // MARK: - Restore Defaults
     func restoreDefaults() async throws {
         guard let resource = initialResourceName else {
-            throw NSError(domain: "GenericStore", code: 404, userInfo: [NSLocalizedDescriptionKey: "Kein initialResourceName vorhanden."])
+            print("⚠️ Kein initialResourceName für \(directoryName), überspringe Restore.")
+            return
         }
-        
+
         switch resourceType {
         case .system:
             try FileManagerService.shared.restoreSystemResource(
-                T.self, // <-- Typ übergeben!
+                T.self,
                 resourceName: resource,
                 subdirectory: directoryName,
                 storageType: storageType
             )
         case .user:
             try FileManagerService.shared.copyUserResourceIfNeeded(
-                T.self, // <-- Typ übergeben!
+                T.self,
                 resourceName: resource,
                 subdirectory: directoryName,
                 storageType: storageType
@@ -134,6 +136,13 @@ where T: Codable & Identifiable, T.ID: Hashable {
         do {
             let data = try JSONEncoder().encode(item)
             let path = directoryURL.appendingPathComponent("\(fileName).json")
+            
+            // Schutz: Verzeichnis existiert?
+            if !fileManager.fileExists(atPath: directoryURL.path) {
+                try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+                print("📂 Verzeichnis wurde automatisch nacherzeugt: \(directoryName)")
+            }
+            
             try data.write(to: path)
             
             await MainActor.run {

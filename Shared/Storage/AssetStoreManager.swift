@@ -19,44 +19,104 @@ class AssetStoreManager {
     }
     
     // MARK: - Initialization
-    
     func initialize() async {
         print("🚀 Initialisiere AssetStores...")
+        
         await createDirectories()
-        await restoreSystemDefaultsIfNeeded()
-        await copyUserDefaultsIfNeeded()
+        await FileManagerService.shared.ensureSVGDirectoryExists(for: storageType)
+        
+        var results: [StoreInitializationResult] = []
+        
+        for store in stores {
+            if let genericStore = store as? GenericStoreProtocol {
+                if genericStore.resourceType == .system || genericStore.resourceType == .user {
+                    if store.itemCount == 0 {
+                        do {
+                            try await store.restoreDefaults()
+                            results.append(.init(storeName: store.directoryName, action: .initialized))
+                        } catch {
+                            results.append(.init(storeName: store.directoryName, action: .empty))
+                            print("⚠️ Fehler bei \(store.directoryName): \(error.localizedDescription)")
+                        }
+                    } else {
+                        results.append(.init(storeName: store.directoryName, action: .alreadyPresent))
+                    }
+                } else {
+                    results.append(.init(storeName: store.directoryName, action: .alreadyPresent))
+                }
+            }
+        }
+        
+        await printInitializationSummary(results)
+    }
+    
+    struct StoreInitializationResult {
+        var storeName: String
+        var action: InitializationAction
+    }
+
+    enum InitializationAction: String {
+        case newlyCreated = "neu erstellt"
+        case initialized = "neu initialisiert"
+        case alreadyPresent = "vorhanden"
+        case empty = "leer"
     }
     
     // MARK: - Create Directories
     
     private func createDirectories() async {
         let service = FileManagerService.shared
-        
+
         guard let baseDir = service.baseDirectory(for: storageType) else {
             print("❌ Basisverzeichnis konnte nicht ermittelt werden für \(storageType)")
             return
         }
-        
+
         if !FileManager.default.fileExists(atPath: baseDir.path) {
             do {
                 try FileManager.default.createDirectory(at: baseDir, withIntermediateDirectories: true)
-                print("📂 Basisverzeichnis erstellt: \(baseDir.path)")
+                print("📂 Basisverzeichnis erstellt: \(baseDir.lastPathComponent)")
             } catch {
                 print("❌ Fehler beim Erstellen des Basisverzeichnisses: \(error)")
             }
         }
-        
+
         for store in stores {
             let dir = baseDir.appendingPathComponent(store.directoryName)
             if !FileManager.default.fileExists(atPath: dir.path) {
                 do {
                     try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-                    print("📁 Subdirectory erstellt: \(dir.path)")
+                    print("📁 Verzeichnis erstellt: \(store.directoryName)")
                 } catch {
-                    print("❌ Fehler beim Erstellen von \(store.directoryName): \(error)")
+                    print("❌ Fehler beim Erstellen von \(store.directoryName): \(error.localizedDescription)")
                 }
             }
         }
+    }
+    
+    private func ensureAllStoresHaveContent() async {
+        print("🔍 Überprüfe Inhalte der Stores...")
+        var summary: [String] = []
+
+        for store in stores {
+            await store.loadItems()
+            if store.itemCount == 0 {
+                do {
+                    try await store.restoreDefaults()
+                    summary.append("✅ \(store.directoryName): neu erstellt")
+                } catch {
+                    summary.append("❌ \(store.directoryName): Fehler beim Wiederherstellen (\(error.localizedDescription))")
+                }
+            } else {
+                summary.append("📦 \(store.directoryName): \(store.itemCount) Einträge gefunden")
+            }
+        }
+
+        print("\n📋 Initialisierungszusammenfassung:\n")
+        for line in summary {
+            print("• \(line)")
+        }
+        print("\n✅ AssetStores Initialisierung abgeschlossen.\n")
     }
     
     // MARK: - Restore System Defaults (wiederherstellbare Ressourcen)
@@ -124,6 +184,13 @@ class AssetStoreManager {
             }
         }
         
+        do {
+            try FileManagerService.shared.migrateSVGDirectory(from: storageType, to: newStorageType)
+            print("✅ SVG-Verzeichnis migriert")
+        } catch {
+            print("❌ Fehler beim Migrieren des SVG-Verzeichnisses: \(error.localizedDescription)")
+        }
+        
         self.storageType = newStorageType
     }
     
@@ -173,5 +240,25 @@ class AssetStoreManager {
         }
         let total = stores.map(\.itemCount).reduce(0, +)
         print("🔢 Gesamtanzahl: \(total)")
+    }
+    
+    private func printInitializationSummary(_ results: [StoreInitializationResult]) async {
+        print("")
+        print("📋 Initialisierungszusammenfassung:")
+        
+        for result in results {
+            let symbol: String
+            switch result.action {
+            case .newlyCreated: symbol = "✅"
+            case .initialized: symbol = "✅"
+            case .alreadyPresent: symbol = "➖"
+            case .empty: symbol = "⚠️"
+            }
+            
+            print("• \(symbol) \(result.storeName): \(result.action.rawValue)")
+        }
+        
+        print("")
+        print("✅ AssetStores Initialisierung abgeschlossen.\n")
     }
 }
