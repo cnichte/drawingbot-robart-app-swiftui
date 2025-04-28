@@ -5,14 +5,16 @@
 //  Created by Carsten Nichte on 23.04.25.
 //
 
-// ConnectionFormView.swift
 import SwiftUI
 
 struct ConnectionFormView: View {
     @Binding var data: ConnectionData
     @EnvironmentObject var store: GenericStore<ConnectionData>
     @EnvironmentObject var bluetoothManager: BluetoothManager
-    @EnvironmentObject var scanner: USBSerialScanner // Hier hinzufügen
+
+    #if os(macOS) // Hier aktivieren wir den USB-Scanner nur für macOS
+    @EnvironmentObject var scanner: USBSerialScanner
+    #endif
 
     @State private var selectedBluetoothPeripheral: DiscoveredPeripheral?
     @State private var selectedUSBDevice: USBSerialDevice?
@@ -56,7 +58,8 @@ struct ConnectionFormView: View {
                     }
                 }
 
-                // USB Geräte
+                #if os(macOS)
+                // USB Geräte nur für macOS
                 if isScanningUSB {
                     ProgressView("Suche nach USB-Geräten...")
                         .progressViewStyle(CircularProgressViewStyle())
@@ -73,6 +76,7 @@ struct ConnectionFormView: View {
                         }
                     }
                 }
+                #endif
             }
 
             // Button um die Zuordnung vorzunehmen
@@ -81,8 +85,10 @@ struct ConnectionFormView: View {
                     // Bluetooth Verbindung herstellen
                     bluetoothManager.connect(to: bluetoothPeripheral.peripheral)
                 } else if let usbDevice = selectedUSBDevice {
-                    // USB Verbindung herstellen
+                    #if os(macOS)
+                    // USB Verbindung nur auf macOS
                     scanner.connect(to: usbDevice)
+                    #endif
                 }
                 save()
             }
@@ -112,9 +118,11 @@ struct ConnectionFormView: View {
     // USB Scannen starten
     private func startUSBScan() {
         isScanningUSB = true
+        #if os(macOS)
         scanner.scanSerialDevices()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             self.isScanningUSB = false
         }
+        #endif
     }
 }

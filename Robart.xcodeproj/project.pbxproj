@@ -186,6 +186,7 @@
 		D5E55CF02DBFFF81003806CF /* SignatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CEE2DBFFF78003806CF /* SignatureData.swift */; };
 		D5E55CF22DC01036003806CF /* jobs.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E55CF12DC0102E003806CF /* jobs.json */; };
 		D5E55CF32DC01036003806CF /* jobs.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E55CF12DC0102E003806CF /* jobs.json */; };
+		D5E55CF42DC02830003806CF /* CustomSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4362DBEA9F10072D83C /* CustomSplitView.swift */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -630,6 +631,7 @@
 		D587A43F2DBEBFA40072D83C /* JobPreviewView */ = {
 			isa = PBXGroup;
 			children = (
+				D5A085142DAFD8C900332690 /* JobPreviewView.swift */,
 				D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */,
 				D587A4412DBEDDD90072D83C /* JobSettingsPanel.swift */,
 				D587A4402DBEBFFA0072D83C /* Deprecated */,
@@ -646,7 +648,6 @@
 				D5A085152DAFD8C900332690 /* JobSummaryView.swift */,
 				D5A085252DAFD8DE00332690 /* SVGTreeView.swift */,
 				D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */,
-				D5A085142DAFD8C900332690 /* JobPreviewView.swift */,
 			);
 			path = Deprecated;
 			sourceTree = "<group>";
@@ -1275,6 +1276,7 @@
 				D5A084F22DAFD88A00332690 /* SVGParser.swift in Sources */,
 				D5A084F32DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
 				D509C0A32DBC4A20009B0233 /* PaperSectionView.swift in Sources */,
+				D5E55CF42DC02830003806CF /* CustomSplitView.swift in Sources */,
 				D5F896F42DBD012D00397561 /* Units.swift in Sources */,
 				D5E55CC12DBF6E95003806CF /* Logger.swift in Sources */,
 				D57566202DB9255400D95E3F /* ConnectionFormView.swift in Sources */,

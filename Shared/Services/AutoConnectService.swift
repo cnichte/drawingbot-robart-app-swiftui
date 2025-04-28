@@ -28,6 +28,7 @@ class AutoConnectService: ObservableObject {
         }
     }
 
+    #if os(macOS)
     func tryAutoConnectUSB(usbScanner: USBSerialScanner) {
         for device in usbScanner.devices {
             if let match = AssetStores.shared.connectionsStore.items.first(where: {
@@ -42,4 +43,5 @@ class AutoConnectService: ObservableObject {
             }
         }
     }
+    #endif
 }
