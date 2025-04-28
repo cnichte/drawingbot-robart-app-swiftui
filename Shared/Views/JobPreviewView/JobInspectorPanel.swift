@@ -16,17 +16,18 @@ import SwiftUI
 
 struct JobInspectorPanel: View {
     @State private var selectedTab: InspectorTab = .fileInfo
-
+    @Binding var selectedMachine: MachineData?
+    
     // SVG-spezifische States
     @State private var layers: [SVGLayer] = []
     @State private var selectedLayer: SVGLayer? = nil
     @State private var selectedElements: [String] = []
     @State private var selectedProperties: [SVGProperty] = []
-
+    
     enum InspectorTab: String, CaseIterable, Identifiable {
         case fileInfo = "SVG-FileInfo"
         case properties = "SVG-Properties"
-
+        case machine = "Maschine"
         var id: String { rawValue }
     }
 
@@ -54,6 +55,8 @@ struct JobInspectorPanel: View {
                         svgFileInfoView
                     case .properties:
                         svgPropertiesView
+                    case .machine:
+                        machineInfoView
                     }
                 }
                 .padding(.horizontal, 12)
@@ -103,7 +106,8 @@ struct JobInspectorPanel: View {
 
             Divider()
 
-            // Abschnitt: SVG-Ebenen-Elemente
+            // MARK: -  SVG-Ebenen-Elemente
+            
             VStack(alignment: .leading, spacing: 8) {
                 Text("SVG-Ebenen-Elemente")
                     .font(.headline)
@@ -140,6 +144,49 @@ struct JobInspectorPanel: View {
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    
+    // MARK: - Inhalt für Maschinen-Details
+    
+    @ViewBuilder
+    private var machineInfoView: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            if let selectedMachine = selectedMachine {
+                Text("Maschinenname: \(selectedMachine.name)")
+                    .font(.headline)
+                Text("Typ: \(selectedMachine.typ.rawValue)")
+                Text("Protokoll: \(selectedMachine.protokoll)")
+                Text("Größe: \(selectedMachine.size.x) x \(selectedMachine.size.y) mm")
+                Text("Verbunden: \(selectedMachine.isConnected ? "Ja" : "Nein")")
+
+                Divider()
+
+                // CodeTemplates anzeigen
+                Text("CodeTemplates:")
+                ForEach(selectedMachine.codeTemplates, id: \.id) { template in
+                    VStack(alignment: .leading) {
+                        Text("Befehl: \(template.command)")
+                        Text("Beschreibung: \(template.description)")
+                    }
+                    .padding(.bottom, 4)
+                }
+
+                Divider()
+
+                // Optionen anzeigen
+                Text("Optionen:")
+                ForEach(selectedMachine.options, id: \.id) { option in
+                    VStack(alignment: .leading) {
+                        Text("Option: \(option.option)")
+                        Text("Wert: \(option.valueAsString)")
+                    }
+                    .padding(.bottom, 4)
+                }
+            } else {
+                Text("Keine Maschine ausgewählt.")
             }
         }
     }

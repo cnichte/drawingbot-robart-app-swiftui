@@ -12,6 +12,7 @@ struct JobSettingsPanel: View {
     @Binding var currentJob: PlotJobData
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool
+    @Binding var selectedMachine: MachineData?
     
     @EnvironmentObject var plotJobStore: GenericStore<PlotJobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
@@ -33,10 +34,10 @@ struct JobSettingsPanel: View {
                 PaperSectionView(currentJob: $currentJob, onUpdate: saveCurrentJob)
                     .padding(.horizontal, 0)
 
-                SignatureSectionView()
+                SignatureSectionView(currentJob: $currentJob)
                     .padding(.horizontal, 0)
                 
-                MachineSectionView(currentJob: $currentJob)
+                MachineSectionView(currentJob: $currentJob, selectedMachine: $selectedMachine)
                     .padding(.horizontal, 0)
                 
                 PenSectionView()

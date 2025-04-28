@@ -20,26 +20,51 @@ enum PaperOrientation: String, Codable {
     case portrait = ".portrait"
 }
 
+enum PenSVGLayerAssignment: String, Codable {
+    case toColor = ".toColor"
+    case toLayer = ".toLayer"
+}
+
+struct PenConfiguration: Codable, Equatable, Identifiable {
+    var id = UUID()
+    var penSVGLayerAssignment:PenSVGLayerAssignment
+    var color: String // Ein Stift kann einer Farbe im SVG zugeordnet werden
+    var layer: String // oder einer Ebene (Element g) zugeordnet werden.
+    var angle: Int // 45° oder 90°
+    // TODO: Vielleicht noch wie weit er rauf oder runter gefahren werden soll.
+}
+
 
 struct PlotJobData: Identifiable, Codable, Equatable, Transferable, Hashable  {
+    // standards
     let id: UUID
     var name: String
     var description: String
-    // alt. noch zu überarbeiten
     
+    // paper
     var paper: PaperData
+    var paperFormatID: UUID? = nil // <-- NEU für Picker-Anbindung
     var paperOrientation:PaperOrientation = .portrait
     
+    // svg
     var svgFilePath: String
-    var gcodeCommands: [String]
-    var currentCommandIndex: Int
     var pitch: Double
     var zoom: Double
     var origin: CGPoint
-    var penSettings: [PenConfiguration]
-    var isActive: Bool = false
     
-    var paperFormatID: UUID? = nil // <-- NEU für Picker-Anbindung
+    // pen
+    var penConfiguration: [PenConfiguration]
+    // TODO: var pens: PenData
+    
+    // cgode, egg
+    var gcodeCommands: [String]
+    var currentCommandIndex: Int
+    
+    // signatur
+    var signatur: SignatureData?
+    
+    // job is running
+    var isActive: Bool = false
     
     init(
         id: UUID = UUID(),
@@ -52,7 +77,7 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable, Hashable  {
         pitch: Double = 0,
         zoom: Double = 1.0,
         origin: CGPoint = .zero,
-        penSettings: [PenConfiguration] = []
+        penConfiguration: [PenConfiguration] = []
     ) {
         self.id = id
         self.name = name
@@ -64,7 +89,7 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable, Hashable  {
         self.pitch = pitch
         self.zoom = zoom
         self.origin = origin
-        self.penSettings = penSettings
+        self.penConfiguration = penConfiguration
     }
     
     
@@ -83,11 +108,4 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable, Hashable  {
     public static var transferRepresentation: some TransferRepresentation {
          CodableRepresentation(contentType: .plotJob)
      }
-}
-
-struct PenConfiguration: Codable, Equatable, Identifiable {
-    var id = UUID()
-    var color: String
-    var layer: String
-    var angle: Int // 45° oder 90°
 }

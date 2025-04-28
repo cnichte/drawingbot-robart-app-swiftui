@@ -1,0 +1,41 @@
+[
+    {
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+        "origin": [
+            0,
+            0
+        ],
+        "id": "99AF743F-B1B5-46D6-A5E9-B214F1BC6D6E",
+        "paperOrientation": ".portrait",
+        "paperFormatID": "07279F4F-BED4-4755-A97D-8EC9EB74CBB6",
+        "penConfiguration":[],
+        "isActive": false,
+        "gcodeCommands": [],
+        "currentCommandIndex": 0,
+        "name": "Neuer Job 1",
+        "pitch": 0,
+        "zoom": 1,
+        "paper": {
+            "color": "weiß",
+            "paperFormat": {
+                "description": "DIN A4 – Standard-Briefformate, Drucker",
+                "width": 210,
+                "name": "DIN A4",
+                "unit": {
+                    "id": "5F6BBF82-57CC-435D-8644-655481CD556B",
+                    "name": "mm"
+                },
+                "id": "7E3EB341-CEE9-4DA6-8ACB-677D5CB19E13",
+                "height": 297
+            },
+            "shoplink": "",
+            "description": "",
+            "hersteller": "unknown",
+            "name": "ZackZack 2",
+            "id": "07279F4F-BED4-4755-A97D-8EC9EB74CBB6",
+            "weight": "100"
+        },
+        "penSettings": [],
+        "svgFilePath": "jobs-data\/99AF743F-B1B5-46D6-A5E9-B214F1BC6D6E\/svg\/plottergram-008-001-021.svg"
+    }
+]

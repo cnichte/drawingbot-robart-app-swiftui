@@ -19,8 +19,6 @@
 		D509C0AA2DBC4AED009B0233 /* PenSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0A82DBC4AEA009B0233 /* PenSectionView.swift */; };
 		D509C0AC2DBC4B05009B0233 /* MachineSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */; };
 		D509C0AD2DBC4B05009B0233 /* MachineSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */; };
-		D509C0AF2DBC4B81009B0233 /* SettingsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0AE2DBC4B7E009B0233 /* SettingsPanel.swift */; };
-		D509C0B02DBC4B81009B0233 /* SettingsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0AE2DBC4B7E009B0233 /* SettingsPanel.swift */; };
 		D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
@@ -182,6 +180,12 @@
 		D5E55CE72DBFCB49003806CF /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CE52DBFCB46003806CF /* ConnectionManager.swift */; };
 		D5E55CE92DBFD6DA003806CF /* AutoConnectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CE82DBFD6D7003806CF /* AutoConnectService.swift */; };
 		D5E55CEA2DBFD6DA003806CF /* AutoConnectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CE82DBFD6D7003806CF /* AutoConnectService.swift */; };
+		D5E55CEC2DBFFF05003806CF /* signatures.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E55CEB2DBFFEFB003806CF /* signatures.json */; };
+		D5E55CED2DBFFF05003806CF /* signatures.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E55CEB2DBFFEFB003806CF /* signatures.json */; };
+		D5E55CEF2DBFFF81003806CF /* SignatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CEE2DBFFF78003806CF /* SignatureData.swift */; };
+		D5E55CF02DBFFF81003806CF /* SignatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CEE2DBFFF78003806CF /* SignatureData.swift */; };
+		D5E55CF22DC01036003806CF /* jobs.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E55CF12DC0102E003806CF /* jobs.json */; };
+		D5E55CF32DC01036003806CF /* jobs.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E55CF12DC0102E003806CF /* jobs.json */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -260,7 +264,6 @@
 		D509C0A52DBC4AA8009B0233 /* SignatureSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureSectionView.swift; sourceTree = "<group>"; };
 		D509C0A82DBC4AEA009B0233 /* PenSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenSectionView.swift; sourceTree = "<group>"; };
 		D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSectionView.swift; sourceTree = "<group>"; };
-		D509C0AE2DBC4B7E009B0233 /* SettingsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPanel.swift; sourceTree = "<group>"; };
 		D50A30632DAEFA9100859908 /* RobartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobartApp.swift; sourceTree = "<group>"; };
 		D52C0AEA2DBA613400F57746 /* PaperFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperFormat.swift; sourceTree = "<group>"; };
 		D52C0AEE2DBA655000F57746 /* paper-formats.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "paper-formats.json"; sourceTree = "<group>"; };
@@ -344,6 +347,9 @@
 		D5E55CDE2DBF8F9A003806CF /* JobListViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListViewMode.swift; sourceTree = "<group>"; };
 		D5E55CE52DBFCB46003806CF /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		D5E55CE82DBFD6D7003806CF /* AutoConnectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectService.swift; sourceTree = "<group>"; };
+		D5E55CEB2DBFFEFB003806CF /* signatures.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = signatures.json; sourceTree = "<group>"; };
+		D5E55CEE2DBFFF78003806CF /* SignatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureData.swift; sourceTree = "<group>"; };
+		D5E55CF12DC0102E003806CF /* jobs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = jobs.json; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -484,6 +490,8 @@
 		D52C0AED2DBA654600F57746 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5E55CF12DC0102E003806CF /* jobs.json */,
+				D5E55CEB2DBFFEFB003806CF /* signatures.json */,
 				D5E55CD42DBF8D21003806CF /* projects.json */,
 				D5F896FF2DBD84C200397561 /* connections.json */,
 				D5F896FC2DBD7F2E00397561 /* machines.json */,
@@ -627,7 +635,6 @@
 				D587A4402DBEBFFA0072D83C /* Deprecated */,
 				D509C0982DBC4979009B0233 /* JobSectionViews */,
 				D5A085202DAFD8DE00332690 /* PaperPreview.swift */,
-				D509C0AE2DBC4B7E009B0233 /* SettingsPanel.swift */,
 			);
 			path = JobPreviewView;
 			sourceTree = "<group>";
@@ -846,6 +853,7 @@
 		D5F896E62DBCDDD500397561 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				D5E55CEE2DBFFF78003806CF /* SignatureData.swift */,
 				D5A084CA2DAFD84000332690 /* ConnectionData.swift */,
 				D5A084CB2DAFD84000332690 /* MachineData.swift */,
 				D5A084CC2DAFD84000332690 /* PenData.swift */,
@@ -1026,6 +1034,7 @@
 				D5F896E42DBCD76900397561 /* robart-smoke-test.sh in Resources */,
 				D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */,
 				D5F896DC2DBCD2DF00397561 /* robart-dev-check-quickrun.sh in Resources */,
+				D5E55CF32DC01036003806CF /* jobs.json in Resources */,
 				D5F896D62DBCD05000397561 /* robart-dev-check-v4.0.sh in Resources */,
 				D5F896F22DBCFB2D00397561 /* papers.json in Resources */,
 				D5F896FD2DBD7F3900397561 /* machines.json in Resources */,
@@ -1034,6 +1043,7 @@
 				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
 				D5F896D02DBCCEF900397561 /* robart-dev-check-v2.0.sh in Resources */,
 				D5F896DE2DBCD54700397561 /* robart-dev-testbuildrun.sh in Resources */,
+				D5E55CEC2DBFFF05003806CF /* signatures.json in Resources */,
 				D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */,
 				D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */,
 				D5F896DA2DBCD27500397561 /* robart-dev-check-mini.sh in Resources */,
@@ -1055,7 +1065,9 @@
 				D5F896E92DBCDF4800397561 /* aspect-ratios.json in Resources */,
 				D5F897002DBD84CA00397561 /* connections.json in Resources */,
 				D5A341052DBAF323005FF05A /* units.json in Resources */,
+				D5E55CED2DBFFF05003806CF /* signatures.json in Resources */,
 				D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */,
+				D5E55CF22DC01036003806CF /* jobs.json in Resources */,
 				D5F896F12DBCFB2D00397561 /* papers.json in Resources */,
 				D5E55CD62DBF8D2A003806CF /* projects.json in Resources */,
 				D5F896FA2DBD7C0400397561 /* pens.json in Resources */,
@@ -1142,7 +1154,6 @@
 				D5E55CC02DBF6E95003806CF /* Logger.swift in Sources */,
 				D581AF772DBB9E9B00821A7E /* Math.swift in Sources */,
 				D5F4DE072DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */,
-				D509C0AF2DBC4B81009B0233 /* SettingsPanel.swift in Sources */,
 				D5A085102DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
 				D5F6C6472DB8499900020AEE /* ConnectionFormView.swift in Sources */,
 				D5A085112DAFD8AD00332690 /* Joystick_View.swift in Sources */,
@@ -1172,6 +1183,7 @@
 				D5E55CE72DBFCB49003806CF /* ConnectionManager.swift in Sources */,
 				D5A085C02DB0348D00332690 /* JobRow.swift in Sources */,
 				D587A4422DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */,
+				D5E55CEF2DBFFF81003806CF /* SignatureData.swift in Sources */,
 				D56C4E482DB1296700F09A0C /* DropZoneModifier.swift in Sources */,
 				D509C0A72DBC4AD2009B0233 /* SignatureSectionView.swift in Sources */,
 				D5A084E72DAFD86700332690 /* GenericStore.swift in Sources */,
@@ -1199,7 +1211,6 @@
 				D5E55CD92DBF8DF1003806CF /* View+HoverEffect.swift in Sources */,
 				D509C0A02DBC49F2009B0233 /* SVGSectionView.swift in Sources */,
 				D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
-				D509C0B02DBC4B81009B0233 /* SettingsPanel.swift in Sources */,
 				D581AF7A2DBBFCD500821A7E /* AppResetHelper.swift in Sources */,
 				D5F896F82DBD56BA00397561 /* AssetStoreManager.swift in Sources */,
 				D5A084D12DAFD84000332690 /* SettingsData.swift in Sources */,
@@ -1273,6 +1284,7 @@
 				D57566252DB9256B00D95E3F /* PaperFormView.swift in Sources */,
 				D587A4432DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */,
 				D5E55CEA2DBFD6DA003806CF /* AutoConnectService.swift in Sources */,
+				D5E55CF02DBFFF81003806CF /* SignatureData.swift in Sources */,
 				D5A085BF2DB0348D00332690 /* JobRow.swift in Sources */,
 				D56C4E492DB1296700F09A0C /* DropZoneModifier.swift in Sources */,
 				D5A084E82DAFD86700332690 /* GenericStore.swift in Sources */,
