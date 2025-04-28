@@ -149,7 +149,7 @@ struct JobPreviewView: View {
                 .presentationDragIndicator(.visible)
         }
         .onAppear {
-            print("Geladener SVG-Pfad:", currentJob.svgFilePath)
+            appLog("Geladener SVG-Pfad:", currentJob.svgFilePath)
             loadActiveJob()
         }
         .onDisappear {

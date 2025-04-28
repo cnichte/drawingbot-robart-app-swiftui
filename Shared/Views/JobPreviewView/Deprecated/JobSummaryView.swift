@@ -121,7 +121,7 @@ struct JobSummaryView: View {
         gCode = parser.elements.map { $0.output }.joined(separator: "\n")
         
         // Debug-Ausgabe, um sicherzustellen, dass die Elemente geladen sind
-        print("Geladene Elemente: \(elements.count)")
+        appLog("Geladene Elemente: \(elements.count)")
     }
 }
 // G-Code Vorlagen in einer map speichern: [{ svgElement:string, gcodeTemplates[ {"key":"value"}] }]

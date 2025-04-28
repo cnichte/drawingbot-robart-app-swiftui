@@ -27,7 +27,6 @@ struct JobSettingsPanel: View {
                     currentJob: $currentJob,
                     svgFileName: $svgFileName,
                     showingFileImporter: $showingFileImporter,
-                    showSourcePreview: .constant(false)
                 )
                 .padding(.horizontal, 0)
 

@@ -68,12 +68,12 @@ Oder als ein einzelner Block GCode:
  
  Zum Beispiel: Den GCode des ersten Kreiselements finden:
  if let circleItem = parser.elements.first(where: { $0.element.name == "circle" }) {
-     print("GCode für Kreis:\n\(circleItem.output)")
+     appLog("GCode für Kreis:\n\(circleItem.output)")
  }
 
  z. B. das erste Element ausgeben
  if let first = elements.first {
-     print("GCode für \(first.element.name):\n\(first.output)")
+     appLog("GCode für \(first.element.name):\n\(first.output)")
  }
  
  Oder falls du den GCode zu einem bestimmten SVGElement hast:
@@ -167,7 +167,7 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
             parser?.delegate = self
             return parser?.parse() ?? false
         } catch {
-            print("Fehler beim Laden der Datei: \(error.localizedDescription)")
+            appLog("Fehler beim Laden der Datei: \(error.localizedDescription)")
             return false
         }
     }

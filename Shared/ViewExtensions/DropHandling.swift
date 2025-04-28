@@ -49,7 +49,7 @@ private func handleProviders(
                         _ = onDrop([job], .zero)
                     }
                 case .failure(let error):
-                    print("Fehler beim Laden von PlotJobData: \(error)")
+                    appLog("Fehler beim Laden von PlotJobData: \(error)")
                 }
             }
         }

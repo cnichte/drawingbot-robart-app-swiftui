@@ -108,7 +108,7 @@ struct ProjectFormView: View {
         .navigationTitle("Projekt bearbeiten")
         .onReceive(projectStore.$refreshTrigger) { _ in
             // Re-render wird automatisch ausgelöst – bei Bedarf kannst du hier z.B. loggen
-            // print("🔄 FormView: Refresh getriggert")
+            // appLog("🔄 FormView: Refresh getriggert")
         }
     }
 

@@ -73,7 +73,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
-        print("BluetoothManager init wurde aufgerufen ✅")
+        appLog("BluetoothManager init wurde aufgerufen ✅")
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -81,20 +81,20 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         switch central.state {
         case .poweredOn:
             isBluetoothReady = true
-            print("✅ Bluetooth ist eingeschaltet")
+            appLog("✅ Bluetooth ist eingeschaltet")
             // Starte Scannen oder andere Operationen hier
         case .poweredOff:
             isBluetoothReady = false
-            print("❌ Bluetooth ist ausgeschaltet")
+            appLog("❌ Bluetooth ist ausgeschaltet")
         case .unauthorized:
             isBluetoothReady = false
-            print("❌ Bluetooth-Berechtigung fehlt")
+            appLog("❌ Bluetooth-Berechtigung fehlt")
         case .unsupported:
             isBluetoothReady = false
-            print("❌ Bluetooth wird nicht unterstützt")
+            appLog("❌ Bluetooth wird nicht unterstützt")
         default:
             isBluetoothReady = false
-            print("❌ Unbekannter Bluetooth-Zustand")
+            appLog("❌ Unbekannter Bluetooth-Zustand")
         }
         
         if central.state == .poweredOn {
@@ -105,7 +105,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     func startScan(filter: Bool? = nil) {
         
         guard let centralManager = centralManager, centralManager.state == .poweredOn else {
-            print("❌ Kann nicht scannen: Bluetooth ist nicht bereit")
+            appLog("❌ Kann nicht scannen: Bluetooth ist nicht bereit")
             return
         }
         
@@ -113,7 +113,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         peripherals.removeAll()
         centralManager.stopScan()
         isScanning = true
-        print("🔍 Starte Scan (\(filterByService ? "nur HM-10" : "alle Geräte"))\n")
+        appLog("🔍 Starte Scan (\(filterByService ? "nur HM-10" : "alle Geräte"))\n")
 
         if filterByService {
             centralManager.scanForPeripherals(withServices: [hm10ServiceUUID], options: nil)
@@ -127,21 +127,21 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             self.centralManager.stopScan()
             self.isScanning = false
-            print("🛑 Scan automatisch gestoppt\n")
+            appLog("🛑 Scan automatisch gestoppt\n")
         }
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         if let error = error {
-            print("❌ Fehler beim Verbinden mit Gerät \(peripheral.name ?? "Unbekannt\n"): \(error.localizedDescription)")
+            appLog("❌ Fehler beim Verbinden mit Gerät \(peripheral.name ?? "Unbekannt\n"): \(error.localizedDescription)")
         }
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         guard let name = peripheral.name else { return }
 
-        print("Gefundenes Gerät: \(name)")
-        print("Advertisement Data: \(advertisementData)\n\n")
+        appLog("Gefundenes Gerät: \(name)")
+        appLog("Advertisement Data: \(advertisementData)\n\n")
 
         if filterByService {
             if !(name.uppercased().contains("HM") || name.uppercased().contains("BLE") || advertisementData.description.contains("HM")) {
@@ -171,7 +171,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("✅ Verbunden mit \(peripheral.name ?? "Unbekannt")\n")
+        appLog("✅ Verbunden mit \(peripheral.name ?? "Unbekannt")\n")
         isConnected = true
         peripheral.readRSSI()
         peripheral.discoverServices([hm10ServiceUUID])
@@ -184,7 +184,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         peripherals.removeAll()
 
         if let error = error {
-            print("❌ Fehler beim Trennen von Gerät \(peripheral.name ?? "Unbekannt\n"): \(error.localizedDescription)\n")
+            appLog("❌ Fehler beim Trennen von Gerät \(peripheral.name ?? "Unbekannt\n"): \(error.localizedDescription)\n")
         }
 
         // automatischer Scan nach Disconnect

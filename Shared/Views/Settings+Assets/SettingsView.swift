@@ -20,6 +20,7 @@ struct SettingsView: View {
     @EnvironmentObject var assetStores: AssetStores
 
     @AppStorage("currentStorageType") private var currentStorageRaw: String = StorageType.local.rawValue
+    @AppStorage("loggingEnabled") private var loggingEnabled: Bool = true
 
     var body: some View {
         Form {
@@ -29,6 +30,10 @@ struct SettingsView: View {
                     Text("iCloud").tag(StorageType.iCloud.rawValue)
                 }
                 .pickerStyle(.segmented)
+
+                Toggle(isOn: $loggingEnabled) {
+                    Label("Logging aktivieren", systemImage: "doc.text.magnifyingglass")
+                }
             }
 
             Section(header: SectionHeader("Housekeeping")) {

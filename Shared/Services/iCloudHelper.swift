@@ -16,9 +16,9 @@ class iCloudHelper {
 
             DispatchQueue.main.async {
                 if let url = containerURL {
-                    print("✅ iCloud verfügbar: \(url)")
+                    appLog("✅ iCloud verfügbar: \(url)")
                 } else {
-                    print("❌ iCloud nicht verfügbar oder nicht aktiviert")
+                    appLog("❌ iCloud nicht verfügbar oder nicht aktiviert")
                 }
                 completion(containerURL)
             }

@@ -160,6 +160,8 @@
 		D5D104302DAEF45100E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042F2DAEF45100E8406E /* SVGView */; };
 		D5E55CBD2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */; };
 		D5E55CBE2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */; };
+		D5E55CC02DBF6E95003806CF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBF2DBF6E93003806CF /* Logger.swift */; };
+		D5E55CC12DBF6E95003806CF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBF2DBF6E93003806CF /* Logger.swift */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -311,6 +313,7 @@
 		D5D104242DAEF38000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
 		D5D104262DAEF39000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
 		D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGMigrationTester.swift; sourceTree = "<group>"; };
+		D5E55CBF2DBF6E93003806CF /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -505,7 +508,7 @@
 			path = ViewExtensions;
 			sourceTree = "<group>";
 		};
-		D57076D52DB57F4600C277AF /* AssetManager */ = {
+		D57076D52DB57F4600C277AF /* Settings+Assets */ = {
 			isa = PBXGroup;
 			children = (
 				D57076DB2DB58A5B00C277AF /* Connections */,
@@ -513,8 +516,9 @@
 				D57076D92DB58A3F00C277AF /* Paper */,
 				D57076D82DB58A2300C277AF /* Pens */,
 				D57076D62DB57F5000C277AF /* Projects */,
+				D5A085022DAFD8AD00332690 /* SettingsView.swift */,
 			);
-			path = AssetManager;
+			path = "Settings+Assets";
 			sourceTree = "<group>";
 		};
 		D57076D62DB57F5000C277AF /* Projects */ = {
@@ -568,6 +572,7 @@
 		D581AF862DBC137B00821A7E /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				D5E55CBF2DBF6E93003806CF /* Logger.swift */,
 				D5F896ED2DBCF7F400397561 /* AssetStoresDebugToolbar.swift */,
 				D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */,
 				D581AF792DBBFCD500821A7E /* AppResetHelper.swift */,
@@ -663,14 +668,13 @@
 				D587A43F2DBEBFA40072D83C /* JobPreviewView */,
 				D52C0AFD2DBA87C100F57746 /* PartialViews */,
 				D5F6C61F2DB8348600020AEE /* GenericItemManagerView */,
-				D57076D52DB57F4600C277AF /* AssetManager */,
+				D57076D52DB57F4600C277AF /* Settings+Assets */,
 				D5A085B72DB02DBD00332690 /* JobListView */,
 				D5A084FD2DAFD8AD00332690 /* AboutMeView.swift */,
 				D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */,
 				D5A084FF2DAFD8AD00332690 /* DeviceListView.swift */,
 				D5A085002DAFD8AD00332690 /* Joystick_View.swift */,
 				D5A085012DAFD8AD00332690 /* RemoteControlView.swift */,
-				D5A085022DAFD8AD00332690 /* SettingsView.swift */,
 				D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */,
 			);
 			path = Views;
@@ -1084,6 +1088,7 @@
 				D5A0850E2DAFD8AD00332690 /* DeviceListView.swift in Sources */,
 				D5A0850F2DAFD8AD00332690 /* RemoteControlView.swift in Sources */,
 				D52C0AF52DBA72DF00F57746 /* AssetStores.swift in Sources */,
+				D5E55CC02DBF6E95003806CF /* Logger.swift in Sources */,
 				D581AF772DBB9E9B00821A7E /* Math.swift in Sources */,
 				D5F4DE072DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */,
 				D509C0AF2DBC4B81009B0233 /* SettingsPanel.swift in Sources */,
@@ -1194,6 +1199,7 @@
 				D5A084F32DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
 				D509C0A32DBC4A20009B0233 /* PaperSectionView.swift in Sources */,
 				D5F896F42DBD012D00397561 /* Units.swift in Sources */,
+				D5E55CC12DBF6E95003806CF /* Logger.swift in Sources */,
 				D57566202DB9255400D95E3F /* ConnectionFormView.swift in Sources */,
 				D5A084F42DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
 				D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */,

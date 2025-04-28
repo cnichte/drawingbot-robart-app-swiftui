@@ -39,7 +39,7 @@ struct RobartApp: App {
                         AppResetHelper.fullResetAll()
                     }
                     if UserDefaults.standard.bool(forKey: "forceResetOnLaunch") {
-                        print("🚨 Starte mit vollständigem Reset...")
+                        appLog("🚨 Starte mit vollständigem Reset...")
                         UserDefaults.standard.set(false, forKey: "forceResetOnLaunch") // Zurücksetzen, damit es nur einmal wirkt
                         
                         Task {

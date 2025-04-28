@@ -18,6 +18,7 @@ struct CollapsibleSection<Content: View>: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            // Header-Button
             Button(action: {
                 withAnimation {
                     isExpanded.toggle()
@@ -26,25 +27,28 @@ struct CollapsibleSection<Content: View>: View {
                 HStack {
                     Image(systemName: systemImage)
                     Text(title)
-                        .font(.headline) // Größerer Titel
+                        .font(.headline)
                         .lineLimit(1)
                     Spacer()
                     Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
                         .foregroundColor(.secondary)
                 }
                 .padding(.horizontal, 8)
-                .padding(.vertical, 8) // mehr Padding
+                .padding(.vertical, 8)
                 .background(ColorHelper.backgroundColor)
                 .foregroundColor(.primary)
             }
             .buttonStyle(.plain)
 
+            // Inhalt
             if isExpanded {
                 VStack {
                     content
                 }
+                .frame(maxWidth: .infinity, minHeight: 100, alignment: .leading) // << minHeight hinzugefügt
                 .padding(12)
                 .background(ColorHelper.backgroundColor)
+                .clipShape(RoundedRectangle(cornerRadius: 6))
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 6))
@@ -53,6 +57,6 @@ struct CollapsibleSection<Content: View>: View {
                 .stroke(Color.gray.opacity(0.2))
         )
         .padding(.horizontal)
-        .padding(.bottom, 0) // Abstand unten
+        .padding(.bottom, 0)
     }
 }

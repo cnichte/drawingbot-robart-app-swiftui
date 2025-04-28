@@ -81,7 +81,7 @@ where T: Codable & Identifiable, T.ID: Hashable {
                     let item = try JSONDecoder().decode(T.self, from: data)
                     tempItems.append(item)
                 } catch {
-                    print("⚠️ Fehler beim Laden von \(file.lastPathComponent): \(error.localizedDescription)")
+                    appLog("⚠️ Fehler beim Laden von \(file.lastPathComponent): \(error.localizedDescription)")
                 }
             }
 
@@ -89,10 +89,10 @@ where T: Codable & Identifiable, T.ID: Hashable {
             await MainActor.run {
                 self.items = result
             }
-            print("📚 Geladen: \(items.count) Elemente in \(directoryName)")
+            appLog("📚 Geladen: \(items.count) Elemente in \(directoryName)")
 
         } catch {
-            print("❌ Fehler beim Lesen von \(directoryName): \(error.localizedDescription)")
+            appLog("❌ Fehler beim Lesen von \(directoryName): \(error.localizedDescription)")
         }
     }
     
@@ -107,7 +107,7 @@ where T: Codable & Identifiable, T.ID: Hashable {
     // MARK: - Restore Defaults
     func restoreDefaults() async throws {
         guard let resource = initialResourceName else {
-            print("⚠️ Kein initialResourceName für \(directoryName), überspringe Restore.")
+            appLog("⚠️ Kein initialResourceName für \(directoryName), überspringe Restore.")
             return
         }
 
@@ -140,7 +140,7 @@ where T: Codable & Identifiable, T.ID: Hashable {
             // Schutz: Verzeichnis existiert?
             if !fileManager.fileExists(atPath: directoryURL.path) {
                 try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-                print("📂 Verzeichnis wurde automatisch nacherzeugt: \(directoryName)")
+                appLog("📂 Verzeichnis wurde automatisch nacherzeugt: \(directoryName)")
             }
             
             try data.write(to: path)
@@ -153,9 +153,9 @@ where T: Codable & Identifiable, T.ID: Hashable {
                 }
             }
             
-            print("💾 Gespeichert: \(path.lastPathComponent)")
+            appLog("💾 Gespeichert: \(path.lastPathComponent)")
         } catch {
-            print("❌ Fehler beim Speichern: \(error.localizedDescription)")
+            appLog("❌ Fehler beim Speichern: \(error.localizedDescription)")
         }
     }
     
@@ -167,9 +167,9 @@ where T: Codable & Identifiable, T.ID: Hashable {
             await MainActor.run {
                 self.items.removeAll { $0.id == item.id }
             }
-            print("🗑️ Gelöscht: \(fileName)")
+            appLog("🗑️ Gelöscht: \(fileName)")
         } catch {
-            print("❌ Fehler beim Löschen: \(error.localizedDescription)")
+            appLog("❌ Fehler beim Löschen: \(error.localizedDescription)")
         }
     }
     

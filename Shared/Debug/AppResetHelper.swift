@@ -22,7 +22,7 @@ struct AppResetHelper {
         guard let bundleID = Bundle.main.bundleIdentifier else { return }
         UserDefaults.standard.removePersistentDomain(forName: bundleID)
         UserDefaults.standard.synchronize()
-        print("🧹 UserDefaults gelöscht.")
+        appLog("🧹 UserDefaults gelöscht.")
     }
 
     private static func resetFiles(for storageType: StorageType) {
@@ -35,26 +35,26 @@ struct AppResetHelper {
                fm.fileExists(atPath: dirURL.path) {
                 do {
                     try fm.removeItem(at: dirURL)
-                    print("🗑️ Verzeichnis gelöscht: \(dirURL.lastPathComponent) (\(storageType.rawValue))")
+                    appLog("🗑️ Verzeichnis gelöscht: \(dirURL.lastPathComponent) (\(storageType.rawValue))")
                 } catch {
-                    print("❌ Fehler beim Löschen von \(dirURL.lastPathComponent): \(error)")
+                    appLog("❌ Fehler beim Löschen von \(dirURL.lastPathComponent): \(error)")
                 }
             }
         }
     }
     
     static func resetLocalOnly() {
-        print("🔁 Lokalen Speicher löschen...")
+        appLog("🔁 Lokalen Speicher löschen...")
         deleteAll(in: .local)
     }
 
     static func resetICloudOnly() {
-        print("🔁 iCloud Speicher löschen...")
+        appLog("🔁 iCloud Speicher löschen...")
         deleteAll(in: .iCloud)
     }
 
     static func fullResetAll() {
-        print("🧨 Kompletter Reset...")
+        appLog("🧨 Kompletter Reset...")
         deleteAll(in: .local)
         deleteAll(in: .iCloud)
         UserDefaults.standard.removeObject(forKey: "migrated_paper-format")
@@ -70,9 +70,9 @@ struct AppResetHelper {
                 if fileManager.fileExists(atPath: dirURL.path) {
                     do {
                         try fileManager.removeItem(at: dirURL)
-                        print("🗑️ Gelöscht: \(dirURL.path)")
+                        appLog("🗑️ Gelöscht: \(dirURL.path)")
                     } catch {
-                        print("❌ Fehler beim Löschen \(dirURL.path): \(error)")
+                        appLog("❌ Fehler beim Löschen \(dirURL.path): \(error)")
                     }
                 }
             }

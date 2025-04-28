@@ -13,7 +13,6 @@ struct SettingsPanel: View {
     @Binding var currentJob: PlotJobData
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool
-    @Binding var showSourcePreview: Bool
 
     @EnvironmentObject var store: GenericStore<PlotJobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
@@ -25,7 +24,7 @@ struct SettingsPanel: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 JobSectionView(currentJob: $currentJob)
-                SVGSectionView(currentJob: $currentJob, svgFileName: $svgFileName, showingFileImporter: $showingFileImporter, showSourcePreview: $showSourcePreview)
+                SVGSectionView(currentJob: $currentJob, svgFileName: $svgFileName, showingFileImporter: $showingFileImporter)
                 SignatureSectionView()
                 PaperSectionView(currentJob: $currentJob, onUpdate: updateJob)
                 PenSectionView()
