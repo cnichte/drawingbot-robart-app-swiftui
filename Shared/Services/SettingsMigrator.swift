@@ -26,7 +26,7 @@ class SettingsMigrator {
         let targetDir = targetBase.appendingPathComponent(subdirectory)
 
         if !fileManager.fileExists(atPath: sourceDir.path) {
-            appLog("⚠️ Quelle \(sourceDir.lastPathComponent) existiert nicht. Migration übersprungen.")
+            appLog(.info, "⚠️ Quelle \(sourceDir.lastPathComponent) existiert nicht. Migration übersprungen.")
             return
         }
 

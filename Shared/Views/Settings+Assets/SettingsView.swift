@@ -21,6 +21,7 @@ struct SettingsView: View {
 
     @AppStorage("currentStorageType") private var currentStorageRaw: String = StorageType.local.rawValue
     @AppStorage("loggingEnabled") private var loggingEnabled: Bool = true
+    @AppStorage("logLevel") private var logLevel: LogLevel = .verbose  // LogLevel-Option in den Einstellungen
 
     var body: some View {
         Form {
@@ -34,6 +35,16 @@ struct SettingsView: View {
                 Toggle(isOn: $loggingEnabled) {
                     Label("Logging aktivieren", systemImage: "doc.text.magnifyingglass")
                 }
+            }
+
+            // Neuer Picker für Log-Level
+            Section(header: SectionHeader("Logging")) {
+                Picker("Log-Level", selection: $logLevel) {
+                    ForEach(LogLevel.allCases, id: \.self) { level in
+                        Text(level.rawValue.capitalized).tag(level)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
             }
 
             Section(header: SectionHeader("Housekeeping")) {
@@ -91,4 +102,5 @@ struct SettingsView: View {
     }
     #endif
 }
+
 // .toast(message: "Bitte zwei mal klicken, oder neu starten damit der System-DarkMode aktiviert - bzw. sauber dargetellt - wird!", isPresented: $showToast, position: .top, duration: 3, type: .info)

@@ -17,21 +17,21 @@
  
 Nur prüfen:
 if UUID.isValidUUID("7e3eb341-cee9-4da6-8acb-677d5cb19e13") {
-    appLog("Gültige UUID!")
+    appLog(.info, "Gültige UUID!")
 }
 
 Versuchen zu erzeugen (z.B. in deinem `PaperFormat.default`)
 do {
     let uuid = try UUID.from("7e3eb341-cee9-4da6-8acb-677d5cb19e13")
-    appLog("Erzeugt: \(uuid)")
+    appLog(.info, "Erzeugt: \(uuid)")
 } catch {
     print(error.localizedDescription)
 }
  
  if let uuid = UUID.safeFrom("7e3eb341-cee9-4da6-8acb-677d5cb19e13") {
-     appLog("Gültige UUID: \(uuid)")
+     appLog(.info, "Gültige UUID: \(uuid)")
  } else {
-     appLog("Ungültige UUID")
+     appLog(.info, "Ungültige UUID")
  }
  
 */

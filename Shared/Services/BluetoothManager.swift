@@ -5,10 +5,6 @@
 //  Created by Carsten Nichte on 07.04.25.
 //
 
-//  Bluetooth_Manager.swift
-import Foundation
-import CoreBluetooth
-
 /* Was steckt drin:
  
  Scannen & Verbinden mit HM-10
@@ -33,11 +29,29 @@ import CoreBluetooth
  
  */
 
+// Bluetooth_Manager.swift
+import Foundation
+import CoreBluetooth
+
 // Definiere den DiscoveredPeripheral-Typ
-struct DiscoveredPeripheral: Identifiable {
+// BluetoothManager.swift
+import Foundation
+import CoreBluetooth
+
+struct DiscoveredPeripheral: Identifiable, Hashable {
     let id = UUID()
     let peripheral: CBPeripheral
     let rssi: NSNumber
+
+    // Implementiere Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(peripheral.identifier)
+    }
+
+    // Implementiere Equatable für den Vergleich
+    static func ==(lhs: DiscoveredPeripheral, rhs: DiscoveredPeripheral) -> Bool {
+        return lhs.peripheral.identifier == rhs.peripheral.identifier
+    }
 }
 
 class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
@@ -70,12 +84,12 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
-        appLog("BluetoothManager init wurde aufgerufen ✅")
+        appLog(.info, "BluetoothManager init wurde aufgerufen ✅")
     }
 
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         isBluetoothReady = (central.state == .poweredOn)
-        appLog(isBluetoothReady ? "✅ Bluetooth ist eingeschaltet" : "❌ Bluetooth ist nicht bereit")
+        appLog(.info, isBluetoothReady ? "✅ Bluetooth ist eingeschaltet" : "❌ Bluetooth ist nicht bereit")
         if isBluetoothReady {
             startScan()
         }
@@ -83,7 +97,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
 
     func startScan(filter: Bool? = nil) {
         guard let centralManager = centralManager, centralManager.state == .poweredOn else {
-            appLog("❌ Bluetooth nicht bereit")
+            appLog(.info, "❌ Bluetooth nicht bereit")
             return
         }
 
@@ -137,7 +151,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        appLog("✅ Verbunden mit \(peripheral.name ?? "Unbekannt")")
+        appLog(.info, "✅ Verbunden mit \(peripheral.name ?? "Unbekannt")")
         isConnected = true
         peripheral.readRSSI()
         peripheral.discoverServices([hm10ServiceUUID])

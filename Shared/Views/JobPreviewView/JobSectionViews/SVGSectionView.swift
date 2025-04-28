@@ -74,7 +74,7 @@ struct SVGSectionView: View {
             )
             return documentsURL.appendingPathComponent(currentJob.svgFilePath)
         } catch {
-            appLog("❌ Fehler beim Ermitteln des Documents-Pfads: \(error)")
+            appLog(.info, "❌ Fehler beim Ermitteln des Documents-Pfads: \(error)")
             return nil
         }
     }
@@ -96,14 +96,14 @@ struct SVGSectionView: View {
                             await store.save(item: currentJob, fileName: currentJob.id.uuidString)
                         }
                     } catch {
-                        appLog("❌ Fehler beim Kopieren der SVG:", error.localizedDescription)
+                        appLog(.info, "❌ Fehler beim Kopieren der SVG:", error.localizedDescription)
                     }
                 } else {
-                    appLog("❌ Konnte Security-Scoped Zugriff auf Datei nicht öffnen!")
+                    appLog(.info, "❌ Konnte Security-Scoped Zugriff auf Datei nicht öffnen!")
                 }
             }
         case .failure(let error):
-            appLog("❌ Fehler beim Importieren: \(error.localizedDescription)")
+            appLog(.info, "❌ Fehler beim Importieren: \(error.localizedDescription)")
         }
     }
 

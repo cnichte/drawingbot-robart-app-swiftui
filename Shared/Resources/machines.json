@@ -3,6 +3,7 @@
         "id": "9c47941f-e774-4ca2-a2ca-e917d16932a5",
         "name": "Axidraw",
         "description": "",
+        "isConnected":false,
         "typ": ".xyPlotter",
         "size": {
             "x": 1000,
@@ -182,6 +183,7 @@
         "name": "Robart",
         "description": "",
         "typ": "omnidirektional",
+        "isConnected":false,
         "size": {
             "x": -1,
             "y": -1

@@ -10,7 +10,7 @@
 import SwiftUI
 
 struct ConnectionStatusHeader: View {
-    @ObservedObject var bluetoothManager: BluetoothManager
+    @EnvironmentObject var bluetoothManager: BluetoothManager
     @EnvironmentObject var assetStores: AssetStores
 #if os(macOS)
     @EnvironmentObject var usbScanner: USBSerialScanner

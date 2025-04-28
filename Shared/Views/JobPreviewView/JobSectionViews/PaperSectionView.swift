@@ -27,7 +27,7 @@ struct PaperSectionView: View {
                             if let id = newID {
                                 if id == customPaperID {
                                     // Eigenes Papier bleibt erhalten
-                                    appLog("✏️ Eigenes Papier ausgewählt")
+                                    appLog(.info, "✏️ Eigenes Papier ausgewählt")
                                 } else if let selectedPaper = assetStores.paperStore.items.first(where: { $0.id == id }) {
                                     currentJob.paper = selectedPaper
                                     onUpdate()
@@ -122,7 +122,7 @@ struct PaperSectionView: View {
         assetStores.paperStore.items.append(newPaper)
         Task {
             await assetStores.paperStore.save(item: newPaper, fileName: newPaper.id.uuidString)
-            appLog("✅ Papier-Vorlage gespeichert: \(newPaper.name)")
+            appLog(.info, "✅ Papier-Vorlage gespeichert: \(newPaper.name)")
         }
 
         // aktuelle Auswahl auf das neue Papier setzen

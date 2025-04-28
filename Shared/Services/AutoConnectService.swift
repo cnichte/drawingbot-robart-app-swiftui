@@ -22,7 +22,7 @@ class AutoConnectService: ObservableObject {
             }) {
                 bluetoothManager.connect(to: discovered.peripheral)
                 ConnectionManager.shared.connect(connection: match)
-                appLog("🔗 Auto-Connect Bluetooth: Verbinde mit \(match.name)")
+                appLog(.info, "🔗 Auto-Connect Bluetooth: Verbinde mit \(match.name)")
                 return
             }
         }
@@ -37,7 +37,7 @@ class AutoConnectService: ObservableObject {
             }) {
                 usbScanner.connect(to: device)
                 ConnectionManager.shared.connect(connection: match)
-                appLog("🔗 Auto-Connect USB: Verbinde mit \(match.name)")
+                appLog(.info, "🔗 Auto-Connect USB: Verbinde mit \(match.name)")
                 return
             }
         }

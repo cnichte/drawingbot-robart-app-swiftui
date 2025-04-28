@@ -146,11 +146,11 @@ class AssetStores: ObservableObject {
     }
     
     func printSummary() {
-        appLog("📦 AssetStores Zusammenfassung:")
+        appLog(.info, "📦 AssetStores Zusammenfassung:")
         for store in allStores {
-            appLog("- \(store.directoryName): \(store.itemCount) Einträge")
+            appLog(.info, "- \(store.directoryName): \(store.itemCount) Einträge")
         }
-        appLog("🔢 Gesamtanzahl: \(allStores.map(\.itemCount).reduce(0, +))")
+        appLog(.info, "🔢 Gesamtanzahl: \(allStores.map(\.itemCount).reduce(0, +))")
     }
 }
 
@@ -162,9 +162,9 @@ extension AssetStores {
                     try await self.migrateTo(storageType: preferredStorageType)
                 }
                 await self.loadAllStores()
-                appLog("✅ Speicherort angepasst auf \(preferredStorageType.rawValue)")
+                appLog(.info, "✅ Speicherort angepasst auf \(preferredStorageType.rawValue)")
             } catch {
-                appLog("❌ Fehler beim Anwenden des bevorzugten Speicherorts: \(error)")
+                appLog(.info, "❌ Fehler beim Anwenden des bevorzugten Speicherorts: \(error)")
             }
         }
     }

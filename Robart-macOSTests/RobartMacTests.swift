@@ -12,12 +12,12 @@ import XCTest
 final class RobartMacTests: XCTestCase {
     
     override func setUpWithError() throws {
-        appLog("🔧 Setup läuft…")
+        appLog(.info, "🔧 Setup läuft…")
         // z.B. Mock-Daten vorbereiten
     }
 
     override func tearDownWithError() throws {
-        appLog("🧹 Teardown läuft…")
+        appLog(.info, "🧹 Teardown läuft…")
         // z.B. Testdaten aufräumen
     }
     

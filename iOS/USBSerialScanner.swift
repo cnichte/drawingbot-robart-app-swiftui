@@ -42,7 +42,7 @@ class USBSerialScanner: ObservableObject {
 
         NotificationCenter.default.addObserver(forName: .EAAccessoryDidConnect, object: nil, queue: .main) { notification in
             if let accessory = notification.userInfo?[EAAccessoryKey] as? EAAccessory {
-                appLog("Connected accessory: \(accessory.name)")
+                appLog(.info, "Connected accessory: \(accessory.name)")
                 // Open a session
                 let session = EASession(accessory: accessory, forProtocol: "com.yourcompany.protocolname")
                 if let inputStream = session?.inputStream, let outputStream = session?.outputStream {
@@ -59,7 +59,7 @@ class USBSerialScanner: ObservableObject {
         // Show accessory picker if needed
         accessoryManager.showBluetoothAccessoryPicker(withNameFilter: nil) { error in
             if let error = error {
-                appLog("Error picking accessory: \(error)")
+                appLog(.info, "Error picking accessory: \(error)")
             }
         }
  */
@@ -77,11 +77,11 @@ class USBSerialScanner: ObservableObject {
                  let bytesRead = inputStream.read(&buffer, maxLength: buffer.count)
                  if bytesRead > 0 {
                      let data = Data(buffer.prefix(bytesRead))
-                     appLog("Received data: \(data)")
+                     appLog(.info, "Received data: \(data)")
                  }
              }
          case .errorOccurred:
-             appLog("Stream error: \(aStream.streamError?.localizedDescription ?? "Unknown")")
+             appLog(.info, "Stream error: \(aStream.streamError?.localizedDescription ?? "Unknown")")
          default:
              break
          }

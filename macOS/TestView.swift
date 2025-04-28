@@ -195,7 +195,7 @@ struct TestView: View {
                         isDragging = true
                         let newWidth = inspectorWidth + translation // Positiv, da translation die Änderung repräsentiert
                         inspectorWidth = min(max(newWidth, 150), 400)
-                        appLog("Inspektor-Breite: \(inspectorWidth)")
+                        appLog(.info, "Inspektor-Breite: \(inspectorWidth)")
                     }
                     .frame(width: 4) // Etwa 1 mm breiter (von 2 auf 4 Pixel)
                 }

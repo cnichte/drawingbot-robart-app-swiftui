@@ -7,17 +7,25 @@
 
 // ConnectionFormView.swift
 import SwiftUI
+
 struct ConnectionFormView: View {
     @Binding var data: ConnectionData
     @EnvironmentObject var store: GenericStore<ConnectionData>
-    
+    @EnvironmentObject var bluetoothManager: BluetoothManager
+    @EnvironmentObject var scanner: USBSerialScanner // Hier hinzufügen
+
+    @State private var selectedBluetoothPeripheral: DiscoveredPeripheral?
+    @State private var selectedUSBDevice: USBSerialDevice?
+    @State private var isScanningBluetooth: Bool = false // Flag für Bluetooth-Scanning
+    @State private var isScanningUSB: Bool = false // Flag für USB-Scanning
+
     var body: some View {
-        Form { 
+        Form {
             Section {
                 TextField("Name", text: $data.name)
                     .platformTextFieldModifiers()
                     .onChange(of: data.name) { save() }
-                
+
                 TextEditor(text: $data.description)
                     .frame(minHeight: 100)
                     .onChange(of: data.description) { save() }
@@ -28,20 +36,85 @@ struct ConnectionFormView: View {
             } header: {
                 Text("Details")
             }
-            
-            // Weitere Pen-spezifische Felder kannst du hier hinzufügen…
+
+            Section(header: Text("Gerät auswählen")) {
+                // Bluetooth Geräte
+                if isScanningBluetooth {
+                    ProgressView("Suche nach Bluetooth-Geräten...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                } else {
+                    Picker("Bluetooth", selection: $selectedBluetoothPeripheral) {
+                        Text("Kein Gerät auswählen").tag(nil as DiscoveredPeripheral?)
+                        ForEach(bluetoothManager.peripherals) { peripheral in
+                            Text(peripheral.peripheral.name ?? "Unbekannt").tag(peripheral as DiscoveredPeripheral?)
+                        }
+                    }
+                    .onAppear {
+                        if bluetoothManager.peripherals.isEmpty {
+                            startBluetoothScan()
+                        }
+                    }
+                }
+
+                // USB Geräte
+                if isScanningUSB {
+                    ProgressView("Suche nach USB-Geräten...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                } else {
+                    Picker("USB", selection: $selectedUSBDevice) {
+                        Text("Kein Gerät auswählen").tag(nil as USBSerialDevice?)
+                        ForEach(scanner.devices) { device in
+                            Text(device.name).tag(device as USBSerialDevice?)
+                        }
+                    }
+                    .onAppear {
+                        if scanner.devices.isEmpty {
+                            startUSBScan()
+                        }
+                    }
+                }
+            }
+
+            // Button um die Zuordnung vorzunehmen
+            Button("Speichern und verbinden") {
+                if let bluetoothPeripheral = selectedBluetoothPeripheral {
+                    // Bluetooth Verbindung herstellen
+                    bluetoothManager.connect(to: bluetoothPeripheral.peripheral)
+                } else if let usbDevice = selectedUSBDevice {
+                    // USB Verbindung herstellen
+                    scanner.connect(to: usbDevice)
+                }
+                save()
+            }
         }
         .platformFormPadding()
-        .navigationTitle("Maschine bearbeiten")
+        .navigationTitle("Verbindung erstellen")
         .onReceive(store.$refreshTrigger) { _ in
-            // Re-render wird automatisch ausgelöst – bei Bedarf kannst du hier z.B. loggen
-            // appLog("🔄 FormView: Refresh getriggert")
+            // Re-render wird automatisch ausgelöst
         }
     }
-    
+
     private func save() {
         Task {
             await store.save(item: data, fileName: data.id.uuidString)
+        }
+    }
+
+    // Bluetooth Scannen starten
+    private func startBluetoothScan() {
+        isScanningBluetooth = true
+        bluetoothManager.startScan(filter: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            self.isScanningBluetooth = false
+        }
+    }
+
+    // USB Scannen starten
+    private func startUSBScan() {
+        isScanningUSB = true
+        scanner.scanSerialDevices()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            self.isScanningUSB = false
         }
     }
 }

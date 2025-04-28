@@ -14,49 +14,41 @@ import SwiftUI
 import CoreBluetooth
 
 struct ContentView: View {
-    @ObservedObject var bluetoothManager: BluetoothManager
-#if os(macOS)
-    @ObservedObject var usbScanner: USBSerialScanner
-#endif
+    @EnvironmentObject var bluetoothManager: BluetoothManager // EnvironmentObject statt ObservedObject
+    @EnvironmentObject var usbScanner: USBSerialScanner // EnvironmentObject statt ObservedObject
     @EnvironmentObject var assetStores: AssetStores
     
     @State private var selectedTab = 0
-    
-    init(bluetoothManager: BluetoothManager, usbScanner: USBSerialScanner) {
-        self.bluetoothManager = bluetoothManager
-#if os(macOS)
-        self.usbScanner = usbScanner
-#endif
-    }
-    
+
     var body: some View {
         VStack(spacing: 0) {
-            ConnectionStatusHeader(bluetoothManager: bluetoothManager)
+            ConnectionStatusHeader()
                 .environmentObject(assetStores)
-#if os(macOS)
-                .environmentObject(usbScanner)
-#endif
             
+#if os(macOS)
+            .environmentObject(usbScanner)
+#endif
+
             TabView(selection: $selectedTab) {
-                DeviceListView(bluetoothManager: bluetoothManager)
+                DeviceListView() // Verwendet das EnvironmentObject für BluetoothManager
                     .tag(0)
                     .tabItem {
                         Label("Verbindung", systemImage: "dot.radiowaves.left.and.right")
                     }
                 
-                RemoteControlView(bluetoothManager: bluetoothManager)
+                RemoteControlView()
                     .tag(1)
                     .tabItem {
                         Label("Fernsteuerung", systemImage: "gamecontroller")
                     }
                 
-                JobListView() // << Direkter Aufruf!
+                JobListView() // Direkter Aufruf
                     .tag(2)
                     .tabItem {
                         Label("Plotter Jobs", systemImage: "printer")
                     }
                 
-                AssetsAndSettingsView()
+                AssetsAndSettingsView() // Weiterhin verwendet
                     .tag(3)
                     .tabItem {
                         Label("Settings", systemImage: "gear")

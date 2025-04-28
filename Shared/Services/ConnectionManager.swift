@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 28.04.25.
 //
 
+// ConnectionManager.swift
 import Foundation
 
 class ConnectionManager: ObservableObject {

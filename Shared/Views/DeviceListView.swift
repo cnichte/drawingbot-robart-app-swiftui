@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct DeviceListView: View {
-    @ObservedObject var bluetoothManager: BluetoothManager
+    @EnvironmentObject var bluetoothManager: BluetoothManager
 
 #if os(macOS)
     @StateObject private var scanner = USBSerialScanner()
@@ -62,7 +62,6 @@ struct DeviceListView: View {
     }
 
     // MARK: - Bluetooth Section
-
     @ViewBuilder
     private func bluetoothSectionContent() -> some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -84,11 +83,10 @@ struct DeviceListView: View {
         }
     }
 
-    @ViewBuilder
     private func deviceCard(for discovered: DiscoveredPeripheral) -> some View {
         let isConnected = bluetoothManager.connectedPeripheralID == discovered.peripheral.identifier
 
-        HStack(alignment: .top) {
+        return HStack(alignment: .top) {  // Füge 'return' hier hinzu
             deviceInfoView(for: discovered, isConnected: isConnected)
             Spacer()
             deviceActionsView(for: discovered, isConnected: isConnected)
@@ -102,7 +100,7 @@ struct DeviceListView: View {
                 .stroke(Color.gray.opacity(0.2))
         )
     }
-
+    
     private func deviceInfoView(for discovered: DiscoveredPeripheral, isConnected: Bool) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(discovered.peripheral.name ?? "Unbekannt")
@@ -138,12 +136,25 @@ struct DeviceListView: View {
                 }
                 .buttonStyle(.borderedProminent)
             }
+
+            // Hier fügen wir die Möglichkeit hinzu, ein Gerät einer bestehenden Connection zuzuordnen
+            Button {
+                // Logik zum Zuordnen des Geräts zu einer ConnectionData hinzufügen
+                if let connection = AssetStores.shared.connectionsStore.items.first(where: { $0.name == discovered.peripheral.name }) {
+                    // Die Zuordnung durchführen
+                    ConnectionManager.shared.connect(connection: connection)
+                }
+            } label: {
+                Label("Zuordnen", systemImage: "arrow.right.circle")
+            }
+            .buttonStyle(.bordered)
+            .foregroundColor(.blue)
+            .help("Gerät mit bestehender Verbindung verknüpfen")
         }
     }
 
 #if os(macOS)
     // MARK: - USB Section
-
     @ViewBuilder
     private func usbSectionContent() -> some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -182,7 +193,6 @@ struct DeviceListView: View {
 #endif
 
     // MARK: - Start Scan
-
     private func startBluetoothScan(filter: Bool) {
         bluetoothManager.startScan(filter: filter)
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {

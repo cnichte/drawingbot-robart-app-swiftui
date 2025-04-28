@@ -71,7 +71,7 @@ struct PaperPreview: View {
                 return nil
             }
         } catch {
-            appLog("❌ Fehler beim Ermitteln des Documents-Pfads: \(error)")
+            appLog(.info, "❌ Fehler beim Ermitteln des Documents-Pfads: \(error)")
             return nil
         }
     }
@@ -81,10 +81,10 @@ struct PaperPreview: View {
             let values = try url.resourceValues(forKeys: [.isUbiquitousItemKey])
             if values.isUbiquitousItem == true {
                 try FileManager.default.startDownloadingUbiquitousItem(at: url)
-                appLog("📥 Download gestartet für \(url.lastPathComponent)")
+                appLog(.info, "📥 Download gestartet für \(url.lastPathComponent)")
             }
         } catch {
-            appLog("⚠️ Fehler beim Überprüfen/Starten des Downloads: \(error)")
+            appLog(.info, "⚠️ Fehler beim Überprüfen/Starten des Downloads: \(error)")
         }
     }
 }

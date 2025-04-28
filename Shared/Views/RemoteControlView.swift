@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RemoteControlView: View {
-    @ObservedObject var bluetoothManager: BluetoothManager
+    @EnvironmentObject var bluetoothManager: BluetoothManager
 
     // Speedometer
     @State private var angleText = "0"

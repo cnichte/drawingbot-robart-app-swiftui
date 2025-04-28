@@ -35,7 +35,7 @@ struct PenFormView: View {
         .navigationTitle("Stift bearbeiten")
         .onReceive(store.$refreshTrigger) { _ in
             // Re-render wird automatisch ausgelöst – bei Bedarf kannst du hier z.B. loggen
-            // appLog("🔄 FormView: Refresh getriggert")
+            // appLog(.info, "🔄 FormView: Refresh getriggert")
         }
     }
 

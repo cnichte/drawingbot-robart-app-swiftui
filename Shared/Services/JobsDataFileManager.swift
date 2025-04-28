@@ -27,7 +27,7 @@ class JobsDataFileManager {
 
             if !fileManager.fileExists(atPath: jobsDataDirectory.path) {
                 try fileManager.createDirectory(at: jobsDataDirectory, withIntermediateDirectories: true)
-                appLog("jobs-data Ordner erstellt")
+                appLog(.info, "jobs-data Ordner erstellt")
             }
         } catch {
             fatalError("Konnte jobs-data-Verzeichnis nicht einrichten: \(error)")
@@ -69,7 +69,7 @@ class JobsDataFileManager {
         for folder in folders {
             if !fileManager.fileExists(atPath: folder.path) {
                 try fileManager.createDirectory(at: folder, withIntermediateDirectories: true)
-                appLog("Ordner erstellt: \(folder.lastPathComponent)")
+                appLog(.info, "Ordner erstellt: \(folder.lastPathComponent)")
             }
         }
     }
@@ -87,7 +87,7 @@ class JobsDataFileManager {
         let data = try Data(contentsOf: sourceURL)
         try data.write(to: destinationURL)
 
-        appLog("✅ SVG kopiert: \(destinationURL.lastPathComponent)")
+        appLog(.info, "✅ SVG kopiert: \(destinationURL.lastPathComponent)")
 
         // 👉 Thumbnail erzeugen
         Task {
@@ -103,9 +103,9 @@ class JobsDataFileManager {
         if let image = await SVGSnapshot.generateThumbnail(from: svgURL, maxSize: CGSize(width: 200, height: 200)) {
             do {
                 try SVGSnapshot.saveThumbnail(image, to: thumbnailURL)
-                appLog("🖼️ Thumbnail gespeichert: \(thumbnailURL.lastPathComponent)")
+                appLog(.info, "🖼️ Thumbnail gespeichert: \(thumbnailURL.lastPathComponent)")
             } catch {
-                appLog("❌ Fehler beim Speichern des Thumbnails: \(error)")
+                appLog(.info, "❌ Fehler beim Speichern des Thumbnails: \(error)")
             }
         }
     }
@@ -116,9 +116,9 @@ class JobsDataFileManager {
         if fileManager.fileExists(atPath: jobFolder.path) {
             do {
                 try fileManager.removeItem(at: jobFolder)
-                appLog("Job-Verzeichnis gelöscht: \(jobFolder.lastPathComponent)")
+                appLog(.info, "Job-Verzeichnis gelöscht: \(jobFolder.lastPathComponent)")
             } catch {
-                appLog("Fehler beim Löschen des Job-Verzeichnisses: \(error.localizedDescription)")
+                appLog(.info, "Fehler beim Löschen des Job-Verzeichnisses: \(error.localizedDescription)")
             }
         }
     }
@@ -129,7 +129,7 @@ class JobsDataFileManager {
 
         if let data = image.pngData() {
             try data.write(to: previewURL)
-            appLog("🖼️ Thumbnail gespeichert für \(jobID)")
+            appLog(.info, "🖼️ Thumbnail gespeichert für \(jobID)")
         } else {
             throw NSError(domain: "JobsDataFileManager", code: 500, userInfo: [NSLocalizedDescriptionKey: "Konnte Thumbnail nicht als PNG speichern."])
         }

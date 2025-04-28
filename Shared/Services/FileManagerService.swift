@@ -53,7 +53,7 @@ class FileManagerService {
     // MARK: - Directory Management
     func ensureAllDirectoriesExist(for stores: [any MigratableStore], storageType: StorageType) async {
         guard let base = baseDirectory(for: storageType) else {
-            appLog("❌ Basisverzeichnis nicht gefunden für \(storageType)")
+            appLog(.info, "❌ Basisverzeichnis nicht gefunden für \(storageType)")
             return
         }
         if !fileManager.fileExists(atPath: base.path) {
@@ -63,7 +63,7 @@ class FileManagerService {
             let dir = base.appendingPathComponent(store.directoryName)
             if !fileManager.fileExists(atPath: dir.path) {
                 try? fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
-                appLog("📁 Verzeichnis erstellt: \(dir.lastPathComponent)")
+                appLog(.info, "📁 Verzeichnis erstellt: \(dir.lastPathComponent)")
             }
         }
     }
@@ -72,7 +72,7 @@ class FileManagerService {
         guard let dir = directory(for: storage, subdirectory: subdirectory) else { return }
         if fileManager.fileExists(atPath: dir.path) {
             try fileManager.removeItem(at: dir)
-            appLog("🗑️ Gelöscht: \(dir.lastPathComponent)")
+            appLog(.info, "🗑️ Gelöscht: \(dir.lastPathComponent)")
         }
     }
 
@@ -100,7 +100,7 @@ class FileManagerService {
             let encoder = JSONEncoder()
             let itemData = try encoder.encode(item)
             try itemData.write(to: itemURL)
-            appLog("✅ System-Item gespeichert: \(itemURL.lastPathComponent)")
+            appLog(.info, "✅ System-Item gespeichert: \(itemURL.lastPathComponent)")
         }
     }
 
@@ -112,7 +112,7 @@ class FileManagerService {
     ) throws {
         let key = "migrated_\(resourceName)_\(storageType.rawValue)"
         if UserDefaults.standard.bool(forKey: key) {
-            appLog("ℹ️ UserResource \(resourceName) wurde bereits kopiert.")
+            appLog(.info, "ℹ️ UserResource \(resourceName) wurde bereits kopiert.")
             return
         }
 
@@ -132,7 +132,7 @@ class FileManagerService {
             let encoder = JSONEncoder()
             let itemData = try encoder.encode(item)
             try itemData.write(to: itemURL)
-            appLog("✅ User-Item gespeichert: \(itemURL.lastPathComponent)")
+            appLog(.info, "✅ User-Item gespeichert: \(itemURL.lastPathComponent)")
         }
 
         UserDefaults.standard.set(true, forKey: key)
@@ -160,7 +160,7 @@ class FileManagerService {
                 let dest = newDir.appendingPathComponent(file.lastPathComponent)
                 if !fileManager.fileExists(atPath: dest.path) {
                     try fileManager.copyItem(at: file, to: dest)
-                    appLog("📦 Migriert: \(file.lastPathComponent)")
+                    appLog(.info, "📦 Migriert: \(file.lastPathComponent)")
                 }
             }
         }
@@ -171,7 +171,7 @@ class FileManagerService {
     func rollbackUserResource(for resourceName: String, storageType: StorageType) {
         let key = "migrated_\(resourceName)_\(storageType.rawValue)"
         UserDefaults.standard.removeObject(forKey: key)
-        appLog("🔄 Rollback Migration: \(resourceName)")
+        appLog(.info, "🔄 Rollback Migration: \(resourceName)")
     }
 }
 
@@ -195,9 +195,9 @@ extension FileManagerService {
         if !fileExists(at: svgDir) {
             do {
                 try FileManager.default.createDirectory(at: svgDir, withIntermediateDirectories: true)
-                appLog("📁 SVG-Verzeichnis erstellt")
+                appLog(.info, "📁 SVG-Verzeichnis erstellt")
             } catch {
-                appLog("❌ Fehler beim Anlegen des SVG-Verzeichnisses: \(error.localizedDescription)")
+                appLog(.info, "❌ Fehler beim Anlegen des SVG-Verzeichnisses: \(error.localizedDescription)")
             }
         }
     }
@@ -210,7 +210,7 @@ extension FileManagerService {
         let newDir = newBase.appendingPathComponent("svgs")
         
         if !fileExists(at: oldDir) {
-            appLog("ℹ️ Kein SVG-Ordner vorhanden in Quelle")
+            appLog(.info, "ℹ️ Kein SVG-Ordner vorhanden in Quelle")
             return
         }
         
@@ -223,7 +223,7 @@ extension FileManagerService {
             let destination = newDir.appendingPathComponent(file.lastPathComponent)
             if !fileExists(at: destination) {
                 try FileManager.default.copyItem(at: file, to: destination)
-                appLog("📄 SVG migriert: \(file.lastPathComponent)")
+                appLog(.info, "📄 SVG migriert: \(file.lastPathComponent)")
             }
         }
     }

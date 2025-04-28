@@ -17,12 +17,12 @@ struct AssetManagerHelper {
         for name in resourceNames {
             FileManagerService.shared.rollbackUserResource(for: name, storageType: storageType)
         }
-        appLog("🔄 Alle User-Migrationen zurückgesetzt für \(storageType.rawValue)")
+        appLog(.info, "🔄 Alle User-Migrationen zurückgesetzt für \(storageType.rawValue)")
     }
     
     static func rollbackSingleMigration(resourceName: String, storageType: StorageType) {
         FileManagerService.shared.rollbackUserResource(for: resourceName, storageType: storageType)
-        appLog("🔄 Migration zurückgesetzt für \(resourceName)")
+        appLog(.info, "🔄 Migration zurückgesetzt für \(resourceName)")
     }
     
     // MARK: - Hard Reset
@@ -30,14 +30,14 @@ struct AssetManagerHelper {
     static func deleteAllData(in assetStores: AssetStores) async {
         await assetStores.deleteAllLocalData()
         assetStores.resetAllStoresInMemory()
-        appLog("🧹 Alle gespeicherten Dokumente wurden gelöscht und RAM zurückgesetzt.")
+        appLog(.info, "🧹 Alle gespeicherten Dokumente wurden gelöscht und RAM zurückgesetzt.")
     }
     
     // MARK: - Soft Reset
     
     static func resetAllInMemory(in assetStores: AssetStores) {
         assetStores.resetAllStoresInMemory()
-        appLog("🔁 RAM-Daten zurückgesetzt (Soft Reset).")
+        appLog(.info, "🔁 RAM-Daten zurückgesetzt (Soft Reset).")
     }
     
     // MARK: - Utilities

@@ -76,23 +76,37 @@ where T: Codable & Identifiable, T.ID: Hashable {
             var tempItems: [T] = []
 
             for file in files where file.pathExtension == "json" {
-                do {
-                    let data = try Data(contentsOf: file)
-                    let item = try JSONDecoder().decode(T.self, from: data)
-                    tempItems.append(item)
-                } catch {
-                    appLog("⚠️ Fehler beim Laden von \(file.lastPathComponent): \(error.localizedDescription)")
-                }
+                    do {
+                        appLog(.error, "📚 lade: \(file.lastPathComponent) in \(directoryName)")
+                        let data = try Data(contentsOf: file)
+                        let item = try JSONDecoder().decode(T.self, from: data)
+                        tempItems.append(item)
+                    } catch let decodingError as DecodingError {
+                        switch decodingError {
+                        case .dataCorrupted(let context):
+                            appLog(.error, "⚠️ Fehler: Daten sind beschädigt: \(context.debugDescription)")
+                        case .keyNotFound(let key, let context):
+                            appLog(.error, "⚠️ Fehler: Schlüssel nicht gefunden: \(key), Kontext: \(context.debugDescription)")
+                        case .typeMismatch(let type, let context):
+                            appLog(.error, "⚠️ Fehler: Typ-Mismatch für \(type): \(context.debugDescription)")
+                        case .valueNotFound(let value, let context):
+                            appLog(.error, "⚠️ Fehler: Wert nicht gefunden für \(value): \(context.debugDescription)")
+                        @unknown default:
+                            appLog(.error, "⚠️ Unbekannter Decoding Fehler: \(decodingError.localizedDescription)")
+                        }
+                    } catch {
+                        appLog(.info, "⚠️ Fehler beim Laden von \(file.lastPathComponent): \(error.localizedDescription)")
+                    }
             }
 
             let result = tempItems
             await MainActor.run {
                 self.items = result
             }
-            appLog("📚 Geladen: \(items.count) Elemente in \(directoryName)")
+            appLog(.info, "📚 Geladen: \(items.count) Elemente in \(directoryName)")
 
         } catch {
-            appLog("❌ Fehler beim Lesen von \(directoryName): \(error.localizedDescription)")
+            appLog(.info, "❌ Fehler beim Lesen von \(directoryName): \(error.localizedDescription)")
         }
     }
     
@@ -107,7 +121,7 @@ where T: Codable & Identifiable, T.ID: Hashable {
     // MARK: - Restore Defaults
     func restoreDefaults() async throws {
         guard let resource = initialResourceName else {
-            appLog("⚠️ Kein initialResourceName für \(directoryName), überspringe Restore.")
+            appLog(.info, "⚠️ Kein initialResourceName für \(directoryName), überspringe Restore.")
             return
         }
 
@@ -140,7 +154,7 @@ where T: Codable & Identifiable, T.ID: Hashable {
             // Schutz: Verzeichnis existiert?
             if !fileManager.fileExists(atPath: directoryURL.path) {
                 try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-                appLog("📂 Verzeichnis wurde automatisch nacherzeugt: \(directoryName)")
+                appLog(.info, "📂 Verzeichnis wurde automatisch nacherzeugt: \(directoryName)")
             }
             
             try data.write(to: path)
@@ -153,9 +167,9 @@ where T: Codable & Identifiable, T.ID: Hashable {
                 }
             }
             
-            appLog("💾 Gespeichert: \(path.lastPathComponent)")
+            appLog(.info, "💾 Gespeichert: \(path.lastPathComponent)")
         } catch {
-            appLog("❌ Fehler beim Speichern: \(error.localizedDescription)")
+            appLog(.info, "❌ Fehler beim Speichern: \(error.localizedDescription)")
         }
     }
     
@@ -167,9 +181,9 @@ where T: Codable & Identifiable, T.ID: Hashable {
             await MainActor.run {
                 self.items.removeAll { $0.id == item.id }
             }
-            appLog("🗑️ Gelöscht: \(fileName)")
+            appLog(.info, "🗑️ Gelöscht: \(fileName)")
         } catch {
-            appLog("❌ Fehler beim Löschen: \(error.localizedDescription)")
+            appLog(.info, "❌ Fehler beim Löschen: \(error.localizedDescription)")
         }
     }
     

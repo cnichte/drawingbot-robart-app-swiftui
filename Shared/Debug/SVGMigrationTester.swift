@@ -11,13 +11,13 @@ import Foundation
 class SVGMigrationTester {
     
     static func performTest() async {
-        appLog("🚀 Starte SVG-Migrationstest...")
+        appLog(.info, "🚀 Starte SVG-Migrationstest...")
 
         let service = FileManagerService.shared
 
         guard let localBase = service.baseDirectory(for: .local),
               let iCloudBase = service.baseDirectory(for: .iCloud) else {
-            appLog("❌ Basisverzeichnisse konnten nicht gefunden werden.")
+            appLog(.info, "❌ Basisverzeichnisse konnten nicht gefunden werden.")
             return
         }
 
@@ -36,33 +36,33 @@ class SVGMigrationTester {
 
             if !FileManager.default.fileExists(atPath: dummyFile.path) {
                 try testSVG.data(using: .utf8)?.write(to: dummyFile)
-                appLog("✅ Dummy-SVG-Datei erstellt: \(dummyFile.lastPathComponent)")
+                appLog(.info, "✅ Dummy-SVG-Datei erstellt: \(dummyFile.lastPathComponent)")
             } else {
-                appLog("ℹ️ Dummy-SVG existiert bereits.")
+                appLog(.info, "ℹ️ Dummy-SVG existiert bereits.")
             }
 
             try service.migrateSVGDirectory(from: .local, to: .iCloud)
 
             let files = try FileManager.default.contentsOfDirectory(atPath: iCloudSVGs.path)
             if files.contains("migration-test.svg") {
-                appLog("🎯 Migration erfolgreich: migration-test.svg gefunden in iCloud!")
+                appLog(.info, "🎯 Migration erfolgreich: migration-test.svg gefunden in iCloud!")
             } else {
-                appLog("⚠️ Migration fehlgeschlagen: migration-test.svg nicht in iCloud gefunden.")
+                appLog(.info, "⚠️ Migration fehlgeschlagen: migration-test.svg nicht in iCloud gefunden.")
             }
 
         } catch {
-            appLog("❌ Fehler während des SVG-Migrationstests: \(error.localizedDescription)")
+            appLog(.info, "❌ Fehler während des SVG-Migrationstests: \(error.localizedDescription)")
         }
     }
     
     static func resetTestSVGs() async {
-        appLog("🧹 Lösche Test-SVG-Dateien...")
+        appLog(.info, "🧹 Lösche Test-SVG-Dateien...")
 
         let service = FileManagerService.shared
 
         guard let localBase = service.baseDirectory(for: .local),
               let iCloudBase = service.baseDirectory(for: .iCloud) else {
-            appLog("❌ Basisverzeichnisse konnten nicht gefunden werden.")
+            appLog(.info, "❌ Basisverzeichnisse konnten nicht gefunden werden.")
             return
         }
 
@@ -75,12 +75,12 @@ class SVGMigrationTester {
             if FileManager.default.fileExists(atPath: path.path) {
                 do {
                     try FileManager.default.removeItem(at: path)
-                    appLog("🗑️ Test-SVG gelöscht: \(path.lastPathComponent)")
+                    appLog(.info, "🗑️ Test-SVG gelöscht: \(path.lastPathComponent)")
                 } catch {
-                    appLog("❌ Fehler beim Löschen von \(path.lastPathComponent): \(error.localizedDescription)")
+                    appLog(.info, "❌ Fehler beim Löschen von \(path.lastPathComponent): \(error.localizedDescription)")
                 }
             } else {
-                appLog("ℹ️ Keine Test-SVG vorhanden unter: \(path.path)")
+                appLog(.info, "ℹ️ Keine Test-SVG vorhanden unter: \(path.path)")
             }
         }
     }

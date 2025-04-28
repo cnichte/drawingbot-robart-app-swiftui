@@ -18,29 +18,33 @@ struct RobartApp: App {
     @StateObject private var settingsStore = GenericStore<SettingsData>(directoryName: "settings")
     @StateObject private var assetStores = AssetStores(initialStorageType: .local)
     
+    @StateObject private var bluetoothManager = BluetoothManager()  // Hinzugefügt
+    @StateObject private var usbScanner = USBSerialScanner() // Hinzugefügt
+    
     var body: some Scene {
         WindowGroup {
-            ContentView(bluetoothManager: BluetoothManager(), usbScanner: USBSerialScanner())
-                .environmentObject(assetStores) // ← Das ist entscheidend. Wichtig für SettingsView.
-                .environmentObject(settingsStore)
-            
+            ContentView()
+                .environmentObject(assetStores)  // EnvironmentObject für AssetStores
+                .environmentObject(settingsStore) // EnvironmentObject für SettingsStore
+                .environmentObject(bluetoothManager) // EnvironmentObject für BluetoothManager
+                .environmentObject(usbScanner) // EnvironmentObject für USBScanner
+                
                 .environmentObject(assetStores.connectionsStore)
                 .environmentObject(assetStores.machineStore)
                 .environmentObject(assetStores.projectStore)
                 .environmentObject(assetStores.plotJobStore)
                 .environmentObject(assetStores.pensStore)
                 .environmentObject(assetStores.paperStore)
-            
                 .environmentObject(assetStores.paperFormatsStore)
-            
+                
                 .preferredColorScheme(.dark)
                 .onAppear {
                     if CommandLine.arguments.contains("-ResetApp") {
                         AppResetHelper.fullResetAll()
                     }
                     if UserDefaults.standard.bool(forKey: "forceResetOnLaunch") {
-                        appLog("🚨 Starte mit vollständigem Reset...")
-                        UserDefaults.standard.set(false, forKey: "forceResetOnLaunch") // Zurücksetzen, damit es nur einmal wirkt
+                        appLog(.info, "🚨 Starte mit vollständigem Reset...")
+                        UserDefaults.standard.set(false, forKey: "forceResetOnLaunch")
                         
                         Task {
                             await assetStores.deleteAllLocalData()
