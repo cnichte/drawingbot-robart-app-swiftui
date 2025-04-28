@@ -30,10 +30,15 @@ struct USBSerialDevice: Identifiable, Hashable {
 class USBSerialScanner: ObservableObject {
     @Published var devices: [USBSerialDevice] = []
     @Published var selectedDevice: USBSerialDevice?
-    
+    @Published var isScanning: Bool = false
+    @Published var lastScanDate: Date?
+
     var currentPort: ORSSerialPort?
     
     func scanSerialDevices() {
+        isScanning = true
+        lastScanDate = Date() // Set last scan date
+
         let ports = ORSSerialPortManager.shared().availablePorts
         let list = ports.compactMap { port -> USBSerialDevice? in
             let (vendor, product) = Self.getVendorProductID(for: port.path)
@@ -47,6 +52,7 @@ class USBSerialScanner: ObservableObject {
         
         DispatchQueue.main.async {
             self.devices = list
+            self.isScanning = false
             self.tryAutoConnect()
         }
     }

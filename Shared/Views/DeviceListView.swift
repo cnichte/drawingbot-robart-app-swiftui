@@ -44,7 +44,7 @@ struct DeviceListView: View {
                 toolbar: {
                     HStack(spacing: 8) {
                         Button("Scan USB") {
-                            scanner.scanSerialDevices()
+                            startUSBScan()
                         }
                         Button("Verbinden") {
                             scanner.connectToSelectedDevice()
@@ -147,6 +147,18 @@ struct DeviceListView: View {
     @ViewBuilder
     private func usbSectionContent() -> some View {
         VStack(alignment: .leading, spacing: 16) {
+            if scanner.isScanning {
+                HStack {
+                    ProgressView()
+                    Text("Suche nach Geräten...")
+                }
+            }
+            if let last = scanner.lastScanDate {
+                Text("Letzter Scan: \(last.formatted(.dateTime.hour().minute().second()))")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+
             List(selection: $scanner.selectedDevice) {
                 ForEach(scanner.devices) { device in
                     VStack(alignment: .leading) {
@@ -177,12 +189,11 @@ struct DeviceListView: View {
             AutoConnectService.shared.tryAutoConnectBluetooth(bluetoothManager: bluetoothManager)
         }
     }
-}
 
-// MARK: - Preview
-
-struct DeviceListView_Previews: PreviewProvider {
-    static var previews: some View {
-        DeviceListView(bluetoothManager: MockBluetoothManager())
+    private func startUSBScan() {
+        scanner.scanSerialDevices()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {
+            AutoConnectService.shared.tryAutoConnectUSB(usbScanner: scanner)
+        }
     }
 }

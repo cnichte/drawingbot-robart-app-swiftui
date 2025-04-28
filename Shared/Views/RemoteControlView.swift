@@ -54,10 +54,3 @@ struct RemoteControlView: View {
         .navigationTitle("Fernsteuerung")
     }
 }
-
-
-struct RemoteControlView_Previews: PreviewProvider {
-    static var previews: some View {
-        RemoteControlView(bluetoothManager: MockBluetoothManager())
-    }
-}
