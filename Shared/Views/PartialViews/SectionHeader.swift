@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SectionHeader: View {
+    
     let title: String
 
     init(_ title: String) {
@@ -17,9 +18,10 @@ struct SectionHeader: View {
     var body: some View {
         Text(title)
             .font(.headline)
-            .padding(8)
+            .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.accentColor.opacity(0.1))
-            .cornerRadius(8)
+            // .background(Color.accentColor.opacity(0.1))
+            .background(ColorHelper.backgroundColor)
+            .cornerRadius(4)
     }
 }

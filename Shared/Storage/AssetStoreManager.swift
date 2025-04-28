@@ -116,7 +116,7 @@ class AssetStoreManager {
         for line in summary {
             appLog(.info, "• \(line)")
         }
-        appLog(.info, "\n✅ AssetStores Initialisierung abgeschlossen.\n")
+        appLog(.info, "\n✅ AssetStores Initialisierung abgeschlossen.")
     }
     
     // MARK: - Restore System Defaults (wiederherstellbare Ressourcen)
@@ -259,6 +259,6 @@ class AssetStoreManager {
         }
         
         appLog(.info, "")
-        appLog(.info, "✅ AssetStores Initialisierung abgeschlossen.\n")
+        appLog(.info, "✅ AssetStores Initialisierung abgeschlossen.")
     }
 }

@@ -187,6 +187,8 @@
 		D5E55CF22DC01036003806CF /* jobs.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E55CF12DC0102E003806CF /* jobs.json */; };
 		D5E55CF32DC01036003806CF /* jobs.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E55CF12DC0102E003806CF /* jobs.json */; };
 		D5E55CF42DC02830003806CF /* CustomSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4362DBEA9F10072D83C /* CustomSplitView.swift */; };
+		D5E55CF62DC049C0003806CF /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CF52DC049B4003806CF /* Menubar.swift */; };
+		D5E55CF72DC049C1003806CF /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CF52DC049B4003806CF /* Menubar.swift */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -351,6 +353,7 @@
 		D5E55CEB2DBFFEFB003806CF /* signatures.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = signatures.json; sourceTree = "<group>"; };
 		D5E55CEE2DBFFF78003806CF /* SignatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureData.swift; sourceTree = "<group>"; };
 		D5E55CF12DC0102E003806CF /* jobs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = jobs.json; sourceTree = "<group>"; };
+		D5E55CF52DC049B4003806CF /* Menubar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menubar.swift; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -508,6 +511,7 @@
 		D52C0AFD2DBA87C100F57746 /* PartialViews */ = {
 			isa = PBXGroup;
 			children = (
+				D5E55CF52DC049B4003806CF /* Menubar.swift */,
 				D5A085232DAFD8DE00332690 /* Speedometer_View.swift */,
 				D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */,
 				D5A085322DAFE17000332690 /* CollapsibleSection.swift */,
@@ -1140,6 +1144,7 @@
 				D587A4482DBEED1C0072D83C /* ActionsSectionView.swift in Sources */,
 				D5F4DE052DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
 				D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */,
+				D5E55CF72DC049C1003806CF /* Menubar.swift in Sources */,
 				D509C09D2DBC49D9009B0233 /* JobSectionView.swift in Sources */,
 				D509C0AC2DBC4B05009B0233 /* MachineSectionView.swift in Sources */,
 				D52C0AF82DBA820300F57746 /* AssetsAndSettingsView.swift in Sources */,
@@ -1283,6 +1288,7 @@
 				D5A084F42DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
 				D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */,
 				D5A084DF2DAFD85300332690 /* FileManagerService.swift in Sources */,
+				D5E55CF62DC049C0003806CF /* Menubar.swift in Sources */,
 				D57566252DB9256B00D95E3F /* PaperFormView.swift in Sources */,
 				D587A4432DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */,
 				D5E55CEA2DBFD6DA003806CF /* AutoConnectService.swift in Sources */,

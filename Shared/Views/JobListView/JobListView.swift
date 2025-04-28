@@ -45,8 +45,10 @@ struct JobListView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
-                    mainSection
+                    menuSection
+                    unassignedSection
                     projectSections
+                    
                 }
                 .padding()
             }
@@ -65,10 +67,10 @@ struct JobListView: View {
 
     // MARK: - Main Section (Toolbar + Unassigned Jobs)
 
-    private var mainSection: some View {
-        CollapsibleSection(
-            title: "Alle Jobs",
-            systemImage: "tray.full",
+    private var menuSection: some View {
+        Menubar(
+            title: "",
+            systemImage: "",
             toolbar: {
                 HStack(spacing: 12) {
                     Button {
@@ -110,9 +112,7 @@ struct JobListView: View {
                     #endif
                 }
             }
-        ) {
-            unassignedSection
-        }
+        )
     }
 
     // MARK: - Unassigned Section

@@ -31,21 +31,21 @@ struct SettingsView: View {
                     Text("iCloud").tag(StorageType.iCloud.rawValue)
                 }
                 .pickerStyle(.segmented)
-
-                Toggle(isOn: $loggingEnabled) {
-                    Label("Logging aktivieren", systemImage: "doc.text.magnifyingglass")
-                }
             }
+            .padding(.top, 8)
 
             // Neuer Picker für Log-Level
             Section(header: SectionHeader("Logging")) {
+                Toggle(isOn: $loggingEnabled) {
+                    Label("Logging aktivieren", systemImage: "doc.text.magnifyingglass")
+                }
                 Picker("Log-Level", selection: $logLevel) {
                     ForEach(LogLevel.allCases, id: \.self) { level in
                         Text(level.rawValue.capitalized).tag(level)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-            }
+            }.padding(.top, 8)
 
             Section(header: SectionHeader("Housekeeping")) {
                 Button(role: .destructive) {
@@ -53,16 +53,17 @@ struct SettingsView: View {
                 } label: {
                     Label("Alle Daten löschen", systemImage: "trash")
                 }
-            }
+            }.padding(.top, 8)
 
             #if DEBUG
             Section(header: SectionHeader("Developer Tools")) {
                 AssetStoresDebugToolbar()
                     .environmentObject(assetStores)
-            }
+            }.padding(.top, 8)
             #endif
         }
         .navigationTitle("Settings")
+        .padding()
         .onChange(of: currentStorageRaw) {
             if let newType = StorageType(rawValue: currentStorageRaw) {
                 assetStores.applyInitialStorageTypeAndMigrations(using: newType)
