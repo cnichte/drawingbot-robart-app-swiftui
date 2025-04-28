@@ -33,7 +33,8 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
         color: String = "weiß",
         hersteller: String = "unknown",
         shoplink: String = "",
-        description: String = ""
+        description: String = "",
+        paperFormat: PaperFormat = .default
     ) {
         self.id = id
         self.name = name
@@ -42,6 +43,7 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
         self.hersteller = "unknown"
         self.shoplink = ""
         self.description = description
+        self.paperFormat = paperFormat
         
     }
     

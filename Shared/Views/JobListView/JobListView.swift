@@ -14,6 +14,14 @@
 // TODO: Playhead: Job starten, und anhalten.
 // TODO: Delete mit Warnung und okay abfrage.
 
+// TODO: Prüfen:
+// Hover-Effekt -Card vergrössert sich leicht + bekommt Schatten. (abba nich in Liste?)
+// Auswahl-Highlight: Umrahmung in accentColor bei ausgewähltem Job. (sieht man nicht weil man sofort in Editor wechselt?)
+// Tooltip: Komplette Description bei Mouseover sichtbar. (nicht zu sehen)
+// Touch-Optimierung: Auf iOS gibts einfach nur Tap/Highlight.
+
+// TODO: Mini-Animation bauen, wenn der Picker wechselt (z.B. ViewMode Grid → List mit leichtem Fade/Slide)?
+
 // JobListView.swift
 import SwiftUI
 #if os(macOS)
@@ -31,7 +39,7 @@ struct JobListView: View {
     @State private var isCopyMode = false
     @State private var searchText = ""
     @State private var showProjectManager = false
-    @State private var viewMode: JobListViewMode = .list
+    @State private var viewMode: JobListViewMode = JobListViewMode.allCases.first ?? .list
 
     var body: some View {
         NavigationStack {
@@ -76,6 +84,12 @@ struct JobListView: View {
             }
             .pickerStyle(.segmented)
             .frame(width: 200)
+            .onAppear {
+                // Sicherstellen, dass viewMode korrekt ist
+                if !JobListViewMode.allCases.contains(viewMode) {
+                    viewMode = .list
+                }
+            }
 
             TextField("Suchen …", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())

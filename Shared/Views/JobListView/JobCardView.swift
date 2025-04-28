@@ -11,6 +11,7 @@ import SwiftUI
 struct JobCardView: View {
     let job: PlotJobData
     let thumbnail: Image?
+    let isSelected: Bool
     let onSelect: (PlotJobData) -> Void
 
     @State private var isHovering = false
@@ -21,12 +22,13 @@ struct JobCardView: View {
                 image
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 100)
+                    .frame(height: 120)
                     .cornerRadius(8)
+                    .clipped()
             } else {
                 Rectangle()
                     .fill(Color.secondary.opacity(0.2))
-                    .frame(height: 100)
+                    .frame(height: 120)
                     .overlay(
                         Image(systemName: "photo")
                             .foregroundColor(.secondary)
@@ -37,21 +39,24 @@ struct JobCardView: View {
             Text(job.name)
                 .font(.headline)
                 .lineLimit(1)
-                .truncationMode(.tail)
 
             if !job.description.isEmpty {
                 Text(job.description)
-                    .font(.caption)
+                    .font(.caption2)
                     .foregroundColor(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                    .help(job.description) // Tooltip auf macOS
+                    .lineLimit(2)
+                    .padding(.horizontal, 4)
+                    .help(job.description) // Tooltip
             }
         }
-        .padding()
+        .padding(8)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color(NSColor.controlBackgroundColor))
+                .fill(ColorHelper.backgroundColor)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 2) // Auswahl-Rand
+                )
         )
         .shadow(color: isHovering ? Color.black.opacity(0.2) : Color.clear, radius: 8, x: 0, y: 4)
         .scaleEffect(isHovering ? 1.02 : 1.0)

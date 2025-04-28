@@ -10,6 +10,7 @@ import SwiftUI
 
 struct JobListProjectSectionView: View {
     let project: ProjectData
+    var selectedJobID: UUID?
     var viewMode: JobListViewMode
     var thumbnailProvider: (PlotJobData) -> Image?
     var onDrop: ([PlotJobData], CGPoint) -> Bool
@@ -53,7 +54,7 @@ struct JobListProjectSectionView: View {
                 LazyVStack(spacing: 12) {
                     ForEach(project.jobs) { job in
                         HStack(spacing: 12) {
-                            (thumbnailProvider(job) ?? Image(systemName: "photo"))
+                            thumbnailProvider(job)?
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 50, height: 50)
@@ -63,18 +64,16 @@ struct JobListProjectSectionView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(job.name)
                                     .font(.headline)
-                                    .lineLimit(1)
                                 if !job.description.isEmpty {
                                     Text(job.description)
                                         .font(.caption)
                                         .foregroundColor(.secondary)
-                                        .lineLimit(1)
                                 }
                             }
                             Spacer()
                         }
                         .padding(6)
-                        .background(ColorHelper.backgroundColor)
+                        .background(selectedJobID == job.id ? Color.accentColor.opacity(0.15) : Color.clear)
                         .cornerRadius(8)
                         .onTapGesture {
                             onJobSelected(job)
@@ -85,63 +84,12 @@ struct JobListProjectSectionView: View {
             case .grid:
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 16) {
                     ForEach(project.jobs) { job in
-                        if viewMode == .list {
-                            HStack(spacing: 12) {
-                                thumbnailProvider(job)?
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(6)
-                                    .clipped()
-
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(job.name)
-                                        .font(.headline)
-                                    if !job.description.isEmpty {
-                                        Text(job.description)
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
-                                    }
-                                }
-                                Spacer()
-                            }
-                            .padding(6)
-                            .background(ColorHelper.backgroundColor)
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                onJobSelected(job)
-                            }
-                            .draggable(job)
-                        } else {
-                            VStack {
-                                thumbnailProvider(job)?
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 120)
-                                    .cornerRadius(8)
-                                    .clipped()
-
-                                Text(job.name)
-                                    .font(.headline)
-                                    .lineLimit(1)
-
-                                if !job.description.isEmpty {
-                                    Text(job.description)
-                                        .font(.caption2)
-                                        .foregroundColor(.secondary)
-                                        .lineLimit(2)
-                                        .padding(.horizontal, 4)
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(8)
-                            .background(ColorHelper.backgroundColor)
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                onJobSelected(job)
-                            }
-                            .draggable(job)
-                        }
+                        JobCardView(
+                            job: job,
+                            thumbnail: thumbnailProvider(job),
+                            isSelected: selectedJobID == job.id,
+                            onSelect: onJobSelected
+                        )
                     }
                 }
                 .padding(.vertical, 8)
