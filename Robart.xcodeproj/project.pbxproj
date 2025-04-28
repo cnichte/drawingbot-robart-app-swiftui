@@ -158,6 +158,8 @@
 		D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042A2DAEF43900E8406E /* ORSSerial */; };
 		D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042D2DAEF44B00E8406E /* SVGView */; };
 		D5D104302DAEF45100E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042F2DAEF45100E8406E /* SVGView */; };
+		D5E55CBD2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */; };
+		D5E55CBE2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -308,6 +310,7 @@
 		D5D104162DAEF30700E8406E /* Robart-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Robart-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D104242DAEF38000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
 		D5D104262DAEF39000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
+		D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGMigrationTester.swift; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -467,7 +470,6 @@
 				D5A085322DAFE17000332690 /* CollapsibleSection.swift */,
 				D5A085032DAFD8AD00332690 /* ToastView.swift */,
 				D587A43C2DBEB9A20072D83C /* ConnectionStatusHeader.swift */,
-				D5F896ED2DBCF7F400397561 /* AssetStoresDebugToolbar.swift */,
 			);
 			path = PartialViews;
 			sourceTree = "<group>";
@@ -566,6 +568,8 @@
 		D581AF862DBC137B00821A7E /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				D5F896ED2DBCF7F400397561 /* AssetStoresDebugToolbar.swift */,
+				D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */,
 				D581AF792DBBFCD500821A7E /* AppResetHelper.swift */,
 				D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */,
 			);
@@ -1095,6 +1099,7 @@
 				D5A084FA2DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
 				D509C0A12DBC49F2009B0233 /* SVGSectionView.swift in Sources */,
 				D5A084FB2DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
+				D5E55CBE2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */,
 				D5F6C62A2DB8358C00020AEE /* PenManagerView.swift in Sources */,
 				D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */,
 				D5F896F52DBD012D00397561 /* Units.swift in Sources */,
@@ -1175,6 +1180,7 @@
 				D509C09E2DBC49D9009B0233 /* JobSectionView.swift in Sources */,
 				D5A085082DAFD8AD00332690 /* RemoteControlView.swift in Sources */,
 				D5F4DE082DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */,
+				D5E55CBD2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */,
 				D5A085092DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
 				D5A0850A2DAFD8AD00332690 /* Joystick_View.swift in Sources */,
 				D52C0AF62DBA72DF00F57746 /* AssetStores.swift in Sources */,

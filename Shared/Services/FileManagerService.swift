@@ -189,69 +189,47 @@ extension FileManagerService {
 // Erweiterung zum Handling des "svgs"-Verzeichnisses
 
 extension FileManagerService {
-
-    private var svgDirectoryName: String { "svgs" }
-
-    /// Stellt sicher, dass das SVG-Verzeichnis existiert (lokal oder iCloud, je nach StorageType)
-    func ensureSVGDirectoryExists(for storageType: StorageType) async {
-        guard let base = baseDirectory(for: storageType) else {
-            print("❌ Basisverzeichnis nicht gefunden für \(storageType)")
-            return
-        }
-        
-        let svgDir = base.appendingPathComponent(svgDirectoryName)
-        if !FileManager.default.fileExists(atPath: svgDir.path) {
+    func ensureSVGDirectoryExists(for storage: StorageType) async {
+        guard let base = baseDirectory(for: storage) else { return }
+        let svgDir = base.appendingPathComponent("svgs")
+        if !fileExists(at: svgDir) {
             do {
                 try FileManager.default.createDirectory(at: svgDir, withIntermediateDirectories: true)
-                print("📂 SVG-Verzeichnis erstellt: \(svgDir.lastPathComponent)")
+                print("📁 SVG-Verzeichnis erstellt")
             } catch {
-                print("❌ Fehler beim Erstellen des SVG-Verzeichnisses: \(error)")
+                print("❌ Fehler beim Anlegen des SVG-Verzeichnisses: \(error.localizedDescription)")
             }
         }
     }
-
-    /// Backup des SVG-Verzeichnisses an eine Ziel-URL
-    func backupSVGDirectory(storageType: StorageType, to destinationURL: URL) throws {
-        guard let base = baseDirectory(for: storageType) else { return }
-        let svgDir = base.appendingPathComponent(svgDirectoryName)
+    
+    func migrateSVGDirectory(from oldStorage: StorageType, to newStorage: StorageType) throws {
+        guard let oldBase = baseDirectory(for: oldStorage),
+              let newBase = baseDirectory(for: newStorage) else { return }
         
-        if FileManager.default.fileExists(atPath: svgDir.path) {
-            let destDir = destinationURL.appendingPathComponent(svgDirectoryName)
-            try? FileManager.default.createDirectory(at: destDir, withIntermediateDirectories: true)
-            
-            let files = try FileManager.default.contentsOfDirectory(at: svgDir, includingPropertiesForKeys: nil)
-            for file in files where file.pathExtension == "svg" {
-                let target = destDir.appendingPathComponent(file.lastPathComponent)
-                try? FileManager.default.copyItem(at: file, to: target)
-            }
-        }
-    }
-
-    /// Migration des SVG-Verzeichnisses von einem StorageType zu einem anderen
-    func migrateSVGDirectory(from sourceStorage: StorageType, to targetStorage: StorageType) throws {
-        guard let sourceBase = baseDirectory(for: sourceStorage),
-              let targetBase = baseDirectory(for: targetStorage) else { return }
-
-        let sourceSVG = sourceBase.appendingPathComponent(svgDirectoryName)
-        let targetSVG = targetBase.appendingPathComponent(svgDirectoryName)
-
-        if !FileManager.default.fileExists(atPath: sourceSVG.path) {
-            print("⚠️ Keine SVGs vorhanden zum Migrieren.")
+        let oldDir = oldBase.appendingPathComponent("svgs")
+        let newDir = newBase.appendingPathComponent("svgs")
+        
+        if !fileExists(at: oldDir) {
+            print("ℹ️ Kein SVG-Ordner vorhanden in Quelle")
             return
         }
-
-        if !FileManager.default.fileExists(atPath: targetSVG.path) {
-            try FileManager.default.createDirectory(at: targetSVG, withIntermediateDirectories: true)
+        
+        if !fileExists(at: newDir) {
+            try FileManager.default.createDirectory(at: newDir, withIntermediateDirectories: true)
         }
-
-        let files = try FileManager.default.contentsOfDirectory(at: sourceSVG, includingPropertiesForKeys: nil)
-        for file in files where file.pathExtension == "svg" {
-            let destination = targetSVG.appendingPathComponent(file.lastPathComponent)
-            if !FileManager.default.fileExists(atPath: destination.path) {
+        
+        let files = try FileManager.default.contentsOfDirectory(at: oldDir, includingPropertiesForKeys: nil)
+        for file in files where file.pathExtension.lowercased() == "svg" {
+            let destination = newDir.appendingPathComponent(file.lastPathComponent)
+            if !fileExists(at: destination) {
                 try FileManager.default.copyItem(at: file, to: destination)
                 print("📄 SVG migriert: \(file.lastPathComponent)")
             }
         }
+    }
+    
+    private func fileExists(at url: URL) -> Bool {
+        FileManager.default.fileExists(atPath: url.path)
     }
 }
 

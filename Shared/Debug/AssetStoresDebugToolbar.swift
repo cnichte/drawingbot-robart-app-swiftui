@@ -22,6 +22,20 @@ struct AssetStoresDebugToolbar: View {
                     .progressViewStyle(.circular)
             }
 
+            Button("🔎 SVG Migration Test") {
+                Task {
+                    await SVGMigrationTester.performTest()
+                }
+            }
+            
+            Button("🧹 SVG Migration Reset") {
+                Task {
+                    await SVGMigrationTester.resetTestSVGs()
+                }
+            }
+            
+            Divider()
+            
             Button("🔄 UserDefaults zurücksetzen") {
                 performResetUserDefaults()
                 showSuccess("UserDefaults erfolgreich zurückgesetzt ✅")
