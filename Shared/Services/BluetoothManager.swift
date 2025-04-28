@@ -33,7 +33,6 @@ import CoreBluetooth
  
  */
 
-
 struct DiscoveredPeripheral: Identifiable {
     let id = UUID()
     let peripheral: CBPeripheral
@@ -41,71 +40,40 @@ struct DiscoveredPeripheral: Identifiable {
 }
 
 class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+    
+    @Published var peripherals: [DiscoveredPeripheral] = []
+    @Published var isConnected = false
+    @Published var isScanning = false
+    @Published var isBluetoothReady = false
+    @Published var lastScanDate: Date? = nil
+    @Published var rssi: NSNumber? = nil
 
+    private var centralManager: CBCentralManager!
+    private var hm10Peripheral: CBPeripheral?
+    private var txCharacteristic: CBCharacteristic?
+    private var filterByService = true
+    
     var connectedPeripheralID: UUID? {
         return hm10Peripheral?.identifier
     }
     
     var connectedPeripheralName: String {
-        return hm10Peripheral?.name ?? "Unbekannt"
+        return hm10Peripheral?.name ?? ""
     }
     
-    @Published var peripherals: [DiscoveredPeripheral] = []
-    @Published var receivedMessage: String = ""
+    private let hm10ServiceUUID = CBUUID(string: "FFE0")
+    private let hm10CharUUID = CBUUID(string: "FFE1")
     
-    @Published var isBluetoothReady = false
-    @Published var isConnected = false
-    @Published var lastScanDate: Date? = nil
-    @Published var isScanning: Bool = false
-    
-    @Published var favoriteUUID: UUID? = nil
-    @Published var rssi: NSNumber? = nil
-    
-    private var centralManager: CBCentralManager!
-    private var hm10Peripheral: CBPeripheral?
-    private var txCharacteristic: CBCharacteristic?
-    private var lastConnectedUUID: UUID?
-    private var filterByService = true
-
-    let hm10ServiceUUID = CBUUID(string: "FFE0")
-    let hm10CharUUID = CBUUID(string: "FFE1")
-
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
-        appLog("BluetoothManager init wurde aufgerufen ✅")
     }
     
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        
-        switch central.state {
-        case .poweredOn:
-            isBluetoothReady = true
-            appLog("✅ Bluetooth ist eingeschaltet")
-            // Starte Scannen oder andere Operationen hier
-        case .poweredOff:
-            isBluetoothReady = false
-            appLog("❌ Bluetooth ist ausgeschaltet")
-        case .unauthorized:
-            isBluetoothReady = false
-            appLog("❌ Bluetooth-Berechtigung fehlt")
-        case .unsupported:
-            isBluetoothReady = false
-            appLog("❌ Bluetooth wird nicht unterstützt")
-        default:
-            isBluetoothReady = false
-            appLog("❌ Unbekannter Bluetooth-Zustand")
-        }
-        
-        if central.state == .poweredOn {
-            startScan()
-        }
-    }
-
+    // MARK: - Public Methods
+    
     func startScan(filter: Bool? = nil) {
-        
-        guard let centralManager = centralManager, centralManager.state == .poweredOn else {
-            appLog("❌ Kann nicht scannen: Bluetooth ist nicht bereit")
+        guard let centralManager, centralManager.state == .poweredOn else {
+            appLog("❌ Bluetooth nicht bereit")
             return
         }
         
@@ -113,133 +81,125 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         peripherals.removeAll()
         centralManager.stopScan()
         isScanning = true
-        appLog("🔍 Starte Scan (\(filterByService ? "nur HM-10" : "alle Geräte"))\n")
+        lastScanDate = Date()
+
+        appLog("🔍 Starte Scan (\(filterByService ? "nur HM-10" : "alle Geräte"))")
 
         if filterByService {
             centralManager.scanForPeripherals(withServices: [hm10ServiceUUID], options: nil)
-            lastScanDate = Date()
         } else {
             centralManager.scanForPeripherals(withServices: nil, options: nil)
-            lastScanDate = Date()
         }
-
-        // ⏱ Scan automatisch nach 5 Sekunden stoppen
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             self.centralManager.stopScan()
             self.isScanning = false
-            appLog("🛑 Scan automatisch gestoppt\n")
+            appLog("🛑 Scan automatisch gestoppt")
         }
     }
-
-    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        if let error = error {
-            appLog("❌ Fehler beim Verbinden mit Gerät \(peripheral.name ?? "Unbekannt\n"): \(error.localizedDescription)")
-        }
-    }
-
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        guard let name = peripheral.name else { return }
-
-        appLog("Gefundenes Gerät: \(name)")
-        appLog("Advertisement Data: \(advertisementData)\n\n")
-
-        if filterByService {
-            if !(name.uppercased().contains("HM") || name.uppercased().contains("BLE") || advertisementData.description.contains("HM")) {
-                return
-            }
-        }
-
-        if !peripherals.contains(where: { $0.peripheral.identifier == peripheral.identifier }) {
-            DispatchQueue.main.async {
-                self.peripherals.append(DiscoveredPeripheral(peripheral: peripheral, rssi: RSSI))
-                self.peripherals.sort { $0.rssi.intValue > $1.rssi.intValue }
-            }
-        }
-
-        if !isConnected, let lastUUID = favoriteUUID ?? lastConnectedUUID, peripheral.identifier == lastUUID {
-            connect(to: peripheral)
-        }
-    }
-
+    
     func connect(to peripheral: CBPeripheral) {
         centralManager.stopScan()
         isScanning = false
         hm10Peripheral = peripheral
         peripheral.delegate = self
-        lastConnectedUUID = peripheral.identifier
         centralManager.connect(peripheral, options: nil)
     }
-
+    
+    func disconnect() {
+        if let peripheral = hm10Peripheral {
+            centralManager.cancelPeripheralConnection(peripheral)
+        }
+        hm10Peripheral = nil
+        isConnected = false
+    }
+    
+    func send(_ text: String) {
+        guard let characteristic = txCharacteristic,
+              let data = text.data(using: .utf8),
+              let peripheral = hm10Peripheral else { return }
+        
+        peripheral.writeValue(data, for: characteristic, type: .withResponse)
+    }
+    
+    // MARK: - CBCentralManagerDelegate
+    
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        isBluetoothReady = (central.state == .poweredOn)
+        appLog(isBluetoothReady ? "✅ Bluetooth bereit" : "❌ Bluetooth nicht verfügbar")
+        
+        if isBluetoothReady {
+            startScan()
+        }
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
+        guard let name = peripheral.name else { return }
+        
+        if filterByService {
+            if !(name.uppercased().contains("HM") || name.uppercased().contains("BLE") || advertisementData.description.contains("HM")) {
+                return
+            }
+        }
+        
+        DispatchQueue.main.async {
+            if !self.peripherals.contains(where: { $0.peripheral.identifier == peripheral.identifier }) {
+                self.peripherals.append(DiscoveredPeripheral(peripheral: peripheral, rssi: RSSI))
+                self.peripherals.sort { $0.rssi.intValue > $1.rssi.intValue }
+            }
+        }
+        
+        // Auto-Reconnect prüfen
+        if !isConnected,
+           let match = AssetStores.shared.connectionsStore.items.first(where: { $0.name == name && $0.typ == .bluetooth }) {
+            connect(to: peripheral)
+            ConnectionManager.shared.connect(connection: match)
+        }
+    }
+    
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        appLog("✅ Verbunden mit \(peripheral.name ?? "Unbekannt")\n")
         isConnected = true
+        peripheral.delegate = self
         peripheral.readRSSI()
         peripheral.discoverServices([hm10ServiceUUID])
     }
-
+    
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         isConnected = false
         hm10Peripheral = nil
         txCharacteristic = nil
         peripherals.removeAll()
 
-        if let error = error {
-            appLog("❌ Fehler beim Trennen von Gerät \(peripheral.name ?? "Unbekannt\n"): \(error.localizedDescription)\n")
+        if let name = peripheral.name,
+           let match = AssetStores.shared.connectionsStore.items.first(where: { $0.name == name && $0.typ == .bluetooth }) {
+            ConnectionManager.shared.disconnect(connection: match)
         }
-
-        // automatischer Scan nach Disconnect
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.startScan()
-         }
+        }
     }
-
+    
+    // MARK: - CBPeripheralDelegate
+    
     func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
         DispatchQueue.main.async {
             self.rssi = RSSI
         }
     }
-
+    
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else { return }
         for service in services where service.uuid == hm10ServiceUUID {
             peripheral.discoverCharacteristics([hm10CharUUID], for: service)
         }
     }
-
+    
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard let characteristics = service.characteristics else { return }
         for characteristic in characteristics where characteristic.uuid == hm10CharUUID {
             txCharacteristic = characteristic
             peripheral.setNotifyValue(true, for: characteristic)
-        }
-    }
-
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let data = characteristic.value, let message = String(data: data, encoding: .utf8) {
-            DispatchQueue.main.async {
-                self.receivedMessage += message
-            }
-        }
-    }
-
-    func send(_ text: String) {
-        guard let peripheral = hm10Peripheral,
-              let characteristic = txCharacteristic,
-              let data = text.data(using: .utf8) else { return }
-
-        peripheral.writeValue(data, for: characteristic, type: .withResponse)
-    }
-
-    func disconnect() {
-        if let peripheral = hm10Peripheral {
-            centralManager.cancelPeripheralConnection(peripheral)
-            hm10Peripheral = nil
-            isConnected = false
-            // Verhindere neuen Scan direkt nach Disconnect
-            
-            // Rücksetzen der Favoriten und der letzten verbundenen UUID
-            favoriteUUID = nil
-            lastConnectedUUID = nil
         }
     }
 }

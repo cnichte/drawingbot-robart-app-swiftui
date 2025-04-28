@@ -12,7 +12,7 @@ struct ConnectionFormView: View {
     @EnvironmentObject var store: GenericStore<ConnectionData>
     
     var body: some View {
-        Form {
+        Form { 
             Section {
                 TextField("Name", text: $data.name)
                     .platformTextFieldModifiers()

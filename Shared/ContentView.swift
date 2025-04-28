@@ -11,6 +11,7 @@
 
 // ContentView.swift
 import SwiftUI
+import CoreBluetooth
 
 struct ContentView: View {
     @ObservedObject var bluetoothManager: BluetoothManager
@@ -73,11 +74,17 @@ struct ContentView: View {
 
 // Vorschau mit Dummy-Daten
 class MockBluetoothManager: BluetoothManager {
-    override init() {
-        super.init()
-        self.isConnected = true
-        self.receivedMessage = "Demo-Modus aktiv"
-        self.peripherals = []
+    @Published var receivedMessage: String = "Testnachricht"
+
+    override func connect(to peripheral: CBPeripheral) {
+        // Füge hier eine Mock-Verbindungslogik ein, die bei Verbindung etwas simuliert
+        isConnected = true
+        appLog("Mock: Verbunden mit \(peripheral.name ?? "Unbekannt")")
+    }
+
+    override func disconnect() {
+        isConnected = false
+        appLog("Mock: Verbindung getrennt")
     }
 }
 

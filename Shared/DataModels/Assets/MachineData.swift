@@ -114,7 +114,11 @@ enum MachineOptionValue: Codable, Hashable {
 // MARK: - MachineConnection
 
 struct MachineConnection: Codable, Equatable, Hashable {
-    // Noch leer (Platzhalter für spätere Verbindungen wie USB, Bluetooth)
+    var connectionID: UUID?
+
+    init(connectionID: UUID? = nil) {
+        self.connectionID = connectionID
+    }
 }
 
 // MARK: - MachineData
@@ -131,6 +135,8 @@ struct MachineData: Codable, Equatable, Identifiable, Hashable, ManageableItem {
     var connection: MachineConnection
     var options: [MachineOption]
 
+    var isConnected: Bool = false
+    
     init(
         id: UUID = UUID(),
         name: String,

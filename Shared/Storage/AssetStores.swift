@@ -57,6 +57,8 @@ enum AssetStoreType: String, CaseIterable, Identifiable {
 
 class AssetStores: ObservableObject {
     
+    static let shared = AssetStores(initialStorageType: .local)
+    
     // MARK: - User Stores
     @Published var connectionsStore: GenericStore<ConnectionData>
     @Published var machineStore: GenericStore<MachineData>
@@ -163,6 +165,17 @@ extension AssetStores {
                 appLog("✅ Speicherort angepasst auf \(preferredStorageType.rawValue)")
             } catch {
                 appLog("❌ Fehler beim Anwenden des bevorzugten Speicherorts: \(error)")
+            }
+        }
+    }
+}
+
+extension AssetStores {
+    func updateMachineConnectionStatus(for connection: ConnectionData, isConnected: Bool) {
+        for var machine in machineStore.items where machine.connection.connectionID == connection.id {
+            machine.isConnected = isConnected
+            Task {
+                await machineStore.save(item: machine, fileName: machine.id.uuidString)
             }
         }
     }

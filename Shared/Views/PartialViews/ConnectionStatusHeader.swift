@@ -15,12 +15,18 @@ struct ConnectionStatusHeader: View {
 #if os(macOS)
     @EnvironmentObject var usbScanner: USBSerialScanner
 #endif
+    
+    private var connectedName: String {
+        bluetoothManager.connectedPeripheralName // FEHLER!
+    }
 
     var body: some View {
         HStack(spacing: 12) {
             bluetoothStatus
+#if os(macOS)
             Divider().frame(height: 20)
             usbStatus
+#endif
             Divider().frame(height: 20)
             storageStatus
         }
@@ -32,14 +38,17 @@ struct ConnectionStatusHeader: View {
         .frame(minHeight: 28, maxHeight: 32)
     }
 
+    // MARK: - Bluetooth Status
     private var bluetoothStatus: some View {
         HStack(spacing: 6) {
             Image(systemName: "antenna.radiowaves.left.and.right")
                 .foregroundColor(bluetoothManager.isConnected ? .green : .secondary)
+
             if bluetoothManager.isConnected {
                 Text("Bluetooth verbunden")
                     .foregroundColor(.green)
-                    .help("Verbunden mit \(bluetoothManager.connectedPeripheralName)")
+                    .help("Verbunden mit \(connectedName.isEmpty ? "Unbekannt" : connectedName)")
+
                 Button {
                     bluetoothManager.disconnect()
                 } label: {
@@ -57,11 +66,13 @@ struct ConnectionStatusHeader: View {
         .fixedSize()
     }
 
-    private var usbStatus: some View {
+    // MARK: - USB Status (nur macOS)
 #if os(macOS)
-        return AnyView(HStack(spacing: 6) {
+    private var usbStatus: some View {
+        HStack(spacing: 6) {
             Image(systemName: "externaldrive.connected.to.line.below")
-                .foregroundColor(.blue)
+                .foregroundColor(usbScanner.currentPort?.isOpen == true ? .blue : .secondary)
+
             if let usbPort = usbScanner.currentPort, usbPort.isOpen {
                 Text("USB verbunden")
                     .foregroundColor(.blue)
@@ -79,33 +90,29 @@ struct ConnectionStatusHeader: View {
                 Text("USB getrennt")
                     .foregroundColor(.secondary)
             }
-        })
-#else
-        return AnyView(
-            Text("USB nicht unterstützt")
-                .foregroundColor(.gray)
-                .help("USB auf iOS nicht verfügbar")
-                .lineLimit(1)
-                .fixedSize()
-        )
-#endif
+        }
+        .lineLimit(1)
+        .fixedSize()
     }
+#endif
 
+    // MARK: - Storage Status
     private var storageStatus: some View {
         HStack(spacing: 8) {
             let currentStorage = assetStores.storageType
-            HStack(spacing: 4) {
-                Image(systemName: currentStorage == .local ? "internaldrive" : "icloud")
-                    .foregroundColor(.gray)
-                    .transition(.opacity)
-                    .id(currentStorage)
-                Text("store: \(currentStorage.rawValue)")
-                    .foregroundColor(.gray)
-                    .font(.footnote)
-            }
-            .animation(.easeInOut(duration: 0.3), value: currentStorage)
+
+            Image(systemName: currentStorage == .local ? "internaldrive" : "icloud")
+                .foregroundColor(.gray)
+                .transition(.opacity)
+                .id(currentStorage)
+
+            Text("Store: \(currentStorage.rawValue)")
+                .foregroundColor(.gray)
+                .font(.footnote)
 
 #if DEBUG
+            Divider().frame(height: 20)
+
             Button(action: AppResetHelper.resetLocalOnly) {
                 Image(systemName: "arrow.counterclockwise.circle")
             }
@@ -114,7 +121,7 @@ struct ConnectionStatusHeader: View {
             Button(action: AppResetHelper.resetICloudOnly) {
                 Image(systemName: "icloud.slash")
             }
-            .help("Nur iCloud Speicher leeren")
+            .help("Nur iCloud-Speicher leeren")
 
             Button(action: AppResetHelper.fullResetAll) {
                 Image(systemName: "trash.circle")

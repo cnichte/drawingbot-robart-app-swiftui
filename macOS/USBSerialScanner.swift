@@ -12,11 +12,8 @@
 // USBSerialScanner.swift
 #if os(macOS)
 import Foundation
-import IOKit
-// import IOKit.usb
 import ORSSerial
-
-
+import IOKit
 
 struct USBSerialDevice: Identifiable, Hashable {
     let id = UUID()
@@ -37,14 +34,11 @@ class USBSerialScanner: ObservableObject {
     var currentPort: ORSSerialPort?
     
     func scanSerialDevices() {
-        let manager = ORSSerialPortManager.shared()
-        let ports = manager.availablePorts
-        
-        let deviceList = ports.compactMap { port -> USBSerialDevice? in
-            guard let bsdPath = port.path as String? else { return nil }
-            let (vendor, product) = Self.getVendorProductID(for: bsdPath)
+        let ports = ORSSerialPortManager.shared().availablePorts
+        let list = ports.compactMap { port -> USBSerialDevice? in
+            let (vendor, product) = Self.getVendorProductID(for: port.path)
             return USBSerialDevice(
-                path: bsdPath,
+                path: port.path,
                 vendorID: vendor,
                 productID: product,
                 description: port.name
@@ -52,12 +46,31 @@ class USBSerialScanner: ObservableObject {
         }
         
         DispatchQueue.main.async {
-            self.devices = deviceList
+            self.devices = list
+            self.tryAutoConnect()
+        }
+    }
+    
+    func tryAutoConnect() {
+        for device in devices {
+            if let match = AssetStores.shared.connectionsStore.items.first(where: {
+                $0.typ == .usb &&
+                $0.usbVendorID == device.vendorID &&
+                $0.usbProductID == device.productID
+            }) {
+                connect(to: device)
+                ConnectionManager.shared.connect(connection: match)
+                return
+            }
         }
     }
     
     func connectToSelectedDevice() {
         guard let device = selectedDevice else { return }
+        connect(to: device)
+    }
+    
+    public func connect(to device: USBSerialDevice) {
         let port = ORSSerialPort(path: device.path)
         port?.baudRate = 9600
         port?.open()
@@ -68,13 +81,14 @@ class USBSerialScanner: ObservableObject {
         let kIOSerialBSDDeviceKey = "IODialinDevice" as CFString
         
         guard let matching = IOServiceMatching("IOSerialBSDClient") else { return (nil, nil) }
-        guard let bsdPathCString = bsdPath.cString(using: .utf8) else { return (nil, nil) }
-        guard let cfBsdPath = CFStringCreateWithCString(kCFAllocatorDefault, bsdPathCString, CFStringBuiltInEncodings.UTF8.rawValue) else { return (nil, nil) }
+        guard let cfPath = bsdPath.cString(using: .utf8).flatMap({
+            CFStringCreateWithCString(kCFAllocatorDefault, $0, CFStringBuiltInEncodings.UTF8.rawValue)
+        }) else { return (nil, nil) }
         
         CFDictionarySetValue(
             matching,
             Unmanaged.passUnretained(kIOSerialBSDDeviceKey).toOpaque(),
-            Unmanaged.passUnretained(cfBsdPath).toOpaque()
+            Unmanaged.passUnretained(cfPath).toOpaque()
         )
         
         var service: io_iterator_t = 0
@@ -85,18 +99,17 @@ class USBSerialScanner: ObservableObject {
         var productID: Int32 = 0
         
         if device != 0 {
-            let vendorIDNum = IORegistryEntryCreateCFProperty(device, "idVendor" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue()
-            let productIDNum = IORegistryEntryCreateCFProperty(device, "idProduct" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue()
-            
-            if let v = vendorIDNum as? Int32 { vendorID = v }
-            if let p = productIDNum as? Int32 { productID = p }
-            
+            if let v = IORegistryEntryCreateCFProperty(device, "idVendor" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? Int32 {
+                vendorID = v
+            }
+            if let p = IORegistryEntryCreateCFProperty(device, "idProduct" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? Int32 {
+                productID = p
+            }
             IOObjectRelease(device)
         }
-        
         IOObjectRelease(service)
+        
         return (Int(vendorID), Int(productID))
     }
 }
 #endif
-

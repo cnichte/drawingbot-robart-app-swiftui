@@ -178,6 +178,10 @@
 		D5E55CDD2DBF8EF6003806CF /* JobCardViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CDB2DBF8EF3003806CF /* JobCardViewMode.swift */; };
 		D5E55CDF2DBF8F9D003806CF /* JobListViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CDE2DBF8F9A003806CF /* JobListViewMode.swift */; };
 		D5E55CE02DBF8F9D003806CF /* JobListViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CDE2DBF8F9A003806CF /* JobListViewMode.swift */; };
+		D5E55CE62DBFCB49003806CF /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CE52DBFCB46003806CF /* ConnectionManager.swift */; };
+		D5E55CE72DBFCB49003806CF /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CE52DBFCB46003806CF /* ConnectionManager.swift */; };
+		D5E55CE92DBFD6DA003806CF /* AutoConnectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CE82DBFD6D7003806CF /* AutoConnectService.swift */; };
+		D5E55CEA2DBFD6DA003806CF /* AutoConnectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CE82DBFD6D7003806CF /* AutoConnectService.swift */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -338,6 +342,8 @@
 		D5E55CD82DBF8DE1003806CF /* View+HoverEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+HoverEffect.swift"; sourceTree = "<group>"; };
 		D5E55CDB2DBF8EF3003806CF /* JobCardViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCardViewMode.swift; sourceTree = "<group>"; };
 		D5E55CDE2DBF8F9A003806CF /* JobListViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListViewMode.swift; sourceTree = "<group>"; };
+		D5E55CE52DBFCB46003806CF /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		D5E55CE82DBFD6D7003806CF /* AutoConnectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectService.swift; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -641,6 +647,8 @@
 		D5A084C02DAFD58B00332690 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D5E55CE82DBFD6D7003806CF /* AutoConnectService.swift */,
+				D5E55CE52DBFCB46003806CF /* ConnectionManager.swift */,
 				D5E55CC82DBF7B82003806CF /* SVGSnapshot.swift */,
 				D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */,
 				D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */,
@@ -1089,6 +1097,7 @@
 				D5F6C61A2DB8230200020AEE /* TabManagerShellView.swift in Sources */,
 				D5A084D72DAFD84000332690 /* SettingsData.swift in Sources */,
 				D5A084D82DAFD84000332690 /* MachineData.swift in Sources */,
+				D5E55CE92DBFD6DA003806CF /* AutoConnectService.swift in Sources */,
 				D5A084D92DAFD84000332690 /* PenData.swift in Sources */,
 				D5A085B92DB02E0000332690 /* JobListUnassignedSectionView.swift in Sources */,
 				D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */,
@@ -1160,6 +1169,7 @@
 				D587A4462DBEDE0D0072D83C /* JobInspectorPanel.swift in Sources */,
 				D5E55CCF2DBF84E4003806CF /* JobListProjectSectionView.swift in Sources */,
 				D5F6C6442DB8498700020AEE /* ConnectionManagerView.swift in Sources */,
+				D5E55CE72DBFCB49003806CF /* ConnectionManager.swift in Sources */,
 				D5A085C02DB0348D00332690 /* JobRow.swift in Sources */,
 				D587A4422DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */,
 				D56C4E482DB1296700F09A0C /* DropZoneModifier.swift in Sources */,
@@ -1210,6 +1220,7 @@
 				D5A0852F2DAFD8DE00332690 /* SVGTreeView.swift in Sources */,
 				D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */,
 				D57566242DB9256600D95E3F /* PaperManagerView.swift in Sources */,
+				D5E55CE62DBFCB49003806CF /* ConnectionManager.swift in Sources */,
 				D5A085302DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */,
 				D5A085312DAFD8DE00332690 /* PaperPreview.swift in Sources */,
 				D5E55CC32DBF7673003806CF /* JobsDataFileManager.swift in Sources */,
@@ -1261,6 +1272,7 @@
 				D5A084DF2DAFD85300332690 /* FileManagerService.swift in Sources */,
 				D57566252DB9256B00D95E3F /* PaperFormView.swift in Sources */,
 				D587A4432DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */,
+				D5E55CEA2DBFD6DA003806CF /* AutoConnectService.swift in Sources */,
 				D5A085BF2DB0348D00332690 /* JobRow.swift in Sources */,
 				D56C4E492DB1296700F09A0C /* DropZoneModifier.swift in Sources */,
 				D5A084E82DAFD86700332690 /* GenericStore.swift in Sources */,
