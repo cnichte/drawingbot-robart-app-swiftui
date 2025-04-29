@@ -28,7 +28,6 @@ struct RobartApp: App {
                 .environmentObject(settingsStore) // EnvironmentObject für SettingsStore
                 .environmentObject(bluetoothManager) // EnvironmentObject für BluetoothManager
                 .environmentObject(usbScanner) // EnvironmentObject für USBScanner
-                
                 .environmentObject(assetStores.connectionsStore)
                 .environmentObject(assetStores.machineStore)
                 .environmentObject(assetStores.projectStore)
@@ -36,7 +35,6 @@ struct RobartApp: App {
                 .environmentObject(assetStores.pensStore)
                 .environmentObject(assetStores.paperStore)
                 .environmentObject(assetStores.paperFormatsStore)
-                
                 .preferredColorScheme(.dark)
                 .onAppear {
                     if CommandLine.arguments.contains("-ResetApp") {

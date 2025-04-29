@@ -26,19 +26,17 @@ typealias PlatformImage = NSImage
 
 // MARK: - Erweiterung für PlatformImage -> PNG-Daten
 
-extension PlatformImage {
+#if os(macOS)
+extension NSImage {
     func pngData() -> Data? {
-        #if os(iOS)
-        return self.pngData()
-        #elseif os(macOS)
         guard let tiffData = self.tiffRepresentation,
               let bitmap = NSBitmapImageRep(data: tiffData) else {
             return nil
         }
         return bitmap.representation(using: .png, properties: [:])
-        #endif
     }
 }
+#endif
 
 // MARK: - SVGSnapshot
 

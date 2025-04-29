@@ -75,7 +75,7 @@ struct JobListView: View {
                 HStack(spacing: 12) {
                     Button {
                         Task {
-                            let job = PlotJobData(name: "Neuer Job", paper: .default)
+                            let job = PlotJobData(name: "Neuer Job", paper: .default, selectedMachine: .default)
                             let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)
                             selectedJob = newJob
                         }

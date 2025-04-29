@@ -36,14 +36,14 @@ import UIKit
 struct JobPreviewView: View {
     @AppStorage("jobPreview_sidebarVisible") private var isSidebarVisible: Bool = true
     @AppStorage("jobPreview_inspectorVisible") private var isInspectorVisible: Bool = false
-
+    
     @Binding var currentJob: PlotJobData
     @Binding var selectedJob: PlotJobData?
-
+    
     @EnvironmentObject var plotJobStore: GenericStore<PlotJobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
     @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormat>
-
+    
     @State private var zoom: Double = 1.0
     @State private var pitch: Double = 0.0
     @State private var origin: CGPoint = .zero
@@ -54,7 +54,7 @@ struct JobPreviewView: View {
     @State private var showingSettings = false
     @State private var showingInspector = false
     @State private var selectedMachine: MachineData? = nil
-
+    
     enum PreviewMode: String, CaseIterable, Identifiable {
         case svgPreview = "SVG Preview"
         case svgSource = "SVG Quellcode"
@@ -62,17 +62,15 @@ struct JobPreviewView: View {
         case plotSimulation = "Plot-Simulation"
         var id: String { rawValue }
     }
-
+    
     init(currentJob: Binding<PlotJobData>, selectedJob: Binding<PlotJobData?>) {
-        print("JobPreviewView init started")
         self._currentJob = currentJob
         self._selectedJob = selectedJob
-        print("JobPreviewView init completed")
     }
-
+    
     var body: some View {
         Group {
-            #if os(macOS)
+#if os(macOS)
             // macOS: Ursprüngliche CustomSplitView für Stabilität
             CustomSplitView(
                 isLeftVisible: $isSidebarVisible,
@@ -117,7 +115,7 @@ struct JobPreviewView: View {
                 }
             )
             .navigationTitle("Job Preview")
-            #else
+#else
             // iOS: Unterscheide zwischen iPad und iPhone
             if UIDevice.current.userInterfaceIdiom == .pad {
                 // iPad: JobSettingsPanel links, previewContent rechts, Inspector als Sheet
@@ -135,7 +133,7 @@ struct JobPreviewView: View {
                         .frame(maxWidth: 300)
                         .padding(.vertical, 10)
                     }
-
+                    
                     previewContent
                         .background(ColorHelper.backgroundColor)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -191,23 +189,54 @@ struct JobPreviewView: View {
                         .presentationDragIndicator(.visible)
                 }
             }
-            #endif
+#endif
         }
         .onAppear {
-            print("JobPreviewView onAppear")
             appLog(.info, "Geladener SVG-Pfad:", currentJob.svgFilePath)
             loadActiveJob()
-            print("JobPreviewView loadActiveJob completed")
         }
         .onDisappear {
-            print("JobPreviewView onDisappear")
             saveCurrentJob()
         }
     }
-
+    
+    // State für den ausgewählten Zoom-Wert (in Prozent)
+    @State private var selectedZoom: Int = 100
+    // Array mit Zoomstufen von 10% bis 200% in 10%-Schritten
+    private let zoomLevels = Array(10...200).filter { $0 % 10 == 0 }
+    
     @ViewBuilder
     private var previewContent: some View {
+        
         VStack {
+            
+            Menubar(
+                title: "Actions",
+                systemImage: "",
+                toolbar: { // TODO: on macOS and iPad okay - on iPhone to much spacce
+                    HStack(spacing: 12) {
+                        VStack { 
+                           /*
+                            // Beispiel: Ein Bild, das mit dem Zoomfaktor skaliert wird
+                            Image(systemName: "star.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .scaleEffect(CGFloat(selectedZoom) / 100.0) // Zoomfaktor anwenden
+                         */
+                            // Picker für die Zoomstufen
+                            Picker("Zoomstufe", selection: $selectedZoom) {
+                                ForEach(zoomLevels, id: \.self) { level in
+                                    Text("\(level)%").tag(level)
+                                }
+                            }
+                            .pickerStyle(.menu) // Stil des Pickers (z. B. Dropdown-Menü)
+                            .padding()
+                        }
+                    }
+                }
+            )
+            
             switch previewMode {
             case .svgPreview:
                 PaperPreview(zoom: $zoom, pitch: $pitch, origin: $origin, job: $currentJob)
@@ -223,18 +252,18 @@ struct JobPreviewView: View {
         }
         .padding()
     }
-
+    
     private func loadActiveJob() {
         svgFileName = URL(fileURLWithPath: currentJob.svgFilePath).lastPathComponent
     }
-
+    
     private func saveCurrentJob() {
         Task {
-            print("Saving job started")
+            appLog(.error, "Saving job started")
             let start = Date()
             await plotJobStore.save(item: currentJob, fileName: currentJob.id.uuidString)
             let duration = Date().timeIntervalSince(start)
-            print("Saving job completed in \(duration) seconds")
+            appLog(.error, "Saving job completed in \(duration) seconds")
         }
     }
 }

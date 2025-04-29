@@ -123,7 +123,7 @@ struct MachineConnection: Codable, Equatable, Hashable {
 
 // MARK: - MachineData
 
-struct MachineData: Codable, Equatable, Identifiable, Hashable, ManageableItem {
+struct MachineData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defaultable {
     var id: UUID
     var name: String
     var description: String
@@ -159,6 +159,10 @@ struct MachineData: Codable, Equatable, Identifiable, Hashable, ManageableItem {
         self.penCount = penCount
         self.connection = connection
         self.options = options
+    }
+    
+    static var `default`: MachineData {
+        MachineData(id: UUID.force("50529c2e-d9ae-42fa-a649-e1aa542a1a03"), name: "Keine Maschine")
     }
 
     static func == (lhs: MachineData, rhs: MachineData) -> Bool {

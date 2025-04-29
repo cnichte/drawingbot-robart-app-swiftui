@@ -21,21 +21,19 @@ struct SettingsView: View {
 
     @AppStorage("currentStorageType") private var currentStorageRaw: String = StorageType.local.rawValue
     @AppStorage("loggingEnabled") private var loggingEnabled: Bool = true
-    @AppStorage("logLevel") private var logLevel: LogLevel = .verbose  // LogLevel-Option in den Einstellungen
+    @AppStorage("logLevel") private var logLevel: LogLevel = .verbose
 
     var body: some View {
         Form {
-            Section(header: SectionHeader("Allgemein")) {
+            CollapsibleSection(title: "Allgemein", systemImage: "photo", toolbar: { EmptyView() }) {
                 Picker("Speicherort", selection: $currentStorageRaw) {
                     Text("Lokal").tag(StorageType.local.rawValue)
                     Text("iCloud").tag(StorageType.iCloud.rawValue)
                 }
                 .pickerStyle(.segmented)
             }
-            .padding(.top, 8)
 
-            // Neuer Picker für Log-Level
-            Section(header: SectionHeader("Logging")) {
+            CollapsibleSection(title: "Logging", systemImage: "photo", toolbar: { EmptyView() }) {
                 Toggle(isOn: $loggingEnabled) {
                     Label("Logging aktivieren", systemImage: "doc.text.magnifyingglass")
                 }
@@ -44,26 +42,25 @@ struct SettingsView: View {
                         Text(level.rawValue.capitalized).tag(level)
                     }
                 }
-                .pickerStyle(SegmentedPickerStyle())
-            }.padding(.top, 8)
+                .pickerStyle(.segmented)
+            }
 
-            Section(header: SectionHeader("Housekeeping")) {
+            CollapsibleSection(title: "Housekeeping", systemImage: "photo", toolbar: { EmptyView() }) {
                 Button(role: .destructive) {
                     confirmDeleteAllData()
                 } label: {
                     Label("Alle Daten löschen", systemImage: "trash")
                 }
-            }.padding(.top, 8)
+            }
 
             #if DEBUG
-            Section(header: SectionHeader("Developer Tools")) {
+            CollapsibleSection(title: "Developer Tools", systemImage: "photo", toolbar: { EmptyView() }) {
                 AssetStoresDebugToolbar()
                     .environmentObject(assetStores)
-            }.padding(.top, 8)
+            }
             #endif
         }
         .navigationTitle("Settings")
-        .padding()
         .onChange(of: currentStorageRaw) {
             if let newType = StorageType(rawValue: currentStorageRaw) {
                 assetStores.applyInitialStorageTypeAndMigrations(using: newType)

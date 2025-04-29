@@ -22,7 +22,7 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     var paperFormat: PaperFormat = .default
     
     static var `default`: PaperData {
-        PaperData(id: UUID.force("1951e531-e879-4171-8d9f-5ad6320fe4d0"), name: "ZackZack")
+        PaperData(id: UUID.force("4d024e70-2825-4d95-8039-c29685063040"), name: "Kein Papier")
     }
     
     init(

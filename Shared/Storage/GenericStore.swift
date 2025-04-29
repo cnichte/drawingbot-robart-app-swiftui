@@ -33,7 +33,7 @@ protocol GenericStoreProtocol: AnyObject {
 }
 
 // MARK: - GenericStore
-class GenericStore<T>: ObservableObject, MigratableStore
+class GenericStore<T>: ObservableObject, MigratableStore, GenericStoreProtocol
 where T: Codable & Identifiable, T.ID: Hashable {
     
     @Published var items: [T] = [] {

@@ -29,18 +29,40 @@ enum AssetStoreType: String, CaseIterable, Identifiable {
     /// Gibt zurück, ob es sich um eine System- oder User-Resource handelt
     var resourceType: ResourceType {
         switch self {
+        case .connections:
+            return .user
+        case .machines:
+            return .user
+        case .projects:
+            return .user
+        case .jobs:
+            return .user
+        case .pens:
+            return .user
         case .papers:
             return .user
         default:
             return .system
         }
     }
-    
+ 
+
     /// Gibt den initialResourceName an (nur falls es einen gibt)
     var initialResourceName: String? {
         switch self {
+        case .connections:
+            return "connections"
+        case .machines:
+            return "machines"
+        case .projects:
+            return "projects"
+        case .jobs:
+            return "jobs"
+        case .pens:
+            return "pens"
         case .papers:
             return "papers"
+            
         case .paperformats:
             return "paper-formats"
         case .aspectratios:
@@ -51,6 +73,7 @@ enum AssetStoreType: String, CaseIterable, Identifiable {
             return nil
         }
     }
+
 }
 
 // MARK: - AssetStores
@@ -86,6 +109,7 @@ class AssetStores: ObservableObject {
             plotJobStore,
             pensStore,
             paperStore,
+            
             paperFormatsStore,
             aspectRatiosStore,
             unitsStore
@@ -94,16 +118,16 @@ class AssetStores: ObservableObject {
 
     // MARK: - Initializer
     init(initialStorageType: StorageType) {
-        self.storageType = initialStorageType
+        self.storageType = initialStorageType 
 
         // User Stores
         self.connectionsStore = GenericStore(directoryName: "connections", resourceType: .user)
         self.machineStore     = GenericStore(directoryName: "machines", resourceType: .user, initialResourceName: "machines")
         self.projectStore     = GenericStore(directoryName: "projects", resourceType: .user, initialResourceName: "projects")
         self.plotJobStore     = GenericStore(directoryName: "jobs", resourceType: .user)
-        self.pensStore        = GenericStore(directoryName: "pens", resourceType: .user)
+        self.pensStore        = GenericStore(directoryName: "pens", resourceType: .user, initialResourceName: "pens")
         self.paperStore       = GenericStore(directoryName: "papers", resourceType: .user, initialResourceName: "papers")
-
+         
         // System Stores
         self.paperFormatsStore = GenericStore(directoryName: "paperformats", resourceType: .system, initialResourceName: "paper-formats")
         self.aspectRatiosStore = GenericStore(directoryName: "aspectratios", resourceType: .system, initialResourceName: "aspect-ratios")
@@ -146,7 +170,11 @@ class AssetStores: ObservableObject {
     }
     
     func printSummary() {
+        
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
         appLog(.info, "📦 AssetStores Zusammenfassung:")
+        appLog(.info, "Location: \(documentsURL)")
         for store in allStores {
             appLog(.info, "- \(store.directoryName): \(store.itemCount) Einträge")
         }

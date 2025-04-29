@@ -40,7 +40,7 @@ struct JobSettingsPanel: View {
                 MachineSectionView(currentJob: $currentJob, selectedMachine: $selectedMachine)
                     .padding(.horizontal, 0)
                 
-                PenSectionView()
+                PenSectionView(currentJob: $currentJob, selectedMachine: $selectedMachine)
                     .padding(.horizontal, 0)
                 
                 ActionsSectionView(currentJob: $currentJob)

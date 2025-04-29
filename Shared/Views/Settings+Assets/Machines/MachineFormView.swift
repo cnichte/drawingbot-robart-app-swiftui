@@ -56,6 +56,12 @@ struct MachineFormView: View {
                 }
                 .pickerStyle(.menu)
                 .onChange(of: data.typ) { save() }
+                
+                HStack {
+                    Text("Anzahl der Stifte")
+                    MF_Tools.intTextField(label: "Anzahl Stifte", value: $data.penCount)
+                }
+                .onChange(of: data.size.x) { save() }
             }
         }
     }
@@ -189,6 +195,11 @@ struct MachineFormView: View {
 
 struct MF_Tools {
     static func doubleTextField(label: String, value: Binding<Double>) -> some View {
+        TextField(label, value: value, format: .number)
+            .textFieldStyle(.roundedBorder)
+    }
+    
+    static func intTextField(label: String, value: Binding<Int>) -> some View {
         TextField(label, value: value, format: .number)
             .textFieldStyle(.roundedBorder)
     }

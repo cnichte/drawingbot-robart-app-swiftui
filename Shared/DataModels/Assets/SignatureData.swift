@@ -20,7 +20,8 @@ enum SignatureLocation: String, Codable, CaseIterable {
     }
 }
 
-struct SignatureData: Codable, Equatable, Identifiable, Hashable, ManageableItem {
+struct SignatureData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defaultable {
+    
     var id: UUID
     var name: String
     var description: String
@@ -45,6 +46,14 @@ struct SignatureData: Codable, Equatable, Identifiable, Hashable, ManageableItem
         self.signatureLocation = signatureLocation
         self.abstandHorizontal = abstandHorizontal
         self.abstandVertical = abstandVertical
+    }
+    
+    static var `default`: SignatureData {
+        SignatureData(
+            id: UUID.force("4be2dd2e-9de1-4e8b-9f33-a9c9696f85f4"),
+            name: "Ohne Signatur",
+            description: ""
+        )
     }
     
     static func == (lhs: SignatureData, rhs: SignatureData) -> Bool {

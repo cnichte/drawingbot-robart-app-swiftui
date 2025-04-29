@@ -13,7 +13,8 @@ enum ConnectionType: String, Codable {
     case bluetooth = ".bluetooth"
 }
 
-struct ConnectionData: Codable, Equatable, Identifiable, Hashable, ManageableItem {
+struct ConnectionData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defaultable {
+    
     // Basis
     var id: UUID            = UUID()
     var name: String        = ""          // Vom Benutzer frei wählbar
@@ -55,6 +56,14 @@ struct ConnectionData: Codable, Equatable, Identifiable, Hashable, ManageableIte
         self.btServiceUUID = btServiceUUID
     }
 
+    static var `default`: ConnectionData {
+        ConnectionData(
+            id: UUID.force("d56e6776-8e43-4b50-b5a1-1d20a5d414d0"),
+            name: "Ohne Verbindung",
+            description: ""
+        )
+    }
+    
     // Implementierung von Equatable
     static func == (lhs: ConnectionData, rhs: ConnectionData) -> Bool {
         return lhs.id == rhs.id

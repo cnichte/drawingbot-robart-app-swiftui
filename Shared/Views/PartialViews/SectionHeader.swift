@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SectionHeader: View {
-    
     let title: String
 
     init(_ title: String) {
@@ -18,10 +17,10 @@ struct SectionHeader: View {
     var body: some View {
         Text(title)
             .font(.headline)
-            .padding(14)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 16) // Angepasstes Padding, um mit Form-Inhalt zu fluchten
             .frame(maxWidth: .infinity, alignment: .leading)
-            // .background(Color.accentColor.opacity(0.1))
             .background(ColorHelper.backgroundColor)
-            .cornerRadius(4)
+            .clipShape(RoundedRectangle(cornerRadius: 4)) // clipShape statt cornerRadius für konsistente Hintergrundform
     }
 }

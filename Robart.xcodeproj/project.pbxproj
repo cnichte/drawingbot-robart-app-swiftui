@@ -74,6 +74,8 @@
 		D587A4462DBEDE0D0072D83C /* JobInspectorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */; };
 		D587A4482DBEED1C0072D83C /* ActionsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4472DBEED190072D83C /* ActionsSectionView.swift */; };
 		D587A4492DBEED1C0072D83C /* ActionsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4472DBEED190072D83C /* ActionsSectionView.swift */; };
+		D59996072DC180EA00130770 /* Defaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59996062DC180E400130770 /* Defaultable.swift */; };
+		D59996082DC180EA00130770 /* Defaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59996062DC180E400130770 /* Defaultable.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -189,6 +191,8 @@
 		D5E55CF42DC02830003806CF /* CustomSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4362DBEA9F10072D83C /* CustomSplitView.swift */; };
 		D5E55CF62DC049C0003806CF /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CF52DC049B4003806CF /* Menubar.swift */; };
 		D5E55CF72DC049C1003806CF /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CF52DC049B4003806CF /* Menubar.swift */; };
+		D5E69CA12DC13CC6003E8ADF /* welcome-to-robart.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E69CA02DC13CBD003E8ADF /* welcome-to-robart.json */; };
+		D5E69CA22DC13CC6003E8ADF /* welcome-to-robart.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E69CA02DC13CBD003E8ADF /* welcome-to-robart.json */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -294,6 +298,7 @@
 		D587A4412DBEDDD90072D83C /* JobSettingsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSettingsPanel.swift; sourceTree = "<group>"; };
 		D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspectorPanel.swift; sourceTree = "<group>"; };
 		D587A4472DBEED190072D83C /* ActionsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsSectionView.swift; sourceTree = "<group>"; };
+		D59996062DC180E400130770 /* Defaultable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaultable.swift; sourceTree = "<group>"; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -354,6 +359,7 @@
 		D5E55CEE2DBFFF78003806CF /* SignatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureData.swift; sourceTree = "<group>"; };
 		D5E55CF12DC0102E003806CF /* jobs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = jobs.json; sourceTree = "<group>"; };
 		D5E55CF52DC049B4003806CF /* Menubar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menubar.swift; sourceTree = "<group>"; };
+		D5E69CA02DC13CBD003E8ADF /* welcome-to-robart.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "welcome-to-robart.json"; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -494,6 +500,7 @@
 		D52C0AED2DBA654600F57746 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5E69CA02DC13CBD003E8ADF /* welcome-to-robart.json */,
 				D5E55CF12DC0102E003806CF /* jobs.json */,
 				D5E55CEB2DBFFEFB003806CF /* signatures.json */,
 				D5E55CD42DBF8D21003806CF /* projects.json */,
@@ -677,6 +684,7 @@
 		D5A084C92DAFD83400332690 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
+				D59996062DC180E400130770 /* Defaultable.swift */,
 				D5F896E62DBCDDD500397561 /* Assets */,
 				D5F896E52DBCDDB800397561 /* Internal */,
 				D5A084CD2DAFD84000332690 /* PlotJobData.swift */,
@@ -1052,6 +1060,7 @@
 				D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */,
 				D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */,
 				D5F896DA2DBCD27500397561 /* robart-dev-check-mini.sh in Resources */,
+				D5E69CA22DC13CC6003E8ADF /* welcome-to-robart.json in Resources */,
 				D5F896FB2DBD7C0400397561 /* pens.json in Resources */,
 				D5F896D42DBCCFA100397561 /* robart-dev-check-v3.5.sh in Resources */,
 				D5F896CC2DBCCB9600397561 /* robart-dev-check-v3.0.sh in Resources */,
@@ -1066,6 +1075,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5E69CA12DC13CC6003E8ADF /* welcome-to-robart.json in Resources */,
 				D5F896FE2DBD7F3900397561 /* machines.json in Resources */,
 				D5F896E92DBCDF4800397561 /* aspect-ratios.json in Resources */,
 				D5F897002DBD84CA00397561 /* connections.json in Resources */,
@@ -1113,6 +1123,7 @@
 				D587A4312DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */,
 				D5F6C61A2DB8230200020AEE /* TabManagerShellView.swift in Sources */,
 				D5A084D72DAFD84000332690 /* SettingsData.swift in Sources */,
+				D59996082DC180EA00130770 /* Defaultable.swift in Sources */,
 				D5A084D82DAFD84000332690 /* MachineData.swift in Sources */,
 				D5E55CE92DBFD6DA003806CF /* AutoConnectService.swift in Sources */,
 				D5A084D92DAFD84000332690 /* PenData.swift in Sources */,
@@ -1278,6 +1289,7 @@
 				D57566272DB9257400D95E3F /* PenFormView.swift in Sources */,
 				D5A084F02DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
 				D5A084F12DAFD88A00332690 /* PathParser.swift in Sources */,
+				D59996072DC180EA00130770 /* Defaultable.swift in Sources */,
 				D5A084F22DAFD88A00332690 /* SVGParser.swift in Sources */,
 				D5A084F32DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
 				D509C0A32DBC4A20009B0233 /* PaperSectionView.swift in Sources */,

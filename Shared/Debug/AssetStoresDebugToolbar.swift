@@ -22,59 +22,125 @@ struct AssetStoresDebugToolbar: View {
                     .progressViewStyle(.circular)
             }
 
-            Button("🔎 SVG Migration Test") {
+            // Button mit explizitem ButtonStyle und klar definiertem Touch-Bereich
+            Button(action: {
                 Task {
                     await SVGMigrationTester.performTest()
                 }
+            }) {
+                Text("SVG Migration Test")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
             }
-            
-            Button("🧹 SVG Migration Reset") {
+            .buttonStyle(PlainButtonStyle()) // Verhindert unerwünschte Standard-Button-Effekte
+            .contentShape(Rectangle()) // Stellt sicher, dass der gesamte Button-Bereich interaktiv ist
+
+            Button(action: {
                 Task {
                     await SVGMigrationTester.resetTestSVGs()
                 }
+            }) {
+                Text("SVG Migration Reset")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
             }
-            
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
+
             Divider()
-            
-            Button("🔄 UserDefaults zurücksetzen") {
+
+            Button(action: {
                 performResetUserDefaults()
                 showSuccess("UserDefaults erfolgreich zurückgesetzt ✅")
+            }) {
+                Text("UserDefaults zurücksetzen")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
             }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
 
-            Button("↩️ Migration zurücksetzen") {
+            Button(action: {
                 performRollbackMigrations()
                 showSuccess("Migration erfolgreich zurückgesetzt ✅")
+            }) {
+                Text("Migration zurücksetzen")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
             }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
 
-            Button("🗑️ Alle gespeicherten Daten löschen") {
+            Button(action: {
                 Task {
                     await AssetManagerHelper.deleteAllData(in: assetStores)
                     assetStores.resetAllStoresInMemory()
                     showSuccess("Alle gespeicherten Daten erfolgreich gelöscht ✅")
                 }
+            }) {
+                Text("Alle gespeicherten Daten löschen")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
             }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
 
             Toggle("Reset beim nächsten Start erzwingen", isOn: $resetOnNextLaunch)
+                .padding(.horizontal)
 
             Divider()
 
-            Button("🧹 Soft Reset (nur RAM)") {
+            Button(action: {
                 AssetManagerHelper.resetAllInMemory(in: assetStores)
+            }) {
+                Text("Soft Reset (nur RAM)")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
             }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
 
-            Button("📦 Standarddaten wiederherstellen") {
+            Button(action: {
                 Task {
                     await run {
                         await assetStores.manager.restoreDefaultResourcesIfNeeded()
                     }
                 }
+            }) {
+                Text("Standarddaten wiederherstellen")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
             }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
 
             Divider()
 
-            Button("📝 Zusammenfassung drucken") {
+            Button(action: {
                 AssetManagerHelper.printSummary(of: assetStores)
+            }) {
+                Text("📝 Zusammenfassung drucken")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(8)
             }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
         }
         .padding()
         .alert(successMessage, isPresented: $showSuccessAlert) {

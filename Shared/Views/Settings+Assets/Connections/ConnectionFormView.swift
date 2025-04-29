@@ -206,8 +206,10 @@ struct ConnectionFormView: View {
     private func connectAndSave() {
         switch data.typ {
         case .bluetooth: if let p = selectedBluetooth { bluetoothManager.connect(to: p.peripheral) }
+
+        case .usb:
 #if os(macOS)
-        case .usb: if let d = selectedUSB { scanner.connect(to: d) }
+            if let d = selectedUSB { scanner.connect(to: d) }
 #endif
         }
         save()

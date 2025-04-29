@@ -145,6 +145,7 @@ class AssetStoreManager {
         for store in stores {
             guard let genericStore = store as? GenericStoreProtocol else { continue }
             if genericStore.resourceType == .user {
+                appLog(.info, "\(store.itemCount) in \(store.directoryName)! - restore")
                 if store.itemCount == 0 {
                     do {
                         try await store.restoreDefaults()
@@ -205,7 +206,7 @@ class AssetStoreManager {
             await store.loadItems()
         }
         
-        print(deleteFiles ? "🔁 Hard Reset abgeschlossen!" : "🔁 Soft Reset abgeschlossen!")
+        appLog(.error, deleteFiles ? "🔁 Hard Reset abgeschlossen!" : "🔁 Soft Reset abgeschlossen!")
     }
     
     private func deleteAllFiles() {

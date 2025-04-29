@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<key>UTExportedTypeDeclarations</key>
-<array>
-    <dict>
-        <key>UTTypeIdentifier</key>
-        <string>de.nichte.plotjob</string>
-        <key>UTTypeTagSpecification</key>
+    <key>CFBundleIdentifier</key>
+    <string>de.nichte.Robart</string>
+    <key>UIFileSharingEnabled</key>
+    <true/>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    <key>UTExportedTypeDeclarations</key>
+    <array>
         <dict>
-            <key>public.filename-extension</key>
+            <key>UTTypeIdentifier</key>
+            <string>de.nichte.plotjob</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <array>
+                    <string>plotjob</string>
+                </array>
+                <key>public.mime-type</key>
+                <string>application/x-plotjob</string>
+            </dict>
+            <key>UTTypeDescription</key>
+            <string>Plot Job</string>
+            <key>UTTypeConformsTo</key>
             <array>
-                <string>plotjob</string>
+                <string>public.data</string>
             </array>
-            <key>public.mime-type</key>
-            <string>application/x-plotjob</string>
+            <key>com.apple.developer.icloud-services</key>
+            <array>
+                <string>CloudDocuments</string>
+            </array>
         </dict>
-        <key>UTTypeDescription</key>
-        <string>Plot Job</string>
-        <key>UTTypeConformsTo</key>
-        <array>
-            <string>public.data</string>
-        </array>
-        <key>com.apple.developer.icloud-services</key>
-		<array>
-    		<string>CloudDocuments</string>
-		</array>
-    </dict>
-</array>
+    </array>
 </dict>
 </plist>

@@ -8,7 +8,7 @@
 // Units.swift
 import Foundation
 
-struct Units: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
+struct Units: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defaultable  {
     
     var id: UUID
     var name: String
