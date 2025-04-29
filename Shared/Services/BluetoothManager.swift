@@ -55,7 +55,10 @@ struct DiscoveredPeripheral: Identifiable, Hashable {
 }
 
 class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-
+    
+    private var scanWorkItem: DispatchWorkItem?
+    private let defaultScanDuration: TimeInterval = 5.0
+    
     var connectedPeripheralID: UUID? {
         return hm10Peripheral?.identifier
     }
@@ -110,28 +113,35 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         DispatchQueue.main.async { self.rssi = RSSI }
     }
     
-    func startScan(filter: Bool? = nil) {
-        guard let centralManager = centralManager, centralManager.state == .poweredOn else {
-            appLog(.info, "❌ Bluetooth nicht bereit")
-            return
-        }
+    // startScan(filter:duration:) ersetzen
+    func startScan(filter: Bool? = nil, duration: TimeInterval? = nil) {
+        guard let central = centralManager, central.state == .poweredOn else { return }
 
         filterByService = filter ?? filterByService
         peripherals.removeAll()
-        centralManager.stopScan()
+
+        // 1) evtl. laufenden Scan + Timer beenden
+        central.stopScan()
+        scanWorkItem?.cancel()
+
         isScanning = true
 
+        // 2) Scan starten
         if filterByService {
-            centralManager.scanForPeripherals(withServices: [hm10ServiceUUID], options: nil)
+            central.scanForPeripherals(withServices: [hm10ServiceUUID], options: nil)
         } else {
-            centralManager.scanForPeripherals(withServices: nil, options: nil)
+            central.scanForPeripherals(withServices: nil, options: nil)
         }
         lastScanDate = Date()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-            self.centralManager.stopScan()
-            self.isScanning = false
+        // 3) Timer zum automatischen Stoppen
+        let work = DispatchWorkItem { [weak self] in
+            self?.centralManager.stopScan()
+            self?.isScanning = false
+            self?.scanWorkItem = nil
         }
+        scanWorkItem = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + (duration ?? defaultScanDuration), execute: work)
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
@@ -212,6 +222,13 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         peripheral.writeValue(data, for: characteristic, type: .withResponse)
     }
 
+    func cancelScan() {
+        centralManager.stopScan()
+        scanWorkItem?.cancel()
+        scanWorkItem = nil
+        isScanning = false
+    }
+    
     func disconnect() {
         if let peripheral = hm10Peripheral {
             centralManager.cancelPeripheralConnection(peripheral)

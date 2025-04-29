@@ -6,10 +6,15 @@
 //
 
 // ConnectionFormView.swift
+// MARK: - ConnectionData.swift (aktualisiert)
+import Foundation
+import SwiftUI
+
+// MARK: - ConnectionFormView.swift (aktualisiert)
 import SwiftUI
 
 struct ConnectionFormView: View {
-    // MARK: - Bindings & Dependencies
+    // MARK: Bindings & Services
     @Binding var data: ConnectionData
     @EnvironmentObject var store: GenericStore<ConnectionData>
     @EnvironmentObject var bluetoothManager: BluetoothManager
@@ -17,60 +22,56 @@ struct ConnectionFormView: View {
     @EnvironmentObject var scanner: USBSerialScanner
     #endif
 
-    // MARK: - UI-State
-    @State private var selectedBluetoothPeripheral: DiscoveredPeripheral?
-    @State private var selectedUSBDevice: USBSerialDevice?
-    @State private var isScanningBluetooth = false
-    @State private var isScanningUSB       = false
+    // MARK: Local UI‑State
+    @State private var selectedBluetooth: DiscoveredPeripheral?
+    #if os(macOS)
+    @State private var selectedUSB: USBSerialDevice?
+    #endif
+    @State private var isScanningBT  = false
+    @State private var isScanningUSB = false
 
-    // MARK: - View
+    // MARK: View
     var body: some View {
         Form {
             detailsSection
             typeSection
             deviceSection
-            saveAndConnectButton
+            Button("Speichern und verbinden", action: connectAndSave)
         }
         .platformFormPadding()
         .navigationTitle("Verbindung erstellen")
-        .onAppear            { syncStateWithData() }
-        .onChange(of: data.id) { _ in syncStateWithData() }
-        .onReceive(store.$refreshTrigger) { _ in /* Re-Render */ }
+        .onAppear              { syncState() }
+        .onChange(of: data.id) { syncState() }
+        .onDisappear { bluetoothManager.cancelScan() }   // verhindert Dauerscan beim Verlassen
     }
 
-    // MARK: - Sections --------------------------------------------------------
-
+    // MARK: Details ---------------------------------------------------------
     private var detailsSection: some View {
         Section {
             TextField("Name", text: $data.name)
                 .platformTextFieldModifiers()
-                .onChange(of: data.name) { _ in save() }
+                .onChange(of: data.name) { save() }
 
             TextEditor(text: $data.description)
                 .frame(minHeight: 100)
-                .onChange(of: data.description) { _ in save() }
-                .overlay(RoundedRectangle(cornerRadius: 6)
-                    .stroke(Color.gray.opacity(0.2)))
-        } header: {
-            Text("Details")
-        }
+                .onChange(of: data.description) { save() }
+                .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.gray.opacity(0.2)))
+        } header: { Text("Details") }
     }
 
+    // MARK: Verbindungstyp --------------------------------------------------
     private var typeSection: some View {
-        Section(header: Text("Typ")) {
+        Section {
             Picker("Typ", selection: $data.typ) {
                 Text("Bluetooth").tag(ConnectionType.bluetooth)
                 Text("USB").tag(ConnectionType.usb)
             }
             .pickerStyle(.segmented)
-            .onChange(of: data.typ) { _ in
-                clearOppositeFields()
-                save()
-                syncStateWithData()
-            }
-        }
+            .onChange(of: data.typ) { clearOppositeFields(); save(); syncState() }
+        } header: { Text("Typ") }
     }
 
+    // MARK: Geräte‑Picker ---------------------------------------------------
     private var deviceSection: some View {
         Section(header: Text("Gerät auswählen")) {
             if data.typ == .bluetooth {
@@ -78,207 +79,139 @@ struct ConnectionFormView: View {
             } else {
                 #if os(macOS)
                 usbPicker
+                #else
+                EmptyView()
                 #endif
             }
         }
     }
 
-    private var saveAndConnectButton: some View {
-        Button("Speichern und verbinden") {
-            connectAndSave()
-        }
-    }
-
-    // MARK: - Bluetooth Picker -------------------------------------------------
-
+    // MARK: Bluetooth Picker
     private var bluetoothPicker: some View {
         Group {
-            if isScanningBluetooth {
-                ProgressView("Suche nach Bluetooth-Geräten…")
+            if isScanningBT {
+                ProgressView("Suche nach Bluetooth‑Geräten …")
             } else {
-                Picker("Bluetooth", selection: $selectedBluetoothPeripheral) {
-                    bluetoothOptions()
+                Picker("Bluetooth", selection: $selectedBluetooth) {
+                    btOptions()
                 }
-                .onAppear { prepareBluetooth() }
-                .onChange(of: selectedBluetoothPeripheral) { _ in
-                    updateBluetoothSelection()
-                }
+                .onAppear { ensureBTScan() }
+                .onChange(of: selectedBluetooth) {  writeBTSelection() }
             }
         }
     }
 
-    // MARK: - USB Picker (macOS) ----------------------------------------------
+    // MARK: USB Picker (macOS)
     #if os(macOS)
     private var usbPicker: some View {
         Group {
             if isScanningUSB {
-                ProgressView("Suche nach USB-Geräten…")
+                ProgressView("Suche nach USB‑Geräten …")
             } else {
-                Picker("USB", selection: $selectedUSBDevice) {
+                Picker("USB", selection: $selectedUSB) {
                     usbOptions()
                 }
-                .onAppear { prepareUSB() }
-                .onChange(of: selectedUSBDevice) { _ in
-                    updateUSBSelection()
-                }
+                .onAppear { ensureUSBScan() }
+                .onChange(of: selectedUSB) { writeUSBSelection() }
             }
         }
     }
     #endif
 
-    // MARK: - Picker-Optionen --------------------------------------------------
-
-    @ViewBuilder
-    private func bluetoothOptions() -> some View {
-        let savedName = data.name
-        if !savedName.isEmpty,
-           !bluetoothManager.peripherals.contains(where: { $0.peripheral.name == savedName }) {
-            Text("🔒 \(savedName) (gespeichert)")
-                .tag(nil as DiscoveredPeripheral?)
+    // MARK: Picker Optionen -------------------------------------------------
+    @ViewBuilder private func btOptions() -> some View {
+        // offline placeholder
+        if let uuid = data.btPeripheralUUID, let name = data.btPeripheralName,
+           !bluetoothManager.peripherals.contains(where: { $0.peripheral.identifier == uuid }) {
+            Text("🔒 \(name) (offline)").tag(nil as DiscoveredPeripheral?)
         }
-
         ForEach(bluetoothManager.peripherals) { p in
-            Text(p.peripheral.name ?? "Unbekannt")
-                .tag(p as DiscoveredPeripheral?)
+            Text(p.peripheral.name ?? "Unbekannt").tag(p as DiscoveredPeripheral?)
         }
-
         Text("Kein Gerät auswählen").tag(nil as DiscoveredPeripheral?)
     }
 
     #if os(macOS)
-    @ViewBuilder
-    private func usbOptions() -> some View {
-        if let vid = data.usbVendorID,
-           let pid = data.usbProductID,
-           !scanner.devices.contains(where: { $0.vendorID == vid && $0.productID == pid }) {
-            Text("🔒 \(data.usbPath ?? "Offline-USB")")
-                .tag(nil as USBSerialDevice?)
+    @ViewBuilder private func usbOptions() -> some View {
+        if let sel = selectedUSB, !scanner.devices.contains(where: { $0.path == sel.path }) {
+            Text("🔒 \(sel.name)").tag(sel as USBSerialDevice?)
         }
-
-        ForEach(scanner.devices) { d in
-            Text(d.name).tag(d as USBSerialDevice?)
-        }
-
+        ForEach(scanner.devices) { d in Text(d.name).tag(d as USBSerialDevice?) }
         Text("Kein Gerät auswählen").tag(nil as USBSerialDevice?)
     }
     #endif
 
-    // MARK: - Sync & Helper ----------------------------------------------------
-
-    /// Gleicht lokale Picker-States mit gespeicherten ConnectionData ab.
-    private func syncStateWithData() {
-        // Bluetooth
+    // MARK: Sync ------------------------------------------------------------
+    private func syncState() {
+        // BT
         if let uuid = data.btPeripheralUUID,
            let match = bluetoothManager.peripherals.first(where: { $0.peripheral.identifier == uuid }) {
-            selectedBluetoothPeripheral = match
-        } else {
-            selectedBluetoothPeripheral = nil
-        }
+            selectedBluetooth = match
+        } else { selectedBluetooth = nil }
 
         // USB
         #if os(macOS)
-        if let vid = data.usbVendorID,
-           let pid = data.usbProductID,
-           let match = scanner.devices.first(where: { $0.vendorID == vid && $0.productID == pid }) {
-            selectedUSBDevice = match
-        } else {
-            selectedUSBDevice = nil
-        }
+        if let path = data.usbPath {
+            if let dev = scanner.devices.first(where: { $0.path == path }) {
+                selectedUSB = dev
+            } else {
+                selectedUSB = USBSerialDevice(path: path,
+                                             vendorID: data.usbVendorID,
+                                             productID: data.usbProductID,
+                                             description: data.usbName ?? "Offline‑USB")
+            }
+        } else { selectedUSB = nil }
         #endif
     }
 
-    /// Entfernt nicht benötigte Felder je nach aktivem Verbindungstyp.
     private func clearOppositeFields() {
         switch data.typ {
         case .bluetooth:
-            data.usbVendorID  = nil
-            data.usbProductID = nil
-            data.usbPath      = nil
+            data.usbVendorID = nil; data.usbProductID = nil; data.usbPath = nil; data.usbName = nil; data.usbDesc = nil
         case .usb:
-            data.btPeripheralUUID = nil
-            data.btServiceUUID    = nil
+            data.btPeripheralUUID = nil; data.btPeripheralName = nil; data.btServiceUUID = nil
         }
     }
 
-    // MARK: - Auswahl-Updates --------------------------------------------------
-
-    private func updateBluetoothSelection() {
-        if let p = selectedBluetoothPeripheral {
-            data.name             = p.peripheral.name ?? "Unbekannt"
-            data.btPeripheralUUID = p.peripheral.identifier
-        } else {
-            data.btPeripheralUUID = nil
-        }
+    // MARK: Write Selection -------------------------------------------------
+    private func writeBTSelection() {
+        guard let p = selectedBluetooth else { return }
+        data.btPeripheralUUID  = p.peripheral.identifier
+        data.btPeripheralName  = p.peripheral.name
         save()
     }
 
     #if os(macOS)
-    private func updateUSBSelection() {
-        if let d = selectedUSBDevice {
-            data.name         = d.description
-            data.usbVendorID  = d.vendorID
-            data.usbProductID = d.productID
-            data.usbPath      = d.path
-        } else {
-            data.usbVendorID = nil
-            data.usbProductID = nil
-            data.usbPath = nil
-        }
+    private func writeUSBSelection() {
+        guard let d = selectedUSB else { return }
+        data.usbPath      = d.path
+        data.usbVendorID  = d.vendorID
+        data.usbProductID = d.productID
+        data.usbName      = d.name
+        data.usbDesc      = d.description
         save()
     }
     #endif
 
-    // MARK: - Scan-Trigger -----------------------------------------------------
-
-    private func prepareBluetooth() {
-        if bluetoothManager.peripherals.isEmpty { startBluetoothScan() }
-    }
+    // MARK: Scan Trigger ----------------------------------------------------
+    private func ensureBTScan() { if bluetoothManager.peripherals.isEmpty { startBTScan() } }
+    private func startBTScan() { isScanningBT = true; bluetoothManager.startScan(filter: true); DispatchQueue.main.asyncAfter(deadline: .now() + 5) { isScanningBT = false } }
 
     #if os(macOS)
-    private func prepareUSB() {
-        if scanner.devices.isEmpty { startUSBScan() }
-    }
+    private func ensureUSBScan() { if scanner.devices.isEmpty { startUSBScan() } }
+    private func startUSBScan() { isScanningUSB = true; scanner.scanSerialDevices(); DispatchQueue.main.asyncAfter(deadline: .now() + 5) { isScanningUSB = false } }
     #endif
 
-    private func startBluetoothScan() {
-        isScanningBluetooth = true
-        bluetoothManager.startScan(filter: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            isScanningBluetooth = false
-        }
-    }
-
-    #if os(macOS)
-    private func startUSBScan() {
-        isScanningUSB = true
-        scanner.scanSerialDevices()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            isScanningUSB = false
-        }
-    }
-    #endif
-
-    // MARK: - Verbinden & Speichern -------------------------------------------
-
+    // MARK: Verbinden & Speichern ------------------------------------------
     private func connectAndSave() {
         switch data.typ {
-        case .bluetooth:
-            if let p = selectedBluetoothPeripheral {
-                bluetoothManager.connect(to: p.peripheral)
-            }
-        case .usb:
-            #if os(macOS)
-            if let d = selectedUSBDevice {
-                scanner.connect(to: d)
-            }
-            #endif
+        case .bluetooth: if let p = selectedBluetooth { bluetoothManager.connect(to: p.peripheral) }
+#if os(macOS)
+        case .usb: if let d = selectedUSB { scanner.connect(to: d) }
+#endif
         }
         save()
     }
 
-    private func save() {
-        Task {
-            await store.save(item: data, fileName: data.id.uuidString)
-        }
-    }
+    private func save() { Task { await store.save(item: data, fileName: data.id.uuidString) } }
 }

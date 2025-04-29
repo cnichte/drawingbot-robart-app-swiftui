@@ -157,7 +157,8 @@ where T: Codable & Identifiable, T.ID: Hashable {
                 appLog(.info, "📂 Verzeichnis wurde automatisch nacherzeugt: \(directoryName)")
             }
             
-            try data.write(to: path)
+            try data.write(to: path, options: [.atomic])  // <- .atomic erzwingt Trunkierung
+            // .atomic schreibt zuerst in eine Temp-Datei und ersetzt danach die alte → keine Reste mehr.
             
             await MainActor.run {
                 if let index = self.items.firstIndex(where: { $0.id == item.id }) {

@@ -184,6 +184,7 @@ struct DeviceListView: View {
                 startUSBScan()
             }
         }
+        .onDisappear { bluetoothManager.cancelScan() }   // verhindert Dauerscan beim Verlassen
     }
 #endif
     
