@@ -5,6 +5,9 @@
 //  Created by Carsten Nichte on 28.04.25.
 //
 
+// TODO: Der AutoConnectService soll ja feststellen ob es ein passendes Verbindungsdokument gibt, und dann die Verbindung automatisch herstellen.
+//  TODO:  merken -> neu oder bestehende aktualisiern - Legt Doc an mit name vom path
+
 // AutoConnectService.swift
 import Foundation
 

@@ -148,10 +148,10 @@ where T: Codable & Identifiable, T.ID: Hashable {
     // MARK: - Speichern
     func save(item: T, fileName: String) async {
         do {
-            let data = try JSONEncoder().encode(item)
+            let data = try JSONEncoder().encode(item)  // Achte darauf, dass nil-Werte korrekt behandelt werden
             let path = directoryURL.appendingPathComponent("\(fileName).json")
             
-            // Schutz: Verzeichnis existiert?
+            // Verzeichnis existiert?
             if !fileManager.fileExists(atPath: directoryURL.path) {
                 try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
                 appLog(.info, "📂 Verzeichnis wurde automatisch nacherzeugt: \(directoryName)")

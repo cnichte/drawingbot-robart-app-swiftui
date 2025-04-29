@@ -33,7 +33,11 @@ class USBSerialScanner: ObservableObject {
     @Published var isScanning: Bool = false
     @Published var lastScanDate: Date?
 
+    @Published var connectedDevice: USBSerialDevice?
+    @Published var isPortOpen: Bool = false
+    
     var currentPort: ORSSerialPort?
+    let defaultBaudRate: Int = 9600
     
     func scanSerialDevices() {
         isScanning = true
@@ -76,11 +80,20 @@ class USBSerialScanner: ObservableObject {
         connect(to: device)
     }
     
-    public func connect(to device: USBSerialDevice) {
+    func connect(to device: USBSerialDevice) {
         let port = ORSSerialPort(path: device.path)
-        port?.baudRate = 9600
-        port?.open()
-        self.currentPort = port
+        port?.baudRate = defaultBaudRate as NSNumber
+        guard ((port?.open()) != nil) == true else { return }
+        currentPort      = port
+        connectedDevice  = device
+        isPortOpen       = true
+    }
+    
+    func disconnect() {
+        currentPort?.close()
+        currentPort     = nil
+        connectedDevice = nil
+        isPortOpen      = false
     }
     
     static func getVendorProductID(for bsdPath: String) -> (Int?, Int?) {

@@ -42,7 +42,7 @@ struct DiscoveredPeripheral: Identifiable, Hashable {
     let id = UUID()
     let peripheral: CBPeripheral
     let rssi: NSNumber
-
+    
     // Implementiere Hashable
     func hash(into hasher: inout Hasher) {
         hasher.combine(peripheral.identifier)
@@ -81,6 +81,8 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     let hm10ServiceUUID = CBUUID(string: "FFE0")
     let hm10CharUUID = CBUUID(string: "FFE1")
 
+    private var rssiTimer: Timer?
+    
     override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: nil)
@@ -95,6 +97,19 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         }
     }
 
+    private func startRSSIMonitoring() {
+        rssiTimer?.invalidate()
+        rssiTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
+            self?.hm10Peripheral?.readRSSI()
+        }
+    }
+    
+    // RSSIMonitoring Delegate-Callback
+    func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
+        guard error == nil else { return }
+        DispatchQueue.main.async { self.rssi = RSSI }
+    }
+    
     func startScan(filter: Bool? = nil) {
         guard let centralManager = centralManager, centralManager.state == .poweredOn else {
             appLog(.info, "❌ Bluetooth nicht bereit")
@@ -155,6 +170,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         isConnected = true
         peripheral.readRSSI()
         peripheral.discoverServices([hm10ServiceUUID])
+        startRSSIMonitoring()
     }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
@@ -165,6 +181,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
 
         if let name = peripheral.name, let match = AssetStores.shared.connectionsStore.items.first(where: { $0.name == name }) {
             ConnectionManager.shared.disconnect(connection: match)
+            rssiTimer?.invalidate()
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
