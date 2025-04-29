@@ -14,8 +14,8 @@ enum JobListViewMode: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .list: return "Liste"
-        case .grid: return "Gitter"
+        case .list: return "List" // List
+        case .grid: return "Grid" // Grid
         }
     }
 

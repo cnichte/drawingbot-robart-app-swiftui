@@ -52,7 +52,7 @@ struct JobListView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Jobs")
+            // .navigationTitle("Jobs")
             .navigationDestination(item: $selectedJob) { job in
                 JobPreviewView(
                     currentJob: binding(for: job),
@@ -69,9 +69,9 @@ struct JobListView: View {
 
     private var menuSection: some View {
         Menubar(
-            title: "",
+            title: "Jobs",
             systemImage: "",
-            toolbar: {
+            toolbar: { // TODO: on macOS and iPad okay - on iPhone to much spacce
                 HStack(spacing: 12) {
                     Button {
                         Task {
@@ -80,14 +80,14 @@ struct JobListView: View {
                             selectedJob = newJob
                         }
                     } label: {
-                        Label("Neu", systemImage: "plus")
+                        Label("Add", systemImage: "plus")
                     }
                     .buttonStyle(.borderedProminent)
 
                     Toggle("D&D Copy", isOn: $isCopyMode)
                         .toggleStyle(.switch)
                         .labelsHidden()
-
+                    
                     Picker("", selection: $viewMode) {
                         ForEach(JobListViewMode.allCases, id: \.self) { mode in
                             Label(mode.label, systemImage: mode.systemImage)
@@ -102,7 +102,7 @@ struct JobListView: View {
                         .frame(maxWidth: 250)
 
                     #if !os(macOS)
-                    Button("\u{1F4C1}") {
+                    Button("") {
                         showProjectManager = true
                     }
                     .buttonStyle(.bordered)
