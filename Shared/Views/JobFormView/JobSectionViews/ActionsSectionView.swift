@@ -7,8 +7,8 @@
 import SwiftUI
 
 struct ActionsSectionView: View {
-    @Binding var currentJob: PlotJobData
-    @EnvironmentObject var store: GenericStore<PlotJobData>
+    @Binding var currentJob: JobData
+    @EnvironmentObject var store: GenericStore<JobData>
 
     var body: some View {
         CollapsibleSection(title: "Actions", systemImage: "figure.run.circle", toolbar: { EmptyView() }) {

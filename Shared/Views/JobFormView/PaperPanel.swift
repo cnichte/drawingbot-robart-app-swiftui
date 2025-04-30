@@ -13,7 +13,7 @@ struct PaperPanel: View {
     @Binding var zoom: Double
     @Binding var pitch: Double
     @Binding var origin: CGPoint
-    @Binding var job: PlotJobData
+    @Binding var job: JobData
 
     var body: some View {
         GeometryReader { geo in

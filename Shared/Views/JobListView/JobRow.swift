@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct JobRow: View {
-    let job: PlotJobData
-    let onSelect: (PlotJobData) -> Void
-    let onDelete: (PlotJobData) -> Void
+    let job: JobData
+    let onSelect: (JobData) -> Void
+    let onDelete: (JobData) -> Void
 
     var body: some View {
         HStack {

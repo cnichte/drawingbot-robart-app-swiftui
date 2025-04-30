@@ -12,10 +12,10 @@ import UniformTypeIdentifiers
 extension View {
     func applyCrossPlatformDropHandling(
         isTargeted: Binding<Bool>,
-        onDrop: @escaping ([PlotJobData], CGPoint) -> Bool
+        onDrop: @escaping ([JobData], CGPoint) -> Bool
     ) -> some View {
         #if os(macOS)
-        self.dropDestination(for: PlotJobData.self) { items, location in
+        self.dropDestination(for: JobData.self) { items, location in
             onDrop(items, location)
         } isTargeted: { active in
             isTargeted.wrappedValue = active
@@ -34,7 +34,7 @@ extension View {
 
 private func handleProviders(
     _ providers: [NSItemProvider],
-    onDrop: @escaping ([PlotJobData], CGPoint) -> Bool
+    onDrop: @escaping ([JobData], CGPoint) -> Bool
 ) -> Bool {
     var found = false
 
@@ -42,14 +42,14 @@ private func handleProviders(
         if provider.hasItemConformingToTypeIdentifier(UTType.plotJob.identifier) {
             found = true
 
-            _ = provider.loadTransferable(type: PlotJobData.self) { (result: Result<PlotJobData, Error>) in
+            _ = provider.loadTransferable(type: JobData.self) { (result: Result<JobData, Error>) in
                 switch result {
                 case .success(let job):
                     DispatchQueue.main.async {
                         _ = onDrop([job], .zero)
                     }
                 case .failure(let error):
-                    appLog(.info, "Fehler beim Laden von PlotJobData: \(error)")
+                    appLog(.info, "Fehler beim Laden von JobData: \(error)")
                 }
             }
         }

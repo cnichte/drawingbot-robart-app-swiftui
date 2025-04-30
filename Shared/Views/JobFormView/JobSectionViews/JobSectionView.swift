@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct JobSectionView: View {
-    @Binding var currentJob: PlotJobData
-    // @EnvironmentObject var jobStore: GenericStore<PlotJobData>
+    @Binding var currentJob: JobData
+    // @EnvironmentObject var jobStore: GenericStore<JobData>
 
     var body: some View {
         CollapsibleSection(title: "Job", systemImage: "doc.plaintext", toolbar: { EmptyView() }) {

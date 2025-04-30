@@ -10,8 +10,8 @@ import SwiftUI
 
 struct JobSummaryView: View {
     @Binding var goToStep: Int
-    @Binding var currentJob: PlotJobData
-    @EnvironmentObject var store: GenericStore<PlotJobData>
+    @Binding var currentJob: JobData
+    @EnvironmentObject var store: GenericStore<JobData>
     
     private let paperWidth = 210.0
     private let paperHeight = 297.0
@@ -26,7 +26,7 @@ struct JobSummaryView: View {
     @State private var selectedElement: ParserListItem? = nil
     @State private var elements: [ParserListItem] = []  // Sammlung von ParserListItem-Objekten
     
-    init(goToStep: Binding<Int>, currentJob: Binding<PlotJobData>) {
+    init(goToStep: Binding<Int>, currentJob: Binding<JobData>) {
         _goToStep = goToStep
         _currentJob = currentJob
         

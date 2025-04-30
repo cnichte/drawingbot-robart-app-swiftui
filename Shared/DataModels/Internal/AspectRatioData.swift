@@ -1,11 +1,11 @@
 //
-//  AspectRatio.swift
+//  AspectRatioData.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 26.04.25.
 //
 
-// AspectRatio.swift
+// AspectRatioData.swift
 import Foundation
 
 struct AspectRatioData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {

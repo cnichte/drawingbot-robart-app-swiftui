@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProjectManagerView: View {
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
-    @EnvironmentObject var jobStore: GenericStore<PlotJobData>
+    @EnvironmentObject var jobStore: GenericStore<JobData>
 
     var body: some View {
         ItemManagerView<ProjectData, ProjectFormView>(

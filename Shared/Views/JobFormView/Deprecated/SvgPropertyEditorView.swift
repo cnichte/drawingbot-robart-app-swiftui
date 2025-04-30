@@ -9,8 +9,8 @@
 import SwiftUI
 
 public struct SvgPropertyEditorView: View {
-    @Binding var currentJob: PlotJobData
-    @EnvironmentObject var store: GenericStore<PlotJobData>  // Verwendung von GenericStore
+    @Binding var currentJob: JobData
+    @EnvironmentObject var store: GenericStore<JobData>  // Verwendung von GenericStore
 
     // Zugriff auf Papierformat-Vorlagen aus Settings
     @EnvironmentObject var settingsModel: GenericStore<SettingsData>  // Verwendung von GenericStore für SettingsData
@@ -21,7 +21,7 @@ public struct SvgPropertyEditorView: View {
     @State private var customHeight: Double = 297.0
 
     // interner Initializer
-    internal init(currentJob: Binding<PlotJobData>) {
+    internal init(currentJob: Binding<JobData>) {
         _currentJob = currentJob
         _selectedPaper = State(initialValue: currentJob.wrappedValue.paper)
         _customWidth = State(initialValue: currentJob.wrappedValue.paper.paperFormat.width)

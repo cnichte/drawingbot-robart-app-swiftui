@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct PaperSectionView: View {
-    @Binding var currentJob: PlotJobData
+    @Binding var currentJob: JobData
     @EnvironmentObject var assetStores: AssetStores
     var onUpdate: () -> Void
 

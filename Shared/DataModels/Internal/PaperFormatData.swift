@@ -1,5 +1,5 @@
 //
-//  PaperFormat.swift
+//  PaperFormatData.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 24.04.25.
@@ -34,7 +34,7 @@ import Foundation
  DIN B10: 31 x 44 mm
  */
 
-// PaperFormat.swift
+// PaperFormatData.swift
 import Foundation
 
 struct PaperFormatData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {

@@ -15,12 +15,12 @@ extension Bundle {
         if resourcePaths.isEmpty {
             appLog(.info, "⚠️ Keine JSON-Dateien im Bundle gefunden.")
         } else {
-            appLog(.info, "\n🔎 Gefundene JSON-Dateien im Bundle:")
+            appLog(.info, "🔎 Gefundene JSON-Dateien im Bundle:")
             for path in resourcePaths {
                 let fileName = (path as NSString).lastPathComponent
                 appLog(.info, "✅ \(fileName)")
             }
-            appLog(.info, "📦 Insgesamt \(resourcePaths.count) JSON-Datei(en) gefunden.\n")
+            appLog(.info, "📦 Insgesamt \(resourcePaths.count) JSON-Datei(en) gefunden.")
         }
 
         return resourcePaths.map { ($0 as NSString).lastPathComponent }

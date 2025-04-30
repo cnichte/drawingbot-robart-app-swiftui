@@ -86,14 +86,14 @@ class AssetStores: ObservableObject {
     @Published var connectionsStore: GenericStore<ConnectionData>
     @Published var machineStore: GenericStore<MachineData>
     @Published var projectStore: GenericStore<ProjectData>
-    @Published var plotJobStore: GenericStore<PlotJobData>
+    @Published var plotJobStore: GenericStore<JobData>
     @Published var pensStore: GenericStore<PenData>
     @Published var paperStore: GenericStore<PaperData>
 
     // MARK: - System Stores
-    @Published var paperFormatsStore: GenericStore<PaperFormat>
-    @Published var aspectRatiosStore: GenericStore<AspectRatio>
-    @Published var unitsStore: GenericStore<Units>
+    @Published var paperFormatsStore: GenericStore<PaperFormatData>
+    @Published var aspectRatiosStore: GenericStore<AspectRatioData>
+    @Published var unitsStore: GenericStore<UnitsData>
 
     private(set) var storageType: StorageType
     

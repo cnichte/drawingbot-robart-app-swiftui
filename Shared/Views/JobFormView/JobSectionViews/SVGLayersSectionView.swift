@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SVGLayersSectionView: View {
-    @Binding var currentJob: PlotJobData
-    // @EnvironmentObject var jobStore: GenericStore<PlotJobData>
+    @Binding var currentJob: JobData
+    // @EnvironmentObject var jobStore: GenericStore<JobData>
 
     var body: some View {
         CollapsibleSection(title: "SVG Ebenen | Stifte", systemImage: "doc.plaintext", toolbar: { EmptyView() }) {

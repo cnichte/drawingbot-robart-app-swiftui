@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SVGColorsSectionView: View {
-    @Binding var currentJob: PlotJobData
-    // @EnvironmentObject var jobStore: GenericStore<PlotJobData>
+    @Binding var currentJob: JobData
+    // @EnvironmentObject var jobStore: GenericStore<JobData>
 
     var body: some View {
         CollapsibleSection(title: "SVG Farben | Stifte", systemImage: "doc.plaintext", toolbar: { EmptyView() }) {

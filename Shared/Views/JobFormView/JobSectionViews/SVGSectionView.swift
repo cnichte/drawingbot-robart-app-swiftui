@@ -10,11 +10,11 @@ import SwiftUI
 import SVGView
 
 struct SVGSectionView: View {
-    @Binding var currentJob: PlotJobData
+    @Binding var currentJob: JobData
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool
 
-    @EnvironmentObject var store: GenericStore<PlotJobData>
+    @EnvironmentObject var store: GenericStore<JobData>
 
     var body: some View {
         CollapsibleSection(title: "SVG", systemImage: "photo", toolbar: { EmptyView() }) {

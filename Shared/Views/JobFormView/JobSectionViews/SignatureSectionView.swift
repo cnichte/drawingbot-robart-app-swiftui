@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct SignatureSectionView: View {
-    @Binding var currentJob: PlotJobData
+    @Binding var currentJob: JobData
     @State private var showingFileImporter = false
     @State private var signatureFileName: String? = nil  // @State für mutablen Zustand
 
-    @EnvironmentObject var store: GenericStore<PlotJobData>
+    @EnvironmentObject var store: GenericStore<JobData>
 
     var body: some View {
         CollapsibleSection(title: "Signatur", systemImage: "signature") {

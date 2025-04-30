@@ -1,6 +1,6 @@
 //
 //  MachineData.swift
-//  Drawingbot-RobArt
+//  Robart
 //
 //  Created by Carsten Nichte on 15.04.25.
 //

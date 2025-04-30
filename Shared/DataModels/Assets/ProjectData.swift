@@ -1,6 +1,6 @@
 //
 //  ProjectData.swift
-//  Drawingbot-RobArt
+//  RobArt
 //
 //  Created by Carsten Nichte on 15.04.25.
 //
@@ -12,13 +12,13 @@ struct ProjectData: Codable, Identifiable, Hashable, ManageableItem, Defaultable
     var id: UUID
     var name: String
     var description: String
-    var jobs: [PlotJobData] = []
+    var jobs: [JobData] = []
 
     init(
         id: UUID = UUID(),
         name: String,
         description: String = "",
-        jobs: [PlotJobData] = []
+        jobs: [JobData] = []
     ) {
         self.id = id
         self.name = name

@@ -30,12 +30,12 @@ import AppKit
 
 struct JobListView: View {
     @EnvironmentObject var assetStores: AssetStores
-    @EnvironmentObject var jobStore: GenericStore<PlotJobData>
+    @EnvironmentObject var jobStore: GenericStore<JobData>
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
-    @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormat>
+    @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormatData>
 
-    @State private var selectedJob: PlotJobData? = nil
+    @State private var selectedJob: JobData? = nil
     @State private var isCopyMode = false
     @State private var searchText = ""
     @State private var showProjectManager = false
@@ -54,7 +54,7 @@ struct JobListView: View {
             }
             // .navigationTitle("Jobs")
             .navigationDestination(item: $selectedJob) { job in
-                JobPreviewView(
+                JobFormView(
                     currentJob: binding(for: job),
                     selectedJob: $selectedJob
                 )
@@ -75,7 +75,7 @@ struct JobListView: View {
                 HStack(spacing: 12) {
                     Button {
                         Task {
-                            let job = PlotJobData(name: "Neuer Job", paper: .default, selectedMachine: .default)
+                            let job = JobData(name: "Neuer Job", paper: .default, selectedMachine: .default)
                             let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)
                             selectedJob = newJob
                         }
@@ -171,7 +171,7 @@ struct JobListView: View {
 
     // MARK: - Helpers
 
-    private func thumbnail(for job: PlotJobData) -> Image? {
+    private func thumbnail(for job: JobData) -> Image? {
         let url = JobsDataFileManager.shared.previewFolder(for: job.id).appendingPathComponent("thumbnail.png")
         if FileManager.default.fileExists(atPath: url.path) {
             #if os(macOS)
@@ -187,7 +187,7 @@ struct JobListView: View {
         return nil
     }
 
-    private func handleDrop(into project: ProjectData, with droppedItems: [PlotJobData]) -> Bool {
+    private func handleDrop(into project: ProjectData, with droppedItems: [JobData]) -> Bool {
         var updated = project
         var changed = false
 
@@ -209,7 +209,7 @@ struct JobListView: View {
         return true
     }
 
-    private func handleUnassign(jobs: [PlotJobData]) -> Bool {
+    private func handleUnassign(jobs: [JobData]) -> Bool {
         if !isCopyMode {
             for job in jobs {
                 removeJobFromAllProjects(job)
@@ -218,7 +218,7 @@ struct JobListView: View {
         return true
     }
 
-    private func removeJobFromAllProjects(_ job: PlotJobData) {
+    private func removeJobFromAllProjects(_ job: JobData) {
         for project in projectStore.items {
             if project.jobs.contains(where: { $0.id == job.id }) {
                 var updated = project
@@ -230,7 +230,7 @@ struct JobListView: View {
         }
     }
 
-    private func binding(for job: PlotJobData) -> Binding<PlotJobData> {
+    private func binding(for job: JobData) -> Binding<JobData> {
         guard let index = jobStore.items.firstIndex(where: { $0.id == job.id }) else {
             fatalError("Job nicht gefunden")
         }

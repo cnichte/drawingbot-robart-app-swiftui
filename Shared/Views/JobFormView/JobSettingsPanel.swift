@@ -9,14 +9,14 @@
 import SwiftUI
 
 struct JobSettingsPanel: View {
-    @Binding var currentJob: PlotJobData
+    @Binding var currentJob: JobData
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool
     @Binding var selectedMachine: MachineData?
     
-    @EnvironmentObject var plotJobStore: GenericStore<PlotJobData>
+    @EnvironmentObject var plotJobStore: GenericStore<JobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
-    @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormat>
+    @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormatData>
     
     var body: some View {
         ScrollView {

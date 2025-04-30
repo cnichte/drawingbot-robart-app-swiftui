@@ -11,7 +11,7 @@ import SwiftUI
 struct ProjectFormView: View {
     
     @EnvironmentObject var projectStore: GenericStore<ProjectData>
-    @EnvironmentObject var plotJobStore: GenericStore<PlotJobData>
+    @EnvironmentObject var plotJobStore: GenericStore<JobData>
 
     @Binding var data: ProjectData
     @State private var showJobPicker = false
@@ -112,7 +112,7 @@ struct ProjectFormView: View {
         }
     }
 
-    private func removeJob(_ job: PlotJobData) {
+    private func removeJob(_ job: JobData) {
         data.jobs.removeAll { $0.id == job.id }
         save()
     }

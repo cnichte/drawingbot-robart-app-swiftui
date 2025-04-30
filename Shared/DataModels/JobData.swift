@@ -1,11 +1,11 @@
 //
-//  PlotJob.swift
+//  JobData.swift
 //  Drawingbot-RobArt
 //
 //  Created by Carsten Nichte on 11.04.25.
 //
 
-//  PlotJob.swift
+//  JobData.swift
 import SwiftUI
 import Foundation
 import UniformTypeIdentifiers

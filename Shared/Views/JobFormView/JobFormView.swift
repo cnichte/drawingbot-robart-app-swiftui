@@ -36,12 +36,12 @@ struct JobFormView: View {
     @AppStorage("jobPreview_sidebarVisible") private var isSidebarVisible: Bool = true
     @AppStorage("jobPreview_inspectorVisible") private var isInspectorVisible: Bool = false
     
-    @Binding var currentJob: PlotJobData
-    @Binding var selectedJob: PlotJobData?
+    @Binding var currentJob: JobData
+    @Binding var selectedJob: JobData?
     
-    @EnvironmentObject var plotJobStore: GenericStore<PlotJobData>
+    @EnvironmentObject var plotJobStore: GenericStore<JobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
-    @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormat>
+    @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormatData>
     
     @State private var zoom: Double = 1.0
     @State private var pitch: Double = 0.0
@@ -62,7 +62,7 @@ struct JobFormView: View {
         var id: String { rawValue }
     }
     
-    init(currentJob: Binding<PlotJobData>, selectedJob: Binding<PlotJobData?>) {
+    init(currentJob: Binding<JobData>, selectedJob: Binding<JobData?>) {
         self._currentJob = currentJob
         self._selectedJob = selectedJob
     }
@@ -238,7 +238,7 @@ struct JobFormView: View {
             
             switch previewMode {
             case .svgPreview:
-                PaperPreview(zoom: $zoom, pitch: $pitch, origin: $origin, job: $currentJob)
+                PaperPanel(zoom: $zoom, pitch: $pitch, origin: $origin, job: $currentJob)
             case .svgSource:
                 PaperSourcePreview(job: currentJob)
             case .codePreview:

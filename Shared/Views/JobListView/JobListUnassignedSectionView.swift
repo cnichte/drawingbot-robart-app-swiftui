@@ -10,13 +10,13 @@ import SwiftUI
 
 struct JobListUnassignedSectionView: View {
     var title: String
-    var jobs: [PlotJobData]
+    var jobs: [JobData]
     var selectedJobID: UUID?
     var viewMode: JobListViewMode
-    var thumbnailProvider: (PlotJobData) -> Image?
-    var onDrop: ([PlotJobData], CGPoint) -> Bool
-    var onJobSelected: (PlotJobData) -> Void
-    var onDeleteJob: (PlotJobData) -> Void
+    var thumbnailProvider: (JobData) -> Image?
+    var onDrop: ([JobData], CGPoint) -> Bool
+    var onJobSelected: (JobData) -> Void
+    var onDeleteJob: (JobData) -> Void
 
     @State private var isTargeted = false
 

@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct JobCardView: View {
-    let job: PlotJobData
+    let job: JobData
     let thumbnail: Image?
     let isSelected: Bool
-    let onSelect: (PlotJobData) -> Void
+    let onSelect: (JobData) -> Void
 
     @State private var isHovering = false
 

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MachinePenSectionView: View {
-    @Binding var currentJob: PlotJobData
+    @Binding var currentJob: JobData
     @Binding var selectedMachine: MachineData? // Binding für die ausgewählte Maschine
     @EnvironmentObject var assetStores: AssetStores
 

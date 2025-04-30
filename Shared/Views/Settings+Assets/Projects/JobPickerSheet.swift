@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct JobPickerSheet: View {
-    var allJobs: [PlotJobData]
-    var assignedJobs: [PlotJobData]
-    var onSelect: (PlotJobData) -> Void
+    var allJobs: [JobData]
+    var assignedJobs: [JobData]
+    var onSelect: (JobData) -> Void
     var onCancel: () -> Void
 
     var body: some View {

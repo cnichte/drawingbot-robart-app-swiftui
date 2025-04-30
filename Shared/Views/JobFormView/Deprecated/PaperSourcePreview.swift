@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PaperSourcePreview: View {
-    var job: PlotJobData
+    var job: JobData
 
     var body: some View {
         ScrollView {

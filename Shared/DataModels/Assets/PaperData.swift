@@ -19,7 +19,7 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     var shoplink: String
     var description: String
     
-    var paperFormat: PaperFormat = .default
+    var paperFormat: PaperFormatData = .default
     
     static var `default`: PaperData {
         PaperData(id: UUID.force("4d024e70-2825-4d95-8039-c29685063040"), name: "Kein Papier")
@@ -33,7 +33,7 @@ struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
         hersteller: String = "unknown",
         shoplink: String = "",
         description: String = "",
-        paperFormat: PaperFormat = .default
+        paperFormat: PaperFormatData = .default
     ) {
         self.id = id
         self.name = name

@@ -10,9 +10,9 @@ import SwiftUI
 
 struct ProjectSectionView: View {
     let project: ProjectData
-    let onDrop: ([PlotJobData], CGPoint) -> Bool
-    let onJobSelected: (PlotJobData) -> Void
-    let onDeleteJob: (PlotJobData) -> Void
+    let onDrop: ([JobData], CGPoint) -> Bool
+    let onJobSelected: (JobData) -> Void
+    let onDeleteJob: (JobData) -> Void
 
     @State private var isTargeted = false
 

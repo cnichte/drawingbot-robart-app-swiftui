@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SVGTreeView: View {
-    @Binding var currentJob: PlotJobData
+    @Binding var currentJob: JobData
 
     var body: some View {
         List {
