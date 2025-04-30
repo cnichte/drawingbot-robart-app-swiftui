@@ -206,7 +206,7 @@ struct TestView: View {
                         Text("Inspektor")
                             .font(.title)
                         Form {
-                            TextField("Einstellung", text: .constant(""))
+                            TextField("Einstellung", text: .constant("test1"))
                             Toggle("Option", isOn: .constant(true))
                         }
                         Button("Toggle Inspektor") {

@@ -30,7 +30,7 @@ struct MachineSectionView: View {
                         Text("Name: \(currentJob.selectedMachine.name)")
                         Text("Typ: \(currentJob.selectedMachine.typ.rawValue)")
                         Text("Größe: \(currentJob.selectedMachine.size.x) x \(currentJob.selectedMachine.size.y) mm")
-                        Text("Protokoll: \(currentJob.selectedMachine.protokoll)")
+                        Text("Protokoll: \(currentJob.selectedMachine.commandProtocol)")
                         Text("Verbindung: \(currentJob.selectedMachine.connection.connectionID?.uuidString ?? "Keine")")
                         Text("Verbunden: \(currentJob.selectedMachine.isConnected ? "Ja" : "Nein")")
                     }

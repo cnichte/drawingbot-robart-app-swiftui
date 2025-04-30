@@ -56,11 +56,8 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
     var penConfiguration: [PenConfiguration]
     // TODO: var pens: PenData
     
-    // machine
+    // machine -> cgode, egg
     var selectedMachine: MachineData
-    
-    // cgode, egg
-    var gcodeCommands: [String]
     var currentCommandIndex: Int
     
     // signatur
@@ -75,7 +72,6 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
         description: String = "",
         paper: PaperData,
         svgFilePath: String = "",
-        gcodeCommands: [String] = [],
         currentCommandIndex: Int = 0,
         pitch: Double = 0,
         zoom: Double = 1.0,
@@ -88,7 +84,6 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
         self.description = description
         self.paper = paper
         self.svgFilePath = svgFilePath
-        self.gcodeCommands = gcodeCommands
         self.currentCommandIndex = currentCommandIndex
         self.pitch = pitch
         self.zoom = zoom

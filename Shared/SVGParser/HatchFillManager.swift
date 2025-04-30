@@ -9,9 +9,12 @@
 //HatchFillManager.swift
 import Foundation
 
-/// Manager for applying hatch-fill algorithms to SVG files and generating output as SVG, GCode, and EggCode.
+/// Manager für Hatch-Fill-Algorithmen auf SVG-Elementen.
+///
+/// Lädt eine SVG-Datei, wendet ein Hatch-Muster an, speichert eine Vorschau-SVG
+/// und liefert GCode- und EggCode-Strings zurück.
 final class HatchFillManager {
-    /// Types of hatch-fill algorithms supported.
+    /// Unterstützte Hatch-Fülltypen.
     enum HatchType {
         case patternBased
         case contourFollowing
@@ -20,87 +23,80 @@ final class HatchFillManager {
         case gridBased
     }
 
-    /// Applies a hatch-fill algorithm to an SVG file, writes a preview SVG, and returns GCode and EggCode.
+    /// Verarbeitet eine SVG-Datei mit dem gegebenen Hatch-Algorithmus.
+    ///
     /// - Parameters:
-    ///   - inputURL: URL of the source SVG file.
-    ///   - hatchType: Hatch-fill algorithm to use.
-    ///   - spacing: Spacing between hatch lines or points.
-    ///   - svgSize: Tuple (width, height) of the SVG viewport.
-    ///   - paperSize: Tuple (width, height) of the target paper for scaling.
-    /// - Returns: (previewURL, gcodeLines, eggcodeLines)
+    ///   - inputURL: URL zur Quelldatei (.svg).
+    ///   - hatchType: Ausgewählter Muster-Typ.
+    ///   - spacing: Abstand zwischen Linien oder Punktpaaren.
+    ///   - svgSize: SVG-Viewport-Größe (width, height).
+    ///   - paperSize: Ziel-Papiermaße (width, height) für Skalierung.
+    /// - Returns: Tuple mit
+    ///   - previewURL: URL zur generierten Vorschau-SVG.
+    ///   - gcode: Array von GCode-Zeilen.
+    ///   - eggCode: Array von EggCode-Zeilen.
     func process(inputURL: URL,
                  hatchType: HatchType,
                  spacing: Double = 5.0,
                  svgSize: (width: Double, height: Double),
                  paperSize: (width: Double, height: Double)) -> (previewURL: URL, gcode: [String], eggCode: [String]) {
-        // 1. Parse original SVG elements
+        // 1. Original-SVG parsen ohne Code-Generierung
         let nullGen = BasePlotterGenerator()
         let svgParser = SVGParser(generator: nullGen)
         guard svgParser.loadSVGFile(from: inputURL,
                                     svgWidth: svgSize.width,
                                     svgHeight: svgSize.height,
                                     paperWidth: paperSize.width,
-                                    paperHeight: paperSize.height) else {
-            fatalError("Failed to load SVG file")
-        }
+                                    paperHeight: paperSize.height)
+        else { fatalError("Fehler beim Laden der SVG-Datei") }
         let elements = svgParser.elements.map { $0.element }
 
-        // 2. Generate hatch paths for each element
+        // 2. Hatch-Linien berechnen
         var hatchDs: [String] = []
         for element in elements {
-            let lines = generateHatchLines(for: element, type: hatchType, spacing: spacing)
-            for (p0, p1) in lines {
-                let d = "M \(p0.x) \(p0.y) L \(p1.x) \(p1.y)"
-                hatchDs.append(d)
+            let segments = generateHatchLines(for: element, type: hatchType, spacing: spacing)
+            for (p0, p1) in segments {
+                hatchDs.append("M \(p0.x) \(p0.y) L \(p1.x) \(p1.y)")
             }
         }
 
-        // 3. Build preview SVG content
-        let svgContent = (try? String(contentsOf: inputURL)) ?? ""
-        let pathElements = hatchDs.map { "<path d=\"\($0)\" stroke=\"black\" fill=\"none\"/>" }.joined(separator: "\n")
-        let previewSVG = svgContent.replacingOccurrences(of: "</svg>", with: "\n<!-- Hatch preview -->\n\(pathElements)\n</svg>")
+        // 3. Vorschau-SVG erzeugen
+        let originalSVG = (try? String(contentsOf: inputURL)) ?? ""
+        let pathTags = hatchDs.map { "<path d='\($0)' stroke='black' fill='none'/>" }.joined(separator: "\n")
+        let previewContent = originalSVG.replacingOccurrences(of: "</svg>",
+            with: "\n<!-- Hatch-Fill Vorschau -->\n\(pathTags)\n</svg>")
+        let previewURL = inputURL.deletingPathExtension().appendingPathExtension("preview.svg")
+        try? previewContent.write(to: previewURL, atomically: true, encoding: .utf8)
 
-        // 4. Write preview file
-        let previewURL = inputURL.deletingPathExtension()
-            .appendingPathExtension("preview.svg")
-        try? previewSVG.write(to: previewURL, atomically: true, encoding: .utf8)
-
-        // 5. Generate GCode
+        // 4. GCode generieren
         let gGen = GCodeGenerator()
         let gParser = SVGParser(generator: gGen)
         guard gParser.loadSVGFile(from: previewURL,
                                   svgWidth: svgSize.width,
                                   svgHeight: svgSize.height,
                                   paperWidth: paperSize.width,
-                                  paperHeight: paperSize.height) else {
-            fatalError("Failed to parse preview SVG for GCode")
-        }
+                                  paperHeight: paperSize.height)
+        else { fatalError("Fehler beim Parsen der Vorschau für GCode") }
         let gcode = gParser.elements.map { $0.output }
 
-        // 6. Generate EggCode
+        // 5. EggCode generieren
         let eGen = EggbotGenerator()
         let eParser = SVGParser(generator: eGen)
         guard eParser.loadSVGFile(from: previewURL,
                                   svgWidth: svgSize.width,
                                   svgHeight: svgSize.height,
                                   paperWidth: paperSize.width,
-                                  paperHeight: paperSize.height) else {
-            fatalError("Failed to parse preview SVG for EggCode")
-        }
+                                  paperHeight: paperSize.height)
+        else { fatalError("Fehler beim Parsen der Vorschau für EggCode") }
         let eggcode = eParser.elements.map { $0.output }
 
         return (previewURL, gcode, eggcode)
     }
 
-    /// Generates hatch lines (segments) for a given SVG element.
-    /// - Parameters:
-    ///   - element: The SVG element to fill.
-    ///   - type: Hatch-fill algorithm to use.
-    ///   - spacing: Spacing parameter.
-    /// - Returns: Array of line segments represented as ((x0,y0),(x1,y1)).
-    private func generateHatchLines(for element: SVGElement,
+    /// Leitet auf den gewünschten Hatch-Algorithmus weiter.
+    public func generateHatchLines(for element: SVGElement,
                                     type: HatchType,
-                                    spacing: Double) -> [((x: Double, y: Double), (x: Double, y: Double))] {
+                                    spacing: Double) -> [((x: Double, y: Double),(x: Double, y: Double))] {
         switch type {
         case .lineBased:
             return lineBasedHatch(for: element, spacing: spacing)
@@ -115,74 +111,78 @@ final class HatchFillManager {
         }
     }
 
-    // MARK: - Hatch Algorithms
+    // MARK: - Algorithmen
 
-    private func lineBasedHatch(for element: SVGElement, spacing: Double) -> [((Double, Double),(Double, Double))] {
-        // Compute bounding box
-        guard let xmin = element.attributes["x"], let ymin = element.attributes["y"],
-              let width = element.attributes["width"], let height = element.attributes["height"]
+    public func lineBasedHatch(for element: SVGElement, spacing: Double) -> [((Double, Double),(Double, Double))] {
+        guard let x = element.attributes["x"], let y = element.attributes["y"],
+              let w = element.attributes["width"], let h = element.attributes["height"]
         else { return [] }
         var lines: [((Double, Double),(Double, Double))] = []
-        let maxY = ymin + height
-        var y = ymin
-        while y <= maxY {
-            lines.append(((xmin, y), (xmin + width, y)))
-            y += spacing
+        var yy = y
+        while yy <= y + h {
+            lines.append(((x, yy), (x + w, yy)))
+            yy += spacing
         }
         return lines
     }
 
-    private func gridBasedHatch(for element: SVGElement, spacing: Double) -> [((Double, Double),(Double, Double))] {
-        // Combines horizontal and vertical lines
+    public func gridBasedHatch(for element: SVGElement, spacing: Double) -> [((Double, Double),(Double, Double))] {
         var lines = lineBasedHatch(for: element, spacing: spacing)
-        guard let xmin = element.attributes["x"], let ymin = element.attributes["y"],
-              let width = element.attributes["width"], let height = element.attributes["height"]
+        guard let x = element.attributes["x"], let y = element.attributes["y"],
+              let w = element.attributes["width"], let h = element.attributes["height"]
         else { return lines }
-        let maxX = xmin + width
-        var x = xmin
-        while x <= maxX {
-            lines.append(((x, ymin), (x, ymin + height)))
-            x += spacing
+        var xx = x
+        while xx <= x + w {
+            lines.append(((xx, y), (xx, y + h)))
+            xx += spacing
         }
         return lines
     }
 
     private func patternBasedHatch(for element: SVGElement, spacing: Double) -> [((Double, Double),(Double, Double))] {
-        // Diagonal + crosshatch
-        var lines: [((Double, Double),(Double, Double))] = []
-        // Use line-based as base
-        lines += lineBasedHatch(for: element, spacing: spacing)
-        // Diagonal / lines
-        guard let xmin = element.attributes["x"], let ymin = element.attributes["y"],
-              let width = element.attributes["width"], let height = element.attributes["height"]
+        var lines = lineBasedHatch(for: element, spacing: spacing)
+        guard let x = element.attributes["x"], let y = element.attributes["y"],
+              let w = element.attributes["width"], let h = element.attributes["height"]
         else { return lines }
-        let diagCount = Int((width + height) / spacing)
-        for i in 0...diagCount {
-            let start = (xmin + Double(i) * spacing, ymin)
-            let end = (xmin, ymin + Double(i) * spacing)
+        let count = Int((w + h) / spacing)
+        for i in 0...count {
+            let start = (x + Double(i)*spacing, y)
+            let end = (x, y + Double(i)*spacing)
             lines.append((start, end))
         }
         return lines
     }
 
     private func contourFollowingHatch(for element: SVGElement, spacing: Double) -> [((Double, Double),(Double, Double))] {
-        // Placeholder: offset contours inside object
-        // TODO: implement proper contour offsets along shape path
-        return lineBasedHatch(for: element, spacing: spacing / 2)
+        var lines: [((Double, Double),(Double, Double))] = []
+        guard let x = element.attributes["x"], let y = element.attributes["y"],
+              let w = element.attributes["width"], let h = element.attributes["height"]
+        else { return [] }
+        var inset: Double = 0
+        while inset <= min(w/2, h/2) {
+            let xmin = x + inset, ymin = y + inset
+            let width = w - 2*inset, height = h - 2*inset
+            // 4 Kanten
+            lines.append(((xmin, ymin), (xmin+width, ymin)))
+            lines.append(((xmin+width, ymin), (xmin+width, ymin+height)))
+            lines.append(((xmin+width, ymin+height), (xmin, ymin+height)))
+            lines.append(((xmin, ymin+height), (xmin, ymin)))
+            inset += spacing
+        }
+        return lines
     }
 
     private func stipplingHatch(for element: SVGElement, density: Double) -> [((Double, Double),(Double, Double))] {
-        // Generate point-dot stippling as very short lines
         var points: [((Double, Double),(Double, Double))] = []
-        guard let xmin = element.attributes["x"], let ymin = element.attributes["y"],
-              let width = element.attributes["width"], let height = element.attributes["height"]
+        guard let x = element.attributes["x"], let y = element.attributes["y"],
+              let w = element.attributes["width"], let h = element.attributes["height"]
         else { return [] }
-        let count = Int((width * height) / (density * density))
+        let count = Int((w * h) / (density * density))
         for _ in 0..<count {
-            let x = xmin + Double.random(in: 0...width)
-            let y = ymin + Double.random(in: 0...height)
-            let r = density / 10.0
-            points.append(((x - r, y - r), (x + r, y + r)))
+            let px = x + Double.random(in: 0...w)
+            let py = y + Double.random(in: 0...h)
+            let r = density / 10
+            points.append(((px-r, py-r), (px+r, py+r)))
         }
         return points
     }

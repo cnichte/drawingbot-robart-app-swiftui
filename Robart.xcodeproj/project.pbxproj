@@ -29,8 +29,13 @@
 		D5148EEE2DC23F2B00BDBE73 /* PaperPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085202DAFD8DE00332690 /* PaperPanel.swift */; };
 		D5148EF02DC25A7800BDBE73 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */; };
 		D5148EF12DC25A7800BDBE73 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */; };
-		D5148EF32DC25B0000BDBE73 /* HatchFillManager.md in Resources */ = {isa = PBXBuildFile; fileRef = D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */; };
 		D5148EF42DC25B0000BDBE73 /* HatchFillManager.md in Resources */ = {isa = PBXBuildFile; fileRef = D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */; };
+		D5148EF62DC27C7600BDBE73 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EF52DC27C6200BDBE73 /* SVGParser+PatternSupport.swift */; };
+		D5148EF72DC27C7600BDBE73 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EF52DC27C6200BDBE73 /* SVGParser+PatternSupport.swift */; };
+		D5148EFE2DC2961B00BDBE73 /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5148EFD2DC2961B00BDBE73 /* ORSSerial */; };
+		D5148F002DC2961B00BDBE73 /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5148EFF2DC2961B00BDBE73 /* SVGView */; };
+		D5148F022DC2962300BDBE73 /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5148F012DC2962300BDBE73 /* ORSSerial */; };
+		D5148F042DC2962300BDBE73 /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5148F032DC2962300BDBE73 /* SVGView */; };
 		D52C0AEB2DBA613400F57746 /* PaperFormatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */; };
 		D52C0AEC2DBA613400F57746 /* PaperFormatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */; };
 		D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */ = {isa = PBXBuildFile; fileRef = D52C0AEE2DBA655000F57746 /* paper-formats.json */; };
@@ -43,7 +48,6 @@
 		D52C0AFC2DBA823D00F57746 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */; };
 		D52D48E02DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
 		D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
-		D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */; };
 		D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E442DB1275C00F09A0C /* View+DropZone.swift */; };
@@ -163,9 +167,6 @@
 		D5D104092DAEF2E600E8406E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
 		D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104242DAEF38000E8406E /* USBSerialScanner.swift */; platformFilters = (macos, ); };
 		D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104262DAEF39000E8406E /* USBSerialScanner.swift */; platformFilter = ios; };
-		D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042A2DAEF43900E8406E /* ORSSerial */; };
-		D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042D2DAEF44B00E8406E /* SVGView */; };
-		D5D104302DAEF45100E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042F2DAEF45100E8406E /* SVGView */; };
 		D5E55CBD2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */; };
 		D5E55CBE2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */; };
 		D5E55CC02DBF6E95003806CF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBF2DBF6E93003806CF /* Logger.swift */; };
@@ -222,19 +223,6 @@
 		D5F6C6412DB8481A00020AEE /* MachineFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6402DB8481A00020AEE /* MachineFormView.swift */; };
 		D5F6C6442DB8498700020AEE /* ConnectionManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6432DB8498700020AEE /* ConnectionManagerView.swift */; };
 		D5F6C6472DB8499900020AEE /* ConnectionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6462DB8499900020AEE /* ConnectionFormView.swift */; };
-		D5F896CC2DBCCB9600397561 /* robart-dev-check-v3.0.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896CB2DBCCB8F00397561 /* robart-dev-check-v3.0.sh */; };
-		D5F896CE2DBCCE9100397561 /* robart-dev-check-v2.5.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896CD2DBCCE8400397561 /* robart-dev-check-v2.5.sh */; };
-		D5F896D02DBCCEF900397561 /* robart-dev-check-v2.0.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896CF2DBCCEF200397561 /* robart-dev-check-v2.0.sh */; };
-		D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D12DBCCF2F00397561 /* robart-dev-check.sh */; };
-		D5F896D42DBCCFA100397561 /* robart-dev-check-v3.5.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D32DBCCF9B00397561 /* robart-dev-check-v3.5.sh */; };
-		D5F896D62DBCD05000397561 /* robart-dev-check-v4.0.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D52DBCD04500397561 /* robart-dev-check-v4.0.sh */; };
-		D5F896D82DBCD12C00397561 /* robart-dev-check-v5.0.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D72DBCD12400397561 /* robart-dev-check-v5.0.sh */; };
-		D5F896DA2DBCD27500397561 /* robart-dev-check-mini.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D92DBCD26F00397561 /* robart-dev-check-mini.sh */; };
-		D5F896DC2DBCD2DF00397561 /* robart-dev-check-quickrun.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896DB2DBCD2D500397561 /* robart-dev-check-quickrun.sh */; };
-		D5F896DE2DBCD54700397561 /* robart-dev-testbuildrun.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896DD2DBCD53900397561 /* robart-dev-testbuildrun.sh */; };
-		D5F896E02DBCD63A00397561 /* robart-dev-testbuildrun-all.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896DF2DBCD63500397561 /* robart-dev-testbuildrun-all.sh */; };
-		D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896E12DBCD6DB00397561 /* robart-testmode-only.sh */; };
-		D5F896E42DBCD76900397561 /* robart-smoke-test.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896E32DBCD76500397561 /* robart-smoke-test.sh */; };
 		D5F896E82DBCDF4800397561 /* aspect-ratios.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896E72DBCDF3C00397561 /* aspect-ratios.json */; };
 		D5F896E92DBCDF4800397561 /* aspect-ratios.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896E72DBCDF3C00397561 /* aspect-ratios.json */; };
 		D5F896EB2DBCE24D00397561 /* AspectRatioData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896EA2DBCE24500397561 /* AspectRatioData.swift */; };
@@ -284,6 +272,7 @@
 		D5148EEB2DC22F6A00BDBE73 /* SVGLayersSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLayersSectionView.swift; sourceTree = "<group>"; };
 		D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HatchFillManager.swift; sourceTree = "<group>"; };
 		D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HatchFillManager.md; sourceTree = "<group>"; };
+		D5148EF52DC27C6200BDBE73 /* SVGParser+PatternSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVGParser+PatternSupport.swift"; sourceTree = "<group>"; };
 		D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperFormatData.swift; sourceTree = "<group>"; };
 		D52C0AEE2DBA655000F57746 /* paper-formats.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "paper-formats.json"; sourceTree = "<group>"; };
 		D52C0AF42DBA72DF00F57746 /* AssetStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStores.swift; sourceTree = "<group>"; };
@@ -479,8 +468,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */,
-				D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */,
+				D5148F002DC2961B00BDBE73 /* SVGView in Frameworks */,
+				D5148EFE2DC2961B00BDBE73 /* ORSSerial in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,7 +477,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5D104302DAEF45100E8406E /* SVGView in Frameworks */,
+				D5148F042DC2962300BDBE73 /* SVGView in Frameworks */,
+				D5148F022DC2962300BDBE73 /* ORSSerial in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,6 +710,7 @@
 		D5A084E92DAFD87E00332690 /* SVGParser */ = {
 			isa = PBXGroup;
 			children = (
+				D5148EF52DC27C6200BDBE73 /* SVGParser+PatternSupport.swift */,
 				D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */,
 				D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */,
 				D5A084EA2DAFD88A00332690 /* BasePlotterGenerator.swift */,
@@ -958,8 +949,8 @@
 			);
 			name = Robart;
 			packageProductDependencies = (
-				D5D1042A2DAEF43900E8406E /* ORSSerial */,
-				D5D1042D2DAEF44B00E8406E /* SVGView */,
+				D5148EFD2DC2961B00BDBE73 /* ORSSerial */,
+				D5148EFF2DC2961B00BDBE73 /* SVGView */,
 			);
 			productName = Robart;
 			productReference = D5D104032DAEF2E600E8406E /* Robart.app */;
@@ -982,7 +973,8 @@
 			);
 			name = "Robart-iOS";
 			packageProductDependencies = (
-				D5D1042F2DAEF45100E8406E /* SVGView */,
+				D5148F012DC2962300BDBE73 /* ORSSerial */,
+				D5148F032DC2962300BDBE73 /* SVGView */,
 			);
 			productName = "Robart-iOS";
 			productReference = D5D104162DAEF30700E8406E /* Robart-iOS.app */;
@@ -1024,8 +1016,8 @@
 			mainGroup = D5D103FA2DAEF2E600E8406E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */,
-				D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */,
+				D5148EFB2DC295A200BDBE73 /* XCRemoteSwiftPackageReference "ORSSerialPort" */,
+				D5148EFC2DC295B100BDBE73 /* XCRemoteSwiftPackageReference "SVGView" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D5D104042DAEF2E600E8406E /* Products */;
@@ -1059,31 +1051,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5F896CE2DBCCE9100397561 /* robart-dev-check-v2.5.sh in Resources */,
-				D5F896E42DBCD76900397561 /* robart-smoke-test.sh in Resources */,
-				D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */,
-				D5F896DC2DBCD2DF00397561 /* robart-dev-check-quickrun.sh in Resources */,
 				D5E55CF32DC01036003806CF /* jobs.json in Resources */,
-				D5F896D62DBCD05000397561 /* robart-dev-check-v4.0.sh in Resources */,
 				D5F896F22DBCFB2D00397561 /* papers.json in Resources */,
 				D5F896FD2DBD7F3900397561 /* machines.json in Resources */,
-				D5F896E02DBCD63A00397561 /* robart-dev-testbuildrun-all.sh in Resources */,
 				D5A341042DBAF323005FF05A /* units.json in Resources */,
 				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
-				D5F896D02DBCCEF900397561 /* robart-dev-check-v2.0.sh in Resources */,
-				D5F896DE2DBCD54700397561 /* robart-dev-testbuildrun.sh in Resources */,
-				D5148EF32DC25B0000BDBE73 /* HatchFillManager.md in Resources */,
 				D5E55CEC2DBFFF05003806CF /* signatures.json in Resources */,
-				D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */,
-				D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */,
-				D5F896DA2DBCD27500397561 /* robart-dev-check-mini.sh in Resources */,
 				D5E69CA22DC13CC6003E8ADF /* welcome-to-robart.json in Resources */,
 				D5F896FB2DBD7C0400397561 /* pens.json in Resources */,
-				D5F896D42DBCCFA100397561 /* robart-dev-check-v3.5.sh in Resources */,
-				D5F896CC2DBCCB9600397561 /* robart-dev-check-v3.0.sh in Resources */,
 				D5E55CD52DBF8D2A003806CF /* projects.json in Resources */,
 				D5F897012DBD84CA00397561 /* connections.json in Resources */,
-				D5F896D82DBCD12C00397561 /* robart-dev-check-v5.0.sh in Resources */,
 				D5F896E82DBCDF4800397561 /* aspect-ratios.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1170,6 +1147,7 @@
 				D5F6C6232DB834B900020AEE /* ItemManagerView.swift in Sources */,
 				D5F6C6262DB834E400020AEE /* ItemListView.swift in Sources */,
 				D57566232DB9256600D95E3F /* PaperManagerView.swift in Sources */,
+				D5148EF62DC27C7600BDBE73 /* SVGParser+PatternSupport.swift in Sources */,
 				D5F896EE2DBCF7F700397561 /* AssetStoresDebugToolbar.swift in Sources */,
 				D587A4482DBEED1C0072D83C /* ActionsSectionView.swift in Sources */,
 				D5F4DE052DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
@@ -1241,6 +1219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5148EF72DC27C7600BDBE73 /* SVGParser+PatternSupport.swift in Sources */,
 				D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */,
 				D5A0851B2DAFD8C900332690 /* JobSummaryView.swift in Sources */,
 				D575661A2DB9041000D95E3F /* ManageableItem.swift in Sources */,
@@ -1760,15 +1739,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exyte/SVGView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.6;
-			};
-		};
-		D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */ = {
+		D5148EFB2DC295A200BDBE73 /* XCRemoteSwiftPackageReference "ORSSerialPort" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/armadsen/ORSSerialPort";
 			requirement = {
@@ -1776,22 +1747,35 @@
 				minimumVersion = 2.1.0;
 			};
 		};
+		D5148EFC2DC295B100BDBE73 /* XCRemoteSwiftPackageReference "SVGView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/SVGView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D5D1042A2DAEF43900E8406E /* ORSSerial */ = {
+		D5148EFD2DC2961B00BDBE73 /* ORSSerial */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
+			package = D5148EFB2DC295A200BDBE73 /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
 			productName = ORSSerial;
 		};
-		D5D1042D2DAEF44B00E8406E /* SVGView */ = {
+		D5148EFF2DC2961B00BDBE73 /* SVGView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */;
+			package = D5148EFC2DC295B100BDBE73 /* XCRemoteSwiftPackageReference "SVGView" */;
 			productName = SVGView;
 		};
-		D5D1042F2DAEF45100E8406E /* SVGView */ = {
+		D5148F012DC2962300BDBE73 /* ORSSerial */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */;
+			package = D5148EFB2DC295A200BDBE73 /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
+			productName = ORSSerial;
+		};
+		D5148F032DC2962300BDBE73 /* SVGView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5148EFC2DC295B100BDBE73 /* XCRemoteSwiftPackageReference "SVGView" */;
 			productName = SVGView;
 		};
 /* End XCSwiftPackageProductDependency section */

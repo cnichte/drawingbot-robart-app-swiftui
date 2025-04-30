@@ -158,7 +158,7 @@ struct JobInspectorPanel: View {
                 Text("Maschinenname: \(selectedMachine.name)")
                     .font(.headline)
                 Text("Typ: \(selectedMachine.typ.rawValue)")
-                Text("Protokoll: \(selectedMachine.protokoll)")
+                Text("Protokoll: \(selectedMachine.commandProtocol)")
                 Text("Größe: \(selectedMachine.size.x) x \(selectedMachine.size.y) mm")
                 Text("Verbunden: \(selectedMachine.isConnected ? "Ja" : "Nein")")
 
@@ -166,7 +166,7 @@ struct JobInspectorPanel: View {
 
                 // CodeTemplates anzeigen
                 Text("CodeTemplates:")
-                ForEach(selectedMachine.codeTemplates, id: \.id) { template in
+                ForEach(selectedMachine.commandItems, id: \.id) { template in
                     VStack(alignment: .leading) {
                         Text("Befehl: \(template.command)")
                         Text("Beschreibung: \(template.description)")

@@ -273,7 +273,37 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String,
                 namespaceURI: String?, qualifiedName qName: String?,
                 attributes attributeDict: [String: String]) {
+ 
+        /* TODO: Neuer Pattern Support / Experimentell
+        // ########## neuer pattern support - start
+        // Pattern-Elemente zuerst erfassen
+        // Hier müsste eine Instanz von SVGPatternElementParser vorgeladen werden
+        // ...
+
+        // Normale Elemente verarbeiten
+        // (Original-Code aus SVGParser)
+        // Erstelle SVGElement und generiere Basis-Output
         
+        
+        // Normale Elemente verarbeiten
+        // (Original-Code aus SVGParser)
+        // Erstelle SVGElement und generiere Basis-Output
+        let attrsNum = parseNumericAttributes(attributeDict)
+        let element = SVGElement(id: UUID(), name: elementName,
+                                 attributes: attrsNum,
+                                 rawAttributes: attributeDict)
+        let baseOutput = generator.generate(for: element)
+        elements.append(ParserListItem(element: element, output: baseOutput))
+
+        // Pattern-Fill anwenden (falls relevant)
+        if let patternParser = self.patternParser {
+            let extra = patternParser.applyPatternIfNeeded(to: element)
+            elements.append(contentsOf: extra)
+        }
+        // ########## neuer pattern support - ende
+*/
+        
+        // ----- originalcode
         if elementName == "g" {
             if let transform = attributeDict["transform"],
                transform.starts(with: "translate("),
@@ -350,5 +380,21 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
         if elementName == "g" {
             _ = transformStack.popLast()
         }
+    }
+    
+    
+    /// Beispiel-Helfer zum Parsen numerischer Attribute.
+    private func parseNumericAttributes(_ dict: [String:String]) -> [String: Double] {
+        var result: [String:Double] = [:]
+        for (k,v) in dict {
+            if let d = Double(v) { result[k] = d }
+        }
+        return result
+    }
+    
+    /// Property für den Pattern-Parser (vom Aufrufer zu setzen).
+    var patternParser: SVGPatternElementParser? {
+        // muss extern initialisiert werden
+        return nil
     }
 }

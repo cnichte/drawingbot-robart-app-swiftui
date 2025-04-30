@@ -130,3 +130,113 @@ Die `EggbotGenerator.swift` implementiert die folgenden Eggbot-Befehle:
 | **G0 Xx Yy** | Schnelle Bewegung zu den Koordinaten (x, y) ohne Zeichnen (Stift oben).      | In `parsePath`, `generateRect`, `generateCircle`, etc. |
 | **G1 Xx Yy** | Lineare Bewegung zu den Koordinaten (x, y) mit Zeichnen (Stift unten).       | In `parsePath`, `generateRect`, `generateCircle`, etc. |
 
+
+
+## SVG-Hatch-Fill & Pattern-Unterstützung
+
+### Übersicht
+
+Dieses Paket enthält folgende Hauptkomponenten:
+
+- **HatchFillManager.swift**  
+  Lädt eine SVG-Datei, wendet verschiedene Hatch-Fill-Algorithmen an, speichert eine „-preview.svg“ und liefert G-Code & EggCode zurück.  
+- **SVGPatternSupport.swift**  
+  `SVGPatternElementParser` erfasst `<pattern>`-Elemente im SVG, sammelt ihre Kind-Elemente und wandelt pattern-fills automatisch in Hatch-Pfad-Elemente um.  
+- **SVGParser+Pattern.swift**  
+  Erweiterung des generischen `SVGParser`, um den Pattern-Parser zu integrieren und nach dem Basis-Parsing zusätzliche Hatch-Pfad-Items einzufügen.
+
+### Installation
+
+1. Kopiere **HatchFillManager.swift**, **SVGPatternSupport.swift** und **SVGParser+Pattern.swift** in Dein Xcode-Projekt.  
+2. Stelle sicher, dass Du bereits hast:
+   - `BasePlotterGenerator.swift`
+   - `SVGParser.swift`
+   - `GCodeGenerator.swift`
+   - `EggbotGenerator.swift`
+   - `PathParser.swift`
+
+
+### 1. Einfacher Hatch-Fill ohne Pattern
+
+```swift
+let svgURL = URL(fileURLWithPath: "/Pfad/zu/meinemBild.svg")
+let hatch = HatchFillManager()
+
+let (previewURL, gcode, eggcode) = hatch.process(
+    inputURL: svgURL,
+    hatchType: .lineBased,
+    spacing: 8.0,
+    svgSize: (width: 300, height: 200),
+    paperSize: (width: 300, height: 200)
+)
+
+print("Preview: \(previewURL.path)")
+print("G-Code Lines: \(gcode.count)")
+print("Egg Code Lines: \(eggcode.count)")
+```
+
+### 2. Hatch-Fill mit Pattern-Erkennung
+
+```swift
+// 1. SVG-Parser mit Pattern-Parser initialisieren
+let hatch = HatchFillManager()
+let patternParser = SVGPatternElementParser(
+    hatchManager: hatch,
+    defaultType: .patternBased,
+    defaultSpacing: 6.0
+)
+
+let parser = SVGParser(generator: BasePlotterGenerator())
+// Weisen Sie dem Parser Ihre patternParser-Instanz zu:
+parser.patternParser = patternParser
+
+// 2. SVG mit Pattern parsen
+let loaded = parser.loadSVGFile(
+    from: svgURL,
+    svgWidth: 300, svgHeight: 200,
+    paperWidth: 300, paperHeight: 200
+)
+
+guard loaded else { fatalError("Parsing fehlgeschlagen") }
+
+// 3. Ergebnisse aus parser.elements entnehmen
+for item in parser.elements {
+    print(item.output)
+}
+```
+
+### Verfügbare Hatch-Algorithmen
+
+- Line-Based: Parallele Linien im Bounding-Box.
+- Grid-Based: Zusätzlich vertikal + horizontal.
+- Pattern-Based: Kreuzlinien + Diagonalen.
+- Contour-Following: Verschachtelte Rechtecke (aktuell implementiert nur für Rechtecke).
+- Stippling: Zufällige Punkt-Paare (als kleine Linien).
+
+
+### Fehlende Features & TODOs
+
+1. Contour-Following für beliebige Pfade
+    - Derzeit nur als Rechteck-Inset implementiert.
+    - TODO: Pfad-Offset-Bibliothek oder eigene Kontur-Offset-Berechnung für beliebige SVGElement-Konturen.
+
+1. Erweiterte `<pattern>`-Attribute
+    - patternUnits (userSpaceOnUse vs. objectBoundingBox).
+    - patternTransform, viewBox, width/height im Pattern.
+    - Unterstützung für gekachelte Pattern-Instanzen über den gesamten Shape.
+
+1. Verschachtelte Pattern & Referenzen
+    - `<pattern>` kann andere `<pattern>` referenzieren.
+    -  TODO: Rekursive Auflösung verschachtelter Patterns.
+
+1. Nicht-Rechteckige Shapes
+    - Alle Hatch-Algorithmen basieren aktuell auf Bounding-Box.
+    - TODO: Clipping der Linien an der wahren Kontur (Pfad-Schnitt).
+
+1. Performance & Speicher
+    - Für sehr große SVGs viele temporäre Strings.
+    - TODO: Streaming-Parsing / Codegenerierung ohne vollständiges Zwischenspeichern aller Items.
+
+1. Unit-Tests und Beispiele
+    - Es fehlen automatisierte Tests für alle Algorithmen.
+    - TODO: XCTest-Suite mit Beispiel-SVGs und erwarteten Outputs.

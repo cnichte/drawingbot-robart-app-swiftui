@@ -10,7 +10,7 @@
         "paperFormatID": "07279F4F-BED4-4755-A97D-8EC9EB74CBB6",
         "penConfiguration":[],
         "isActive": false,
-        "gcodeCommands": [],
+        "selectedMachine": {},
         "currentCommandIndex": 0,
         "name": "Neuer Job 1",
         "pitch": 0,

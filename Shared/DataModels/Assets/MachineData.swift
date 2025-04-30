@@ -38,7 +38,7 @@ struct MachineSize: Codable, Equatable, Hashable {
 // MARK: - MachineCodeTemplate
 
 
-struct MachineCodeTemplate: Codable, Identifiable, Hashable {
+struct MachineCommandItem: Codable, Identifiable, Hashable {
     var id = UUID()
     var command: String
     var description: String
@@ -129,8 +129,8 @@ struct MachineData: Codable, Equatable, Identifiable, Hashable, ManageableItem, 
     var description: String
     var typ: MachineType
     var size: MachineSize
-    var protokoll: String
-    var codeTemplates: [MachineCodeTemplate]
+    var commandProtocol: String
+    var commandItems: [MachineCommandItem] // commands
     var penCount: Int
     var connection: MachineConnection
     var options: [MachineOption]
@@ -144,7 +144,7 @@ struct MachineData: Codable, Equatable, Identifiable, Hashable, ManageableItem, 
         typ: MachineType = .omnidirektionalPlotter,
         size: MachineSize = MachineSize(x: 0, y: 0),
         protokoll: String = "",
-        codeTemplates: [MachineCodeTemplate] = [],
+        commandItems: [MachineCommandItem] = [],
         penCount: Int = 1,
         connection: MachineConnection = MachineConnection(),
         options: [MachineOption] = []
@@ -154,8 +154,8 @@ struct MachineData: Codable, Equatable, Identifiable, Hashable, ManageableItem, 
         self.description = description
         self.typ = typ
         self.size = size
-        self.protokoll = protokoll
-        self.codeTemplates = codeTemplates
+        self.commandProtocol = protokoll
+        self.commandItems = commandItems
         self.penCount = penCount
         self.connection = connection
         self.options = options

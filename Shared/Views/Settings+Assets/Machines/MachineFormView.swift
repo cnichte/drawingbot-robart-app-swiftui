@@ -23,8 +23,8 @@ struct MachineFormView: View {
             VStack(spacing: 16) {
                 detailsSection
                 sizeSection
-                codeTemplatesSection
-                optionsSection
+                machineCommandsSection
+                machineOptionsSection
             }
             .padding()
         }
@@ -86,11 +86,11 @@ struct MachineFormView: View {
         }
     }
 
-    // MARK: - Code Templates Section
+    // MARK: - Machine-Commands Section
 
-    private var codeTemplatesSection: some View {
+    private var machineCommandsSection: some View {
         CollapsibleSection(
-            title: "Code Templates",
+            title: "Machine Commands",
             systemImage: "doc.plaintext",
             toolbar: {
                 HStack(spacing: 8) {
@@ -99,7 +99,7 @@ struct MachineFormView: View {
                         .frame(maxWidth: 200)
 
                     Button(action: {
-                        data.codeTemplates.append(MachineCodeTemplate(command: "", description: ""))
+                        data.commandItems.append(MachineCommandItem(command: "", description: ""))
                         save()
                     }) {
                         Image(systemName: "plus.circle.fill")
@@ -120,22 +120,22 @@ struct MachineFormView: View {
                     .onChange(of: template) { save() }
                 }
                 .onDelete { indices in
-                    data.codeTemplates.remove(atOffsets: indices)
+                    data.commandItems.remove(atOffsets: indices)
                     save()
                 }
             }
         }
     }
 
-    private var filteredTemplates: [Binding<MachineCodeTemplate>] {
-        $data.codeTemplates.filter { binding in
+    private var filteredTemplates: [Binding<MachineCommandItem>] {
+        $data.commandItems.filter { binding in
             codeTemplateSearchText.isEmpty || binding.wrappedValue.command.localizedCaseInsensitiveContains(codeTemplateSearchText)
         }
     }
 
-    // MARK: - Options Section
+    // MARK: - Machine-Options Section
 
-    private var optionsSection: some View {
+    private var machineOptionsSection: some View {
         CollapsibleSection(
             title: "Optionen",
             systemImage: "slider.horizontal.3",
