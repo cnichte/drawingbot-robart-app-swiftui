@@ -27,6 +27,10 @@
 		D5148EEC2DC22F6A00BDBE73 /* SVGLayersSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEB2DC22F6A00BDBE73 /* SVGLayersSectionView.swift */; };
 		D5148EED2DC22F6A00BDBE73 /* SVGLayersSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEB2DC22F6A00BDBE73 /* SVGLayersSectionView.swift */; };
 		D5148EEE2DC23F2B00BDBE73 /* PaperPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085202DAFD8DE00332690 /* PaperPanel.swift */; };
+		D5148EF02DC25A7800BDBE73 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */; };
+		D5148EF12DC25A7800BDBE73 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */; };
+		D5148EF32DC25B0000BDBE73 /* HatchFillManager.md in Resources */ = {isa = PBXBuildFile; fileRef = D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */; };
+		D5148EF42DC25B0000BDBE73 /* HatchFillManager.md in Resources */ = {isa = PBXBuildFile; fileRef = D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */; };
 		D52C0AEB2DBA613400F57746 /* PaperFormatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */; };
 		D52C0AEC2DBA613400F57746 /* PaperFormatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */; };
 		D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */ = {isa = PBXBuildFile; fileRef = D52C0AEE2DBA655000F57746 /* paper-formats.json */; };
@@ -278,6 +282,8 @@
 		D50A30632DAEFA9100859908 /* RobartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobartApp.swift; sourceTree = "<group>"; };
 		D5148EE82DC22F5200BDBE73 /* SVGColorsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGColorsSectionView.swift; sourceTree = "<group>"; };
 		D5148EEB2DC22F6A00BDBE73 /* SVGLayersSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLayersSectionView.swift; sourceTree = "<group>"; };
+		D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HatchFillManager.swift; sourceTree = "<group>"; };
+		D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HatchFillManager.md; sourceTree = "<group>"; };
 		D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperFormatData.swift; sourceTree = "<group>"; };
 		D52C0AEE2DBA655000F57746 /* paper-formats.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "paper-formats.json"; sourceTree = "<group>"; };
 		D52C0AF42DBA72DF00F57746 /* AssetStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStores.swift; sourceTree = "<group>"; };
@@ -714,6 +720,8 @@
 		D5A084E92DAFD87E00332690 /* SVGParser */ = {
 			isa = PBXGroup;
 			children = (
+				D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */,
+				D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */,
 				D5A084EA2DAFD88A00332690 /* BasePlotterGenerator.swift */,
 				D5A084EB2DAFD88A00332690 /* EggbotGenerator.swift */,
 				D5A084EC2DAFD88A00332690 /* GCodeGenerator.swift */,
@@ -1064,6 +1072,7 @@
 				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
 				D5F896D02DBCCEF900397561 /* robart-dev-check-v2.0.sh in Resources */,
 				D5F896DE2DBCD54700397561 /* robart-dev-testbuildrun.sh in Resources */,
+				D5148EF32DC25B0000BDBE73 /* HatchFillManager.md in Resources */,
 				D5E55CEC2DBFFF05003806CF /* signatures.json in Resources */,
 				D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */,
 				D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */,
@@ -1089,6 +1098,7 @@
 				D5F897002DBD84CA00397561 /* connections.json in Resources */,
 				D5A341052DBAF323005FF05A /* units.json in Resources */,
 				D5E55CED2DBFFF05003806CF /* signatures.json in Resources */,
+				D5148EF42DC25B0000BDBE73 /* HatchFillManager.md in Resources */,
 				D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */,
 				D5E55CF22DC01036003806CF /* jobs.json in Resources */,
 				D5F896F12DBCFB2D00397561 /* papers.json in Resources */,
@@ -1187,6 +1197,7 @@
 				D5F896F72DBD56BA00397561 /* AssetStoreManager.swift in Sources */,
 				D5A084F72DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
 				D5E55CC42DBF7673003806CF /* JobsDataFileManager.swift in Sources */,
+				D5148EF02DC25A7800BDBE73 /* HatchFillManager.swift in Sources */,
 				D5148EED2DC22F6A00BDBE73 /* SVGLayersSectionView.swift in Sources */,
 				D5A084F82DAFD88A00332690 /* PathParser.swift in Sources */,
 				D587A43D2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */,
@@ -1318,6 +1329,7 @@
 				D5E55CEA2DBFD6DA003806CF /* AutoConnectService.swift in Sources */,
 				D5E55CF02DBFFF81003806CF /* SignatureData.swift in Sources */,
 				D5A085BF2DB0348D00332690 /* JobRow.swift in Sources */,
+				D5148EF12DC25A7800BDBE73 /* HatchFillManager.swift in Sources */,
 				D56C4E492DB1296700F09A0C /* DropZoneModifier.swift in Sources */,
 				D5A084E82DAFD86700332690 /* GenericStore.swift in Sources */,
 				D509C0A92DBC4AED009B0233 /* MachinePenSectionView.swift in Sources */,

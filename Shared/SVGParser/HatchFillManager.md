@@ -1,5 +1,23 @@
 # Anleitung: HatchFillManager.swift
 
+Erweitere SVGParser so, das er geschlossene Pfade erkennt und HatchFill anwendet.
+Basierend auf was? der Farbe?
+Den vorgegebenen
+Per zufallsgenerator?
+
+
+Erweitere SVGParser so, das er auch mit dem  SVG `<pattern>`-Element umgehen kann, (und ggfs. den HatchFillManager anwendet?)
+
+Benutze 
+ParserListItem
+private(set) var elements: [ParserListItem] = []
+
+um die Ergebnisse ab zu speichern.
+    
+Der Übersichtlickeit halber können wir den neuen Code das in eine eigene Klasse SVGPatternElemetParser auslagern, der die im SVG Parser benutzt wird.
+Auch hier sollen die Änderungen in einer neuen -preview svg datei gespeichert werden.
+
+
 ## 1. Übersicht  
 
 `HatchFillManager` liest eine SVG-Datei ein, füllt sie mit verschiedenen Hatch-Mustern und liefert drei Ausgaben: 

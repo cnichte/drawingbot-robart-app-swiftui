@@ -99,36 +99,78 @@ import Foundation
 
 // MARK: - SVGElement & ParserListItem
 
-struct SVGElement: Identifiable, Hashable {
-    let id: UUID
-    let name: String
-    let attributes: [String: Double]
-    let rawAttributes: [String: String] // für z. B. d, points
+import Foundation
 
+/// A structure representing an SVG element with identifiable and hashable properties.
+struct SVGElement: Identifiable, Hashable {
+    /// A unique identifier for the SVG element.
+    let id: UUID
+    
+    /// The name of the SVG element (e.g., "rect", "circle").
+    let name: String
+    
+    /// A dictionary of attributes with numeric values (e.g., "x", "y", "width").
+    let attributes: [String: Double]
+    
+    /// A dictionary of raw attributes as strings (e.g., "d" for paths, "points" for polylines).
+    let rawAttributes: [String: String]
+    
+    /// Compares two SVG elements for equality based on their IDs.
+    ///
+    /// - Parameters:
+    ///   - lhs: The left-hand SVG element.
+    ///   - rhs: The right-hand SVG element.
+    /// - Returns: `true` if the elements have the same ID, `false` otherwise.
     static func == (lhs: SVGElement, rhs: SVGElement) -> Bool {
         lhs.id == rhs.id
     }
-
+    
+    /// Hashes the SVG element into a hasher.
+    ///
+    /// Combines the `id`, `name`, and `attributes` into the hasher for uniqueness.
+    ///
+    /// - Parameter hasher: The hasher to combine values into.
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(name)
         hasher.combine(attributes)
     }
     
+    /// Accesses a numeric attribute by key.
+    ///
+    /// - Parameter key: The attribute key (e.g., "x", "y").
+    /// - Returns: The `Double` value of the attribute, or `nil` if not found.
     subscript(key: String) -> Double? {
-            return attributes[key]
-        }
+        return attributes[key]
+    }
 }
 
+/// A structure representing a parsed SVG element with its generated output.
 struct ParserListItem: Identifiable, Hashable {
+    /// The unique identifier of the associated SVG element.
     var id: UUID { element.id }
+    
+    /// The SVG element associated with this item.
     let element: SVGElement
+    
+    /// The generated output string for the SVG element.
     let output: String
-
+    
+    /// Compares two parser list items for equality based on their IDs.
+    ///
+    /// - Parameters:
+    ///   - lhs: The left-hand parser list item.
+    ///   - rhs: The right-hand parser list item.
+    /// - Returns: `true` if the items have the same ID, `false` otherwise.
     static func == (lhs: ParserListItem, rhs: ParserListItem) -> Bool {
         lhs.id == rhs.id
     }
-
+    
+    /// Hashes the parser list item into a hasher.
+    ///
+    /// Combines the `id`, `element`, and `output` into the hasher for uniqueness.
+    ///
+    /// - Parameter hasher: The hasher to combine values into.
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(element)
@@ -136,31 +178,59 @@ struct ParserListItem: Identifiable, Hashable {
     }
 }
 
-// MARK: - Generator-Protokoll
+// MARK: - Generator Protocol
 
+/// A protocol defining the interface for generating code from SVG elements.
 protocol PlotterCodeGenerator {
+    /// Generates a string representation for a given SVG element.
+    ///
+    /// - Parameter element: The SVG element to generate code for.
+    /// - Returns: A string containing the generated code.
     func generate(for element: SVGElement) -> String
 }
 
-// MARK: - Generischer SVG-Parser
+// MARK: - Generic SVG Parser
 
+/// A generic SVG parser that processes SVG files and generates output using a provided code generator.
 class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
+    /// The code generator used to produce output for parsed SVG elements.
     private let generator: Generator
+    
+    /// The XML parser used to process the SVG file.
     private var parser: XMLParser?
+    
+    /// The list of parsed SVG elements and their generated outputs.
     private(set) var elements: [ParserListItem] = []
-
+    
+    /// A stack of transformation offsets (dx, dy) for handling nested group transformations.
     private var transformStack: [(dx: Double, dy: Double)] = [(0, 0)]
+    
+    /// The scaling factor for the x-axis based on paper and SVG dimensions.
     private var scaleX: Double = 1.0
+    
+    /// The scaling factor for the y-axis based on paper and SVG dimensions.
     private var scaleY: Double = 1.0
-
+    
+    /// Initializes the parser with a code generator.
+    ///
+    /// - Parameter generator: The generator used to produce output for SVG elements.
     init(generator: Generator) {
         self.generator = generator
     }
-
+    
+    /// Loads and parses an SVG file, scaling it to fit the specified paper dimensions.
+    ///
+    /// - Parameters:
+    ///   - fileURL: The URL of the SVG file to load.
+    ///   - svgWidth: The width of the SVG viewport.
+    ///   - svgHeight: The height of the SVG viewport.
+    ///   - paperWidth: The target paper width for scaling.
+    ///   - paperHeight: The target paper height for scaling.
+    /// - Returns: `true` if the file was successfully parsed, `false` otherwise.
     func loadSVGFile(from fileURL: URL, svgWidth: Double, svgHeight: Double, paperWidth: Double, paperHeight: Double) -> Bool {
         scaleX = paperWidth / svgWidth
         scaleY = paperHeight / svgHeight
-
+        
         do {
             let data = try Data(contentsOf: fileURL)
             parser = XMLParser(data: data)
@@ -171,31 +241,50 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
             return false
         }
     }
-
+    
+    /// Returns the current transformation offset (dx, dy).
+    ///
+    /// - Returns: A tuple containing the current translation offsets.
     func currentTransform() -> (dx: Double, dy: Double) {
         return transformStack.last ?? (0, 0)
     }
-
+    
+    /// Applies the current transformation to a point (x, y).
+    ///
+    /// - Parameters:
+    ///   - x: The x-coordinate to transform.
+    ///   - y: The y-coordinate to transform.
+    /// - Returns: A tuple containing the transformed (x, y) coordinates.
     func applyTransform(x: Double, y: Double) -> (Double, Double) {
         let t = currentTransform()
         return (x + t.dx, y + t.dy)
     }
-
+    
+    /// Called when the XML parser encounters the start of an element.
+    ///
+    /// Processes SVG elements, applies transformations, and generates output using the code generator.
+    ///
+    /// - Parameters:
+    ///   - parser: The XML parser processing the SVG file.
+    ///   - elementName: The name of the element (e.g., "rect", "g").
+    ///   - namespaceURI: The namespace URI, if any.
+    ///   - qName: The qualified name of the element.
+    ///   - attributeDict: A dictionary of the element's attributes.
     func parser(_ parser: XMLParser, didStartElement elementName: String,
                 namespaceURI: String?, qualifiedName qName: String?,
                 attributes attributeDict: [String: String]) {
-
+        
         if elementName == "g" {
             if let transform = attributeDict["transform"],
                transform.starts(with: "translate("),
                let open = transform.range(of: "translate(")?.upperBound,
                let close = transform.range(of: ")")?.lowerBound {
-
+                
                 let values = transform[open..<close]
                     .split(separator: ",")
                     .map { $0.trimmingCharacters(in: .whitespaces) }
                     .compactMap(Double.init)
-
+                
                 let dx = (values.count > 0 ? values[0] : 0.0) * scaleX
                 let dy = (values.count > 1 ? values[1] : 0.0) * scaleY
                 let parent = currentTransform()
@@ -205,7 +294,7 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
             }
             return
         }
-
+        
         var attributes: [String: Double] = [:]
         for (key, value) in attributeDict {
             if let val = Double(value) {
@@ -225,8 +314,8 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
                 }
             }
         }
-
-        // Für spezielle Felder original übernehmen
+        
+        // Handle special attributes (e.g., "points", "d") by preserving their raw values
         if let points = attributeDict["points"] {
             attributes["points_raw"] = 1 // Marker
             let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: ["points": points])
@@ -241,12 +330,21 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
             elements.append(ParserListItem(element: element, output: output))
             return
         }
-
+        
         let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: attributeDict)
         let output = generator.generate(for: element)
         elements.append(ParserListItem(element: element, output: output))
     }
-
+    
+    /// Called when the XML parser encounters the end of an element.
+    ///
+    /// Pops the transformation stack for group (`g`) elements.
+    ///
+    /// - Parameters:
+    ///   - parser: The XML parser processing the SVG file.
+    ///   - elementName: The name of the element.
+    ///   - namespaceURI: The namespace URI, if any.
+    ///   - qName: The qualified name of the element.
     func parser(_ parser: XMLParser, didEndElement elementName: String,
                 namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "g" {
