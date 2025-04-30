@@ -51,7 +51,7 @@ struct MachineSectionView: View {
         .onChange(of: currentJob.selectedMachine) { oldValue, newValue in //TODO: Fix für die Meldung unten...
             selectedMachine = newValue.isDefault ? nil : newValue
         }
-        .onChange(of: selectedMachine) { newValue in
+        .onChange(of: selectedMachine) { oldValue, newValue  in
             currentJob.selectedMachine = newValue ?? .default
         }
         .onAppear {
