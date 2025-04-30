@@ -8,14 +8,14 @@
 // PenSectionView.swift
 import SwiftUI
 
-struct PenSectionView: View {
+struct MachinePenSectionView: View {
     @Binding var currentJob: PlotJobData
     @Binding var selectedMachine: MachineData? // Binding für die ausgewählte Maschine
     @EnvironmentObject var assetStores: AssetStores
 
     var body: some View {
         CollapsibleSection(
-            title: "Stifte",
+            title: "Maschine | Stifte", // Stiftkonfiguration
             systemImage: "pencil.tip",
             toolbar: { EmptyView() }
         ) {
@@ -62,8 +62,8 @@ struct PenSectionView: View {
                     .foregroundColor(.secondary)
             }
         }
-        .onChange(of: selectedMachine) { newMachine in
-            appLog(.info, "PEN CECTION VIEW - MACHINE CHANGED: \(newMachine?.penCount)")
+        .onChange(of: selectedMachine) { oldMachine, newMachine in
+            appLog(.info, "PEN SECTION VIEW - MACHINE CHANGED: \(String(describing: newMachine?.penCount))")
             guard let newCount = newMachine?.penCount else { return }
             let currentCount = currentJob.penConfiguration.count
 

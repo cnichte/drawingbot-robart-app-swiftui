@@ -35,7 +35,7 @@ struct PenConfiguration: Codable, Equatable, Identifiable {
 }
 
 
-struct PlotJobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaultable  {
+struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaultable  {
     // standards
     let id: UUID
     var name: String
@@ -97,11 +97,11 @@ struct PlotJobData: Identifiable, Codable, Equatable, Transferable, Hashable, De
         self.selectedMachine = selectedMachine
     }
     
-    static var `default`: PlotJobData {
-        PlotJobData(id: UUID.force("cfd1401b-af1a-4382-a101-cee156f1cda4"), name: "Kein Job", paper: .default, selectedMachine: .default)
+    static var `default`: JobData {
+        JobData(id: UUID.force("cfd1401b-af1a-4382-a101-cee156f1cda4"), name: "Kein Job", paper: .default, selectedMachine: .default)
     }
     
-    static func == (lhs: PlotJobData, rhs: PlotJobData) -> Bool {
+    static func == (lhs: JobData, rhs: JobData) -> Bool {
         lhs.id == rhs.id // oder vollständiger Vergleich
     }
     

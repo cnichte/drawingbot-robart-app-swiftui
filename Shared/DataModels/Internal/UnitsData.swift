@@ -8,13 +8,13 @@
 // Units.swift
 import Foundation
 
-struct Units: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defaultable  {
+struct UnitsData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defaultable  {
     
     var id: UUID
     var name: String
     
-    static var `default`: Units {
-        Units(id: UUID.force("5f6bbf82-57cc-435d-8644-655481cd556b"), name: "mm", )
+    static var `default`: UnitsData {
+        UnitsData(id: UUID.force("5f6bbf82-57cc-435d-8644-655481cd556b"), name: "mm", )
     }
     
     init(
@@ -25,7 +25,7 @@ struct Units: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defaul
         self.name = name
     }
     
-    static func == (lhs: Units, rhs: Units) -> Bool {
+    static func == (lhs: UnitsData, rhs: UnitsData) -> Bool {
         lhs.id == rhs.id // oder vollständiger Vergleich
     }
     

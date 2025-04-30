@@ -1,6 +1,6 @@
 //
-//  JobPreviewView.swift
-//  Drawingbot-RobArt
+//  JobFormView.swift
+//  Robart
 //
 //  Created by Carsten Nichte on 11.04.25.
 //
@@ -26,14 +26,13 @@
 
 // TODO: UUID-Relationen in JSON! https://x.com/i/grok/share/HJ7BTKeYeDGFm4NhUtrOyYWdp
 
-// JobPreviewView.swift (aktualisiert mit Sidebar- und Inspector-Steuerung)
-// JobPreviewView.swift
+// JobFormView.swift (aktualisiert mit Sidebar- und Inspector-Steuerung)
 import SwiftUI
 #if os(iOS)
 import UIKit
 #endif
 
-struct JobPreviewView: View {
+struct JobFormView: View {
     @AppStorage("jobPreview_sidebarVisible") private var isSidebarVisible: Bool = true
     @AppStorage("jobPreview_inspectorVisible") private var isInspectorVisible: Bool = false
     

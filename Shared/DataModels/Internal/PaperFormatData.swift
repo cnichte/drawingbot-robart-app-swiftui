@@ -37,17 +37,17 @@ import Foundation
 // PaperFormat.swift
 import Foundation
 
-struct PaperFormat: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
+struct PaperFormatData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     
     var id: UUID
     var name: String
     var description: String
     var width:Double
     var height:Double
-    var unit:Units
+    var unit:UnitsData
     
-    static var `default`: PaperFormat {
-        PaperFormat(id: UUID.force("7e3eb341-cee9-4da6-8acb-677d5cb19e13"), name: "DIN A4", width: 210, height: 297, unit: .default)
+    static var `default`: PaperFormatData {
+        PaperFormatData(id: UUID.force("7e3eb341-cee9-4da6-8acb-677d5cb19e13"), name: "DIN A4", width: 210, height: 297, unit: .default)
     }
     
     init(
@@ -56,7 +56,7 @@ struct PaperFormat: Codable, Equatable, Identifiable, Hashable, ManageableItem  
         description: String = "",
         width:Double = 0,
         height:Double = 0,
-        unit:Units = .default
+        unit:UnitsData = .default
     ) {
         self.id = id
         self.name = name
@@ -66,7 +66,7 @@ struct PaperFormat: Codable, Equatable, Identifiable, Hashable, ManageableItem  
         self.unit = unit
     }
     
-    static func == (lhs: PaperFormat, rhs: PaperFormat) -> Bool {
+    static func == (lhs: PaperFormatData, rhs: PaperFormatData) -> Bool {
         lhs.id == rhs.id // oder vollständiger Vergleich
     }
     

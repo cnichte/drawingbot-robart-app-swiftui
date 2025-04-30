@@ -8,14 +8,14 @@
 // AspectRatio.swift
 import Foundation
 
-struct AspectRatio: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
+struct AspectRatioData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     
     var id: UUID
     var name: String
     var factor:Double
     
-    static var `default`: AspectRatio {
-        AspectRatio(id: UUID.force("4b34dc07-a722-4a40-8bbf-8503739db801"), name: "From Paper", factor: 1.0)
+    static var `default`: AspectRatioData {
+        AspectRatioData(id: UUID.force("4b34dc07-a722-4a40-8bbf-8503739db801"), name: "From Paper", factor: 1.0)
     }
     
     init(
@@ -28,7 +28,7 @@ struct AspectRatio: Codable, Equatable, Identifiable, Hashable, ManageableItem  
         self.factor = factor
     }
     
-    static func == (lhs: AspectRatio, rhs: AspectRatio) -> Bool {
+    static func == (lhs: AspectRatioData, rhs: AspectRatioData) -> Bool {
         lhs.id == rhs.id // oder vollständiger Vergleich
     }
     

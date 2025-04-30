@@ -24,6 +24,12 @@ struct JobSettingsPanel: View {
                 JobSectionView(currentJob: $currentJob)
                     .padding(.horizontal, 0)
 
+                MachineSectionView(currentJob: $currentJob, selectedMachine: $selectedMachine)
+                    .padding(.horizontal, 0)
+                
+                MachinePenSectionView(currentJob: $currentJob, selectedMachine: $selectedMachine)
+                    .padding(.horizontal, 0)
+                
                 SVGSectionView(
                     currentJob: $currentJob,
                     svgFileName: $svgFileName,
@@ -31,17 +37,22 @@ struct JobSettingsPanel: View {
                 )
                 .padding(.horizontal, 0)
 
+                SVGLayersSectionView(currentJob: $currentJob)
+                    .padding(.horizontal, 0)
+                
+                SVGColorsSectionView(currentJob: $currentJob)
+                    .padding(.horizontal, 0)
+                
+                
                 PaperSectionView(currentJob: $currentJob, onUpdate: saveCurrentJob)
                     .padding(.horizontal, 0)
 
                 SignatureSectionView(currentJob: $currentJob)
                     .padding(.horizontal, 0)
                 
-                MachineSectionView(currentJob: $currentJob, selectedMachine: $selectedMachine)
-                    .padding(.horizontal, 0)
+
                 
-                PenSectionView(currentJob: $currentJob, selectedMachine: $selectedMachine)
-                    .padding(.horizontal, 0)
+
                 
                 ActionsSectionView(currentJob: $currentJob)
                     .padding(.horizontal, 0)

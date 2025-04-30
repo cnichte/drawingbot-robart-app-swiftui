@@ -1,15 +1,15 @@
 //
-//  PaperPreview.swift
-//  Drawingbot-RobArt
+//  PaperPanel.swift
+//  Robart
 //
 //  Created by Carsten Nichte on 11.04.25.
 //
 
-// PaperPreview.swift
+// PaperPanel.swift
 import SwiftUI
 import SVGView
 
-struct PaperPreview: View {
+struct PaperPanel: View {
     @Binding var zoom: Double
     @Binding var pitch: Double
     @Binding var origin: CGPoint
