@@ -71,7 +71,7 @@ struct JobListView: View {
         Menubar(
             title: "Jobs",
             systemImage: "",
-            toolbar: { // TODO: on macOS and iPad okay - on iPhone to much spacce
+            toolbar: {
                 HStack(spacing: 12) {
                     Button {
                         Task {

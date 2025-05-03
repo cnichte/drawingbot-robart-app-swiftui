@@ -5,17 +5,17 @@
 //  Created by Carsten Nichte on 29.04.25.
 //
 
-// CollapsibleSection.swift
+// Menubar.swift
 import SwiftUI
 
 struct Menubar<Toolbar: View>: View {
-    let title: String
-    let systemImage: String
+    var title: String?
+    var systemImage: String?
     let toolbar: Toolbar
 
     init(
-        title: String,
-        systemImage: String,
+        title: String? = nil,
+        systemImage: String? = nil,
         @ViewBuilder toolbar: () -> Toolbar = { EmptyView() },
     ) {
         self.title = title
@@ -25,27 +25,25 @@ struct Menubar<Toolbar: View>: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            VStack(spacing: 0) {
-                HStack {
-                    HStack {
-                        Image(systemName: systemImage)
-                        Text(title)
-                            .font(.headline)
-                            .lineLimit(1)
-                        Spacer()
-                    }
-                    // Toolbar direkt daneben
-                    toolbar
+            HStack {
+                if let systemImage = systemImage {
+                    Image(systemName: systemImage)
                 }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 8)
-                .background(ColorHelper.backgroundColor)
-                .foregroundColor(.primary)
-                .cornerRadius(8)
+                if let title = title {
+                    Text(title)
+                        .font(.headline)
+                        .lineLimit(1)
+                }
+                Spacer()
+                
+                toolbar
             }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 8)
+            .background(ColorHelper.backgroundColor)
+            .foregroundColor(.primary)
+            .cornerRadius(8)
         }
         .padding(.horizontal)
-        .padding(.bottom, 0)
     }
 }

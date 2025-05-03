@@ -15,27 +15,23 @@
 		D509C0A42DBC4A20009B0233 /* PaperSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0A22DBC4A1D009B0233 /* PaperSectionView.swift */; };
 		D509C0A62DBC4AD2009B0233 /* SignatureSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0A52DBC4AA8009B0233 /* SignatureSectionView.swift */; };
 		D509C0A72DBC4AD2009B0233 /* SignatureSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0A52DBC4AA8009B0233 /* SignatureSectionView.swift */; };
-		D509C0A92DBC4AED009B0233 /* MachinePenSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0A82DBC4AEA009B0233 /* MachinePenSectionView.swift */; };
-		D509C0AA2DBC4AED009B0233 /* MachinePenSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0A82DBC4AEA009B0233 /* MachinePenSectionView.swift */; };
 		D509C0AC2DBC4B05009B0233 /* MachineSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */; };
 		D509C0AD2DBC4B05009B0233 /* MachineSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */; };
 		D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
-		D5148EE92DC22F5200BDBE73 /* SVGColorsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EE82DC22F5200BDBE73 /* SVGColorsSectionView.swift */; };
-		D5148EEA2DC22F5200BDBE73 /* SVGColorsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EE82DC22F5200BDBE73 /* SVGColorsSectionView.swift */; };
-		D5148EEC2DC22F6A00BDBE73 /* SVGLayersSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEB2DC22F6A00BDBE73 /* SVGLayersSectionView.swift */; };
-		D5148EED2DC22F6A00BDBE73 /* SVGLayersSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEB2DC22F6A00BDBE73 /* SVGLayersSectionView.swift */; };
-		D5148EEE2DC23F2B00BDBE73 /* PaperPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085202DAFD8DE00332690 /* PaperPanel.swift */; };
-		D5148EF02DC25A7800BDBE73 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */; };
-		D5148EF12DC25A7800BDBE73 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */; };
-		D5148EF42DC25B0000BDBE73 /* HatchFillManager.md in Resources */ = {isa = PBXBuildFile; fileRef = D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */; };
-		D5148EF62DC27C7600BDBE73 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EF52DC27C6200BDBE73 /* SVGParser+PatternSupport.swift */; };
-		D5148EF72DC27C7600BDBE73 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5148EF52DC27C6200BDBE73 /* SVGParser+PatternSupport.swift */; };
-		D5148EFE2DC2961B00BDBE73 /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5148EFD2DC2961B00BDBE73 /* ORSSerial */; };
-		D5148F002DC2961B00BDBE73 /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5148EFF2DC2961B00BDBE73 /* SVGView */; };
-		D5148F022DC2962300BDBE73 /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5148F012DC2962300BDBE73 /* ORSSerial */; };
-		D5148F042DC2962300BDBE73 /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5148F032DC2962300BDBE73 /* SVGView */; };
+		D52AE7F02DC4375600D7E6C8 /* SVGLayersSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7EF2DC4375600D7E6C8 /* SVGLayersSectionView.swift */; };
+		D52AE7F12DC4375600D7E6C8 /* MachinePenSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7ED2DC4375600D7E6C8 /* MachinePenSectionView.swift */; };
+		D52AE7F22DC4375600D7E6C8 /* SVGColorsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */; };
+		D52AE7F32DC4375600D7E6C8 /* SVGLayersSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7EF2DC4375600D7E6C8 /* SVGLayersSectionView.swift */; };
+		D52AE7F42DC4375600D7E6C8 /* MachinePenSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7ED2DC4375600D7E6C8 /* MachinePenSectionView.swift */; };
+		D52AE7F52DC4375600D7E6C8 /* SVGColorsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */; };
+		D52AE7F92DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */; };
+		D52AE7FA2DC4399F00D7E6C8 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */; };
+		D52AE7FB2DC4399F00D7E6C8 /* HatchFillManager.md in Resources */ = {isa = PBXBuildFile; fileRef = D52AE7F62DC4399F00D7E6C8 /* HatchFillManager.md */; };
+		D52AE7FC2DC4399F00D7E6C8 /* HatchFillManager.md in Resources */ = {isa = PBXBuildFile; fileRef = D52AE7F62DC4399F00D7E6C8 /* HatchFillManager.md */; };
+		D52AE7FD2DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */; };
+		D52AE7FE2DC4399F00D7E6C8 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */; };
 		D52C0AEB2DBA613400F57746 /* PaperFormatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */; };
 		D52C0AEC2DBA613400F57746 /* PaperFormatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */; };
 		D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */ = {isa = PBXBuildFile; fileRef = D52C0AEE2DBA655000F57746 /* paper-formats.json */; };
@@ -48,6 +44,7 @@
 		D52C0AFC2DBA823D00F57746 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */; };
 		D52D48E02DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
 		D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
+		D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */; };
 		D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E442DB1275C00F09A0C /* View+DropZone.swift */; };
@@ -81,14 +78,12 @@
 		D587A43A2DBEAE620072D83C /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4392DBEAE5D0072D83C /* TestView.swift */; };
 		D587A43D2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A43C2DBEB9A20072D83C /* ConnectionStatusHeader.swift */; };
 		D587A43E2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A43C2DBEB9A20072D83C /* ConnectionStatusHeader.swift */; };
-		D587A4422DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4412DBEDDD90072D83C /* JobSettingsPanel.swift */; };
-		D587A4432DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4412DBEDDD90072D83C /* JobSettingsPanel.swift */; };
+		D587A4422DBEDDDE0072D83C /* JobPropertiesPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4412DBEDDD90072D83C /* JobPropertiesPanel.swift */; };
+		D587A4432DBEDDDE0072D83C /* JobPropertiesPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4412DBEDDD90072D83C /* JobPropertiesPanel.swift */; };
 		D587A4452DBEDE0D0072D83C /* JobInspectorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */; };
 		D587A4462DBEDE0D0072D83C /* JobInspectorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */; };
 		D587A4482DBEED1C0072D83C /* ActionsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4472DBEED190072D83C /* ActionsSectionView.swift */; };
 		D587A4492DBEED1C0072D83C /* ActionsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4472DBEED190072D83C /* ActionsSectionView.swift */; };
-		D59996072DC180EA00130770 /* Defaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59996062DC180E400130770 /* Defaultable.swift */; };
-		D59996082DC180EA00130770 /* Defaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59996062DC180E400130770 /* Defaultable.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -135,20 +130,13 @@
 		D5A0850F2DAFD8AD00332690 /* RemoteControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085012DAFD8AD00332690 /* RemoteControlView.swift */; };
 		D5A085102DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */; };
 		D5A085112DAFD8AD00332690 /* Joystick_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085002DAFD8AD00332690 /* Joystick_View.swift */; };
-		D5A085172DAFD8C900332690 /* JobSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085152DAFD8C900332690 /* JobSummaryView.swift */; };
 		D5A085182DAFD8C900332690 /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085132DAFD8C900332690 /* JobListView.swift */; };
 		D5A0851A2DAFD8C900332690 /* JobFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085142DAFD8C900332690 /* JobFormView.swift */; };
-		D5A0851B2DAFD8C900332690 /* JobSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085152DAFD8C900332690 /* JobSummaryView.swift */; };
 		D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085132DAFD8C900332690 /* JobListView.swift */; };
 		D5A0851E2DAFD8C900332690 /* JobFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085142DAFD8C900332690 /* JobFormView.swift */; };
-		D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */; };
 		D5A085282DAFD8DE00332690 /* Speedometer_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085232DAFD8DE00332690 /* Speedometer_View.swift */; };
-		D5A085292DAFD8DE00332690 /* SVGTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085252DAFD8DE00332690 /* SVGTreeView.swift */; };
-		D5A0852A2DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */; };
-		D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */; };
+		D5A0852B2DAFD8DE00332690 /* PaperPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085202DAFD8DE00332690 /* PaperPanel.swift */; };
 		D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085232DAFD8DE00332690 /* Speedometer_View.swift */; };
-		D5A0852F2DAFD8DE00332690 /* SVGTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085252DAFD8DE00332690 /* SVGTreeView.swift */; };
-		D5A085302DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */; };
 		D5A085312DAFD8DE00332690 /* PaperPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085202DAFD8DE00332690 /* PaperPanel.swift */; };
 		D5A085332DAFE17000332690 /* CollapsibleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085322DAFE17000332690 /* CollapsibleSection.swift */; };
 		D5A085342DAFE17000332690 /* CollapsibleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085322DAFE17000332690 /* CollapsibleSection.swift */; };
@@ -164,9 +152,22 @@
 		D5A085C02DB0348D00332690 /* JobRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A085BE2DB0348D00332690 /* JobRow.swift */; };
 		D5A341042DBAF323005FF05A /* units.json in Resources */ = {isa = PBXBuildFile; fileRef = D5A341032DBAF31A005FF05A /* units.json */; };
 		D5A341052DBAF323005FF05A /* units.json in Resources */ = {isa = PBXBuildFile; fileRef = D5A341032DBAF31A005FF05A /* units.json */; };
+		D5A884622DC583600090BCE4 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A884612DC583600090BCE4 /* CustomButton.swift */; };
+		D5A884632DC583600090BCE4 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A884612DC583600090BCE4 /* CustomButton.swift */; };
 		D5D104092DAEF2E600E8406E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
 		D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104242DAEF38000E8406E /* USBSerialScanner.swift */; platformFilters = (macos, ); };
 		D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104262DAEF39000E8406E /* USBSerialScanner.swift */; platformFilter = ios; };
+		D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042A2DAEF43900E8406E /* ORSSerial */; };
+		D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042D2DAEF44B00E8406E /* SVGView */; };
+		D5D104302DAEF45100E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042F2DAEF45100E8406E /* SVGView */; };
+		D5E1E6CD2DC417D7008F6347 /* JobInspector_MachineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6CC2DC417BD008F6347 /* JobInspector_MachineInfoView.swift */; };
+		D5E1E6CE2DC417D7008F6347 /* JobInspector_MachineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6CC2DC417BD008F6347 /* JobInspector_MachineInfoView.swift */; };
+		D5E1E6D02DC417EC008F6347 /* JobInspector_SVGFileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6CF2DC417EA008F6347 /* JobInspector_SVGFileInfoView.swift */; };
+		D5E1E6D12DC417EC008F6347 /* JobInspector_SVGFileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6CF2DC417EA008F6347 /* JobInspector_SVGFileInfoView.swift */; };
+		D5E1E6D32DC417F9008F6347 /* JobInspector_SVGPropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6D22DC417F5008F6347 /* JobInspector_SVGPropertiesView.swift */; };
+		D5E1E6D42DC417F9008F6347 /* JobInspector_SVGPropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6D22DC417F5008F6347 /* JobInspector_SVGPropertiesView.swift */; };
+		D5E1E6D62DC41D08008F6347 /* Defaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6D52DC41D02008F6347 /* Defaultable.swift */; };
+		D5E1E6D72DC41D08008F6347 /* Defaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6D52DC41D02008F6347 /* Defaultable.swift */; };
 		D5E55CBD2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */; };
 		D5E55CBE2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */; };
 		D5E55CC02DBF6E95003806CF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CBF2DBF6E93003806CF /* Logger.swift */; };
@@ -200,8 +201,6 @@
 		D5E55CF42DC02830003806CF /* CustomSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4362DBEA9F10072D83C /* CustomSplitView.swift */; };
 		D5E55CF62DC049C0003806CF /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CF52DC049B4003806CF /* Menubar.swift */; };
 		D5E55CF72DC049C1003806CF /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CF52DC049B4003806CF /* Menubar.swift */; };
-		D5E69CA12DC13CC6003E8ADF /* welcome-to-robart.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E69CA02DC13CBD003E8ADF /* welcome-to-robart.json */; };
-		D5E69CA22DC13CC6003E8ADF /* welcome-to-robart.json in Resources */ = {isa = PBXBuildFile; fileRef = D5E69CA02DC13CBD003E8ADF /* welcome-to-robart.json */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -223,6 +222,19 @@
 		D5F6C6412DB8481A00020AEE /* MachineFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6402DB8481A00020AEE /* MachineFormView.swift */; };
 		D5F6C6442DB8498700020AEE /* ConnectionManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6432DB8498700020AEE /* ConnectionManagerView.swift */; };
 		D5F6C6472DB8499900020AEE /* ConnectionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F6C6462DB8499900020AEE /* ConnectionFormView.swift */; };
+		D5F896CC2DBCCB9600397561 /* robart-dev-check-v3.0.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896CB2DBCCB8F00397561 /* robart-dev-check-v3.0.sh */; };
+		D5F896CE2DBCCE9100397561 /* robart-dev-check-v2.5.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896CD2DBCCE8400397561 /* robart-dev-check-v2.5.sh */; };
+		D5F896D02DBCCEF900397561 /* robart-dev-check-v2.0.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896CF2DBCCEF200397561 /* robart-dev-check-v2.0.sh */; };
+		D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D12DBCCF2F00397561 /* robart-dev-check.sh */; };
+		D5F896D42DBCCFA100397561 /* robart-dev-check-v3.5.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D32DBCCF9B00397561 /* robart-dev-check-v3.5.sh */; };
+		D5F896D62DBCD05000397561 /* robart-dev-check-v4.0.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D52DBCD04500397561 /* robart-dev-check-v4.0.sh */; };
+		D5F896D82DBCD12C00397561 /* robart-dev-check-v5.0.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D72DBCD12400397561 /* robart-dev-check-v5.0.sh */; };
+		D5F896DA2DBCD27500397561 /* robart-dev-check-mini.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896D92DBCD26F00397561 /* robart-dev-check-mini.sh */; };
+		D5F896DC2DBCD2DF00397561 /* robart-dev-check-quickrun.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896DB2DBCD2D500397561 /* robart-dev-check-quickrun.sh */; };
+		D5F896DE2DBCD54700397561 /* robart-dev-testbuildrun.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896DD2DBCD53900397561 /* robart-dev-testbuildrun.sh */; };
+		D5F896E02DBCD63A00397561 /* robart-dev-testbuildrun-all.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896DF2DBCD63500397561 /* robart-dev-testbuildrun-all.sh */; };
+		D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896E12DBCD6DB00397561 /* robart-testmode-only.sh */; };
+		D5F896E42DBCD76900397561 /* robart-smoke-test.sh in Resources */ = {isa = PBXBuildFile; fileRef = D5F896E32DBCD76500397561 /* robart-smoke-test.sh */; };
 		D5F896E82DBCDF4800397561 /* aspect-ratios.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896E72DBCDF3C00397561 /* aspect-ratios.json */; };
 		D5F896E92DBCDF4800397561 /* aspect-ratios.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896E72DBCDF3C00397561 /* aspect-ratios.json */; };
 		D5F896EB2DBCE24D00397561 /* AspectRatioData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896EA2DBCE24500397561 /* AspectRatioData.swift */; };
@@ -265,14 +277,14 @@
 		D509C09F2DBC49EF009B0233 /* SVGSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGSectionView.swift; sourceTree = "<group>"; };
 		D509C0A22DBC4A1D009B0233 /* PaperSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperSectionView.swift; sourceTree = "<group>"; };
 		D509C0A52DBC4AA8009B0233 /* SignatureSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureSectionView.swift; sourceTree = "<group>"; };
-		D509C0A82DBC4AEA009B0233 /* MachinePenSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachinePenSectionView.swift; sourceTree = "<group>"; };
 		D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSectionView.swift; sourceTree = "<group>"; };
 		D50A30632DAEFA9100859908 /* RobartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobartApp.swift; sourceTree = "<group>"; };
-		D5148EE82DC22F5200BDBE73 /* SVGColorsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGColorsSectionView.swift; sourceTree = "<group>"; };
-		D5148EEB2DC22F6A00BDBE73 /* SVGLayersSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLayersSectionView.swift; sourceTree = "<group>"; };
-		D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HatchFillManager.swift; sourceTree = "<group>"; };
-		D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HatchFillManager.md; sourceTree = "<group>"; };
-		D5148EF52DC27C6200BDBE73 /* SVGParser+PatternSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVGParser+PatternSupport.swift"; sourceTree = "<group>"; };
+		D52AE7ED2DC4375600D7E6C8 /* MachinePenSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachinePenSectionView.swift; sourceTree = "<group>"; };
+		D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGColorsSectionView.swift; sourceTree = "<group>"; };
+		D52AE7EF2DC4375600D7E6C8 /* SVGLayersSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLayersSectionView.swift; sourceTree = "<group>"; };
+		D52AE7F62DC4399F00D7E6C8 /* HatchFillManager.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HatchFillManager.md; sourceTree = "<group>"; };
+		D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HatchFillManager.swift; sourceTree = "<group>"; };
+		D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVGParser+PatternSupport.swift"; sourceTree = "<group>"; };
 		D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperFormatData.swift; sourceTree = "<group>"; };
 		D52C0AEE2DBA655000F57746 /* paper-formats.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "paper-formats.json"; sourceTree = "<group>"; };
 		D52C0AF42DBA72DF00F57746 /* AssetStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStores.swift; sourceTree = "<group>"; };
@@ -296,10 +308,9 @@
 		D587A4362DBEA9F10072D83C /* CustomSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSplitView.swift; sourceTree = "<group>"; };
 		D587A4392DBEAE5D0072D83C /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		D587A43C2DBEB9A20072D83C /* ConnectionStatusHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusHeader.swift; sourceTree = "<group>"; };
-		D587A4412DBEDDD90072D83C /* JobSettingsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSettingsPanel.swift; sourceTree = "<group>"; };
+		D587A4412DBEDDD90072D83C /* JobPropertiesPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobPropertiesPanel.swift; sourceTree = "<group>"; };
 		D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspectorPanel.swift; sourceTree = "<group>"; };
 		D587A4472DBEED190072D83C /* ActionsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsSectionView.swift; sourceTree = "<group>"; };
-		D59996062DC180E400130770 /* Defaultable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaultable.swift; sourceTree = "<group>"; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -339,11 +350,16 @@
 		D5A085BB2DB02E2100332690 /* JobRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRowView.swift; sourceTree = "<group>"; };
 		D5A085BE2DB0348D00332690 /* JobRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRow.swift; sourceTree = "<group>"; };
 		D5A341032DBAF31A005FF05A /* units.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = units.json; sourceTree = "<group>"; };
+		D5A884612DC583600090BCE4 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		D5D104032DAEF2E600E8406E /* Robart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Robart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D104082DAEF2E600E8406E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D5D104162DAEF30700E8406E /* Robart-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Robart-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D104242DAEF38000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
 		D5D104262DAEF39000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
+		D5E1E6CC2DC417BD008F6347 /* JobInspector_MachineInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspector_MachineInfoView.swift; sourceTree = "<group>"; };
+		D5E1E6CF2DC417EA008F6347 /* JobInspector_SVGFileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspector_SVGFileInfoView.swift; sourceTree = "<group>"; };
+		D5E1E6D22DC417F5008F6347 /* JobInspector_SVGPropertiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspector_SVGPropertiesView.swift; sourceTree = "<group>"; };
+		D5E1E6D52DC41D02008F6347 /* Defaultable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaultable.swift; sourceTree = "<group>"; };
 		D5E55CBC2DBF6A41003806CF /* SVGMigrationTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGMigrationTester.swift; sourceTree = "<group>"; };
 		D5E55CBF2DBF6E93003806CF /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		D5E55CC22DBF766F003806CF /* JobsDataFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsDataFileManager.swift; sourceTree = "<group>"; };
@@ -360,7 +376,6 @@
 		D5E55CEE2DBFFF78003806CF /* SignatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureData.swift; sourceTree = "<group>"; };
 		D5E55CF12DC0102E003806CF /* jobs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = jobs.json; sourceTree = "<group>"; };
 		D5E55CF52DC049B4003806CF /* Menubar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menubar.swift; sourceTree = "<group>"; };
-		D5E69CA02DC13CBD003E8ADF /* welcome-to-robart.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "welcome-to-robart.json"; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -468,8 +483,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5148F002DC2961B00BDBE73 /* SVGView in Frameworks */,
-				D5148EFE2DC2961B00BDBE73 /* ORSSerial in Frameworks */,
+				D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */,
+				D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,8 +492,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5148F042DC2962300BDBE73 /* SVGView in Frameworks */,
-				D5148F022DC2962300BDBE73 /* ORSSerial in Frameworks */,
+				D5D104302DAEF45100E8406E /* SVGView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,15 +502,15 @@
 		D509C0982DBC4979009B0233 /* JobSectionViews */ = {
 			isa = PBXGroup;
 			children = (
+				D52AE7ED2DC4375600D7E6C8 /* MachinePenSectionView.swift */,
+				D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */,
+				D52AE7EF2DC4375600D7E6C8 /* SVGLayersSectionView.swift */,
 				D587A4472DBEED190072D83C /* ActionsSectionView.swift */,
 				D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */,
-				D509C0A82DBC4AEA009B0233 /* MachinePenSectionView.swift */,
 				D509C0A52DBC4AA8009B0233 /* SignatureSectionView.swift */,
 				D509C0A22DBC4A1D009B0233 /* PaperSectionView.swift */,
 				D509C09F2DBC49EF009B0233 /* SVGSectionView.swift */,
 				D509C09C2DBC49D5009B0233 /* JobSectionView.swift */,
-				D5148EE82DC22F5200BDBE73 /* SVGColorsSectionView.swift */,
-				D5148EEB2DC22F6A00BDBE73 /* SVGLayersSectionView.swift */,
 			);
 			path = JobSectionViews;
 			sourceTree = "<group>";
@@ -504,7 +518,6 @@
 		D52C0AED2DBA654600F57746 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D5E69CA02DC13CBD003E8ADF /* welcome-to-robart.json */,
 				D5E55CF12DC0102E003806CF /* jobs.json */,
 				D5E55CEB2DBFFEFB003806CF /* signatures.json */,
 				D5E55CD42DBF8D21003806CF /* projects.json */,
@@ -522,6 +535,7 @@
 		D52C0AFD2DBA87C100F57746 /* PartialViews */ = {
 			isa = PBXGroup;
 			children = (
+				D5A884612DC583600090BCE4 /* CustomButton.swift */,
 				D5E55CF52DC049B4003806CF /* Menubar.swift */,
 				D5A085232DAFD8DE00332690 /* Speedometer_View.swift */,
 				D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */,
@@ -643,19 +657,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		D587A43F2DBEBFA40072D83C /* JobFormView */ = {
-			isa = PBXGroup;
-			children = (
-				D5A085142DAFD8C900332690 /* JobFormView.swift */,
-				D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */,
-				D587A4412DBEDDD90072D83C /* JobSettingsPanel.swift */,
-				D587A4402DBEBFFA0072D83C /* Deprecated */,
-				D509C0982DBC4979009B0233 /* JobSectionViews */,
-				D5A085202DAFD8DE00332690 /* PaperPanel.swift */,
-			);
-			path = JobFormView;
-			sourceTree = "<group>";
-		};
 		D587A4402DBEBFFA0072D83C /* Deprecated */ = {
 			isa = PBXGroup;
 			children = (
@@ -688,7 +689,7 @@
 		D5A084C92DAFD83400332690 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
-				D59996062DC180E400130770 /* Defaultable.swift */,
+				D5E1E6D52DC41D02008F6347 /* Defaultable.swift */,
 				D5F896E62DBCDDD500397561 /* Assets */,
 				D5F896E52DBCDDB800397561 /* Internal */,
 				D5A084CD2DAFD84000332690 /* JobData.swift */,
@@ -710,9 +711,9 @@
 		D5A084E92DAFD87E00332690 /* SVGParser */ = {
 			isa = PBXGroup;
 			children = (
-				D5148EF52DC27C6200BDBE73 /* SVGParser+PatternSupport.swift */,
-				D5148EF22DC25AF700BDBE73 /* HatchFillManager.md */,
-				D5148EEF2DC25A7100BDBE73 /* HatchFillManager.swift */,
+				D52AE7F62DC4399F00D7E6C8 /* HatchFillManager.md */,
+				D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */,
+				D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */,
 				D5A084EA2DAFD88A00332690 /* BasePlotterGenerator.swift */,
 				D5A084EB2DAFD88A00332690 /* EggbotGenerator.swift */,
 				D5A084EC2DAFD88A00332690 /* GCodeGenerator.swift */,
@@ -727,8 +728,8 @@
 		D5A084FC2DAFD89900332690 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D5E1E6C92DC41497008F6347 /* JobFormView */,
 				D5E55CD72DBF8DBD003806CF /* View-Extensions */,
-				D587A43F2DBEBFA40072D83C /* JobFormView */,
 				D52C0AFD2DBA87C100F57746 /* PartialViews */,
 				D5F6C61F2DB8348600020AEE /* GenericItemManagerView */,
 				D57076D52DB57F4600C277AF /* Settings+Assets */,
@@ -827,6 +828,38 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D5E1E6C92DC41497008F6347 /* JobFormView */ = {
+			isa = PBXGroup;
+			children = (
+				D5A085142DAFD8C900332690 /* JobFormView.swift */,
+				D5A085202DAFD8DE00332690 /* PaperPanel.swift */,
+				D587A4402DBEBFFA0072D83C /* Deprecated */,
+				D5E1E6CB2DC414FB008F6347 /* JobPropertiesPanel */,
+				D5E1E6CA2DC414DA008F6347 /* JobInspectorPanel */,
+			);
+			path = JobFormView;
+			sourceTree = "<group>";
+		};
+		D5E1E6CA2DC414DA008F6347 /* JobInspectorPanel */ = {
+			isa = PBXGroup;
+			children = (
+				D5E1E6D22DC417F5008F6347 /* JobInspector_SVGPropertiesView.swift */,
+				D5E1E6CF2DC417EA008F6347 /* JobInspector_SVGFileInfoView.swift */,
+				D5E1E6CC2DC417BD008F6347 /* JobInspector_MachineInfoView.swift */,
+				D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */,
+			);
+			path = JobInspectorPanel;
+			sourceTree = "<group>";
+		};
+		D5E1E6CB2DC414FB008F6347 /* JobPropertiesPanel */ = {
+			isa = PBXGroup;
+			children = (
+				D509C0982DBC4979009B0233 /* JobSectionViews */,
+				D587A4412DBEDDD90072D83C /* JobPropertiesPanel.swift */,
+			);
+			path = JobPropertiesPanel;
 			sourceTree = "<group>";
 		};
 		D5E55CD72DBF8DBD003806CF /* View-Extensions */ = {
@@ -949,8 +982,8 @@
 			);
 			name = Robart;
 			packageProductDependencies = (
-				D5148EFD2DC2961B00BDBE73 /* ORSSerial */,
-				D5148EFF2DC2961B00BDBE73 /* SVGView */,
+				D5D1042A2DAEF43900E8406E /* ORSSerial */,
+				D5D1042D2DAEF44B00E8406E /* SVGView */,
 			);
 			productName = Robart;
 			productReference = D5D104032DAEF2E600E8406E /* Robart.app */;
@@ -973,8 +1006,7 @@
 			);
 			name = "Robart-iOS";
 			packageProductDependencies = (
-				D5148F012DC2962300BDBE73 /* ORSSerial */,
-				D5148F032DC2962300BDBE73 /* SVGView */,
+				D5D1042F2DAEF45100E8406E /* SVGView */,
 			);
 			productName = "Robart-iOS";
 			productReference = D5D104162DAEF30700E8406E /* Robart-iOS.app */;
@@ -1016,8 +1048,8 @@
 			mainGroup = D5D103FA2DAEF2E600E8406E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				D5148EFB2DC295A200BDBE73 /* XCRemoteSwiftPackageReference "ORSSerialPort" */,
-				D5148EFC2DC295B100BDBE73 /* XCRemoteSwiftPackageReference "SVGView" */,
+				D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */,
+				D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D5D104042DAEF2E600E8406E /* Products */;
@@ -1051,16 +1083,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5F896CE2DBCCE9100397561 /* robart-dev-check-v2.5.sh in Resources */,
+				D5F896E42DBCD76900397561 /* robart-smoke-test.sh in Resources */,
+				D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */,
+				D5F896DC2DBCD2DF00397561 /* robart-dev-check-quickrun.sh in Resources */,
 				D5E55CF32DC01036003806CF /* jobs.json in Resources */,
+				D5F896D62DBCD05000397561 /* robart-dev-check-v4.0.sh in Resources */,
 				D5F896F22DBCFB2D00397561 /* papers.json in Resources */,
 				D5F896FD2DBD7F3900397561 /* machines.json in Resources */,
+				D5F896E02DBCD63A00397561 /* robart-dev-testbuildrun-all.sh in Resources */,
 				D5A341042DBAF323005FF05A /* units.json in Resources */,
 				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
+				D5F896D02DBCCEF900397561 /* robart-dev-check-v2.0.sh in Resources */,
+				D5F896DE2DBCD54700397561 /* robart-dev-testbuildrun.sh in Resources */,
 				D5E55CEC2DBFFF05003806CF /* signatures.json in Resources */,
-				D5E69CA22DC13CC6003E8ADF /* welcome-to-robart.json in Resources */,
+				D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */,
+				D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */,
+				D5F896DA2DBCD27500397561 /* robart-dev-check-mini.sh in Resources */,
 				D5F896FB2DBD7C0400397561 /* pens.json in Resources */,
+				D5F896D42DBCCFA100397561 /* robart-dev-check-v3.5.sh in Resources */,
+				D52AE7FC2DC4399F00D7E6C8 /* HatchFillManager.md in Resources */,
+				D5F896CC2DBCCB9600397561 /* robart-dev-check-v3.0.sh in Resources */,
 				D5E55CD52DBF8D2A003806CF /* projects.json in Resources */,
 				D5F897012DBD84CA00397561 /* connections.json in Resources */,
+				D5F896D82DBCD12C00397561 /* robart-dev-check-v5.0.sh in Resources */,
 				D5F896E82DBCDF4800397561 /* aspect-ratios.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1069,13 +1115,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5E69CA12DC13CC6003E8ADF /* welcome-to-robart.json in Resources */,
 				D5F896FE2DBD7F3900397561 /* machines.json in Resources */,
 				D5F896E92DBCDF4800397561 /* aspect-ratios.json in Resources */,
 				D5F897002DBD84CA00397561 /* connections.json in Resources */,
 				D5A341052DBAF323005FF05A /* units.json in Resources */,
+				D52AE7FB2DC4399F00D7E6C8 /* HatchFillManager.md in Resources */,
 				D5E55CED2DBFFF05003806CF /* signatures.json in Resources */,
-				D5148EF42DC25B0000BDBE73 /* HatchFillManager.md in Resources */,
 				D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */,
 				D5E55CF22DC01036003806CF /* jobs.json in Resources */,
 				D5F896F12DBCFB2D00397561 /* papers.json in Resources */,
@@ -1105,29 +1150,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5148EEE2DC23F2B00BDBE73 /* PaperPanel.swift in Sources */,
 				D5A084D62DAFD84000332690 /* ProjectData.swift in Sources */,
 				D5F6C63B2DB8469A00020AEE /* PaperFormView.swift in Sources */,
 				D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */,
 				D587A43A2DBEAE620072D83C /* TestView.swift in Sources */,
-				D5A085172DAFD8C900332690 /* JobSummaryView.swift in Sources */,
 				D5A085182DAFD8C900332690 /* JobListView.swift in Sources */,
 				D581AF892DBC139100821A7E /* Bundle+DebugTools.swift in Sources */,
 				D509C0A42DBC4A20009B0233 /* PaperSectionView.swift in Sources */,
 				D5F6C61C2DB825C100020AEE /* PaperData.swift in Sources */,
+				D52AE7FD2DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift in Sources */,
+				D52AE7FE2DC4399F00D7E6C8 /* HatchFillManager.swift in Sources */,
 				D5A0851A2DAFD8C900332690 /* JobFormView.swift in Sources */,
 				D587A4312DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */,
+				D52AE7F02DC4375600D7E6C8 /* SVGLayersSectionView.swift in Sources */,
+				D52AE7F12DC4375600D7E6C8 /* MachinePenSectionView.swift in Sources */,
+				D52AE7F22DC4375600D7E6C8 /* SVGColorsSectionView.swift in Sources */,
 				D5F6C61A2DB8230200020AEE /* TabManagerShellView.swift in Sources */,
 				D5A084D72DAFD84000332690 /* SettingsData.swift in Sources */,
-				D59996082DC180EA00130770 /* Defaultable.swift in Sources */,
 				D5A084D82DAFD84000332690 /* MachineData.swift in Sources */,
-				D5148EE92DC22F5200BDBE73 /* SVGColorsSectionView.swift in Sources */,
 				D5E55CE92DBFD6DA003806CF /* AutoConnectService.swift in Sources */,
 				D5A084D92DAFD84000332690 /* PenData.swift in Sources */,
 				D5A085B92DB02E0000332690 /* JobListUnassignedSectionView.swift in Sources */,
 				D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */,
 				D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
-				D5A085272DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
 				D581AFA72DBC216900821A7E /* UUID+Helpers.swift in Sources */,
 				D52C0AEC2DBA613400F57746 /* PaperFormatData.swift in Sources */,
 				D5F6C6212DB8349B00020AEE /* ManageableItem.swift in Sources */,
@@ -1137,9 +1182,8 @@
 				D5F6C6412DB8481A00020AEE /* MachineFormView.swift in Sources */,
 				D5A085282DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
 				D56C4E592DB1847400F09A0C /* WindowID.swift in Sources */,
-				D5A085292DAFD8DE00332690 /* SVGTreeView.swift in Sources */,
 				D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */,
-				D5A0852A2DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */,
+				D5A0852B2DAFD8DE00332690 /* PaperPanel.swift in Sources */,
 				D587A4372DBEA9F90072D83C /* CustomSplitView.swift in Sources */,
 				D5A084DA2DAFD84000332690 /* JobData.swift in Sources */,
 				D5A084DB2DAFD84000332690 /* ConnectionData.swift in Sources */,
@@ -1147,7 +1191,6 @@
 				D5F6C6232DB834B900020AEE /* ItemManagerView.swift in Sources */,
 				D5F6C6262DB834E400020AEE /* ItemListView.swift in Sources */,
 				D57566232DB9256600D95E3F /* PaperManagerView.swift in Sources */,
-				D5148EF62DC27C7600BDBE73 /* SVGParser+PatternSupport.swift in Sources */,
 				D5F896EE2DBCF7F700397561 /* AssetStoresDebugToolbar.swift in Sources */,
 				D587A4482DBEED1C0072D83C /* ActionsSectionView.swift in Sources */,
 				D5F4DE052DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
@@ -1162,7 +1205,9 @@
 				D5A085B02DB0248000332690 /* ProjectManagerView.swift in Sources */,
 				D5A0850D2DAFD8AD00332690 /* ToastView.swift in Sources */,
 				D56C4E462DB1275C00F09A0C /* View+DropZone.swift in Sources */,
+				D5A884632DC583600090BCE4 /* CustomButton.swift in Sources */,
 				D5A0850E2DAFD8AD00332690 /* DeviceListView.swift in Sources */,
+				D5E1E6CE2DC417D7008F6347 /* JobInspector_MachineInfoView.swift in Sources */,
 				D5A0850F2DAFD8AD00332690 /* RemoteControlView.swift in Sources */,
 				D52C0AF52DBA72DF00F57746 /* AssetStores.swift in Sources */,
 				D5E55CC02DBF6E95003806CF /* Logger.swift in Sources */,
@@ -1175,8 +1220,6 @@
 				D5F896F72DBD56BA00397561 /* AssetStoreManager.swift in Sources */,
 				D5A084F72DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
 				D5E55CC42DBF7673003806CF /* JobsDataFileManager.swift in Sources */,
-				D5148EF02DC25A7800BDBE73 /* HatchFillManager.swift in Sources */,
-				D5148EED2DC22F6A00BDBE73 /* SVGLayersSectionView.swift in Sources */,
 				D5A084F82DAFD88A00332690 /* PathParser.swift in Sources */,
 				D587A43D2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */,
 				D5A084F92DAFD88A00332690 /* SVGParser.swift in Sources */,
@@ -1190,15 +1233,17 @@
 				D5E55CDC2DBF8EF6003806CF /* JobCardViewMode.swift in Sources */,
 				D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */,
 				D5F896F52DBD012D00397561 /* UnitsData.swift in Sources */,
-				D509C0AA2DBC4AED009B0233 /* MachinePenSectionView.swift in Sources */,
+				D5E1E6D72DC41D08008F6347 /* Defaultable.swift in Sources */,
+				D5E1E6D12DC417EC008F6347 /* JobInspector_SVGFileInfoView.swift in Sources */,
 				D5F896EB2DBCE24D00397561 /* AspectRatioData.swift in Sources */,
 				D5A084E22DAFD85300332690 /* FileManagerService.swift in Sources */,
 				D587A4462DBEDE0D0072D83C /* JobInspectorPanel.swift in Sources */,
 				D5E55CCF2DBF84E4003806CF /* JobListProjectSectionView.swift in Sources */,
 				D5F6C6442DB8498700020AEE /* ConnectionManagerView.swift in Sources */,
 				D5E55CE72DBFCB49003806CF /* ConnectionManager.swift in Sources */,
+				D5E1E6D42DC417F9008F6347 /* JobInspector_SVGPropertiesView.swift in Sources */,
 				D5A085C02DB0348D00332690 /* JobRow.swift in Sources */,
-				D587A4422DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */,
+				D587A4422DBEDDDE0072D83C /* JobPropertiesPanel.swift in Sources */,
 				D5E55CEF2DBFFF81003806CF /* SignatureData.swift in Sources */,
 				D56C4E482DB1296700F09A0C /* DropZoneModifier.swift in Sources */,
 				D509C0A72DBC4AD2009B0233 /* SignatureSectionView.swift in Sources */,
@@ -1219,12 +1264,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5148EF72DC27C7600BDBE73 /* SVGParser+PatternSupport.swift in Sources */,
 				D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */,
-				D5A0851B2DAFD8C900332690 /* JobSummaryView.swift in Sources */,
 				D575661A2DB9041000D95E3F /* ManageableItem.swift in Sources */,
 				D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */,
 				D5A0851E2DAFD8C900332690 /* JobFormView.swift in Sources */,
+				D5A884622DC583600090BCE4 /* CustomButton.swift in Sources */,
 				D5E55CD92DBF8DF1003806CF /* View+HoverEffect.swift in Sources */,
 				D509C0A02DBC49F2009B0233 /* SVGSectionView.swift in Sources */,
 				D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */,
@@ -1232,25 +1276,26 @@
 				D5F896F82DBD56BA00397561 /* AssetStoreManager.swift in Sources */,
 				D5A084D12DAFD84000332690 /* SettingsData.swift in Sources */,
 				D52C0AFB2DBA823D00F57746 /* SectionHeader.swift in Sources */,
+				D5E1E6D32DC417F9008F6347 /* JobInspector_SVGPropertiesView.swift in Sources */,
 				D5A084D22DAFD84000332690 /* MachineData.swift in Sources */,
 				D5A084D32DAFD84000332690 /* PenData.swift in Sources */,
 				D5F6C61D2DB825C100020AEE /* PaperData.swift in Sources */,
 				D5F4DE042DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
 				D5A085BA2DB02E0000332690 /* JobListUnassignedSectionView.swift in Sources */,
-				D5A0852D2DAFD8DE00332690 /* PaperSourcePreview.swift in Sources */,
 				D5A085BD2DB02E2100332690 /* JobRowView.swift in Sources */,
 				D5A085B62DB02D7800332690 /* ProjectSectionView.swift in Sources */,
+				D5E1E6D62DC41D08008F6347 /* Defaultable.swift in Sources */,
 				D587A4492DBEED1C0072D83C /* ActionsSectionView.swift in Sources */,
 				D575661B2DB91E5000D95E3F /* ItemManagerView.swift in Sources */,
 				D5E55CD02DBF84E4003806CF /* JobListProjectSectionView.swift in Sources */,
 				D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
 				D587A4322DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */,
-				D5A0852F2DAFD8DE00332690 /* SVGTreeView.swift in Sources */,
 				D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */,
 				D57566242DB9256600D95E3F /* PaperManagerView.swift in Sources */,
 				D5E55CE62DBFCB49003806CF /* ConnectionManager.swift in Sources */,
-				D5A085302DAFD8DE00332690 /* SvgPropertyEditorView.swift in Sources */,
 				D5A085312DAFD8DE00332690 /* PaperPanel.swift in Sources */,
+				D52AE7F92DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift in Sources */,
+				D52AE7FA2DC4399F00D7E6C8 /* HatchFillManager.swift in Sources */,
 				D5E55CC32DBF7673003806CF /* JobsDataFileManager.swift in Sources */,
 				D5A084D42DAFD84000332690 /* JobData.swift in Sources */,
 				D5A084D52DAFD84000332690 /* ConnectionData.swift in Sources */,
@@ -1289,8 +1334,6 @@
 				D57566272DB9257400D95E3F /* PenFormView.swift in Sources */,
 				D5A084F02DAFD88A00332690 /* GCodeGenerator.swift in Sources */,
 				D5A084F12DAFD88A00332690 /* PathParser.swift in Sources */,
-				D5148EEC2DC22F6A00BDBE73 /* SVGLayersSectionView.swift in Sources */,
-				D59996072DC180EA00130770 /* Defaultable.swift in Sources */,
 				D5A084F22DAFD88A00332690 /* SVGParser.swift in Sources */,
 				D5A084F32DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
 				D509C0A32DBC4A20009B0233 /* PaperSectionView.swift in Sources */,
@@ -1298,26 +1341,28 @@
 				D5F896F42DBD012D00397561 /* UnitsData.swift in Sources */,
 				D5E55CC12DBF6E95003806CF /* Logger.swift in Sources */,
 				D57566202DB9255400D95E3F /* ConnectionFormView.swift in Sources */,
+				D52AE7F32DC4375600D7E6C8 /* SVGLayersSectionView.swift in Sources */,
+				D52AE7F42DC4375600D7E6C8 /* MachinePenSectionView.swift in Sources */,
+				D52AE7F52DC4375600D7E6C8 /* SVGColorsSectionView.swift in Sources */,
 				D5A084F42DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
 				D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */,
 				D5A084DF2DAFD85300332690 /* FileManagerService.swift in Sources */,
 				D5E55CF62DC049C0003806CF /* Menubar.swift in Sources */,
 				D57566252DB9256B00D95E3F /* PaperFormView.swift in Sources */,
-				D587A4432DBEDDDE0072D83C /* JobSettingsPanel.swift in Sources */,
-				D5148EEA2DC22F5200BDBE73 /* SVGColorsSectionView.swift in Sources */,
+				D587A4432DBEDDDE0072D83C /* JobPropertiesPanel.swift in Sources */,
+				D5E1E6CD2DC417D7008F6347 /* JobInspector_MachineInfoView.swift in Sources */,
 				D5E55CEA2DBFD6DA003806CF /* AutoConnectService.swift in Sources */,
 				D5E55CF02DBFFF81003806CF /* SignatureData.swift in Sources */,
 				D5A085BF2DB0348D00332690 /* JobRow.swift in Sources */,
-				D5148EF12DC25A7800BDBE73 /* HatchFillManager.swift in Sources */,
 				D56C4E492DB1296700F09A0C /* DropZoneModifier.swift in Sources */,
 				D5A084E82DAFD86700332690 /* GenericStore.swift in Sources */,
-				D509C0A92DBC4AED009B0233 /* MachinePenSectionView.swift in Sources */,
 				D5A085332DAFE17000332690 /* CollapsibleSection.swift in Sources */,
 				D5A084E02DAFD85300332690 /* Tools.swift in Sources */,
 				D509C0AD2DBC4B05009B0233 /* MachineSectionView.swift in Sources */,
 				D57566212DB9255A00D95E3F /* MachineManagerView.swift in Sources */,
 				D5E55CDD2DBF8EF6003806CF /* JobCardViewMode.swift in Sources */,
 				D5A084E12DAFD85300332690 /* SettingsMigrator.swift in Sources */,
+				D5E1E6D02DC417EC008F6347 /* JobInspector_SVGFileInfoView.swift in Sources */,
 				D52C0AF92DBA820300F57746 /* AssetsAndSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1739,15 +1784,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5148EFB2DC295A200BDBE73 /* XCRemoteSwiftPackageReference "ORSSerialPort" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/armadsen/ORSSerialPort";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.0;
-			};
-		};
-		D5148EFC2DC295B100BDBE73 /* XCRemoteSwiftPackageReference "SVGView" */ = {
+		D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/exyte/SVGView.git";
 			requirement = {
@@ -1755,27 +1792,30 @@
 				minimumVersion = 1.0.6;
 			};
 		};
+		D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/armadsen/ORSSerialPort";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D5148EFD2DC2961B00BDBE73 /* ORSSerial */ = {
+		D5D1042A2DAEF43900E8406E /* ORSSerial */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5148EFB2DC295A200BDBE73 /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
+			package = D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
 			productName = ORSSerial;
 		};
-		D5148EFF2DC2961B00BDBE73 /* SVGView */ = {
+		D5D1042D2DAEF44B00E8406E /* SVGView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5148EFC2DC295B100BDBE73 /* XCRemoteSwiftPackageReference "SVGView" */;
+			package = D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */;
 			productName = SVGView;
 		};
-		D5148F012DC2962300BDBE73 /* ORSSerial */ = {
+		D5D1042F2DAEF45100E8406E /* SVGView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5148EFB2DC295A200BDBE73 /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
-			productName = ORSSerial;
-		};
-		D5148F032DC2962300BDBE73 /* SVGView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D5148EFC2DC295B100BDBE73 /* XCRemoteSwiftPackageReference "SVGView" */;
+			package = D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */;
 			productName = SVGView;
 		};
 /* End XCSwiftPackageProductDependency section */

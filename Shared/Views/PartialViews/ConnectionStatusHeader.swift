@@ -111,6 +111,7 @@ struct ConnectionStatusHeader: View {
                 .font(.footnote)
 
 #if DEBUG
+/*
             Divider().frame(height: 20)
 
             Button(action: AppResetHelper.resetLocalOnly) {
@@ -134,6 +135,7 @@ struct ConnectionStatusHeader: View {
                 Image(systemName: "doc.text.magnifyingglass")
             }
             .help("JSON-Dateien im Bundle anzeigen")
+ */
 #endif
         }
     }

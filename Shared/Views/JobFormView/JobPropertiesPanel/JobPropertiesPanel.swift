@@ -1,14 +1,14 @@
 //
-//  JobSettingsPanel.swift
+//  JobPropertiesPanel.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 27.04.25.
 //
 
-// JobSettingsPanel.swift - Linker Bereich.
+// JobPropertiesPanel.swift - Linker Bereich.
 import SwiftUI
 
-struct JobSettingsPanel: View {
+struct JobPropertiesPanel: View {
     @Binding var currentJob: JobData
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool
@@ -49,10 +49,6 @@ struct JobSettingsPanel: View {
 
                 SignatureSectionView(currentJob: $currentJob)
                     .padding(.horizontal, 0)
-                
-
-                
-
                 
                 ActionsSectionView(currentJob: $currentJob)
                     .padding(.horizontal, 0)
