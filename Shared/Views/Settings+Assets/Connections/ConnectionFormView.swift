@@ -195,7 +195,7 @@ struct ConnectionFormView: View {
 
     // MARK: Scan Trigger ----------------------------------------------------
     private func ensureBTScan() { if bluetoothManager.peripherals.isEmpty { startBTScan() } }
-    private func startBTScan() { isScanningBT = true; bluetoothManager.startScan(filter: true); DispatchQueue.main.asyncAfter(deadline: .now() + 5) { isScanningBT = false } }
+    private func startBTScan() { isScanningBT = true; bluetoothManager.startScan(filter: false); DispatchQueue.main.asyncAfter(deadline: .now() + 5) { isScanningBT = false } }
 
     #if os(macOS)
     private func ensureUSBScan() { if scanner.devices.isEmpty { startUSBScan() } }

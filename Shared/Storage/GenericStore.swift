@@ -74,28 +74,30 @@ where T: Codable & Identifiable, T.ID: Hashable {
             let files = try fileManager.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil)
 
             var tempItems: [T] = []
-
+            var theLocation = ""
+            
             for file in files where file.pathExtension == "json" {
                     do {
-                        appLog(.error, "📚 lade: \(file.lastPathComponent) in \(directoryName)")
+                        theLocation = "\(file.lastPathComponent) in \(directoryName)"
+                        appLog(.error, "📚 lade: \(theLocation)")
                         let data = try Data(contentsOf: file)
                         let item = try JSONDecoder().decode(T.self, from: data)
                         tempItems.append(item)
                     } catch let decodingError as DecodingError {
                         switch decodingError {
                         case .dataCorrupted(let context):
-                            appLog(.error, "⚠️ Fehler: Daten sind beschädigt: \(context.debugDescription)")
+                            appLog(.error, "⚠️ Fehler: Daten sind beschädigt: \(context.debugDescription) | \(theLocation)")
                         case .keyNotFound(let key, let context):
-                            appLog(.error, "⚠️ Fehler: Schlüssel nicht gefunden: \(key), Kontext: \(context.debugDescription)")
+                            appLog(.error, "⚠️ Fehler: Schlüssel nicht gefunden: \(key), Kontext: \(context.debugDescription) | \(theLocation)")
                         case .typeMismatch(let type, let context):
-                            appLog(.error, "⚠️ Fehler: Typ-Mismatch für \(type): \(context.debugDescription)")
+                            appLog(.error, "⚠️ Fehler: Typ-Mismatch für \(type): \(context.debugDescription) | \(theLocation)")
                         case .valueNotFound(let value, let context):
-                            appLog(.error, "⚠️ Fehler: Wert nicht gefunden für \(value): \(context.debugDescription)")
+                            appLog(.error, "⚠️ Fehler: Wert nicht gefunden für \(value): \(context.debugDescription) | \(theLocation)")
                         @unknown default:
-                            appLog(.error, "⚠️ Unbekannter Decoding Fehler: \(decodingError.localizedDescription)")
+                            appLog(.error, "⚠️ Unbekannter Decoding Fehler: \(decodingError.localizedDescription) | \(theLocation)")
                         }
                     } catch {
-                        appLog(.info, "⚠️ Fehler beim Laden von \(file.lastPathComponent): \(error.localizedDescription)")
+                        appLog(.info, "⚠️ Fehler beim Laden von \(file.lastPathComponent): \(error.localizedDescription) | \(theLocation)")
                     }
             }
 

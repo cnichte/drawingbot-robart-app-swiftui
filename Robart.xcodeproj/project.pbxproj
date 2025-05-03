@@ -28,8 +28,6 @@
 		D52AE7F52DC4375600D7E6C8 /* SVGColorsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */; };
 		D52AE7F92DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */; };
 		D52AE7FA2DC4399F00D7E6C8 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */; };
-		D52AE7FB2DC4399F00D7E6C8 /* HatchFillManager.md in Resources */ = {isa = PBXBuildFile; fileRef = D52AE7F62DC4399F00D7E6C8 /* HatchFillManager.md */; };
-		D52AE7FC2DC4399F00D7E6C8 /* HatchFillManager.md in Resources */ = {isa = PBXBuildFile; fileRef = D52AE7F62DC4399F00D7E6C8 /* HatchFillManager.md */; };
 		D52AE7FD2DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */; };
 		D52AE7FE2DC4399F00D7E6C8 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */; };
 		D52C0AEB2DBA613400F57746 /* PaperFormatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */; };
@@ -45,6 +43,12 @@
 		D52D48E02DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
 		D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
 		D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */; };
+		D56125912DC691A30044B6A9 /* GettingStarted.md in Resources */ = {isa = PBXBuildFile; fileRef = D56125902DC6919F0044B6A9 /* GettingStarted.md */; };
+		D56125922DC691A30044B6A9 /* GettingStarted.md in Resources */ = {isa = PBXBuildFile; fileRef = D56125902DC6919F0044B6A9 /* GettingStarted.md */; };
+		D56125972DC6926E0044B6A9 /* HatchFillManager.markdown in Resources */ = {isa = PBXBuildFile; fileRef = D56125962DC6926E0044B6A9 /* HatchFillManager.markdown */; };
+		D56125982DC6926E0044B6A9 /* HatchFillManager.markdown in Resources */ = {isa = PBXBuildFile; fileRef = D56125962DC6926E0044B6A9 /* HatchFillManager.markdown */; };
+		D561259A2DC692BE0044B6A9 /* SVGParser.markdown in Resources */ = {isa = PBXBuildFile; fileRef = D56125992DC692BE0044B6A9 /* SVGParser.markdown */; };
+		D561259B2DC692BE0044B6A9 /* SVGParser.markdown in Resources */ = {isa = PBXBuildFile; fileRef = D56125992DC692BE0044B6A9 /* SVGParser.markdown */; };
 		D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */; };
 		D56C4E452DB1275C00F09A0C /* View+DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C4E442DB1275C00F09A0C /* View+DropZone.swift */; };
@@ -289,7 +293,6 @@
 		D52AE7ED2DC4375600D7E6C8 /* MachinePenSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachinePenSectionView.swift; sourceTree = "<group>"; };
 		D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGColorsSectionView.swift; sourceTree = "<group>"; };
 		D52AE7EF2DC4375600D7E6C8 /* SVGLayersSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLayersSectionView.swift; sourceTree = "<group>"; };
-		D52AE7F62DC4399F00D7E6C8 /* HatchFillManager.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HatchFillManager.md; sourceTree = "<group>"; };
 		D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HatchFillManager.swift; sourceTree = "<group>"; };
 		D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVGParser+PatternSupport.swift"; sourceTree = "<group>"; };
 		D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperFormatData.swift; sourceTree = "<group>"; };
@@ -299,6 +302,10 @@
 		D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudHelper.swift; sourceTree = "<group>"; };
 		D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "robart-dev-checks.md"; sourceTree = "<group>"; };
+		D561258D2DC691140044B6A9 /* GettingStarted.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = GettingStarted.md; sourceTree = "<group>"; };
+		D56125902DC6919F0044B6A9 /* GettingStarted.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = GettingStarted.md; sourceTree = "<group>"; };
+		D56125962DC6926E0044B6A9 /* HatchFillManager.markdown */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HatchFillManager.markdown; sourceTree = "<group>"; };
+		D56125992DC692BE0044B6A9 /* SVGParser.markdown */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SVGParser.markdown; sourceTree = "<group>"; };
 		D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropHandling.swift; sourceTree = "<group>"; };
 		D56C4E442DB1275C00F09A0C /* View+DropZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DropZone.swift"; sourceTree = "<group>"; };
 		D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneModifier.swift; sourceTree = "<group>"; };
@@ -339,7 +346,6 @@
 		D5A084EC2DAFD88A00332690 /* GCodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCodeGenerator.swift; sourceTree = "<group>"; };
 		D5A084ED2DAFD88A00332690 /* PathParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathParser.swift; sourceTree = "<group>"; };
 		D5A084EE2DAFD88A00332690 /* SVGParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGParser.swift; sourceTree = "<group>"; };
-		D5A084EF2DAFD88A00332690 /* SVGParser-Dokumentation.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SVGParser-Dokumentation.md"; sourceTree = "<group>"; };
 		D5A084FD2DAFD8AD00332690 /* AboutMeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeView.swift; sourceTree = "<group>"; };
 		D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatformUI_Helpers.swift; sourceTree = "<group>"; };
 		D5A084FF2DAFD8AD00332690 /* DeviceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListView.swift; sourceTree = "<group>"; };
@@ -530,6 +536,7 @@
 		D52C0AED2DBA654600F57746 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D561258D2DC691140044B6A9 /* GettingStarted.md */,
 				D5E55CF12DC0102E003806CF /* jobs.json */,
 				D5E55CEB2DBFFEFB003806CF /* signatures.json */,
 				D5E55CD42DBF8D21003806CF /* projects.json */,
@@ -734,8 +741,8 @@
 		D5A084E92DAFD87E00332690 /* SVGParser */ = {
 			isa = PBXGroup;
 			children = (
+				D56125902DC6919F0044B6A9 /* GettingStarted.md */,
 				D572A2322DC624B800D91FC5 /* MachineCommandResolver.swift */,
-				D52AE7F62DC4399F00D7E6C8 /* HatchFillManager.md */,
 				D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */,
 				D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */,
 				D5A084EA2DAFD88A00332690 /* BasePlotterGenerator.swift */,
@@ -743,8 +750,9 @@
 				D5A084EC2DAFD88A00332690 /* GCodeGenerator.swift */,
 				D5A084ED2DAFD88A00332690 /* PathParser.swift */,
 				D5A084EE2DAFD88A00332690 /* SVGParser.swift */,
-				D5A084EF2DAFD88A00332690 /* SVGParser-Dokumentation.md */,
 				D581AF762DBB9E9B00821A7E /* Math.swift */,
+				D56125962DC6926E0044B6A9 /* HatchFillManager.markdown */,
+				D56125992DC692BE0044B6A9 /* SVGParser.markdown */,
 			);
 			path = SVGParser;
 			sourceTree = "<group>";
@@ -1117,17 +1125,19 @@
 				D5F896F22DBCFB2D00397561 /* papers.json in Resources */,
 				D5F896FD2DBD7F3900397561 /* machines.json in Resources */,
 				D5F896E02DBCD63A00397561 /* robart-dev-testbuildrun-all.sh in Resources */,
+				D56125982DC6926E0044B6A9 /* HatchFillManager.markdown in Resources */,
 				D5A341042DBAF323005FF05A /* units.json in Resources */,
 				D52C0AF02DBA656B00F57746 /* paper-formats.json in Resources */,
 				D5F896D02DBCCEF900397561 /* robart-dev-check-v2.0.sh in Resources */,
 				D5F896DE2DBCD54700397561 /* robart-dev-testbuildrun.sh in Resources */,
+				D56125912DC691A30044B6A9 /* GettingStarted.md in Resources */,
 				D5E55CEC2DBFFF05003806CF /* signatures.json in Resources */,
+				D561259B2DC692BE0044B6A9 /* SVGParser.markdown in Resources */,
 				D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */,
 				D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */,
 				D5F896DA2DBCD27500397561 /* robart-dev-check-mini.sh in Resources */,
 				D5F896FB2DBD7C0400397561 /* pens.json in Resources */,
 				D5F896D42DBCCFA100397561 /* robart-dev-check-v3.5.sh in Resources */,
-				D52AE7FC2DC4399F00D7E6C8 /* HatchFillManager.md in Resources */,
 				D5F896CC2DBCCB9600397561 /* robart-dev-check-v3.0.sh in Resources */,
 				D5E55CD52DBF8D2A003806CF /* projects.json in Resources */,
 				D5F897012DBD84CA00397561 /* connections.json in Resources */,
@@ -1142,11 +1152,13 @@
 			files = (
 				D5F896FE2DBD7F3900397561 /* machines.json in Resources */,
 				D5F896E92DBCDF4800397561 /* aspect-ratios.json in Resources */,
+				D561259A2DC692BE0044B6A9 /* SVGParser.markdown in Resources */,
 				D5F897002DBD84CA00397561 /* connections.json in Resources */,
 				D5A341052DBAF323005FF05A /* units.json in Resources */,
-				D52AE7FB2DC4399F00D7E6C8 /* HatchFillManager.md in Resources */,
+				D56125922DC691A30044B6A9 /* GettingStarted.md in Resources */,
 				D5E55CED2DBFFF05003806CF /* signatures.json in Resources */,
 				D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */,
+				D56125972DC6926E0044B6A9 /* HatchFillManager.markdown in Resources */,
 				D5E55CF22DC01036003806CF /* jobs.json in Resources */,
 				D5F896F12DBCFB2D00397561 /* papers.json in Resources */,
 				D5E55CD62DBF8D2A003806CF /* projects.json in Resources */,
