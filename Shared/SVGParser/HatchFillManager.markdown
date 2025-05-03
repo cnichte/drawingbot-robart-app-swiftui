@@ -1,4 +1,4 @@
-# Anleitung: HatchFillManager.swift
+# HatchFillManager
 
 Erweitere SVGParser so, das er geschlossene Pfade erkennt und HatchFill anwendet.
 Basierend auf was? der Farbe?
@@ -83,3 +83,4 @@ print("EggCode-Zeilen:", eggcode.count)
 - Contour-Following: Aktuell als Platzhalter (lineBased mit halbiertem Abstand).
 - Echte Pfad-Offset-Berechnung an der TODO-Stelle implementieren.
 - Zusätzliche Muster in generateHatchLines(for:type:spacing:) ergänzen.
+
