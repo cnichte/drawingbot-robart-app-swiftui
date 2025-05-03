@@ -1,5 +1,5 @@
 //
-//  JobFormPanelViews.swift
+//  JobFormPanels.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 03.05.25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// JobFormPanelViews.swift
+// JobFormPanels.swift
 struct SidebarPanelView: View {
     @Binding var currentJob: JobData
     @Binding var svgFileName: String?

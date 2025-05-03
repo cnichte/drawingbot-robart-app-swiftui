@@ -1,7 +1,7 @@
 [
     {
         "id":"3a5788d2-6b4d-4904-925a-63b20b5c6a2e",
-        "name":"",
+        "name":"Axidraw USB",
         "description":"",
         "type":".usb",
         "bluetoothPeripheral":"CBPeripheral",

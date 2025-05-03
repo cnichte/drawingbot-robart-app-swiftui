@@ -1,5 +1,5 @@
 //
-//  JobPreviewView.swift
+//  JobFormView.swift
 //  Drawingbot-RobArt
 //
 //  Created by Carsten Nichte on 11.04.25.
@@ -30,8 +30,8 @@
 // MARK: Das ist eine Markierung
 // TODO: Das ist ein TODO
 
-// JobPreviewView.swift (aktualisiert mit Sidebar- und Inspector-Steuerung)
-// JobPreviewView.swift
+// JobFormView.swift (aktualisiert mit Sidebar- und Inspector-Steuerung)
+// JobFormView.swift
 import SwiftUI
 #if os(iOS)
 import UIKit
@@ -67,172 +67,74 @@ struct JobFormView: View {
     }
 
     init(currentJob: Binding<JobData>, selectedJob: Binding<JobData?>) {
-        print("JobPreviewView init started")
         self._currentJob = currentJob
         self._selectedJob = selectedJob
-        print("JobPreviewView init completed")
     }
-
-    // MARK: - Subviews
-
-    private var sidebarView: some View {
-        JobPropertiesPanel(
-            currentJob: $currentJob,
-            svgFileName: $svgFileName,
-            showingFileImporter: $showingFileImporter,
-            selectedMachine: $selectedMachine
-        )
-        .environmentObject(plotJobStore)
-        .environmentObject(paperStore)
-        .environmentObject(paperFormatsStore)
-        .frame(maxWidth: 300)
-        .padding(.vertical, 10)
-    }
-
-    private var mainContentView: some View {
-        PaperPanel(zoom: $zoom, pitch: $pitch, origin: $origin, job: $currentJob)
-            .background(ColorHelper.backgroundColor)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    private var inspectorSheet: some View {
-        JobInspectorPanel(currentJob: $currentJob, selectedMachine: $selectedMachine)
-            .frame(minWidth: 300, maxWidth: 400)
-            .presentationDetents([.fraction(0.5)])
-            .presentationDragIndicator(.visible)
-    }
-
-    private var settingsSheet: some View {
-        JobPropertiesPanel(
-            currentJob: $currentJob,
-            svgFileName: $svgFileName,
-            showingFileImporter: $showingFileImporter,
-            selectedMachine: $selectedMachine
-        )
-        .environmentObject(plotJobStore)
-        .environmentObject(paperStore)
-        .environmentObject(paperFormatsStore)
-        .presentationDetents([.fraction(0.95)])
-        .presentationDragIndicator(.visible)
-    }
-
-    private var iPhoneInspectorSheet: some View {
-        JobInspectorPanel(currentJob: $currentJob, selectedMachine: $selectedMachine)
-            .presentationDetents([.fraction(0.95)])
-            .presentationDragIndicator(.visible)
-    }
-
-    // MARK: - Body
 
     var body: some View {
         Group {
-            #if os(macOS)
-            AnyView(
-                CustomSplitView(
-                    isLeftVisible: $isSidebarVisible,
-                    isRightVisible: $isInspectorVisible,
-                    rightPanelWidth: $inspectorWidth,
-                    leftView: {
-                        JobPropertiesPanel(
-                            currentJob: $currentJob,
-                            svgFileName: $svgFileName,
-                            showingFileImporter: $showingFileImporter,
-                            selectedMachine: $selectedMachine
-                        )
-                        .environmentObject(plotJobStore)
-                        .environmentObject(paperStore)
-                        .environmentObject(paperFormatsStore)
-                    },
-                    centerView: {
-                        PaperPanel(zoom: $zoom, pitch: $pitch, origin: $origin, job: $currentJob)
-                            .background(ColorHelper.backgroundColor)
-                            .toolbar {
-                                ToolbarItem(placement: .automatic) {
-                                    Picker("Vorschau", selection: $previewMode) {
-                                        ForEach(PreviewMode.allCases) { mode in
-                                            Text(mode.rawValue).tag(mode)
-                                        }
-                                    }
-                                }
-                                ToolbarItem(placement: .automatic) {
-                                    Button(isSidebarVisible ? "Sidebar ausblenden" : "Sidebar einblenden") {
-                                        isSidebarVisible.toggle()
-                                    }
-                                }
-                                ToolbarItem(placement: .automatic) {
-                                    Button(isInspectorVisible ? "Inspector ausblenden" : "Inspector einblenden") {
-                                        isInspectorVisible.toggle()
-                                    }
-                                }
-                            }
-                    },
-                    rightView: {
-                        JobInspectorPanel(currentJob: $currentJob, selectedMachine: $selectedMachine)
-                    }
-                )
-                .navigationTitle("Job Preview")
+#if os(macOS)
+            MacJobPreviewLayoutView(
+                currentJob: $currentJob,
+                svgFileName: $svgFileName,
+                showingFileImporter: $showingFileImporter,
+                selectedMachine: $selectedMachine,
+                zoom: $zoom,
+                pitch: $pitch,
+                origin: $origin,
+                previewMode: $previewMode,
+                isSidebarVisible: $isSidebarVisible,
+                isInspectorVisible: $isInspectorVisible,
+                inspectorWidth: $inspectorWidth
             )
-            #else
-            AnyView(
-                Group {
-                    // ---------- iPAD ----------
-                    if UIDevice.current.userInterfaceIdiom == .pad {
-                        HStack {
-                            if isSidebarVisible {
-                                sidebarView
-                            }
-                            mainContentView
-                        }
-                        .navigationTitle("Job Preview")
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                Button("Einstellungen") { showingSettings.toggle() }
-                            }
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button("Inspector") { showingInspector.toggle() }
-                            }
-                        }
-                        .sheet(isPresented: $showingInspector) {
-                            inspectorSheet
-                        }
-                    } else {
-                        // ---------- iPhone ----------
-                        VStack {
-                            mainContentView
-                        }
-                        .navigationTitle("Job Preview")
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                Button("Einstellungen") { showingSettings.toggle() }
-                            }
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button("Inspector") { showingInspector.toggle() }
-                            }
-                        }
-                        .sheet(isPresented: $showingSettings) {
-                            settingsSheet
-                        }
-                        .sheet(isPresented: $showingInspector) {
-                            iPhoneInspectorSheet
-                        }
-                    }
+            .environmentObject(plotJobStore)
+            .environmentObject(paperStore)
+            .environmentObject(paperFormatsStore)
+            .navigationTitle("Job Preview")
+#else
+            Group {
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    iPadJobPreviewLayout(
+                        currentJob: $currentJob,
+                        svgFileName: $svgFileName,
+                        showingFileImporter: $showingFileImporter,
+                        selectedMachine: $selectedMachine,
+                        zoom: $zoom,
+                        pitch: $pitch,
+                        origin: $origin,
+                        previewMode: $previewMode,
+                        isSidebarVisible: $isSidebarVisible,
+                        showingInspector: $showingInspector
+                    )
+                } else {
+                    iPhoneJobPreviewLayout(
+                        currentJob: $currentJob,
+                        svgFileName: $svgFileName,
+                        showingFileImporter: $showingFileImporter,
+                        selectedMachine: $selectedMachine,
+                        zoom: $zoom,
+                        pitch: $pitch,
+                        origin: $origin,
+                        previewMode: $previewMode,
+                        showingSettings: $showingSettings,
+                        showingInspector: $showingInspector
+                    )
                 }
-            )
-            #endif
+            }
+            .environmentObject(plotJobStore)
+            .environmentObject(paperStore)
+            .environmentObject(paperFormatsStore)
+            .navigationTitle("Job Preview")
+#endif
         }
         .onAppear {
-            print("JobPreviewView onAppear")
             appLog(.info, "Geladener SVG-Pfad:", currentJob.svgFilePath)
             loadActiveJob()
-            print("JobPreviewView loadActiveJob completed")
         }
         .onDisappear {
-            print("JobPreviewView onDisappear")
             saveCurrentJob()
         }
     }
-
-    // MARK: - Helper Methods
 
     private func loadActiveJob() {
         svgFileName = URL(fileURLWithPath: currentJob.svgFilePath).lastPathComponent
@@ -240,7 +142,6 @@ struct JobFormView: View {
 
     private func saveCurrentJob() {
         Task {
-            print("Saving job started")
             let start = Date()
             await plotJobStore.save(item: currentJob, fileName: currentJob.id.uuidString)
             let duration = Date().timeIntervalSince(start)

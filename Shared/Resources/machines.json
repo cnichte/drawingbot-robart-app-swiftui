@@ -9,13 +9,26 @@
             "x": 1000,
             "y": 500
         },
-        "commandProtocol": "egg",
-        "commandItems": [
-            {
-                "id":"b9b9cdfc-ccbf-403e-bf25-f929b41b9388",
-                "command": "",
-                "description": ""
-            }
+        "commandProtocol": "EGG",
+        "commandItems":[
+          {
+            "id": "885b5cff-d9c2-4420-aeba-e9dcb061020f",
+            "name": "MOVE_TO",
+            "command": "SP,{X},{Y}",
+            "description": "Positionieren mit Stift oben"
+          },
+          {
+            "id": "637f3fa9-c47f-4b09-9809-f3476fa7cc62",
+            "name": "DRAW_TO",
+            "command": "PD,{X},{Y}",
+            "description": "Zeichne mit Stift unten"
+          },
+          {
+            "id": "dfa87d12-e803-4bb5-b281-74676dd66ab7",
+            "name": "PEN_UP",
+            "command": "PU",
+            "description": "Stift anheben"
+          }
         ],
         "penCount": 1,
         "connection": {},
@@ -188,8 +201,12 @@
             "x": -1,
             "y": -1
         },
-        "commandProtocol": "gcode",
-        "commandItems": [],
+        "commandProtocol": "GCODE",
+        "commandItems":[
+           { "0446c01b-1c47-4ab4-a4e4-68fa00ad9c41": "auto", "name": "PEN_UP",    "command": "M5",           "description": "Stift anheben" },
+           { "a7a1e0a3-2d1f-4c20-b47d-519ac3055c49": "auto", "name": "PEN_DOWN",  "command": "M3 S90",       "description": "Stift absenken" },
+           { "c0f87284-58df-4656-b9b3-31900fe246f8": "auto", "name": "MOVE_FAST", "command": "G0 X{X} Y{Y}", "description": "Schnellpositionierung" },
+           { "787b2faa-c2c0-4963-8fcc-e5c26e9b5737": "auto", "name": "DRAW_LINE", "command": "G1 X{X} Y{Y}", "description": "Linienbewegung" }
         "penCount": 5,
         "connection": {},
         "codeTemplates": [],

@@ -40,6 +40,7 @@ struct MachineSize: Codable, Equatable, Hashable {
 
 struct MachineCommandItem: Codable, Identifiable, Hashable {
     var id = UUID()
+    var name: String // lesbare aber eindeutige ID für den MachineCommandResolver
     var command: String
     var description: String
 }

@@ -14,6 +14,13 @@ import Foundation
 /// Lädt eine SVG-Datei, wendet ein Hatch-Muster an, speichert eine Vorschau-SVG
 /// und liefert GCode- und EggCode-Strings zurück.
 final class HatchFillManager {
+    
+    private var machineData: MachineData
+    
+    init(machineData: MachineData) {
+        self.machineData = machineData
+    }
+    
     /// Unterstützte Hatch-Fülltypen.
     enum HatchType {
         case patternBased
@@ -69,7 +76,7 @@ final class HatchFillManager {
         try? previewContent.write(to: previewURL, atomically: true, encoding: .utf8)
 
         // 4. GCode generieren
-        let gGen = GCodeGenerator()
+        let gGen = GCodeGenerator(machineData: machineData)
         let gParser = SVGParser(generator: gGen)
         guard gParser.loadSVGFile(from: previewURL,
                                   svgWidth: svgSize.width,
@@ -80,7 +87,7 @@ final class HatchFillManager {
         let gcode = gParser.elements.map { $0.output }
 
         // 5. EggCode generieren
-        let eGen = EggbotGenerator()
+        let eGen = EggbotGenerator(machineData: machineData)
         let eParser = SVGParser(generator: eGen)
         guard eParser.loadSVGFile(from: previewURL,
                                   svgWidth: svgSize.width,

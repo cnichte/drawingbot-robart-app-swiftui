@@ -24,41 +24,46 @@ struct SettingsView: View {
     @AppStorage("logLevel") private var logLevel: LogLevel = .verbose
 
     var body: some View {
-        Form {
-            CollapsibleSection(title: "Allgemein", systemImage: "photo", toolbar: { EmptyView() }) {
-                Picker("Speicherort", selection: $currentStorageRaw) {
-                    Text("Lokal").tag(StorageType.local.rawValue)
-                    Text("iCloud").tag(StorageType.iCloud.rawValue)
+        ScrollView {
+            VStack(spacing: 16) {
+                CollapsibleSection(title: "Allgemein", systemImage: "gear") {
+                    Picker("Speicherort", selection: $currentStorageRaw) {
+                        Text("Lokal").tag(StorageType.local.rawValue)
+                        Text("iCloud").tag(StorageType.iCloud.rawValue)
+                    }
+                    .pickerStyle(.segmented)
                 }
-                .pickerStyle(.segmented)
-            }
 
-            CollapsibleSection(title: "Logging", systemImage: "photo", toolbar: { EmptyView() }) {
-                Toggle(isOn: $loggingEnabled) {
-                    Label("Logging aktivieren", systemImage: "doc.text.magnifyingglass")
+                CollapsibleSection(title: "Logging", systemImage: "doc.text.magnifyingglass") {
+                    Toggle(isOn: $loggingEnabled) {
+                        Label("Logging aktivieren", systemImage: "doc.text.magnifyingglass")
+                    }
+                    Picker("Log-Level", selection: $logLevel) {
+                        ForEach(LogLevel.allCases, id: \.self) { level in
+                            Text(level.rawValue.capitalized).tag(level)
+                        }
+                    }
+                    .pickerStyle(.segmented)
                 }
-                Picker("Log-Level", selection: $logLevel) {
-                    ForEach(LogLevel.allCases, id: \.self) { level in
-                        Text(level.rawValue.capitalized).tag(level)
+
+                CollapsibleSection(title: "Housekeeping", systemImage: "trash") {
+                    Button(role: .destructive) {
+                        confirmDeleteAllData()
+                    } label: {
+                        Label("Alle Daten löschen", systemImage: "trash")
                     }
                 }
-                .pickerStyle(.segmented)
-            }
 
-            CollapsibleSection(title: "Housekeeping", systemImage: "photo", toolbar: { EmptyView() }) {
-                Button(role: .destructive) {
-                    confirmDeleteAllData()
-                } label: {
-                    Label("Alle Daten löschen", systemImage: "trash")
+                #if DEBUG
+                CollapsibleSection(title: "Developer Tools", systemImage: "hammer") {
+                    AssetStoresDebugToolbar()
+                        .environmentObject(assetStores)
                 }
+                #endif
             }
-
-            #if DEBUG
-            CollapsibleSection(title: "Developer Tools", systemImage: "photo", toolbar: { EmptyView() }) {
-                AssetStoresDebugToolbar()
-                    .environmentObject(assetStores)
-            }
-            #endif
+            .padding(.vertical)
+            .frame(maxWidth: 700)
+            .padding(.horizontal)
         }
         .navigationTitle("Settings")
         .onChange(of: currentStorageRaw) {
@@ -100,5 +105,4 @@ struct SettingsView: View {
     }
     #endif
 }
-
 // .toast(message: "Bitte zwei mal klicken, oder neu starten damit der System-DarkMode aktiviert - bzw. sauber dargetellt - wird!", isPresented: $showToast, position: .top, duration: 3, type: .info)

@@ -30,15 +30,14 @@ struct DeviceListView: View {
                 systemImage: "wave.3.up",
                 toolbar: {
                     HStack(spacing: 8) {
-                        Button("Scan RobArt") {
+                        // Scan RobArt
+                        CustomToolbarButton(title: "", icon: "exclamationmark.magnifyingglass", style: .secondary, role: nil,hasBorder:false, iconSize: .large ) {
                             startBluetoothScan(filter: true)
                         }
-                        .buttonStyle(.borderedProminent)
-                        
-                        Button("Alle Geräte") {
+                        // Scan Alle Geräte
+                        CustomToolbarButton(title: "", icon: "sparkle.magnifyingglass", style: .primary, role: nil,hasBorder:false, iconSize: .large ) {
                             startBluetoothScan(filter: false)
                         }
-                        .buttonStyle(.bordered)
                     }
                 }
             ) {
@@ -94,6 +93,9 @@ struct DeviceListView: View {
                         if isCurrent {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundColor(.green)
+                        }else{
+                            Image(systemName: "checkmark.circle")
+                                .foregroundColor(.gray)
                         }
                         
                         // RSSI-Anzeige  (-100 … 0 dBm)
@@ -105,13 +107,14 @@ struct DeviceListView: View {
                         Text(discovered.peripheral.name ?? "Unbekannt")
                         
                         Spacer()
-                        
-                        Button(isCurrent ? "Beenden" : "Verbinden") {
+                        // beende, verbinde
+                        CustomButton(title: (isCurrent ? "" : ""), icon:(isCurrent ? "personalhotspot" : "personalhotspot.slash"), style: .secondary ){
+ 
                             isCurrent
                             ? bluetoothManager.disconnect()
                             : bluetoothManager.connect(to: discovered.peripheral)
+                            
                         }
-                        .buttonStyle(.borderedProminent)
                     }
                 }
             }
@@ -147,6 +150,9 @@ struct DeviceListView: View {
                                   ? "externaldrive.fill.badge.checkmark"
                                   : "externaldrive.badge.xmark")
                             .foregroundColor(portOpen ? .green : .red)
+                        }else{
+                            Image(systemName: "externaldrive.fill")
+                            .foregroundColor(.gray)
                         }
                         
                         // Geräteinfos

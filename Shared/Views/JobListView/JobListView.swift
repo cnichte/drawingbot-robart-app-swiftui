@@ -70,46 +70,48 @@ struct JobListView: View {
     private var menuSection: some View {
         Menubar(
             title: "Jobs",
-            systemImage: "",
+            systemImage: "document.fill",
             toolbar: {
                 HStack(spacing: 12) {
-                    Button {
+                    
+                    CustomToolbarButton(title: "", icon: "document.badge.plus.fill", style: .secondary, role: nil,hasBorder:false, iconSize: .large ) {
                         Task {
                             let job = JobData(name: "Neuer Job", paper: .default, selectedMachine: .default)
                             let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)
                             selectedJob = newJob
                         }
-                    } label: {
-                        Label("Add", systemImage: "plus")
                     }
-                    .buttonStyle(.borderedProminent)
-
+                    
+                    CustomToolbarButton(title: "", icon: "folder.badge.plus", style: .secondary, role: nil,hasBorder:false, iconSize: .large ) {
+                        showProjectManager = true
+                    }
+                    .sheet(isPresented: $showProjectManager) {
+                        ProjectManagerView()
+                    }
+                    
+                    // Drag and Drop move versus copy
                     Toggle("D&D Copy", isOn: $isCopyMode)
                         .toggleStyle(.switch)
                         .labelsHidden()
                     
-                    Picker("", selection: $viewMode) {
+                
+                    CustomToolbarPicker(
+                        title: "",
+                        icon: nil,
+                        style: .secondary,
+                        hasBorder: false,
+                        iconSize: .medium,
+                        selection: $viewMode
+                    ) {
                         ForEach(JobListViewMode.allCases, id: \.self) { mode in
-                            Label(mode.label, systemImage: mode.systemImage)
+                            Image(systemName: mode.systemImage)
                                 .tag(mode)
                         }
                     }
-                    .pickerStyle(.segmented)
-                    .frame(width: 200)
 
                     TextField("Suchen …", text: $searchText)
                         .textFieldStyle(.roundedBorder)
                         .frame(maxWidth: 250)
-
-                    #if !os(macOS)
-                    Button("") {
-                        showProjectManager = true
-                    }
-                    .buttonStyle(.bordered)
-                    .sheet(isPresented: $showProjectManager) {
-                        ProjectManagerView()
-                    }
-                    #endif
                 }
             }
         )

@@ -99,7 +99,7 @@ struct MachineFormView: View {
                         .frame(maxWidth: 200)
 
                     Button(action: {
-                        data.commandItems.append(MachineCommandItem(command: "", description: ""))
+                        data.commandItems.append(MachineCommandItem(name:"", command: "", description: ""))
                         save()
                     }) {
                         Image(systemName: "plus.circle.fill")
