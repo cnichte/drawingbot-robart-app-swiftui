@@ -1,0 +1,161 @@
+//
+//  BackgroundTask.swift
+//  Robart
+//
+//  Created by Carsten Nichte on 06.05.25.
+//
+
+/*
+// Verwendung
+let manager = BackgroundTaskManager()
+
+// Starte den Task
+manager.startBackgroundTask { result, success in
+    if success {
+        print("Task erfolgreich: \(result)")
+    } else {
+        print("Task fehlgeschlagen")
+    }
+}
+
+// Daten in Echtzeit aktualisieren
+manager.updateData("Daten 1")
+DispatchQueue.main.asyncAfter(deadline: .now() + 65) {
+    manager.updateData("Daten 2") // Wird gesendet, da anders
+}
+DispatchQueue.main.asyncAfter(deadline: .now() + 125) {
+    manager.updateData("Daten 2") // Wird nicht gesendet, da gleich
+}
+*/
+
+// BackgroundTaskManager.swift
+import SwiftUI
+import Foundation
+
+// Backend: BackgroundTaskManager
+import Foundation
+
+class BackgroundTaskManager: ObservableObject {
+    
+    var timer: Timer?
+    
+    private var currentData: StickValues? // Aktuelle Daten
+    private var lastSentData: StickValues? // Zuletzt gesendete Daten
+    
+    private let dataQueue = DispatchQueue(label: "com.example.dataQueue")
+    @Published var isRunning: Bool = false
+    
+    typealias OnSend = (StickValues, @escaping (Bool) -> Void) -> Void // Callback
+    
+    func startBackgroundTask(onSend: @escaping OnSend) {
+        guard !isRunning else { return }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+            self?.checkAndPerformTask(onSend: onSend)
+        }
+        
+        RunLoop.current.add(timer!, forMode: .common)
+        DispatchQueue.main.async {
+            self.isRunning = true
+        }
+    }
+    
+    func updateData(_ data: StickValues) {
+        dataQueue.async {
+            self.currentData = data.clone()
+        }
+    }
+    
+    private func checkAndPerformTask(onSend: @escaping OnSend) {
+        dataQueue.sync {
+            guard let data = currentData, data != lastSentData else {
+                // print("Daten unverändert: \(String(describing: currentData)) um \(Date())")
+                return
+            }
+            
+            appLog(.info, "Daten geändert, sende: \(data) um \(Date())")
+            lastSentData = data
+            
+            onSend(data) { success in
+                appLog(.info, "Sendevorgang \(success ? "erfolgreich" : "fehlgeschlagen")")
+            }
+        }
+    }
+    
+    func stopBackgroundTask() {
+        timer?.invalidate()
+        timer = nil
+        DispatchQueue.main.async {
+            self.isRunning = false
+        }
+    }
+}
+
+/*
+ // SwiftUI-Ansicht
+ struct ContentView: View {
+     @StateObject private var taskManager = BackgroundTaskManager()
+     @State private var stickValues: StickValues = .default
+     
+     var body: some View {
+         VStack(spacing: 20) {
+             // Statusanzeige
+             Text(taskManager.isRunning ? "Task läuft" : "Task läuft nicht")
+                 .font(.headline)
+                 .foregroundColor(taskManager.isRunning ? .green : .red)
+             
+             // Button zum Ein-/Ausschalten
+             Button(action: {
+                 if taskManager.isRunning {
+                     taskManager.stopBackgroundTask()
+                 } else {
+                     taskManager.startBackgroundTask(data: stickValues) { data, completion in
+                         // Beispiel für eine Send-Mechanik (z. B. Netzwerkaufruf)
+                         print("Sende Daten: stickType=\(data.stickTypeRaw), angle=\(data.angleText)")
+                         // Simuliere einen asynchronen Sendevorgang
+                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                             completion(true) // Erfolg melden
+                         }
+                     }
+                 }
+             }) {
+                 Text(taskManager.isRunning ? "Task stoppen" : "Task starten")
+                     .font(.title2)
+                     .padding()
+                     .frame(maxWidth: .infinity)
+                     .background(taskManager.isRunning ? Color.red : Color.blue)
+                     .foregroundColor(.white)
+                     .cornerRadius(10)
+             }
+             .padding(.horizontal)
+             
+             // Eingabefelder für Test-Daten
+             TextField("Angle", text: $stickValues.angleText)
+                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                 .padding(.horizontal)
+             
+             TextField("Speed", text: $stickValues.speedText)
+                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                 .padding(.horizontal)
+         }
+         .padding()
+         .onChange(of: stickValues) { newData in
+             if taskManager.isRunning {
+                 taskManager.startBackgroundTask(data: newData) { data, completion in
+                     print("Sende Daten: stickType=\(data.stickTypeRaw), angle=\(data.angleText)")
+                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                         completion(true)
+                     }
+                 }
+             }
+         }
+     }
+ }
+
+ // Vorschau
+ struct ContentView_Previews: PreviewProvider {
+     static var previews: some View {
+         ContentView()
+     }
+ }
+*/
