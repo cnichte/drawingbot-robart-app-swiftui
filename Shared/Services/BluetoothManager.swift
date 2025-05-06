@@ -29,14 +29,11 @@
  
  */
 
-// Bluetooth_Manager.swift
-import Foundation
-import CoreBluetooth
-
-// Definiere den DiscoveredPeripheral-Typ
 // BluetoothManager.swift
 import Foundation
 import CoreBluetooth
+
+// MARK: - DiscoveredPeripheral
 
 struct DiscoveredPeripheral: Identifiable, Hashable {
     let id = UUID()
@@ -54,11 +51,33 @@ struct DiscoveredPeripheral: Identifiable, Hashable {
     }
 }
 
+// MARK: - BluetoothManager
+
 class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     private var scanWorkItem: DispatchWorkItem?
     private let defaultScanDuration: TimeInterval = 5.0
+
+    @Published var peripherals: [DiscoveredPeripheral] = [] // discoveredPeripherals Verwende den DiscoveredPeripheral-Typ
+    @Published var receivedMessage: String = ""
+    @Published var isBluetoothReady = false
+    @Published var isConnected = false
+    @Published var lastScanDate: Date? = nil
+    @Published var isScanning: Bool = false
+    @Published var rssi: NSNumber? = nil
     
+    @Published var favoriteUUID: UUID? //TODO: deprecated ??
+
+    private var centralManager: CBCentralManager!
+    private var txCharacteristic: CBCharacteristic?
+    private var filterByService = true
+    private var rssiTimer: Timer?
+    
+    // Das ist EINE Verbindung zu Robart...
+    private var hm10Peripheral: CBPeripheral?
+    let hm10ServiceUUID = CBUUID(string: "FFE0")
+    let hm10CharUUID = CBUUID(string: "FFE1")
+
     var connectedPeripheralID: UUID? {
         return hm10Peripheral?.identifier
     }
@@ -66,25 +85,10 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
     var connectedPeripheralName: String {
         return hm10Peripheral?.name ?? ""
     }
-
-    @Published var peripherals: [DiscoveredPeripheral] = [] // Verwende den DiscoveredPeripheral-Typ
-    @Published var receivedMessage: String = ""
-    @Published var isBluetoothReady = false
-    @Published var isConnected = false
-    @Published var lastScanDate: Date? = nil
-    @Published var isScanning: Bool = false
-    @Published var rssi: NSNumber? = nil
-    @Published var favoriteUUID: UUID?
-
-    private var centralManager: CBCentralManager!
-    private var hm10Peripheral: CBPeripheral?
-    private var txCharacteristic: CBCharacteristic?
-    private var filterByService = true
-
-    let hm10ServiceUUID = CBUUID(string: "FFE0")
-    let hm10CharUUID = CBUUID(string: "FFE1")
-
-    private var rssiTimer: Timer?
+    
+    /// Enthält alle aktuell verbundenen Peripherie-UUIDs
+    @Published var connectedPeripheralIDs: Set<UUID> = []
+    
     
     override init() {
         super.init()
@@ -229,6 +233,7 @@ class BluetoothManager: NSObject, ObservableObject, CBCentralManagerDelegate, CB
         isScanning = false
     }
     
+    /// Verbindung trennen
     func disconnect() {
         if let peripheral = hm10Peripheral {
             centralManager.cancelPeripheralConnection(peripheral)

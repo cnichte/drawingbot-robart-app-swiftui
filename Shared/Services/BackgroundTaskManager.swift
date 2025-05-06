@@ -1,39 +1,17 @@
 //
-//  BackgroundTask.swift
+//  BackgroundTaskManager.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 06.05.25.
 //
 
-/*
-// Verwendung
-let manager = BackgroundTaskManager()
-
-// Starte den Task
-manager.startBackgroundTask { result, success in
-    if success {
-        print("Task erfolgreich: \(result)")
-    } else {
-        print("Task fehlgeschlagen")
-    }
-}
-
-// Daten in Echtzeit aktualisieren
-manager.updateData("Daten 1")
-DispatchQueue.main.asyncAfter(deadline: .now() + 65) {
-    manager.updateData("Daten 2") // Wird gesendet, da anders
-}
-DispatchQueue.main.asyncAfter(deadline: .now() + 125) {
-    manager.updateData("Daten 2") // Wird nicht gesendet, da gleich
-}
-*/
-
 // BackgroundTaskManager.swift
+import Foundation
 import SwiftUI
-import Foundation
 
-// Backend: BackgroundTaskManager
-import Foundation
+protocol Cloneable {
+    func clone() -> Self
+}
 
 class BackgroundTaskManager<T: Equatable & Cloneable>: ObservableObject {
     
@@ -42,14 +20,14 @@ class BackgroundTaskManager<T: Equatable & Cloneable>: ObservableObject {
     private var currentData: T? // Aktuelle Daten
     private var lastSentData: T? // Zuletzt gesendete Daten
     
-    private let dataQueue = DispatchQueue(label: "com.example.dataQueue")
+    private let dataQueue = DispatchQueue(label: "de.nichte.robart.dataQueue")
     @Published var isRunning: Bool = false
     
     typealias OnSend = (T, @escaping (Bool) -> Void) -> Void // Callback
     
     func startBackgroundTask(onSend: @escaping OnSend) {
         guard !isRunning else { return }
-        
+        // 0.5 reicht für Bluetooth
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
             self?.checkAndPerformTask(onSend: onSend)
         }
@@ -69,13 +47,14 @@ class BackgroundTaskManager<T: Equatable & Cloneable>: ObservableObject {
     private func checkAndPerformTask(onSend: @escaping OnSend) {
         dataQueue.sync {
             guard let data = currentData, data != lastSentData else {
-                // print("Daten unverändert: \(String(describing: currentData)) um \(Date())")
+                appLog(.error, "Daten unverändert: \(String(describing: currentData)) um \(Date())")
                 return
             }
             
             appLog(.info, "Daten geändert, sende: \(data) um \(Date())")
             lastSentData = data
             
+            // You have to do the sending yourself in the callback....
             onSend(data) { success in
                 appLog(.info, "Sendevorgang \(success ? "erfolgreich" : "fehlgeschlagen")")
             }

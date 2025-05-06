@@ -18,6 +18,8 @@ struct ContentView: View {
     @EnvironmentObject var usbScanner: USBSerialScanner // EnvironmentObject statt ObservedObject
     @EnvironmentObject var assetStores: AssetStores
     
+    @AppStorage("remoteControlEnabled") private var remoteControlEnabled: Bool = true
+    
     @State private var selectedTab = 0
 
     var body: some View {
@@ -36,11 +38,13 @@ struct ContentView: View {
                         Label("Verbindung", systemImage: "dot.radiowaves.left.and.right")
                     }
                 
-                RemoteControlView()
-                    .tag(1)
-                    .tabItem {
-                        Label("Fernsteuerung", systemImage: "gamecontroller")
-                    }
+                if(remoteControlEnabled){
+                    RemoteControlView()
+                        .tag(1)
+                        .tabItem {
+                            Label("Fernsteuerung", systemImage: "gamecontroller")
+                        }
+                }
                 
                 JobListView() // Direkter Aufruf
                     .tag(2)

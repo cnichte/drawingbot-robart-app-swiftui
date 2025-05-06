@@ -37,7 +37,7 @@ struct ToastModifier: ViewModifier {
                         .zIndex(1)
                         Spacer()
                     }
-                    .padding(.top, PlatformUIHelper.isMacOS ? 40 : 60)
+                    .padding(.top, PlatformDetection.isMacOS ? 40 : 60)
                 }
                 Spacer()
                 if position == .bottom, isPresented {

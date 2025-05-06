@@ -43,6 +43,16 @@
 		D52D48E02DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
 		D52D48E12DBAA926000B6E5F /* iCloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */; };
 		D53EA2352DBC303600C23B17 /* robart-dev-checks.md in Resources */ = {isa = PBXBuildFile; fileRef = D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */; };
+		D559912D2DC8CA020066FE1E /* PlatformDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D559912C2DC8C9FB0066FE1E /* PlatformDetection.swift */; };
+		D559912E2DC8CA020066FE1E /* PlatformDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D559912C2DC8C9FB0066FE1E /* PlatformDetection.swift */; };
+		D55991302DC8CAC20066FE1E /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D559912F2DC8CAC00066FE1E /* ColorHelper.swift */; };
+		D55991312DC8CAC20066FE1E /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D559912F2DC8CAC00066FE1E /* ColorHelper.swift */; };
+		D55991332DC8CB000066FE1E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55991322DC8CAF40066FE1E /* ViewExtensions.swift */; };
+		D55991342DC8CB000066FE1E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55991322DC8CAF40066FE1E /* ViewExtensions.swift */; };
+		D55991362DC8CB940066FE1E /* PlatformSidebarAndInspectorToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55991352DC8CB910066FE1E /* PlatformSidebarAndInspectorToolbar.swift */; };
+		D55991372DC8CB940066FE1E /* PlatformSidebarAndInspectorToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55991352DC8CB910066FE1E /* PlatformSidebarAndInspectorToolbar.swift */; };
+		D55991392DC8E8140066FE1E /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55991382DC8E8120066FE1E /* CheckboxToggleStyle.swift */; };
+		D559913A2DC8E8140066FE1E /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55991382DC8E8120066FE1E /* CheckboxToggleStyle.swift */; };
 		D56125912DC691A30044B6A9 /* GettingStarted.md in Resources */ = {isa = PBXBuildFile; fileRef = D56125902DC6919F0044B6A9 /* GettingStarted.md */; };
 		D56125922DC691A30044B6A9 /* GettingStarted.md in Resources */ = {isa = PBXBuildFile; fileRef = D56125902DC6919F0044B6A9 /* GettingStarted.md */; };
 		D56125972DC6926E0044B6A9 /* HatchFillManager.markdown in Resources */ = {isa = PBXBuildFile; fileRef = D56125962DC6926E0044B6A9 /* HatchFillManager.markdown */; };
@@ -95,6 +105,8 @@
 		D587A4462DBEDE0D0072D83C /* JobInspectorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */; };
 		D587A4482DBEED1C0072D83C /* ActionsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4472DBEED190072D83C /* ActionsSectionView.swift */; };
 		D587A4492DBEED1C0072D83C /* ActionsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4472DBEED190072D83C /* ActionsSectionView.swift */; };
+		D59A28CF2DCA1F1300EAB3BC /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59A28CE2DCA1F0800EAB3BC /* BackgroundTaskManager.swift */; };
+		D59A28D02DCA1F1300EAB3BC /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59A28CE2DCA1F0800EAB3BC /* BackgroundTaskManager.swift */; };
 		D5A084C22DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084C12DAFD59B00332690 /* BluetoothManager.swift */; };
 		D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A084CE2DAFD84000332690 /* ProjectData.swift */; };
@@ -302,6 +314,11 @@
 		D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		D52D48DF2DBAA926000B6E5F /* iCloudHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudHelper.swift; sourceTree = "<group>"; };
 		D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "robart-dev-checks.md"; sourceTree = "<group>"; };
+		D559912C2DC8C9FB0066FE1E /* PlatformDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformDetection.swift; sourceTree = "<group>"; };
+		D559912F2DC8CAC00066FE1E /* ColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
+		D55991322DC8CAF40066FE1E /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		D55991352DC8CB910066FE1E /* PlatformSidebarAndInspectorToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSidebarAndInspectorToolbar.swift; sourceTree = "<group>"; };
+		D55991382DC8E8120066FE1E /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		D561258D2DC691140044B6A9 /* GettingStarted.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = GettingStarted.md; sourceTree = "<group>"; };
 		D56125902DC6919F0044B6A9 /* GettingStarted.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = GettingStarted.md; sourceTree = "<group>"; };
 		D56125962DC6926E0044B6A9 /* HatchFillManager.markdown */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HatchFillManager.markdown; sourceTree = "<group>"; };
@@ -330,6 +347,7 @@
 		D587A4412DBEDDD90072D83C /* JobPropertiesPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobPropertiesPanel.swift; sourceTree = "<group>"; };
 		D587A4442DBEDE0A0072D83C /* JobInspectorPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspectorPanel.swift; sourceTree = "<group>"; };
 		D587A4472DBEED190072D83C /* ActionsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsSectionView.swift; sourceTree = "<group>"; };
+		D59A28CE2DCA1F0800EAB3BC /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -556,7 +574,6 @@
 			children = (
 				D5A884612DC583600090BCE4 /* CustomButtons.swift */,
 				D5E55CF52DC049B4003806CF /* Menubar.swift */,
-				D5A085232DAFD8DE00332690 /* Speedometer_View.swift */,
 				D52C0AFA2DBA823D00F57746 /* SectionHeader.swift */,
 				D5A085322DAFE17000332690 /* CollapsibleSection.swift */,
 				D5A085032DAFD8AD00332690 /* ToastView.swift */,
@@ -584,6 +601,19 @@
 				D53EA2342DBC302C00C23B17 /* robart-dev-checks.md */,
 			);
 			path = "bash-scripte";
+			sourceTree = "<group>";
+		};
+		D559912B2DC8C9BA0066FE1E /* CrossPlatformUI_Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D55991382DC8E8120066FE1E /* CheckboxToggleStyle.swift */,
+				D55991352DC8CB910066FE1E /* PlatformSidebarAndInspectorToolbar.swift */,
+				D55991322DC8CAF40066FE1E /* ViewExtensions.swift */,
+				D559912F2DC8CAC00066FE1E /* ColorHelper.swift */,
+				D559912C2DC8C9FB0066FE1E /* PlatformDetection.swift */,
+				D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */,
+			);
+			path = CrossPlatformUI_Helpers;
 			sourceTree = "<group>";
 		};
 		D56C4E3D2DB118A600F09A0C /* ViewExtensions */ = {
@@ -698,9 +728,19 @@
 			path = Deprecated;
 			sourceTree = "<group>";
 		};
+		D59A28D12DCA4A3A00EAB3BC /* Joystick */ = {
+			isa = PBXGroup;
+			children = (
+				D5A085232DAFD8DE00332690 /* Speedometer_View.swift */,
+				D5A085002DAFD8AD00332690 /* Joystick_View.swift */,
+			);
+			path = Joystick;
+			sourceTree = "<group>";
+		};
 		D5A084C02DAFD58B00332690 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D59A28CE2DCA1F0800EAB3BC /* BackgroundTaskManager.swift */,
 				D5E55CE82DBFD6D7003806CF /* AutoConnectService.swift */,
 				D5E55CE52DBFCB46003806CF /* ConnectionManager.swift */,
 				D5E55CC82DBF7B82003806CF /* SVGSnapshot.swift */,
@@ -760,6 +800,8 @@
 		D5A084FC2DAFD89900332690 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D59A28D12DCA4A3A00EAB3BC /* Joystick */,
+				D559912B2DC8C9BA0066FE1E /* CrossPlatformUI_Helpers */,
 				D587A4402DBEBFFA0072D83C /* Deprecated */,
 				D5E1E6C92DC41497008F6347 /* JobFormView */,
 				D5E55CD72DBF8DBD003806CF /* View-Extensions */,
@@ -768,9 +810,7 @@
 				D57076D52DB57F4600C277AF /* Settings+Assets */,
 				D5A085B72DB02DBD00332690 /* JobListView */,
 				D5A084FD2DAFD8AD00332690 /* AboutMeView.swift */,
-				D5A084FE2DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift */,
 				D5A084FF2DAFD8AD00332690 /* DeviceListView.swift */,
-				D5A085002DAFD8AD00332690 /* Joystick_View.swift */,
 				D5A085012DAFD8AD00332690 /* RemoteControlView.swift */,
 				D52C0AF72DBA820300F57746 /* AssetsAndSettingsView.swift */,
 			);
@@ -1192,6 +1232,7 @@
 				D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */,
 				D587A43A2DBEAE620072D83C /* TestView.swift in Sources */,
 				D5A085182DAFD8C900332690 /* JobListView.swift in Sources */,
+				D55991332DC8CB000066FE1E /* ViewExtensions.swift in Sources */,
 				D581AF892DBC139100821A7E /* Bundle+DebugTools.swift in Sources */,
 				D509C0A42DBC4A20009B0233 /* PaperSectionView.swift in Sources */,
 				D5F6C61C2DB825C100020AEE /* PaperData.swift in Sources */,
@@ -1220,6 +1261,7 @@
 				D5F6C63F2DB8480200020AEE /* MachineManagerView.swift in Sources */,
 				D5F6C6412DB8481A00020AEE /* MachineFormView.swift in Sources */,
 				D5A085282DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
+				D59A28CF2DCA1F1300EAB3BC /* BackgroundTaskManager.swift in Sources */,
 				D56C4E592DB1847400F09A0C /* WindowID.swift in Sources */,
 				D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */,
 				D5A0852B2DAFD8DE00332690 /* PaperPanel.swift in Sources */,
@@ -1235,6 +1277,7 @@
 				D587A4482DBEED1C0072D83C /* ActionsSectionView.swift in Sources */,
 				D5F4DE052DB5A3A100C9FE57 /* ProjectFormView.swift in Sources */,
 				D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */,
+				D55991372DC8CB940066FE1E /* PlatformSidebarAndInspectorToolbar.swift in Sources */,
 				D5E55CF72DC049C1003806CF /* Menubar.swift in Sources */,
 				D509C09D2DBC49D9009B0233 /* JobSectionView.swift in Sources */,
 				D509C0AC2DBC4B05009B0233 /* MachineSectionView.swift in Sources */,
@@ -1262,9 +1305,11 @@
 				D5E55CC42DBF7673003806CF /* JobsDataFileManager.swift in Sources */,
 				D5A084F82DAFD88A00332690 /* PathParser.swift in Sources */,
 				D587A43D2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */,
+				D55991302DC8CAC20066FE1E /* ColorHelper.swift in Sources */,
 				D5A084F92DAFD88A00332690 /* SVGParser.swift in Sources */,
 				D5A084FA2DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
 				D509C0A12DBC49F2009B0233 /* SVGSectionView.swift in Sources */,
+				D559912D2DC8CA020066FE1E /* PlatformDetection.swift in Sources */,
 				D5A084FB2DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
 				D5E55CDA2DBF8DF1003806CF /* View+HoverEffect.swift in Sources */,
 				D5E55CBE2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */,
@@ -1279,6 +1324,7 @@
 				D5A084E22DAFD85300332690 /* FileManagerService.swift in Sources */,
 				D587A4462DBEDE0D0072D83C /* JobInspectorPanel.swift in Sources */,
 				D5E55CCF2DBF84E4003806CF /* JobListProjectSectionView.swift in Sources */,
+				D559913A2DC8E8140066FE1E /* CheckboxToggleStyle.swift in Sources */,
 				D5F6C6442DB8498700020AEE /* ConnectionManagerView.swift in Sources */,
 				D5E55CE72DBFCB49003806CF /* ConnectionManager.swift in Sources */,
 				D5E1E6D42DC417F9008F6347 /* JobInspector_SVGPropertiesView.swift in Sources */,
@@ -1305,6 +1351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5A084D02DAFD84000332690 /* ProjectData.swift in Sources */,
+				D55991392DC8E8140066FE1E /* CheckboxToggleStyle.swift in Sources */,
 				D575661A2DB9041000D95E3F /* ManageableItem.swift in Sources */,
 				D5A0851C2DAFD8C900332690 /* JobListView.swift in Sources */,
 				D5A0851E2DAFD8C900332690 /* JobFormView.swift in Sources */,
@@ -1330,6 +1377,7 @@
 				D572A2332DC624BB00D91FC5 /* MachineCommandResolver.swift in Sources */,
 				D575661B2DB91E5000D95E3F /* ItemManagerView.swift in Sources */,
 				D5E55CD02DBF84E4003806CF /* JobListProjectSectionView.swift in Sources */,
+				D55991342DC8CB000066FE1E /* ViewExtensions.swift in Sources */,
 				D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
 				D587A4322DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */,
 				D56C4E402DB118DB00F09A0C /* DropHandling.swift in Sources */,
@@ -1346,9 +1394,11 @@
 				D5F896EC2DBCE24D00397561 /* AspectRatioData.swift in Sources */,
 				D5E55CD22DBF8B6E003806CF /* JobCardView.swift in Sources */,
 				D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */,
+				D55991362DC8CB940066FE1E /* PlatformSidebarAndInspectorToolbar.swift in Sources */,
 				D52C0AEB2DBA613400F57746 /* PaperFormatData.swift in Sources */,
 				D581AF882DBC139100821A7E /* Bundle+DebugTools.swift in Sources */,
 				D5A085042DAFD8AD00332690 /* SettingsView.swift in Sources */,
+				D55991312DC8CAC20066FE1E /* ColorHelper.swift in Sources */,
 				D5A085052DAFD8AD00332690 /* AboutMeView.swift in Sources */,
 				D57566222DB9256000D95E3F /* MachineFormView.swift in Sources */,
 				D581AFA62DBC216900821A7E /* UUID+Helpers.swift in Sources */,
@@ -1370,6 +1420,7 @@
 				D5A085092DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
 				D5A0850A2DAFD8AD00332690 /* Joystick_View.swift in Sources */,
 				D52C0AF62DBA72DF00F57746 /* AssetStores.swift in Sources */,
+				D559912E2DC8CA020066FE1E /* PlatformDetection.swift in Sources */,
 				D5A084C32DAFD59B00332690 /* BluetoothManager.swift in Sources */,
 				D509C0A62DBC4AD2009B0233 /* SignatureSectionView.swift in Sources */,
 				D587A43E2DBEB9A60072D83C /* ConnectionStatusHeader.swift in Sources */,
@@ -1407,6 +1458,7 @@
 				D5E55CDD2DBF8EF6003806CF /* JobCardViewMode.swift in Sources */,
 				D5A084E12DAFD85300332690 /* SettingsMigrator.swift in Sources */,
 				D5E1E6D02DC417EC008F6347 /* JobInspector_SVGFileInfoView.swift in Sources */,
+				D59A28D02DCA1F1300EAB3BC /* BackgroundTaskManager.swift in Sources */,
 				D52C0AF92DBA820300F57746 /* AssetsAndSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

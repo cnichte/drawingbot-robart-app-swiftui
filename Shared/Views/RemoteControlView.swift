@@ -5,52 +5,115 @@
 //  Created by Carsten Nichte on 08.04.25.
 //
 
+// MARK: - RemoteControlView
+
+// RemoteControlView.swift
 import SwiftUI
 
-struct RemoteControlView: View {
-    @EnvironmentObject var bluetoothManager: BluetoothManager
+// MARK: - RemoteControlView
 
-    // Speedometer
-    @State private var angleText = "0"
-    @State private var speedText = "0"
-    @State private var rotationText = "0"
+public struct RemoteControlView: View {
+    @EnvironmentObject var bluetoothManager: BluetoothManager
     
-    @State private var leftStickPosition: CGPoint = .zero
-    @State private var rightStickPosition: CGPoint = .zero
+    @AppStorage("currentLeftStickType") private var currentLeftStickType: String = RemoteControlStickType.standard.rawValue
+    @AppStorage("currentRightStickType") private var currentRightStickType: String = RemoteControlStickType.standard.rawValue
+    @AppStorage("currentLeftStickMode") private var currentLeftStickMode: String = RemoteControlStickMode.free.rawValue
+    @AppStorage("currentRightStickMode") private var currentRightStickMode: String = RemoteControlStickMode.free.rawValue
     
-    @State var leftStickDefaultMode = true
-    @State var rightStickDefaultMode = false
+    @StateObject private var leftStickValues = StickValues.default
+    @StateObject private var rightStickValues = StickValues.default
     
-    private let joystickRadius: CGFloat = 60
-    private let knobRadius: CGFloat = 30
+    @StateObject private var backgroundTask: BackgroundTaskManager<CombinedStickValues> = BackgroundTaskManager()
     
-   // Geräte merken (z. B. Favoriten) - Für gezielten Auto-Reconnect
-   // 🗂 Sortierung nach Namen oder manuell - Für bessere Übersicht
-   // 📲 Verbindungssymbol + Name oben in UI- Wie bei AirPods oder Gerätenamen
-    
-    var body: some View {
-        
+    public var body: some View {
         VStack(spacing: 15) {
-            
-            Speedometer_View(angleText: angleText, speedText: speedText, rotationText: rotationText)
-            
+            joystickToolbarView
+            HStack {
+                Speedometer_View(stickValues: leftStickValues) // left Stick
+                Spacer()
+                Speedometer_View(stickValues: rightStickValues) // right Stick
+            }
             .padding()
             
-            Spacer() // Optional: sorgt für den Abstand am unteren Ende
+            Spacer()
             
-            // HStack - Joysticks
-            HStack(
-                alignment: .top,
-                spacing: 50
-            ) {
-                // Left Joystick
-                Joystick_View(position: $leftStickPosition, default_mode: $leftStickDefaultMode, angleText:$angleText, speedText:$speedText, rotateText: $rotationText)
-                
-                // Right Joystick
-                Joystick_View(position: $rightStickPosition, default_mode: $rightStickDefaultMode ,angleText:$angleText, speedText:$speedText, rotateText: $rotationText)
-            } // HStack - Joysticks
+            HStack(alignment: .top, spacing: 50) {
+                Joystick_View(stickValues: leftStickValues)
+                Joystick_View(stickValues: rightStickValues)
+            }
         }
         .padding()
         .navigationTitle("Fernsteuerung")
+        .onAppear {
+            // Initialisiere stickValues mit AppStorage-Werten
+            leftStickValues.stickTypeRaw = currentLeftStickType
+            leftStickValues.stickModeRaw = currentLeftStickMode
+            rightStickValues.stickTypeRaw = currentRightStickType
+            rightStickValues.stickModeRaw = currentRightStickMode
+        }
+        .onChange(of: currentLeftStickType) { _, newValue in
+            leftStickValues.stickTypeRaw = newValue
+        }
+        .onChange(of: currentLeftStickMode) { _, newValue in
+            leftStickValues.stickModeRaw = newValue
+        }
+        .onChange(of: currentRightStickType) { _, newValue in
+            rightStickValues.stickTypeRaw = newValue
+        }
+        .onChange(of: currentRightStickMode) { _, newValue in
+            rightStickValues.stickModeRaw = newValue
+        }
+        
+        .onReceive(leftStickValues.objectWillChange) { _ in
+            let newCombined = CombinedStickValues(left: leftStickValues.clone(), right: rightStickValues.clone())
+            backgroundTask.updateData(newCombined)
+        }
+        .onReceive(rightStickValues.objectWillChange) { _ in
+            let newCombined = CombinedStickValues(left: leftStickValues.clone(), right: rightStickValues.clone())
+            backgroundTask.updateData(newCombined)
+        }
+    }
+    
+    // MARK: - joystickToolbarView
+    
+    private var joystickToolbarView: some View {
+        CollapsibleSection(title: "Joystick", systemImage: "gamecontroller.fill", toolbar: {
+            Text(backgroundTask.isRunning ? "runs" : "stopped")
+                .font(.headline)
+                .foregroundColor(backgroundTask.isRunning ? .green : .red)
+            
+            CustomToolbarButton(
+                title: (backgroundTask.isRunning ? "Task stop" : "Task start"),
+                icon: "paperplane.fill",
+                style: .primary,
+                role: nil,
+                hasBorder: false,
+                iconSize: .large
+            ) {
+                if backgroundTask.isRunning {
+                    backgroundTask.stopBackgroundTask()
+                } else {
+                    backgroundTask.startBackgroundTask { data, completion in
+                        appLog(.info, "Sende Daten: \(data)")
+                        Task {
+                            let command = String(format: "G1 X%.1f Y%.1f R%.2f", data.left.position.x, data.left.position.y, data.right.rotation)
+                            bluetoothManager.send("\(command)")
+                        }
+                    }
+                }
+            }
+        }) {
+            Picker("LeftStick Type", selection: $currentLeftStickType) {
+                Text(".standard").tag(RemoteControlStickType.standard.rawValue)
+                Text(".rotate").tag(RemoteControlStickType.rotate.rawValue)
+            }
+            .pickerStyle(.segmented)
+            
+            Picker("RightStick Type", selection: $currentRightStickType) {
+                Text(".standard").tag(RemoteControlStickType.standard.rawValue)
+                Text(".rotate").tag(RemoteControlStickType.rotate.rawValue)
+            }
+            .pickerStyle(.segmented)
+        }
     }
 }

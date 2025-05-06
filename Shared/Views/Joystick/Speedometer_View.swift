@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Speedometer_View: View {
     
-    var stickValues:StickValues
+    @ObservedObject var stickValues: StickValues
     
     var body: some View {
 
@@ -58,6 +58,8 @@ struct Speedometer_View: View {
     } // body
 } // Speedometer_View
 
+/*
 #Preview {
     Speedometer_View(stickValues: .default)
 }
+*/

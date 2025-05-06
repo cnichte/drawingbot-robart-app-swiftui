@@ -15,19 +15,13 @@
 // SettingsView.swift
 import SwiftUI
 
-// Man kann entweder plotten, oder wie eine Fernsteuerung benutzen.
-enum ControlType: String, Codable {
-    case plotterControl = ".potterControl"
-    case remoteControl = ".remoteControl"
-}
-
 struct SettingsView: View {
     @EnvironmentObject var settingsStore: GenericStore<SettingsData>
     @EnvironmentObject var assetStores: AssetStores
 
     @AppStorage("currentStorageType") private var currentStorageRaw: String = StorageType.local.rawValue
-    @AppStorage("currentControlType") private var currentControlType: String = ControlType.plotterControl.rawValue
-    
+    @AppStorage("remoteControlEnabled") private var remoteControlEnabled: Bool = true
+
     @AppStorage("loggingEnabled") private var loggingEnabled: Bool = true
     @AppStorage("logLevel") private var logLevel: LogLevel = .verbose
 
@@ -35,27 +29,27 @@ struct SettingsView: View {
         ScrollView {
             VStack(spacing: 16) {
                 CollapsibleSection(title: "Allgemein", systemImage: "gear") {
+                    
                     Picker("Speicherort", selection: $currentStorageRaw) {
                         Text("Lokal").tag(StorageType.local.rawValue)
                         Text("iCloud").tag(StorageType.iCloud.rawValue)
                     }
                     .pickerStyle(.segmented)
+                    
+                    Toggle(isOn: $remoteControlEnabled) {
+                        VStack(alignment: .leading) {
+                            Label("Fernsteuerung anzeigen", systemImage: "gamecontroller")
+                            Text("Fernsteuerung im UI ausblenden wenn du die Funktion nicht benötigst.")
+                        }
+                    }.toggleStyle(CheckboxToggleStyle())
                 }
-
-                CollapsibleSection(title: "Fernsteuerung", systemImage: "gamecontroller") {
-                    Picker("ControlType", selection: $currentControlType) {
-                        Text("potterControl").tag(ControlType.plotterControl.rawValue)
-                        Text("remoteControl").tag(ControlType.remoteControl.rawValue)
-                    }
-                    .pickerStyle(.segmented)
-                    Text("Du kannst die App im Plotter-Modus verwenden, oder die Fernsteuerung nutzen.")
-                }
-                
                 
                 CollapsibleSection(title: "Logging", systemImage: "doc.text.magnifyingglass") {
                     Toggle(isOn: $loggingEnabled) {
                         Label("Logging aktivieren", systemImage: "doc.text.magnifyingglass")
                     }
+                    .toggleStyle(CheckboxToggleStyle())
+                    
                     Picker("Log-Level", selection: $logLevel) {
                         ForEach(LogLevel.allCases, id: \.self) { level in
                             Text(level.rawValue.capitalized).tag(level)

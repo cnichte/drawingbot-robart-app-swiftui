@@ -97,7 +97,8 @@ struct AssetStoresDebugToolbar: View {
 
             Toggle("Reset beim nächsten Start erzwingen", isOn: $resetOnNextLaunch)
                 .padding(.horizontal)
-
+                .toggleStyle(CheckboxToggleStyle())
+            
             Divider()
 
             Button(action: {
