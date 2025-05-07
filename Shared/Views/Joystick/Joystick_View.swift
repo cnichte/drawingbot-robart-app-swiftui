@@ -30,24 +30,24 @@ public enum RemoteControlStickMode: String, Codable {
 
 // Bundle all the values for a stick...
 final class StickValues: ObservableObject, Equatable, Cloneable {
-    
+    // ObservableObject
     @Published var stickTypeRaw: String
     @Published var stickModeRaw: String
-
-    @Published var position: CGPoint
+    
+    @Published var position: CGPoint // mode .standard
     @Published var angle: CGFloat
     @Published var speed: CGFloat
-    @Published var rotation: CGFloat
-
+    
+    @Published var rotation: CGFloat // mode .rotation
+    
     @Published var positionText: String
     @Published var angleText: String
     @Published var speedText: String
     @Published var rotationText: String
-
+    
     static var `default`: StickValues {
         StickValues()
     }
-    
     
     init(
         stickType: RemoteControlStickType = .standard,
@@ -72,7 +72,8 @@ final class StickValues: ObservableObject, Equatable, Cloneable {
         self.speedText = speedText
         self.rotationText = rotationText
     }
-
+    
+    // Equatable
     static func == (lhs: StickValues, rhs: StickValues) -> Bool {
         lhs.stickTypeRaw == rhs.stickTypeRaw &&
         lhs.stickModeRaw == rhs.stickModeRaw &&
@@ -85,8 +86,8 @@ final class StickValues: ObservableObject, Equatable, Cloneable {
         lhs.speedText == rhs.speedText &&
         lhs.rotationText == rhs.rotationText
     }
-
     
+    // Cloneable
     func clone() -> StickValues {
         let copy = StickValues(
             stickType: RemoteControlStickType(rawValue: self.stickTypeRaw) ?? .standard,
@@ -105,23 +106,25 @@ final class StickValues: ObservableObject, Equatable, Cloneable {
     
 }
 
+// MARK: - CombinedStickValues
+
 final class CombinedStickValues: ObservableObject, Equatable, Cloneable {
     
     @Published var left: StickValues
     @Published var right: StickValues
-
+    
     init(left: StickValues, right: StickValues) {
         self.left = left
         self.right = right
     }
-
+    
     func clone() -> CombinedStickValues {
         CombinedStickValues(
             left: left.clone(),
             right: right.clone()
         )
     }
-
+    
     static func == (lhs: CombinedStickValues, rhs: CombinedStickValues) -> Bool {
         lhs.left == rhs.left && lhs.right == rhs.right
     }
@@ -129,15 +132,13 @@ final class CombinedStickValues: ObservableObject, Equatable, Cloneable {
 
 // MARK: - Joystick_View
 
-// This is a Joystick with two Modes.
+// This is a Joystick with two Modes: standard and rotation
 // Joystick_View.swift
 struct Joystick_View: View {
-
-    // TODO: replace this with RemoteControlStickType .default (means true) .rotate (means false)
+    
     @ObservedObject var stickValues: StickValues
     @State private var absolutPosition: CGPoint = .zero
     
-    // TODO: Knob should end inside the joystick circle.
     private let joystickRadius: CGFloat = 75
     private let knobRadius: CGFloat = 30
     private let initialAngle: CGFloat = 0
@@ -259,13 +260,13 @@ struct Joystick_View: View {
 }
 
 /*
-#Preview {
-    @Previewable @State var angleText = "0"
-    @Previewable @State var speedText = "0"
-    @Previewable @State var rotateText = "0"
-    @Previewable @State var default_mode = true
-    @Previewable @State var stickPosition: CGPoint = .zero
-    
-    Joystick_View() .position(x: ScreenHelper.width * 0.5, y: ScreenHelper.height * 0.5) .background(Color.black.opacity(0.7))
-}
-*/
+ #Preview {
+ @Previewable @State var angleText = "0"
+ @Previewable @State var speedText = "0"
+ @Previewable @State var rotateText = "0"
+ @Previewable @State var default_mode = true
+ @Previewable @State var stickPosition: CGPoint = .zero
+ 
+ Joystick_View() .position(x: ScreenHelper.width * 0.5, y: ScreenHelper.height * 0.5) .background(Color.black.opacity(0.7))
+ }
+ */

@@ -5,7 +5,6 @@
 //  Created by Carsten Nichte on 08.04.25.
 //
 
-// MARK: - RemoteControlView
 
 // RemoteControlView.swift
 import SwiftUI
@@ -13,16 +12,16 @@ import SwiftUI
 // MARK: - RemoteControlView
 
 public struct RemoteControlView: View {
-    @EnvironmentObject var bluetoothManager: BluetoothManager
-    
+    // TODO: use AssetStore for settings
     @AppStorage("currentLeftStickType") private var currentLeftStickType: String = RemoteControlStickType.standard.rawValue
     @AppStorage("currentRightStickType") private var currentRightStickType: String = RemoteControlStickType.standard.rawValue
     @AppStorage("currentLeftStickMode") private var currentLeftStickMode: String = RemoteControlStickMode.free.rawValue
     @AppStorage("currentRightStickMode") private var currentRightStickMode: String = RemoteControlStickMode.free.rawValue
     
+    @EnvironmentObject var bluetoothManager: BluetoothManager
+    
     @StateObject private var leftStickValues = StickValues.default
     @StateObject private var rightStickValues = StickValues.default
-    
     @StateObject private var backgroundTask: BackgroundTaskManager<CombinedStickValues> = BackgroundTaskManager()
     
     public var body: some View {
@@ -51,6 +50,7 @@ public struct RemoteControlView: View {
             rightStickValues.stickTypeRaw = currentRightStickType
             rightStickValues.stickModeRaw = currentRightStickMode
         }
+        
         .onChange(of: currentLeftStickType) { _, newValue in
             leftStickValues.stickTypeRaw = newValue
         }
@@ -103,17 +103,26 @@ public struct RemoteControlView: View {
                 }
             }
         }) {
-            Picker("LeftStick Type", selection: $currentLeftStickType) {
-                Text(".standard").tag(RemoteControlStickType.standard.rawValue)
-                Text(".rotate").tag(RemoteControlStickType.rotate.rawValue)
-            }
-            .pickerStyle(.segmented)
             
-            Picker("RightStick Type", selection: $currentRightStickType) {
-                Text(".standard").tag(RemoteControlStickType.standard.rawValue)
-                Text(".rotate").tag(RemoteControlStickType.rotate.rawValue)
+            
+            HStack {
+                Text("LeftStick Type")
+                Picker("LeftStick Type", selection: $currentLeftStickType) {
+                    Text(".standard").tag(RemoteControlStickType.standard.rawValue)
+                    Text(".rotate").tag(RemoteControlStickType.rotate.rawValue)
+                }
+                .pickerStyle(.segmented)
             }
-            .pickerStyle(.segmented)
+            
+            HStack {
+                Text("RightStick Type")
+                Picker("RightStick Type", selection: $currentRightStickType) {
+                    Text(".standard").tag(RemoteControlStickType.standard.rawValue)
+                    Text(".rotate").tag(RemoteControlStickType.rotate.rawValue)
+                }
+                .pickerStyle(.segmented)
+            }
+            
         }
     }
 }
