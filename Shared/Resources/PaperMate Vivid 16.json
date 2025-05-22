@@ -1,0 +1,143 @@
+{
+  "presetType": "drawing_set",
+  "version": "2.0",
+  "presetSubType": "User",
+  "presetName": "PaperMate Vivid 16",
+  "enabled": true,
+  "userCreated": true,
+  "data": {
+    "type": "User",
+    "name": "New Preset",
+    "pens": [
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid",
+        "argb": -16777216,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Copy",
+        "argb": -65536,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Rouge - Copy",
+        "argb": -26333,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Rose",
+        "argb": -33676,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Jaune",
+        "argb": -15872,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Jaune - Copy",
+        "argb": -9133987,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Vert - Copy",
+        "argb": -7287369,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Bleu lila",
+        "argb": -5258282,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Bleu ciel",
+        "argb": -9789280,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Jaune tournesol - Copy",
+        "argb": -7414,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Jaune citron - Copy",
+        "argb": -4337664,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Citron vert - Copy",
+        "argb": -6247630,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Bleu lila - Copy",
+        "argb": -3031336,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Lila - Copy",
+        "argb": -5027210,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Framboise - Copy",
+        "argb": -8895360,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      },
+      {
+        "type": "PaperMate",
+        "name": "Flair Vivid - Violine - Copy",
+        "argb": -10735531,
+        "distributionWeight": 100,
+        "strokeSize": 1.0,
+        "isEnabled": true
+      }
+    ],
+    "colorHandler": "Default"
+  }
+}
