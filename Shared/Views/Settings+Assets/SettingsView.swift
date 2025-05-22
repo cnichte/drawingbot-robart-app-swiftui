@@ -28,13 +28,17 @@ struct SettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                CollapsibleSection(title: "Allgemein", systemImage: "gear") {
+                CollapsibleSection(title: "Speicher", systemImage: "gear") {
                     
                     Picker("Speicherort", selection: $currentStorageRaw) {
                         Text("Lokal").tag(StorageType.local.rawValue)
                         Text("iCloud").tag(StorageType.iCloud.rawValue)
                     }
                     .pickerStyle(.segmented)
+                    
+                }
+                
+                CollapsibleSection(title: "Fernsteuerung", systemImage: "gear") {
                     
                     Toggle(isOn: $remoteControlEnabled) {
                         VStack(alignment: .leading) {
@@ -43,6 +47,7 @@ struct SettingsView: View {
                         }
                     }.toggleStyle(CheckboxToggleStyle())
                 }
+                
                 
                 CollapsibleSection(title: "Logging", systemImage: "doc.text.magnifyingglass") {
                     Toggle(isOn: $loggingEnabled) {

@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct InspectorPanelView: View {
+struct RightPanelView: View {
     @Binding var currentJob: JobData
     @Binding var selectedMachine: MachineData?
 

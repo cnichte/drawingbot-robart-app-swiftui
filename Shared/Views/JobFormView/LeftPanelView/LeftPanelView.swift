@@ -1,12 +1,12 @@
 //
-//  SidebarPanelView.swift
+//  LeftPanelView.swift
 //  Robart
 //
 //  Created by Carsten Nichte on 22.05.25.
 //
 import SwiftUI
 
-struct SidebarPanelView: View {
+struct LeftPanelView: View {
     @Binding var currentJob: JobData
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool

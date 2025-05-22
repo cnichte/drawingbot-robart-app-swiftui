@@ -44,7 +44,7 @@ struct iPhoneJobPreviewLayout: View {
             }
         }
         .sheet(isPresented: $showingSettings) {
-            SidebarPanelView(
+            LeftPanelView(
                 currentJob: $currentJob,
                 svgFileName: $svgFileName,
                 showingFileImporter: $showingFileImporter,
@@ -52,7 +52,7 @@ struct iPhoneJobPreviewLayout: View {
             )
         }
         .sheet(isPresented: $showingInspector) {
-            InspectorPanelView(
+            RightPanelView(
                 currentJob: $currentJob,
                 selectedMachine: $selectedMachine
             )

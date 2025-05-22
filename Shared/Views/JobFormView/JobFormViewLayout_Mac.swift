@@ -33,7 +33,7 @@ struct MacJobPreviewLayoutView: View {
             isRightVisible: $isInspectorVisible,
             rightPanelWidth: $inspectorWidth,
             leftView: {
-                SidebarPanelView(
+                LeftPanelView(
                     currentJob: $currentJob,
                     svgFileName: $svgFileName,
                     showingFileImporter: $showingFileImporter,
@@ -55,7 +55,7 @@ struct MacJobPreviewLayoutView: View {
                 )
             },
             rightView: {
-                InspectorPanelView(
+                RightPanelView(
                     currentJob: $currentJob,
                     selectedMachine: $selectedMachine
                 )

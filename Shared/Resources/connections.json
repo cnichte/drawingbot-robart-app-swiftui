@@ -1,10 +1,9 @@
 [
     {
-        "id":"3a5788d2-6b4d-4904-925a-63b20b5c6a2e",
-        "name":"Axidraw USB",
-        "description":"",
-        "type":".usb",
-        "bluetoothPeripheral":"CBPeripheral",
-        "usbConnection":""
+        "id":"87CDC347-C2AC-4347-9EA9-69F46EF799BA",
+        "name":"Robart Bluetooth",
+        "description":"Verbindung zu Robart sollte automatisch erfolgen wenn diese Connection angelegt ist. Vielleicht könnte hier noch ein Property autoconnect:true|false rein, damit ich die Wahl habe.",
+        "typ":".bluetooth",
+        "btPeripheralUUID":"69A117A1-84F1-2B7A-5923-42C8DE29EC3C",
     }
 ]

@@ -27,7 +27,7 @@ struct iPadJobPreviewLayout: View {
     var body: some View {
         HStack {
             if isSidebarVisible {
-                SidebarPanelView(
+                LeftPanelView(
                     currentJob: $currentJob,
                     svgFileName: $svgFileName,
                     showingFileImporter: $showingFileImporter,
@@ -60,7 +60,7 @@ struct iPadJobPreviewLayout: View {
             */
         }
         .sheet(isPresented: $showingInspector) {
-            InspectorPanelView(
+            RightPanelView(
                 currentJob: $currentJob,
                 selectedMachine: $selectedMachine
             )

@@ -121,7 +121,7 @@ class AssetStores: ObservableObject {
         self.storageType = initialStorageType 
 
         // User Stores
-        self.connectionsStore = GenericStore(directoryName: "connections", resourceType: .user)
+        self.connectionsStore = GenericStore(directoryName: "connections", resourceType: .user, initialResourceName: "connections")
         self.machineStore     = GenericStore(directoryName: "machines", resourceType: .user, initialResourceName: "machines")
         self.projectStore     = GenericStore(directoryName: "projects", resourceType: .user, initialResourceName: "projects")
         self.plotJobStore     = GenericStore(directoryName: "jobs", resourceType: .user)

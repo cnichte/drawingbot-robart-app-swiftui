@@ -45,7 +45,7 @@ struct AssetsAndSettingsView: View {
     #if os(macOS)
     private var macOSAssetsAndSettingsView: some View {
         VStack {
-            Picker("Kategorie", selection: $selectedIndex) {
+            Picker("", selection: $selectedIndex) {
                 ForEach(Array(allTabs.enumerated()), id: \ .offset) { index, tab in
                     Text(tab.title).tag(index)
                 }
@@ -62,28 +62,28 @@ struct AssetsAndSettingsView: View {
     private var allTabs: [AssetTab] {
         [
             AssetTab(
-                title: "Settings",
+                title: "Allgemein",
                 view: AnyView(
                     SettingsView()
                         .environmentObject(assetStores)
                 )
             ),
             AssetTab(
-                title: "Connection",
+                title: "Verbindungen",
                 view: AnyView(
                     ItemManagerView<ConnectionData, ConnectionFormView>(
-                        title: "Connection",
-                        createItem: { ConnectionData(name: "Neue Connection") },
+                        title: "Verbindungen",
+                        createItem: { ConnectionData(name: "Neue Verbindung") },
                         buildForm: { ConnectionFormView(data: $0) }
                     )
                     .environmentObject(assetStores)
                 )
             ),
             AssetTab(
-                title: "Maschine",
+                title: "Maschinen",
                 view: AnyView(
                     ItemManagerView<MachineData, MachineFormView>(
-                        title: "Maschine",
+                        title: "Maschinen",
                         createItem: { MachineData(name: "Neue Maschine") },
                         buildForm: { MachineFormView(data: $0) }
                     )
@@ -113,7 +113,7 @@ struct AssetsAndSettingsView: View {
                 )
             ),
             AssetTab(
-                title: "Papier",
+                title: "Papiere",
                 view: AnyView(
                     PaperManagerView()
                         .environmentObject(assetStores)
