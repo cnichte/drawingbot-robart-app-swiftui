@@ -4,6 +4,8 @@
 //
 //  Created by Carsten Nichte on 03.05.25.
 //
+
+// InspectorPanelView.swift
 import SwiftUI
 
 struct RightPanelView: View {

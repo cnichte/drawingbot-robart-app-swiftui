@@ -89,6 +89,8 @@
 		D581AF892DBC139100821A7E /* Bundle+DebugTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AF872DBC139100821A7E /* Bundle+DebugTools.swift */; };
 		D581AFA62DBC216900821A7E /* UUID+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AFA52DBC216600821A7E /* UUID+Helpers.swift */; };
 		D581AFA72DBC216900821A7E /* UUID+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581AFA52DBC216600821A7E /* UUID+Helpers.swift */; };
+		D58371A32DDFA0C200707133 /* SVGInspectorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58371A22DDFA0BD00707133 /* SVGInspectorModel.swift */; };
+		D58371A42DDFA0C200707133 /* SVGInspectorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58371A22DDFA0BD00707133 /* SVGInspectorModel.swift */; };
 		D587A4312DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */; };
 		D587A4322DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */; };
 		D587A4372DBEA9F90072D83C /* CustomSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4362DBEA9F10072D83C /* CustomSplitView.swift */; };
@@ -341,6 +343,7 @@
 		D581AFA52DBC216600821A7E /* UUID+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UUID+Helpers.swift"; sourceTree = "<group>"; };
 		D581AFAC2DBC236A00821A7E /* Robart-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Robart-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D581AFC22DBC24F100821A7E /* Robart-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Robart-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D58371A22DDFA0BD00707133 /* SVGInspectorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGInspectorModel.swift; sourceTree = "<group>"; };
 		D587A4302DBE8EAA0072D83C /* AssetManagerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetManagerHelper.swift; sourceTree = "<group>"; };
 		D587A4362DBEA9F10072D83C /* CustomSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSplitView.swift; sourceTree = "<group>"; };
 		D587A4392DBEAE5D0072D83C /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
@@ -762,6 +765,7 @@
 		D5A084C92DAFD83400332690 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
+				D58371A22DDFA0BD00707133 /* SVGInspectorModel.swift */,
 				D5E1E6D52DC41D02008F6347 /* Defaultable.swift */,
 				D5F896E62DBCDDD500397561 /* Assets */,
 				D5F896E52DBCDDB800397561 /* Internal */,
@@ -1252,6 +1256,7 @@
 				D572A2402DC645C900D91FC5 /* RightPanelView.swift in Sources */,
 				D572A2382DC628CF00D91FC5 /* JobFormViewLayout_Mac.swift in Sources */,
 				D5F6C61A2DB8230200020AEE /* TabManagerShellView.swift in Sources */,
+				D58371A42DDFA0C200707133 /* SVGInspectorModel.swift in Sources */,
 				D5A084D72DAFD84000332690 /* SettingsData.swift in Sources */,
 				D5A084D82DAFD84000332690 /* MachineData.swift in Sources */,
 				D5E55CE92DBFD6DA003806CF /* AutoConnectService.swift in Sources */,
@@ -1428,6 +1433,7 @@
 				D5F4DE082DB5A3C500C9FE57 /* JobPickerSheet.swift in Sources */,
 				D59161DA2DDF633800E9DC61 /* JobFormViewLayout_Mac.swift in Sources */,
 				D5E55CBD2DBF6A46003806CF /* SVGMigrationTester.swift in Sources */,
+				D58371A32DDFA0C200707133 /* SVGInspectorModel.swift in Sources */,
 				D5A085092DAFD8AD00332690 /* CrossPlatformUI_Helpers.swift in Sources */,
 				D5A0850A2DAFD8AD00332690 /* Joystick_View.swift in Sources */,
 				D52C0AF62DBA72DF00F57746 /* AssetStores.swift in Sources */,

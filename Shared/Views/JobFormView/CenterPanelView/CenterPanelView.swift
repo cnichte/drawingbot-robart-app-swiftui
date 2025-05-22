@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 22.05.25.
 //
 
+// CenterPanelView.swift
 import SwiftUI
 
 struct CenterPanelView: View {

@@ -88,6 +88,12 @@ struct SVGSectionView: View {
 
                     do {
                         let destinationURL = try JobsDataFileManager.shared.copySVG(toJobID: currentJob.id, from: selectedURL)
+                        
+                        // arbeitskopie
+                        let workingCopyURL = JobsDataFileManager.shared.svgFolder(for: currentJob.id).appendingPathComponent("working.svg")
+                        try Data(contentsOf: destinationURL).write(to: workingCopyURL)
+                        
+                        // original
                         let relativePath = "jobs-data/\(currentJob.id.uuidString)/svg/\(destinationURL.lastPathComponent)"
                         currentJob.svgFilePath = relativePath
                         svgFileName = destinationURL.lastPathComponent

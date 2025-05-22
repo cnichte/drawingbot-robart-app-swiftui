@@ -32,19 +32,21 @@ struct SVGProperty: Identifiable {
 struct JobInspectorPanel: View {
     @Binding var currentJob: JobData
     @Binding var selectedMachine: MachineData?
-    
-    @State private var selectedTab: InspectorTab = .fileInfo
 
-    @State private var layers: [SVGLayer] = []
-    @State private var selectedLayer: SVGLayer? = nil
-    @State private var selectedElements: [String] = []
-    @State private var selectedProperties: [SVGProperty] = []
-    
+    @State private var selectedTab: InspectorTab = .fileInfo
+    @StateObject private var svgInspectorModel: SVGInspectorModel
+
     enum InspectorTab: String, CaseIterable, Identifiable {
         case fileInfo = "SVG-FileInfo"
         case properties = "SVG-Properties"
         case machine = "Maschine"
         var id: String { rawValue }
+    }
+
+    init(currentJob: Binding<JobData>, selectedMachine: Binding<MachineData?>) {
+        self._currentJob = currentJob
+        self._selectedMachine = selectedMachine
+        _svgInspectorModel = StateObject(wrappedValue: SVGInspectorModel(job: currentJob.wrappedValue, machine: selectedMachine.wrappedValue))
     }
 
     var body: some View {
@@ -68,13 +70,7 @@ struct JobInspectorPanel: View {
                     case .fileInfo:
                         JobInspector_SVGFileInfoView(currentJob: $currentJob)
                     case .properties:
-                        JobInspector_SVGPropertiesView(
-                            currentJob: $currentJob,
-                            layers: $layers,
-                            selectedLayer: $selectedLayer,
-                            selectedElements: $selectedElements,
-                            selectedProperties: $selectedProperties
-                        )
+                        JobInspector_SVGPropertiesView(model: svgInspectorModel)
                     case .machine:
                         JobInspector_MachineInfoView(currentJob: $currentJob, selectedMachine: selectedMachine)
                     }
@@ -85,5 +81,10 @@ struct JobInspectorPanel: View {
             }
         }
         .background(Color.gray.opacity(0.05))
+        .onAppear {
+            Task {
+                await svgInspectorModel.loadAndParseSVG()
+            }
+        }
     }
 }

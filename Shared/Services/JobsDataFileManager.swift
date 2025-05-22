@@ -73,6 +73,10 @@ class JobsDataFileManager {
             }
         }
     }
+    
+    func workingSVGURL(for jobID: UUID) -> URL {
+        svgFolder(for: jobID).appendingPathComponent("working.svg")
+    }
 
     func copySVG(toJobID jobID: UUID, from sourceURL: URL) throws -> URL {
         try createFoldersForJob(jobID: jobID)

@@ -4,6 +4,8 @@
 //
 //  Created by Carsten Nichte on 22.05.25.
 //
+
+// LeftPanelView.swift
 import SwiftUI
 
 struct LeftPanelView: View {

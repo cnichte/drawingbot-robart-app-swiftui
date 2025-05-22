@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 03.05.25.
 //
 
+// JobPreviewLayout_Mac.swift
 #if os(macOS)
 import SwiftUI
 
