@@ -121,21 +121,30 @@ class FileManagerService {
         }
         let data = try Data(contentsOf: baseURL)
         let decoder = JSONDecoder()
-        let items = try decoder.decode([T].self, from: data)
-
-        guard let dirURL = directory(for: storageType, subdirectory: subdirectory) else {
-            throw NSError(domain: "Directory not found for user resource", code: 4)
+        do {
+            let items = try decoder.decode([T].self, from: data)
+            guard let dirURL = directory(for: storageType, subdirectory: subdirectory) else {
+                throw NSError(domain: "Directory not found for user resource", code: 4)
+            }
+            for item in items {
+                let itemURL = dirURL.appendingPathComponent("\(item.id).json")
+                let encoder = JSONEncoder()
+                let itemData = try encoder.encode(item)
+                try itemData.write(to: itemURL, options: [.atomic]) // Use .atomic for safer writes
+                appLog(.info, "✅ User-Item gespeichert: \(itemURL.lastPathComponent)")
+            }
+            UserDefaults.standard.set(true, forKey: key)
+        } catch let DecodingError.dataCorrupted(context) {
+            appLog(.error, "❌ Decoding Fehler (dataCorrupted) für \(resourceName): \(context.debugDescription)")
+        } catch let DecodingError.keyNotFound(key, context) {
+            appLog(.error, "❌ Decoding Fehler (keyNotFound) für \(resourceName): Schlüssel \(key), Kontext: \(context.debugDescription)")
+        } catch let DecodingError.typeMismatch(type, context) {
+            appLog(.error, "❌ Decoding Fehler (typeMismatch) für \(resourceName): Typ \(type), Kontext: \(context.debugDescription)")
+        } catch let DecodingError.valueNotFound(value, context) {
+            appLog(.error, "❌ Decoding Fehler (valueNotFound) für \(resourceName): Wert \(value), Kontext: \(context.debugDescription)")
+        } catch {
+            appLog(.error, "❌ Unbekannter Fehler beim Decodieren von \(resourceName): \(error.localizedDescription)")
         }
-
-        for item in items {
-            let itemURL = dirURL.appendingPathComponent("\(item.id).json")
-            let encoder = JSONEncoder()
-            let itemData = try encoder.encode(item)
-            try itemData.write(to: itemURL)
-            appLog(.info, "✅ User-Item gespeichert: \(itemURL.lastPathComponent)")
-        }
-
-        UserDefaults.standard.set(true, forKey: key)
     }
 
     // MARK: - Migration
@@ -187,7 +196,7 @@ extension FileManagerService {
 
 // FileManagerService+SVG.swift
 // Erweiterung zum Handling des "svgs"-Verzeichnisses
-
+/*
 extension FileManagerService {
     func ensureSVGDirectoryExists(for storage: StorageType) async {
         guard let base = baseDirectory(for: storage) else { return }
@@ -227,9 +236,9 @@ extension FileManagerService {
             }
         }
     }
-    
+
     private func fileExists(at url: URL) -> Bool {
         FileManager.default.fileExists(atPath: url.path)
     }
 }
-
+*/

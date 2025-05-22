@@ -94,10 +94,12 @@ public struct RemoteControlView: View {
                     backgroundTask.stopBackgroundTask()
                 } else {
                     backgroundTask.startBackgroundTask { data, completion in
-                        appLog(.info, "Sende Daten: \(data)")
+                        // appLog(.error, "Sende Daten: \(data.toString())")
+                        // TODO: use MachineCommandResolver and templates: "G1 X{X} Y{Y} R{R}"
                         Task {
-                            let command = String(format: "G1 X%.1f Y%.1f R%.2f", data.left.position.x, data.left.position.y, data.right.rotation)
-                            bluetoothManager.send("\(command)")
+                            let command_string = String(format: "G1 X%.1f Y%.1f R%.2f\n", data.left.position.x, data.left.position.y, data.right.rotation)
+                            appLog(.error, "Sende Command: \(command_string)")
+                            bluetoothManager.send("\(command_string)")
                         }
                     }
                 }

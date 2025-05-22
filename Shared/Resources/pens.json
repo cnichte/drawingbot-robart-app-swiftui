@@ -1,0 +1,41 @@
+[
+    {
+        "id": "7cb46b4f-f000-4dca-82ba-4d870b8fd334",
+        "name": "Copic Classic",
+        "description": "",
+        "hersteller": "Copic",
+        "shoplink": "",
+        "farben":["N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9"],
+        "varianten": [
+            {
+                "id":"4b62ca0f-ebbb-4d19-a394-2ddd445f1172",
+                "name":"Runde Spitze",
+                "spitzeSize":{"x":3, "y":3},
+                "spitzeUnit": {
+                    "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
+                    "name": "mm"
+                },
+                "reichweite": 1000.00,
+                "reichweiteUnit": {
+                    "id": "f740bef0-962e-4c0d-8df3-c990eb1b0378",
+                    "name": "m"
+                }
+            },
+            {
+                "id":"8404cd7a-7f24-4352-907d-243532442715",
+                "name":"Breite Spitze",
+                "spitzeSize":{"x":3, "y":5},
+                "spitzeUnit": {
+                    "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
+                    "name": "mm"
+                },
+                "reichweite": 1000.00,
+                "reichweiteUnit": {
+                    "id": "f740bef0-962e-4c0d-8df3-c990eb1b0378",
+                    "name": "m"
+                }
+            }
+        ]
+    }
+]
+

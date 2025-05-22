@@ -104,6 +104,9 @@ final class StickValues: ObservableObject, Equatable, Cloneable {
         return copy
     }
     
+    func toString() -> String {
+        return "[position:\(self.positionText), angle:\(self.angleText), speed:\(self.speedText), rotation:\(self.rotationText)]"
+    }
 }
 
 // MARK: - CombinedStickValues
@@ -127,6 +130,10 @@ final class CombinedStickValues: ObservableObject, Equatable, Cloneable {
     
     static func == (lhs: CombinedStickValues, rhs: CombinedStickValues) -> Bool {
         lhs.left == rhs.left && lhs.right == rhs.right
+    }
+    
+    func toString() -> String {
+        return "left-stick:" + self.left.toString() + ", right-stick:" + self.right.toString() + "\n--------------------------"
     }
 }
 

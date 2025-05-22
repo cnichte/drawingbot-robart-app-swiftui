@@ -10,11 +10,14 @@ import SwiftUI
 
 struct PenFormView: View {
     @Binding var data: PenData
+    
+    @EnvironmentObject var assetStores: AssetStores
     @EnvironmentObject var store: GenericStore<PenData>
-
+    
     @State private var colorInput: String = ""
     @State private var varianteSearchText = ""
 
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
@@ -50,14 +53,6 @@ struct PenFormView: View {
 
                 TextField("Shoplink", text: $data.shoplink)
                     .onChange(of: data.shoplink) { save() }
-
-                Picker("Farbe", selection: $data.farbe) {
-                    ForEach(data.farben, id: \.self) { color in
-                        Text(color)
-                    }
-                }
-                .pickerStyle(.menu)
-                .onChange(of: data.farbe) { save() }
             }
         }
     }
@@ -102,7 +97,7 @@ struct PenFormView: View {
     }
 
     // MARK: - Varianten
-
+    
     private var variantenSection: some View {
         CollapsibleSection(
             title: "Varianten",
@@ -114,9 +109,10 @@ struct PenFormView: View {
                         .frame(maxWidth: 200)
 
                     Button(action: {
-                        data.variante.append(PenVariante(
+                        data.varianten.append(PenVariante(
+                            id: UUID(),
                             name: "",
-                            spitze: .init(x: 0, y: 0),
+                            spitzeSize: .init(x: 0, y: 0),
                             spitzeUnit: .init(id: UUID(), name: "mm"),
                             reichweite: 0,
                             reichweiteUnit: .init(id: UUID(), name: "m")
@@ -131,19 +127,50 @@ struct PenFormView: View {
         ) {
             VStack(spacing: 8) {
                 ForEach(filteredVarianten) { $variante in
+                    // Lokale Bindings für Picker
+                    let spitzeUnitBinding = Binding<UUID>(
+                        get: { variante.spitzeUnit.id },
+                        set: { newID in
+                            if let selected = assetStores.unitsStore.items.first(where: { $0.id == newID }) {
+                                variante.spitzeUnit = selected
+                                save()
+                            }
+                        }
+                    )
+                    let reichweiteUnitBinding = Binding<UUID>(
+                        get: { variante.reichweiteUnit.id },
+                        set: { newID in
+                            if let selected = assetStores.unitsStore.items.first(where: { $0.id == newID }) {
+                                variante.reichweiteUnit = selected
+                                save()
+                            }
+                        }
+                    )
+
                     VStack(alignment: .leading, spacing: 8) {
                         TextField("Name", text: $variante.name)
 
                         HStack {
-                            MF_Tools.doubleTextField(label: "Spitze X", value: $variante.spitze.x)
-                            MF_Tools.doubleTextField(label: "Y", value: $variante.spitze.y)
+                            MF_Tools.doubleTextField(label: "Spitze X", value: $variante.spitzeSize.x)
+                            MF_Tools.doubleTextField(label: "Y", value: $variante.spitzeSize.y)
                         }
 
-                        TextField("Spitzen-Einheit", text: $variante.spitzeUnit.name)
+                        Picker("Spitzen-Einheit", selection: spitzeUnitBinding) {
+                            ForEach(assetStores.unitsStore.items) { unit in
+                                Text(unit.name).tag(unit.id)
+                            }
+                        }
+                        .pickerStyle(.menu)
 
                         HStack {
                             MF_Tools.doubleTextField(label: "Reichweite", value: $variante.reichweite)
-                            TextField("Einheit", text: $variante.reichweiteUnit.name)
+
+                            Picker("Reichweite-Einheit", selection: reichweiteUnitBinding) {
+                                ForEach(assetStores.unitsStore.items) { unit in
+                                    Text(unit.name).tag(unit.id)
+                                }
+                            }
+                            .pickerStyle(.menu)
                         }
                     }
                     .padding(8)
@@ -152,7 +179,7 @@ struct PenFormView: View {
                     .onChange(of: variante) { save() }
                 }
                 .onDelete { indices in
-                    data.variante.remove(atOffsets: indices)
+                    data.varianten.remove(atOffsets: indices)
                     save()
                 }
             }
@@ -160,7 +187,7 @@ struct PenFormView: View {
     }
 
     private var filteredVarianten: [Binding<PenVariante>] {
-        $data.variante.filter {
+        $data.varianten.filter {
             varianteSearchText.isEmpty || $0.wrappedValue.name.localizedCaseInsensitiveContains(varianteSearchText)
         }
     }

@@ -25,7 +25,7 @@ class SVGMigrationTester {
         let iCloudSVGs = iCloudBase.appendingPathComponent("svgs")
 
         do {
-            await service.ensureSVGDirectoryExists(for: .local)
+            // await service.ensureSVGDirectoryExists(for: .local)
 
             let testSVG = """
             <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
@@ -41,7 +41,7 @@ class SVGMigrationTester {
                 appLog(.info, "ℹ️ Dummy-SVG existiert bereits.")
             }
 
-            try service.migrateSVGDirectory(from: .local, to: .iCloud)
+            // try service.migrateSVGDirectory(from: .local, to: .iCloud)
 
             let files = try FileManager.default.contentsOfDirectory(atPath: iCloudSVGs.path)
             if files.contains("migration-test.svg") {

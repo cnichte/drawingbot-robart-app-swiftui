@@ -177,6 +177,8 @@
 		D5A341052DBAF323005FF05A /* units.json in Resources */ = {isa = PBXBuildFile; fileRef = D5A341032DBAF31A005FF05A /* units.json */; };
 		D5A884622DC583600090BCE4 /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A884612DC583600090BCE4 /* CustomButtons.swift */; };
 		D5A884632DC583600090BCE4 /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A884612DC583600090BCE4 /* CustomButtons.swift */; };
+		D5C7094A2DDF47C00081F7C5 /* pens.json in Resources */ = {isa = PBXBuildFile; fileRef = D5C709492DDF47B80081F7C5 /* pens.json */; };
+		D5C7094B2DDF47C00081F7C5 /* pens.json in Resources */ = {isa = PBXBuildFile; fileRef = D5C709492DDF47B80081F7C5 /* pens.json */; };
 		D5D104092DAEF2E600E8406E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
 		D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104242DAEF38000E8406E /* USBSerialScanner.swift */; platformFilters = (macos, ); };
 		D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104262DAEF39000E8406E /* USBSerialScanner.swift */; platformFilter = ios; };
@@ -270,8 +272,6 @@
 		D5F896F52DBD012D00397561 /* UnitsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F32DBD012900397561 /* UnitsData.swift */; };
 		D5F896F72DBD56BA00397561 /* AssetStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */; };
 		D5F896F82DBD56BA00397561 /* AssetStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */; };
-		D5F896FA2DBD7C0400397561 /* pens.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896F92DBD7BFC00397561 /* pens.json */; };
-		D5F896FB2DBD7C0400397561 /* pens.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896F92DBD7BFC00397561 /* pens.json */; };
 		D5F896FD2DBD7F3900397561 /* machines.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896FC2DBD7F2E00397561 /* machines.json */; };
 		D5F896FE2DBD7F3900397561 /* machines.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896FC2DBD7F2E00397561 /* machines.json */; };
 		D5F897002DBD84CA00397561 /* connections.json in Resources */ = {isa = PBXBuildFile; fileRef = D5F896FF2DBD84C200397561 /* connections.json */; };
@@ -387,6 +387,8 @@
 		D5A085BE2DB0348D00332690 /* JobRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRow.swift; sourceTree = "<group>"; };
 		D5A341032DBAF31A005FF05A /* units.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = units.json; sourceTree = "<group>"; };
 		D5A884612DC583600090BCE4 /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
+		D5C709482DDF352C0081F7C5 /* PaperMate Vivid 16.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "PaperMate Vivid 16.json"; sourceTree = "<group>"; };
+		D5C709492DDF47B80081F7C5 /* pens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pens.json; sourceTree = "<group>"; };
 		D5D104032DAEF2E600E8406E /* Robart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Robart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D104082DAEF2E600E8406E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D5D104162DAEF30700E8406E /* Robart-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Robart-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -449,7 +451,6 @@
 		D5F896F02DBCFB2300397561 /* papers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = papers.json; sourceTree = "<group>"; };
 		D5F896F32DBD012900397561 /* UnitsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsData.swift; sourceTree = "<group>"; };
 		D5F896F62DBD56BA00397561 /* AssetStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStoreManager.swift; sourceTree = "<group>"; };
-		D5F896F92DBD7BFC00397561 /* pens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pens.json; sourceTree = "<group>"; };
 		D5F896FC2DBD7F2E00397561 /* machines.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = machines.json; sourceTree = "<group>"; };
 		D5F896FF2DBD84C200397561 /* connections.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = connections.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -554,13 +555,14 @@
 		D52C0AED2DBA654600F57746 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5C709492DDF47B80081F7C5 /* pens.json */,
 				D561258D2DC691140044B6A9 /* GettingStarted.md */,
+				D5C709482DDF352C0081F7C5 /* PaperMate Vivid 16.json */,
 				D5E55CF12DC0102E003806CF /* jobs.json */,
 				D5E55CEB2DBFFEFB003806CF /* signatures.json */,
 				D5E55CD42DBF8D21003806CF /* projects.json */,
 				D5F896FF2DBD84C200397561 /* connections.json */,
 				D5F896FC2DBD7F2E00397561 /* machines.json */,
-				D5F896F92DBD7BFC00397561 /* pens.json */,
 				D5F896F02DBCFB2300397561 /* papers.json */,
 				D5F896E72DBCDF3C00397561 /* aspect-ratios.json */,
 				D5A341032DBAF31A005FF05A /* units.json */,
@@ -1176,10 +1178,10 @@
 				D5F896D22DBCCF3600397561 /* robart-dev-check.sh in Resources */,
 				D5F896E22DBCD6E000397561 /* robart-testmode-only.sh in Resources */,
 				D5F896DA2DBCD27500397561 /* robart-dev-check-mini.sh in Resources */,
-				D5F896FB2DBD7C0400397561 /* pens.json in Resources */,
 				D5F896D42DBCCFA100397561 /* robart-dev-check-v3.5.sh in Resources */,
 				D5F896CC2DBCCB9600397561 /* robart-dev-check-v3.0.sh in Resources */,
 				D5E55CD52DBF8D2A003806CF /* projects.json in Resources */,
+				D5C7094A2DDF47C00081F7C5 /* pens.json in Resources */,
 				D5F897012DBD84CA00397561 /* connections.json in Resources */,
 				D5F896D82DBCD12C00397561 /* robart-dev-check-v5.0.sh in Resources */,
 				D5F896E82DBCDF4800397561 /* aspect-ratios.json in Resources */,
@@ -1195,6 +1197,7 @@
 				D561259A2DC692BE0044B6A9 /* SVGParser.markdown in Resources */,
 				D5F897002DBD84CA00397561 /* connections.json in Resources */,
 				D5A341052DBAF323005FF05A /* units.json in Resources */,
+				D5C7094B2DDF47C00081F7C5 /* pens.json in Resources */,
 				D56125922DC691A30044B6A9 /* GettingStarted.md in Resources */,
 				D5E55CED2DBFFF05003806CF /* signatures.json in Resources */,
 				D52C0AEF2DBA656B00F57746 /* paper-formats.json in Resources */,
@@ -1202,7 +1205,6 @@
 				D5E55CF22DC01036003806CF /* jobs.json in Resources */,
 				D5F896F12DBCFB2D00397561 /* papers.json in Resources */,
 				D5E55CD62DBF8D2A003806CF /* projects.json in Resources */,
-				D5F896FA2DBD7C0400397561 /* pens.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

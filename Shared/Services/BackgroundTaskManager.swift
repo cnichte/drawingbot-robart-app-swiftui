@@ -47,7 +47,7 @@ class BackgroundTaskManager<T: Equatable & Cloneable>: ObservableObject {
     private func checkAndPerformTask(onSend: @escaping OnSend) {
         dataQueue.sync {
             guard let data = currentData, data != lastSentData else {
-                appLog(.error, "Daten unverändert: \(String(describing: currentData)) um \(Date())")
+                // appLog(.error, "Daten unverändert: \(String(describing: currentData)) um \(Date())")
                 return
             }
             

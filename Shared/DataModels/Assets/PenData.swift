@@ -15,9 +15,8 @@ struct PenData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defa
     var hersteller: String
     var shoplink: String
     var farben: [String]
-    var farbe: String // selected color?
-    var variante: [PenVariante]
-
+    var varianten: [PenVariante]
+    
     init(
         id: UUID = UUID(),
         name: String,
@@ -25,8 +24,7 @@ struct PenData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defa
         hersteller: String = "",
         shoplink: String = "",
         farben: [String] = [],
-        farbe: String = "",
-        variante: [PenVariante] = []
+        varianten: [PenVariante] = [],
     ) {
         self.id = id
         self.name = name
@@ -34,8 +32,7 @@ struct PenData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defa
         self.hersteller = hersteller
         self.shoplink = shoplink
         self.farben = farben
-        self.farbe = farbe
-        self.variante = variante
+        self.varianten = varianten
     }
 
     static var `default`: PenData {
@@ -52,20 +49,15 @@ struct PenData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defa
 }
 
 struct PenVariante: Codable, Equatable, Hashable, Identifiable {
-    var id = UUID()
+    var id: UUID
     var name: String
-    var spitze: Size
-    var spitzeUnit: UnitInfo
+    var spitzeSize: Size
+    var spitzeUnit: UnitsData
     var reichweite: Double
-    var reichweiteUnit: UnitInfo
+    var reichweiteUnit: UnitsData
 }
 
 struct Size: Codable, Equatable, Hashable {
     var x: Double
     var y: Double
-}
-
-struct UnitInfo: Codable, Equatable, Hashable, Identifiable {
-    var id: UUID
-    var name: String
 }

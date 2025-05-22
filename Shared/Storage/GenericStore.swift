@@ -4,7 +4,7 @@
 //
 //  Created by Carsten Nichte on 11.04.25.
 
-//  /Users/cnichte/Library/Containers/de.nichte.Drawingbot-RobArt/Data/Documents/svgs
+//  /Users/cnichte/Library/Containers/de.nichte.Drawingbot-RobArt/Data/Documents/
 // Shift+command + c - Öffnet Konsole
 // ❌✅⚠️
 

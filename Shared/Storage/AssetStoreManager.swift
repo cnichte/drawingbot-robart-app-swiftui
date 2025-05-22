@@ -23,7 +23,7 @@ class AssetStoreManager {
         appLog(.info, "🚀 Initialisiere AssetStores...")
         
         await createDirectories()
-        await FileManagerService.shared.ensureSVGDirectoryExists(for: storageType)
+        // await FileManagerService.shared.ensureSVGDirectoryExists(for: storageType)
         
         var results: [StoreInitializationResult] = []
         
@@ -184,14 +184,14 @@ class AssetStoreManager {
                 appLog(.info, "❌ Fehler bei Migration \(store.directoryName): \(error)")
             }
         }
-        
+/*
         do {
             try FileManagerService.shared.migrateSVGDirectory(from: storageType, to: newStorageType)
             appLog(.info, "✅ SVG-Verzeichnis migriert")
         } catch {
             appLog(.info, "❌ Fehler beim Migrieren des SVG-Verzeichnisses: \(error.localizedDescription)")
         }
-        
+*/
         self.storageType = newStorageType
     }
     
