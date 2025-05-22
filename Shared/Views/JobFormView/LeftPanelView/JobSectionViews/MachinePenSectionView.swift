@@ -32,7 +32,7 @@ struct MachinePenSectionView: View {
                         .padding(8)
                         .background(Color.gray.opacity(0.05))
                         .cornerRadius(8)
-                    }
+                    } 
                 }
             } else {
                 Text("Bitte zuerst eine Maschine auswählen oder Maschine hat keine Stift-Slots.")
@@ -96,59 +96,136 @@ struct MachinePenSectionView: View {
 }
 
 // Neue Unterkomponente für einen einzelnen Stift-Slot
+
 struct PenSlotView: View {
     let index: Int
     @Binding var penConfiguration: [PenConfiguration]
     let pens: [PenData]
 
     var body: some View {
+        let config = penConfiguration[safe: index] ?? PenConfiguration(penSVGLayerAssignment: .toLayer, color: "", layer: "", angle: 90)
+
+        let selectedPen = pens.first(where: { $0.id == config.penID })
+        let availableColors = selectedPen?.farben ?? []
+        let availableVarianten = selectedPen?.varianten ?? []
+
+        let selectedColor = availableColors.first(where: { $0.id == config.penColorID })
+        let selectedVariante = availableVarianten.first(where: { $0.id == config.penVarianteID })
+
         VStack(alignment: .leading, spacing: 8) {
             Text("Slot \(index + 1)").font(.headline)
 
-            Picker("Stift", selection: Binding<String>(
-                get: {
-                    penConfiguration[safe: index]?.color ?? ""
-                },
-                set: { newValue in
-                    updatePenConfiguration { config in
-                        config.color = newValue
-                    }
-                }
+            Picker("Stift", selection: Binding(
+                get: { config.penID ?? UUID() },
+                set: { newID in update {
+                    $0.penID = newID
+                    $0.penColorID = nil
+                    $0.penVarianteID = nil
+                }}
             )) {
-                Text("– Kein Stift –").tag("")
+                Text("– Kein Stift –").tag(UUID())
                 ForEach(pens) { pen in
-                    Text(pen.name).tag(pen.name)
+                    Text(pen.name).tag(pen.id)
                 }
             }
-            .pickerStyle(.menu)
 
-            TextField("Ebene", text: Binding<String>(
-                get: {
-                    penConfiguration[safe: index]?.layer ?? ""
-                },
-                set: { newValue in
-                    updatePenConfiguration { config in
-                        config.layer = newValue
+            if !availableColors.isEmpty {
+                Picker("Farbe", selection: Binding(
+                    get: { config.penColorID ?? UUID() },
+                    set: { newID in update { $0.penColorID = newID } }
+                )) {
+                    Text("– Keine –").tag(UUID())
+
+                    ForEach(availableColors) { color in
+                        let preview = Color(color.wert) ?? .clear
+                        Text("\(color.name)  \(color.wert)")
+                            .tag(color.id)
+                            .foregroundColor(preview)
                     }
                 }
-            ))
-            .textFieldStyle(.roundedBorder)
+
+                if let color = selectedColor {
+                    HStack(spacing: 8) {
+                        Text("Hex: \(color.wert)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Circle()
+                            .fill(Color(color.wert) ?? .clear)
+                            .frame(width: 20, height: 20)
+                            .overlay(Circle().stroke(Color.gray.opacity(0.3)))
+                    }
+                }
+            }
+
+            if !availableVarianten.isEmpty { 
+                Picker("Variante", selection: Binding(
+                    get: { config.penVarianteID ?? UUID() },
+                    set: { newID in update { $0.penVarianteID = newID } }
+                )) {
+                    Text("– Keine –").tag(UUID())
+                    ForEach(availableVarianten) { variant in
+                        Text(variant.name).tag(variant.id)
+                    }
+                }
+
+                if let variant = selectedVariante {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Spitze: \(variant.spitzeSize.x.clean) × \(variant.spitzeSize.y.clean) \(variant.spitzeUnit.name)")
+                        Text("Reichweite: \(variant.reichweite.clean) \(variant.reichweiteUnit.name)")
+                    }
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                }
+            }
+
+            Picker("Zuordnung", selection: Binding(
+                get: { config.penSVGLayerAssignment },
+                set: { newValue in update { $0.penSVGLayerAssignment = newValue } }
+            )) {
+                Text("Ebene").tag(PenSVGLayerAssignment.toLayer)
+                Text("Farbe").tag(PenSVGLayerAssignment.toColor)
+            }
+            .pickerStyle(.segmented)
+            
+            if config.penSVGLayerAssignment == .toLayer {
+                TextField("Ebene", text: Binding(
+                    get: { config.layer },
+                    set: { newValue in update { $0.layer = newValue } }
+                ))
+                .textFieldStyle(.roundedBorder)
+            } else {
+                TextField("Farbe im SVG", text: Binding(
+                    get: { config.color },
+                    set: { newValue in update { $0.color = newValue } }
+                ))
+                .textFieldStyle(.roundedBorder)
+            }
         }
+        .padding(8)
+        .background(Color.gray.opacity(0.05))
+        .cornerRadius(8)
     }
 
-    private func updatePenConfiguration(update: (inout PenConfiguration) -> Void) {
+    private func update(_ apply: (inout PenConfiguration) -> Void) {
         var configs = penConfiguration
         while configs.count <= index {
             configs.append(PenConfiguration(penSVGLayerAssignment: .toLayer, color: "", layer: "", angle: 90))
         }
-        update(&configs[index])
-        penConfiguration = configs // Weise neuen Array zu, um Reaktivität sicherzustellen
+        apply(&configs[index])
+        penConfiguration = configs
     }
 }
+
 
 // Safe Array Access
 extension Array {
     subscript(safe index: Int) -> Element? {
         indices.contains(index) ? self[index] : nil
+    }
+}
+
+extension Double {
+    var clean: String {
+        self == floor(self) ? String(format: "%.0f", self) : String(format: "%.1f", self)
     }
 }

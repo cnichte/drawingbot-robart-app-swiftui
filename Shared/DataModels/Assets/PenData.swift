@@ -14,7 +14,7 @@ struct PenData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defa
     var description: String
     var hersteller: String
     var shoplink: String
-    var farben: [String]
+    var farben: [PenColor]
     var varianten: [PenVariante]
     
     init(
@@ -23,7 +23,7 @@ struct PenData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defa
         description: String = "",
         hersteller: String = "",
         shoplink: String = "",
-        farben: [String] = [],
+        farben: [PenColor] = [],
         varianten: [PenVariante] = [],
     ) {
         self.id = id
@@ -46,6 +46,12 @@ struct PenData: Codable, Equatable, Identifiable, Hashable, ManageableItem, Defa
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+}
+
+struct PenColor: Codable, Equatable, Hashable, Identifiable {
+    var id: UUID
+    var name: String
+    var wert: String
 }
 
 struct PenVariante: Codable, Equatable, Hashable, Identifiable {

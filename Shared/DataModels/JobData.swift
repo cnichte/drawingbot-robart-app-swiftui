@@ -22,12 +22,17 @@ enum PaperOrientation: String, Codable {
 
 enum PenSVGLayerAssignment: String, Codable {
     case toColor = ".toColor"
-    case toLayer = ".toLayer"
+    case toLayer = ".toLayer" 
 }
 
 struct PenConfiguration: Codable, Equatable, Identifiable {
     var id = UUID()
-    var penSVGLayerAssignment:PenSVGLayerAssignment 
+    var penSVGLayerAssignment:PenSVGLayerAssignment
+    
+    var penID: UUID? = nil               // <-- neu: ausgewählter Stift
+    var penColorID: UUID? = nil          // <-- neu: Farbe aus dem Stift
+    var penVarianteID: UUID? = nil       // <-- neu: Variante aus dem Stift
+    
     var color: String // Ein Stift kann einer Farbe im SVG zugeordnet werden
     var layer: String // oder einer Ebene (Element g) zugeordnet werden.
     var angle: Int // 45° oder 90°

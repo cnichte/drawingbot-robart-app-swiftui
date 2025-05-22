@@ -5,12 +5,66 @@
         "description": "",
         "hersteller": "Copic",
         "shoplink": "",
-        "farben":["N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9"],
+        "farben": [
+            {
+                "id":"fd5644e3-c8d1-4146-b038-5a44d5e76840",
+                "name": "N1",
+                "wert": ""
+            },
+            {
+                "id":"0eec0677-bbb0-4182-82ed-cc1abb9eec22",
+                "name": "N2",
+                "wert": ""
+            },
+            {
+                "id":"8a688d53-e652-4944-b1e3-c657061b0e34",
+                "name": "N3",
+                "wert": ""
+            },
+            {
+                "id":"d8801951-08d3-4f09-ae7a-884580948f8b",
+                "name": "N4",
+                "wert": ""
+            },
+            {
+                "id":"f6470218-15ba-492b-8b15-b7b52afa0a9c",
+                "name": "N5",
+                "wert": ""
+            },
+            {
+                "id":"285afcb5-dea0-4ed5-acd0-24508b7b3793",
+                "name": "N6",
+                "wert": ""
+            },
+            {
+                "id":"883b2f1d-4497-445a-8552-47c9440ec0c4",
+                "name": "N7",
+                "wert": ""
+            },
+            {
+                "id":"72b7c345-d7fc-4288-bc10-e5892160c258",
+                "name": "N8",
+                "wert": ""
+            },
+            {
+                "id":"1c4081a8-1376-446b-bd74-6f1aeeda7987",
+                "name": "N9",
+                "wert": ""
+            },
+            {
+                "id":"30b4baa3-3f29-4d42-8aa9-69bd2bd2b342",
+                "name": "N10",
+                "wert": ""
+            }
+        ],
         "varianten": [
             {
-                "id":"4b62ca0f-ebbb-4d19-a394-2ddd445f1172",
-                "name":"Runde Spitze",
-                "spitzeSize":{"x":3, "y":3},
+                "id": "4b62ca0f-ebbb-4d19-a394-2ddd445f1172",
+                "name": "Runde Spitze",
+                "spitzeSize": {
+                    "x": 3,
+                    "y": 3
+                },
                 "spitzeUnit": {
                     "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
                     "name": "mm"
@@ -22,9 +76,12 @@
                 }
             },
             {
-                "id":"8404cd7a-7f24-4352-907d-243532442715",
-                "name":"Breite Spitze",
-                "spitzeSize":{"x":3, "y":5},
+                "id": "8404cd7a-7f24-4352-907d-243532442715",
+                "name": "Breite Spitze",
+                "spitzeSize": {
+                    "x": 3,
+                    "y": 5
+                },
                 "spitzeUnit": {
                     "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
                     "name": "mm"
@@ -38,4 +95,3 @@
         ]
     }
 ]
-

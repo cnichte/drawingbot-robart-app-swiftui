@@ -36,13 +36,6 @@ struct JobPropertiesPanel: View {
                     showingFileImporter: $showingFileImporter,
                 )
                 .padding(.horizontal, 0)
-
-                SVGLayersSectionView(currentJob: $currentJob)
-                    .padding(.horizontal, 0)
-                
-                SVGColorsSectionView(currentJob: $currentJob)
-                    .padding(.horizontal, 0)
-                
                 
                 PaperSectionView(currentJob: $currentJob, onUpdate: saveCurrentJob)
                     .padding(.horizontal, 0)

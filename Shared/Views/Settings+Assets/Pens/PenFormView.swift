@@ -60,42 +60,60 @@ struct PenFormView: View {
     // MARK: - Farben
 
     private var farbenSection: some View {
-        CollapsibleSection(title: "Farben", systemImage: "paintpalette", toolbar: {
-            HStack {
-                TextField("Neue Farbe", text: $colorInput)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 120)
+        CollapsibleSection(
+            title: "Farben",
+            systemImage: "paintpalette",
+            toolbar: {
+                HStack(spacing: 8) {
+                    TextField("Suchen …", text: $colorInput)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(maxWidth: 200)
 
-                Button(action: {
-                    let trimmed = colorInput.trimmingCharacters(in: .whitespaces)
-                    if !trimmed.isEmpty && !data.farben.contains(trimmed) {
-                        data.farben.append(trimmed)
-                        colorInput = ""
+                    Button(action: {
+                        data.farben.append(PenColor(id: UUID(), name: "", wert: "#000000"))
                         save()
+                    }) {
+                        Image(systemName: "plus.circle.fill")
                     }
-                }) {
-                    Image(systemName: "plus.circle.fill")
+                    .buttonStyle(.borderless)
                 }
-                .buttonStyle(.borderless)
             }
-        }) {
-            ForEach(data.farben, id: \.self) { color in
-                HStack {
-                    Text(color)
-                    Spacer()
+        ) {
+            ForEach(filteredFarben) { $color in
+                HStack(spacing: 12) {
+                    TextField("Name", text: $color.name)
+                        .platformTextFieldModifiers()
+                        .frame(minWidth: 80)
+                        .onChange(of: color.name) { save() }
+
+                    TextField("#RRGGBB", text: $color.wert)
+                        .platformTextFieldModifiers()
+                        .frame(width: 100)
+                        .onChange(of: color.wert) { save() }
+
+                    ColorPicker("", selection: Binding(
+                        get: { Color(color.wert) ?? .black },
+                        set: { newColor in
+                            color.wert = newColor.toHexString()
+                            save()
+                        }
+                    ))
+                    .labelsHidden()
+                    .frame(width: 44)
+
                     Button(role: .destructive) {
-                        data.farben.removeAll { $0 == color }
+                        data.farben.removeAll { $0.id == color.id }
                         save()
                     } label: {
                         Image(systemName: "trash")
                     }
                     .buttonStyle(.borderless)
                 }
-                .padding(4)
+                .padding(.vertical, 4)
             }
         }
     }
-
+    
     // MARK: - Varianten
     
     private var variantenSection: some View {
@@ -186,6 +204,12 @@ struct PenFormView: View {
         }
     }
 
+    private var filteredFarben: [Binding<PenColor>] {
+        $data.farben.filter {
+            colorInput.isEmpty || $0.wrappedValue.name.localizedCaseInsensitiveContains(colorInput)
+        }
+    }
+    
     private var filteredVarianten: [Binding<PenVariante>] {
         $data.varianten.filter {
             varianteSearchText.isEmpty || $0.wrappedValue.name.localizedCaseInsensitiveContains(varianteSearchText)

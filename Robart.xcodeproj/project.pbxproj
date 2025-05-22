@@ -20,12 +20,8 @@
 		D50A30652DAEFA9100859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306C2DAEFB0B00859908 /* RobartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50A30632DAEFA9100859908 /* RobartApp.swift */; };
 		D50A306D2DAEFB7E00859908 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104082DAEF2E600E8406E /* ContentView.swift */; };
-		D52AE7F02DC4375600D7E6C8 /* SVGLayersSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7EF2DC4375600D7E6C8 /* SVGLayersSectionView.swift */; };
 		D52AE7F12DC4375600D7E6C8 /* MachinePenSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7ED2DC4375600D7E6C8 /* MachinePenSectionView.swift */; };
-		D52AE7F22DC4375600D7E6C8 /* SVGColorsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */; };
-		D52AE7F32DC4375600D7E6C8 /* SVGLayersSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7EF2DC4375600D7E6C8 /* SVGLayersSectionView.swift */; };
 		D52AE7F42DC4375600D7E6C8 /* MachinePenSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7ED2DC4375600D7E6C8 /* MachinePenSectionView.swift */; };
-		D52AE7F52DC4375600D7E6C8 /* SVGColorsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */; };
 		D52AE7F92DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */; };
 		D52AE7FA2DC4399F00D7E6C8 /* HatchFillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */; };
 		D52AE7FD2DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */; };
@@ -190,6 +186,8 @@
 		D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042A2DAEF43900E8406E /* ORSSerial */; };
 		D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042D2DAEF44B00E8406E /* SVGView */; };
 		D5D104302DAEF45100E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042F2DAEF45100E8406E /* SVGView */; };
+		D5D309322DDF8613004511C7 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D309312DDF860E004511C7 /* Color+Hex.swift */; };
+		D5D309332DDF8613004511C7 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D309312DDF860E004511C7 /* Color+Hex.swift */; };
 		D5E1E6CD2DC417D7008F6347 /* JobInspector_MachineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6CC2DC417BD008F6347 /* JobInspector_MachineInfoView.swift */; };
 		D5E1E6CE2DC417D7008F6347 /* JobInspector_MachineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6CC2DC417BD008F6347 /* JobInspector_MachineInfoView.swift */; };
 		D5E1E6D02DC417EC008F6347 /* JobInspector_SVGFileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6CF2DC417EA008F6347 /* JobInspector_SVGFileInfoView.swift */; };
@@ -308,8 +306,6 @@
 		D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineSectionView.swift; sourceTree = "<group>"; };
 		D50A30632DAEFA9100859908 /* RobartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobartApp.swift; sourceTree = "<group>"; };
 		D52AE7ED2DC4375600D7E6C8 /* MachinePenSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachinePenSectionView.swift; sourceTree = "<group>"; };
-		D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGColorsSectionView.swift; sourceTree = "<group>"; };
-		D52AE7EF2DC4375600D7E6C8 /* SVGLayersSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGLayersSectionView.swift; sourceTree = "<group>"; };
 		D52AE7F72DC4399F00D7E6C8 /* HatchFillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HatchFillManager.swift; sourceTree = "<group>"; };
 		D52AE7F82DC4399F00D7E6C8 /* SVGParser+PatternSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVGParser+PatternSupport.swift"; sourceTree = "<group>"; };
 		D52C0AEA2DBA613400F57746 /* PaperFormatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperFormatData.swift; sourceTree = "<group>"; };
@@ -401,6 +397,7 @@
 		D5D104162DAEF30700E8406E /* Robart-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Robart-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D104242DAEF38000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
 		D5D104262DAEF39000E8406E /* USBSerialScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USBSerialScanner.swift; sourceTree = "<group>"; };
+		D5D309312DDF860E004511C7 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		D5E1E6CC2DC417BD008F6347 /* JobInspector_MachineInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspector_MachineInfoView.swift; sourceTree = "<group>"; };
 		D5E1E6CF2DC417EA008F6347 /* JobInspector_SVGFileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspector_SVGFileInfoView.swift; sourceTree = "<group>"; };
 		D5E1E6D22DC417F5008F6347 /* JobInspector_SVGPropertiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobInspector_SVGPropertiesView.swift; sourceTree = "<group>"; };
@@ -547,8 +544,6 @@
 			isa = PBXGroup;
 			children = (
 				D52AE7ED2DC4375600D7E6C8 /* MachinePenSectionView.swift */,
-				D52AE7EE2DC4375600D7E6C8 /* SVGColorsSectionView.swift */,
-				D52AE7EF2DC4375600D7E6C8 /* SVGLayersSectionView.swift */,
 				D587A4472DBEED190072D83C /* ActionsSectionView.swift */,
 				D509C0AB2DBC4B02009B0233 /* MachineSectionView.swift */,
 				D509C0A52DBC4AA8009B0233 /* SignatureSectionView.swift */,
@@ -711,6 +706,7 @@
 		D581AFA12DBC204300821A7E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D5D309312DDF860E004511C7 /* Color+Hex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1238,6 +1234,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5D309332DDF8613004511C7 /* Color+Hex.swift in Sources */,
 				D5A084D62DAFD84000332690 /* ProjectData.swift in Sources */,
 				D5F6C63B2DB8469A00020AEE /* PaperFormView.swift in Sources */,
 				D56C4E5B2DB1857600F09A0C /* WindowManager+Extensions.swift in Sources */,
@@ -1251,9 +1248,7 @@
 				D52AE7FE2DC4399F00D7E6C8 /* HatchFillManager.swift in Sources */,
 				D5A0851A2DAFD8C900332690 /* JobFormView.swift in Sources */,
 				D587A4312DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */,
-				D52AE7F02DC4375600D7E6C8 /* SVGLayersSectionView.swift in Sources */,
 				D52AE7F12DC4375600D7E6C8 /* MachinePenSectionView.swift in Sources */,
-				D52AE7F22DC4375600D7E6C8 /* SVGColorsSectionView.swift in Sources */,
 				D572A2402DC645C900D91FC5 /* RightPanelView.swift in Sources */,
 				D572A2382DC628CF00D91FC5 /* JobFormViewLayout_Mac.swift in Sources */,
 				D5F6C61A2DB8230200020AEE /* TabManagerShellView.swift in Sources */,
@@ -1446,15 +1441,14 @@
 				D5A084F12DAFD88A00332690 /* PathParser.swift in Sources */,
 				D5A084F22DAFD88A00332690 /* SVGParser.swift in Sources */,
 				D5A084F32DAFD88A00332690 /* BasePlotterGenerator.swift in Sources */,
+				D5D309322DDF8613004511C7 /* Color+Hex.swift in Sources */,
 				D572A2422DC6481D00D91FC5 /* JobFormViewLayout_iPhone.swift in Sources */,
 				D509C0A32DBC4A20009B0233 /* PaperSectionView.swift in Sources */,
 				D5E55CF42DC02830003806CF /* CustomSplitView.swift in Sources */,
 				D5F896F42DBD012D00397561 /* UnitsData.swift in Sources */,
 				D5E55CC12DBF6E95003806CF /* Logger.swift in Sources */,
 				D57566202DB9255400D95E3F /* ConnectionFormView.swift in Sources */,
-				D52AE7F32DC4375600D7E6C8 /* SVGLayersSectionView.swift in Sources */,
 				D52AE7F42DC4375600D7E6C8 /* MachinePenSectionView.swift in Sources */,
-				D52AE7F52DC4375600D7E6C8 /* SVGColorsSectionView.swift in Sources */,
 				D5A084F42DAFD88A00332690 /* EggbotGenerator.swift in Sources */,
 				D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */,
 				D5A084DF2DAFD85300332690 /* FileManagerService.swift in Sources */,
