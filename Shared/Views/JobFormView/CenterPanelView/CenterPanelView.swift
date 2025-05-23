@@ -12,13 +12,13 @@ struct CenterPanelView: View {
     @Binding var zoom: Double
     @Binding var pitch: Double
     @Binding var origin: CGPoint
-    @Binding var job: JobData
+    // @Binding var job: JobData
     @Binding var previewMode: JobFormView.PreviewMode
     @Binding var isSidebarVisible: Bool
     @Binding var isInspectorVisible: Bool
 
     var body: some View {
-        PaperPanel(zoom: $zoom, pitch: $pitch, origin: $origin, job: $job)
+        PaperPanel(zoom: $zoom, pitch: $pitch, origin: $origin)
             .background(ColorHelper.backgroundColor)
             .toolbar {
                 ToolbarItem(placement: .automatic) {

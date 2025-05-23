@@ -5,7 +5,7 @@
 //  Created by Carsten Nichte on 11.04.25.
 //
 
-//  JobData.swift
+// JobData.swift
 import SwiftUI
 import Foundation
 import UniformTypeIdentifiers
@@ -82,7 +82,11 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
         zoom: Double = 1.0,
         origin: CGPoint = .zero,
         penConfiguration: [PenConfiguration] = [],
-        selectedMachine:MachineData
+        selectedMachine: MachineData,
+        paperFormatID: UUID? = nil,
+        paperOrientation: PaperOrientation = .portrait,
+        signatur: SignatureData? = nil,
+        isActive: Bool = false
     ) {
         self.id = id
         self.name = name
@@ -95,6 +99,10 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
         self.origin = origin
         self.penConfiguration = penConfiguration
         self.selectedMachine = selectedMachine
+        self.paperFormatID = paperFormatID
+        self.paperOrientation = paperOrientation
+        self.signatur = signatur
+        self.isActive = isActive
     }
     
     static var `default`: JobData {

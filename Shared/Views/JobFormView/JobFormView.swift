@@ -44,6 +44,8 @@ struct JobFormView: View {
     @Binding var currentJob: JobData
     @Binding var selectedJob: JobData?
 
+    @StateObject private var svgInspectorModel: SVGInspectorModel
+
     @EnvironmentObject var plotJobStore: GenericStore<JobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
     @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormatData>
@@ -69,16 +71,15 @@ struct JobFormView: View {
     init(currentJob: Binding<JobData>, selectedJob: Binding<JobData?>) {
         self._currentJob = currentJob
         self._selectedJob = selectedJob
+        _svgInspectorModel = StateObject(wrappedValue: SVGInspectorModel(job: currentJob.wrappedValue, machine: nil))
     }
 
     var body: some View {
         Group {
 #if os(macOS)
             MacJobPreviewLayoutView(
-                currentJob: $currentJob,
                 svgFileName: $svgFileName,
                 showingFileImporter: $showingFileImporter,
-                selectedMachine: $selectedMachine,
                 zoom: $zoom,
                 pitch: $pitch,
                 origin: $origin,
@@ -87,6 +88,7 @@ struct JobFormView: View {
                 isInspectorVisible: $isInspectorVisible,
                 inspectorWidth: $inspectorWidth
             )
+            .environmentObject(svgInspectorModel)
             .environmentObject(plotJobStore)
             .environmentObject(paperStore)
             .environmentObject(paperFormatsStore)
@@ -121,6 +123,7 @@ struct JobFormView: View {
                     )
                 }
             }
+            .environmentObject(svgInspectorModel)
             .environmentObject(plotJobStore)
             .environmentObject(paperStore)
             .environmentObject(paperFormatsStore)
@@ -143,7 +146,16 @@ struct JobFormView: View {
     private func saveCurrentJob() {
         Task {
             let start = Date()
-            await plotJobStore.save(item: currentJob, fileName: currentJob.id.uuidString)
+            await svgInspectorModel.save(using: plotJobStore)
+
+            // Aktualisiere den Job in der Liste
+            if let index = plotJobStore.items.firstIndex(where: { $0.id == svgInspectorModel.job.id }) {
+                plotJobStore.items[index] = svgInspectorModel.job
+            }
+
+            // Aktuelles Binding aktualisieren
+            currentJob = svgInspectorModel.job
+
             let duration = Date().timeIntervalSince(start)
             print("Saving job completed in \(duration) seconds")
         }

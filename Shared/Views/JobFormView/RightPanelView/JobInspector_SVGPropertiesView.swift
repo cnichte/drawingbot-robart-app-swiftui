@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct JobInspector_SVGPropertiesView: View {
-    @ObservedObject var model: SVGInspectorModel
+    @EnvironmentObject var model: SVGInspectorModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -70,7 +70,7 @@ struct JobInspector_SVGPropertiesView: View {
             Divider()
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Properties / Robot-Commands").font(.headline)
+                Text("SVG-Properties").font(.headline)
 
                 if model.selectedProperties.isEmpty {
                     Text("Keine Properties verfügbar").foregroundColor(.secondary)
@@ -103,6 +103,13 @@ struct JobInspector_SVGPropertiesView: View {
                 } else {
                     Text("Kein Element ausgewählt")
                         .foregroundColor(.secondary)
+                }
+            }
+        }
+        .onAppear {
+            if model.layers.isEmpty {
+                Task {
+                    await model.loadAndParseSVG()
                 }
             }
         }

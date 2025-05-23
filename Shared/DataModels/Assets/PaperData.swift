@@ -8,7 +8,6 @@
 // PaperData.swift
 import Foundation
 
-
 struct PaperData: Codable, Equatable, Identifiable, Hashable, ManageableItem  {
     
     var id: UUID

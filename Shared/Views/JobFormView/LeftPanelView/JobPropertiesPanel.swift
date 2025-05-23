@@ -9,41 +9,38 @@
 import SwiftUI
 
 struct JobPropertiesPanel: View {
-    @Binding var currentJob: JobData
-    @Binding var svgFileName: String?
-    @Binding var showingFileImporter: Bool
-    @Binding var selectedMachine: MachineData?
-    
+    @EnvironmentObject var model: SVGInspectorModel
+
     @EnvironmentObject var plotJobStore: GenericStore<JobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
     @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormatData>
     
+    @Binding var svgFileName: String?
+    @Binding var showingFileImporter: Bool
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                JobSectionView(currentJob: $currentJob)
-                    .padding(.horizontal, 0)
-
-                MachineSectionView(currentJob: $currentJob, selectedMachine: $selectedMachine)
+                JobSectionView()
                     .padding(.horizontal, 0)
                 
-                MachinePenSectionView(currentJob: $currentJob, selectedMachine: $selectedMachine)
+                MachineSectionView()
                     .padding(.horizontal, 0)
                 
-                SVGSectionView(
-                    currentJob: $currentJob,
-                    svgFileName: $svgFileName,
-                    showingFileImporter: $showingFileImporter,
-                )
+                MachinePenSectionView()
+                    .padding(.horizontal, 0)
+                
+                SVGSectionView(svgFileName: $svgFileName,
+                               showingFileImporter: $showingFileImporter)
                 .padding(.horizontal, 0)
                 
-                PaperSectionView(currentJob: $currentJob, onUpdate: saveCurrentJob)
-                    .padding(.horizontal, 0)
-
-                SignatureSectionView(currentJob: $currentJob)
+                PaperSectionView(onUpdate: saveCurrentJob)
                     .padding(.horizontal, 0)
                 
-                ActionsSectionView(currentJob: $currentJob)
+                SignatureSectionView()
+                    .padding(.horizontal, 0)
+                
+                ActionsSectionView()
                     .padding(.horizontal, 0)
                 
                 Spacer()
@@ -57,7 +54,7 @@ struct JobPropertiesPanel: View {
     
     private func saveCurrentJob() {
         Task {
-            await plotJobStore.save(item: currentJob, fileName: currentJob.id.uuidString)
+            await model.save(using: plotJobStore)
         }
     }
 }

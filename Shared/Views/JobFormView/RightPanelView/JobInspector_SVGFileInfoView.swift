@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct JobInspector_SVGFileInfoView: View {
-    @Binding var currentJob: JobData
+    @EnvironmentObject var model: SVGInspectorModel
+    // @Binding var currentJob: JobData
 
     @State private var fileSize: String = "–"
     @State private var modifiedDate: String = "–"
@@ -30,7 +31,7 @@ struct JobInspector_SVGFileInfoView: View {
     }
 
     private func loadFileInfo() {
-        let url = JobsDataFileManager.shared.workingSVGURL(for: currentJob.id)
+        let url = JobsDataFileManager.shared.workingSVGURL(for: $model.job.id)
         fileName = url.lastPathComponent
 
         do {

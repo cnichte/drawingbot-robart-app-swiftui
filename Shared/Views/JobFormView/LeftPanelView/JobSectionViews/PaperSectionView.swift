@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct PaperSectionView: View {
-    @Binding var currentJob: JobData
+    @EnvironmentObject var model: SVGInspectorModel
     @EnvironmentObject var assetStores: AssetStores
+    
     var onUpdate: () -> Void
 
     private let customPaperID = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
@@ -21,24 +22,32 @@ struct PaperSectionView: View {
                 
                 HStack {
                     Picker("Papier-Vorlage", selection: Binding<UUID?>(
-                        get: { currentJob.paperFormatID },
+                        get: {
+                            model.job.paperFormatID
+                        },
                         set: { newID in
-                            currentJob.paperFormatID = newID
+                            model.job.paperFormatID = newID
                             if let id = newID {
                                 if id == customPaperID {
                                     // Eigenes Papier bleibt erhalten
                                     appLog(.info, "✏️ Eigenes Papier ausgewählt")
+                                } else if id == PaperData.default.id {
+                                    model.job.paper = .default
                                 } else if let selectedPaper = assetStores.paperStore.items.first(where: { $0.id == id }) {
-                                    currentJob.paper = selectedPaper
-                                    onUpdate()
+                                    model.job.paper = selectedPaper
                                 }
+                                onUpdate()
                             }
                         }
                     )) {
+                        Text("– Kein Papier –").tag(Optional(PaperData.default.id))
+
                         ForEach(assetStores.paperStore.items) { paper in
                             Text(paper.name).tag(Optional(paper.id))
                         }
+
                         Divider()
+
                         Text("➕ Eigenes Papier").tag(Optional(customPaperID))
                     }
                     .pickerStyle(.menu)
@@ -57,45 +66,45 @@ struct PaperSectionView: View {
                 Divider()
 
                 Group {
-                    Tools.textField(label: "Name", value: $currentJob.paper.name)
+                    Tools.textField(label: "Name", value: $model.job.paper.name)
                         .disabled(!isCustomPaperSelected)
-                    Tools.textField(label: "Gewicht (g/m²)", value: $currentJob.paper.weight)
+                    Tools.textField(label: "Gewicht (g/m²)", value: $model.job.paper.weight)
                         .disabled(!isCustomPaperSelected)
-                    Tools.textField(label: "Farbe", value: $currentJob.paper.color)
+                    Tools.textField(label: "Farbe", value: $model.job.paper.color)
                         .disabled(!isCustomPaperSelected)
-                    Tools.textField(label: "Hersteller", value: $currentJob.paper.hersteller)
+                    Tools.textField(label: "Hersteller", value: $model.job.paper.hersteller)
                         .disabled(!isCustomPaperSelected)
-                    Tools.textField(label: "Shoplink", value: $currentJob.paper.shoplink)
+                    Tools.textField(label: "Shoplink", value: $model.job.paper.shoplink)
                         .disabled(!isCustomPaperSelected)
-                    Tools.textField(label: "Beschreibung", value: $currentJob.paper.description)
+                    Tools.textField(label: "Beschreibung", value: $model.job.paper.description)
                         .disabled(!isCustomPaperSelected)
                 }
-                .onChange(of: currentJob.paper) { onUpdate() }
+                .onChange(of: model.job.paper) { onUpdate() }
 
                 Divider()
 
                 HStack {
                     Text("Breite (mm)")
-                    Tools.doubleTextField(label: "Breite", value: $currentJob.paper.paperFormat.width)
+                    Tools.doubleTextField(label: "Breite", value: $model.job.paper.paperFormat.width)
                         .disabled(!isCustomPaperSelected)
                 }
-                .onChange(of: currentJob.paper.paperFormat.width) { onUpdate() }
+                .onChange(of: model.job.paper.paperFormat.width) { onUpdate() }
 
                 HStack {
                     Text("Höhe (mm)")
-                    Tools.doubleTextField(label: "Höhe", value: $currentJob.paper.paperFormat.height)
+                    Tools.doubleTextField(label: "Höhe", value: $model.job.paper.paperFormat.height)
                         .disabled(!isCustomPaperSelected)
                 }
-                .onChange(of: currentJob.paper.paperFormat.height) { onUpdate() }
+                .onChange(of: model.job.paper.paperFormat.height) { onUpdate() }
 
                 HStack {
-                    Picker("Orientierung", selection: $currentJob.paperOrientation) {
+                    Picker("Orientierung", selection: $model.job.paperOrientation) {
                         Text("Hochformat").tag(PaperOrientation.portrait)
                         Text("Querformat").tag(PaperOrientation.landscape)
                     }
                     .pickerStyle(.segmented)
                 }
-                .onChange(of: currentJob.paperOrientation) { onUpdate() }
+                .onChange(of: model.job.paperOrientation) { onUpdate() }
             }
             .padding(.top, 4)
         }
@@ -104,19 +113,19 @@ struct PaperSectionView: View {
     // MARK: - Helpers
 
     private var isCustomPaperSelected: Bool {
-        return currentJob.paperFormatID == customPaperID
+        return model.job.paperFormatID == customPaperID
     }
 
     private func saveCustomPaperAsTemplate() {
         let newPaper = PaperData(
             id: UUID(), // <<< neue eindeutige ID
-            name: currentJob.paper.name,
-            weight: currentJob.paper.weight,
-            color: currentJob.paper.color,
-            hersteller: currentJob.paper.hersteller,
-            shoplink: currentJob.paper.shoplink,
-            description: currentJob.paper.description,
-            paperFormat: currentJob.paper.paperFormat
+            name: model.job.paper.name,
+            weight: model.job.paper.weight,
+            color: model.job.paper.color,
+            hersteller: model.job.paper.hersteller,
+            shoplink: model.job.paper.shoplink,
+            description: model.job.paper.description,
+            paperFormat: model.job.paper.paperFormat
         )
 
         assetStores.paperStore.items.append(newPaper)
@@ -126,8 +135,8 @@ struct PaperSectionView: View {
         }
 
         // aktuelle Auswahl auf das neue Papier setzen
-        currentJob.paperFormatID = newPaper.id
-        currentJob.paper = newPaper
+        model.job.paperFormatID = newPaper.id
+        model.job.paper = newPaper
         onUpdate()
     }
 }

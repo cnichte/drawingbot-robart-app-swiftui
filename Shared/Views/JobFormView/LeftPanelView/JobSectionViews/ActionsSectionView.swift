@@ -4,10 +4,13 @@
 //
 //  Created by Carsten Nichte on 28.04.25.
 //
+
+// ActionsSectionView.swift
 import SwiftUI
 
 struct ActionsSectionView: View {
-    @Binding var currentJob: JobData
+    
+    @EnvironmentObject var model: SVGInspectorModel
     @EnvironmentObject var store: GenericStore<JobData>
 
     var body: some View {

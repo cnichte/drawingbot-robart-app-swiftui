@@ -6,17 +6,17 @@
 //
 
 // JobSectionView.swift
+import Foundation
 import SwiftUI
 
 struct JobSectionView: View {
-    @Binding var currentJob: JobData
-    // @EnvironmentObject var jobStore: GenericStore<JobData>
+    @EnvironmentObject var model: SVGInspectorModel
 
     var body: some View {
         CollapsibleSection(title: "Job", systemImage: "doc.plaintext", toolbar: { EmptyView() }) {
             VStack(alignment: .leading) {
-                TextField("Name", text: $currentJob.name)
-                TextEditor(text: $currentJob.description)
+                TextField("Name", text: $model.jobBox.name)
+                TextEditor(text: $model.jobBox.description)
                     .frame(minHeight: 80)
                     .padding(4)
                     .background(ColorHelper.backgroundColor)

@@ -10,10 +10,12 @@
 import SwiftUI
 
 struct MacJobPreviewLayoutView: View {
-    @Binding var currentJob: JobData
+    @EnvironmentObject var model: SVGInspectorModel // TODO: NEW
+    
+    // @Binding var currentJob: JobData
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool
-    @Binding var selectedMachine: MachineData?
+    // @Binding var selectedMachine: MachineData?
 
     @Binding var zoom: Double
     @Binding var pitch: Double
@@ -35,10 +37,11 @@ struct MacJobPreviewLayoutView: View {
             rightPanelWidth: $inspectorWidth,
             leftView: {
                 LeftPanelView(
-                    currentJob: $currentJob,
+                    // currentJob: $currentJob,
                     svgFileName: $svgFileName,
                     showingFileImporter: $showingFileImporter,
-                    selectedMachine: $selectedMachine
+                    // selectedMachine: $selectedMachine
+                    
                 )
                 .environmentObject(plotJobStore)
                 .environmentObject(paperStore)
@@ -49,16 +52,19 @@ struct MacJobPreviewLayoutView: View {
                     zoom: $zoom,
                     pitch: $pitch,
                     origin: $origin,
-                    job: $currentJob,
+                    // job: $currentJob,
                     previewMode: $previewMode,
+                    
                     isSidebarVisible: $isSidebarVisible,
                     isInspectorVisible: $isInspectorVisible
                 )
             },
             rightView: {
                 RightPanelView(
+                    /*
                     currentJob: $currentJob,
                     selectedMachine: $selectedMachine
+                     */
                 )
             }
         )

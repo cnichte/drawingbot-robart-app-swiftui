@@ -206,3 +206,11 @@ extension GenericStore where T.ID == UUID {
         return defaultItem
     }
 }
+
+extension GenericStore {
+    func replace(_ item: T) {
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
+            items[index] = item
+        }
+    }
+}

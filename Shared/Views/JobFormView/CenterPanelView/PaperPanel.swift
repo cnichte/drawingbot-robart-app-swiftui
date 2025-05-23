@@ -10,16 +10,17 @@ import SwiftUI
 import SVGView
 
 struct PaperPanel: View {
+    @EnvironmentObject var model: SVGInspectorModel
+    
     @Binding var zoom: Double
     @Binding var pitch: Double
     @Binding var origin: CGPoint
-    @Binding var job: JobData
 
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                let paperWidth = CGFloat(job.paper.paperFormat.width)
-                let paperHeight = CGFloat(job.paper.paperFormat.height)
+                let paperWidth = CGFloat(model.job.paper.paperFormat.width)
+                let paperHeight = CGFloat(model.job.paper.paperFormat.height)
                 let scaleFactor = min(geo.size.width / paperWidth, geo.size.height / paperHeight)
 
                 let paperFrame = CGSize(width: paperWidth * scaleFactor, height: paperHeight * scaleFactor)
@@ -54,7 +55,7 @@ struct PaperPanel: View {
     }
 
     private func resolveSVGURL() -> URL? {
-        guard !job.svgFilePath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        guard !model.job.svgFilePath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return nil
         }
         do {
@@ -64,7 +65,7 @@ struct PaperPanel: View {
                 appropriateFor: nil,
                 create: false
             )
-            let fullURL = documentsURL.appendingPathComponent(job.svgFilePath)
+            let fullURL = documentsURL.appendingPathComponent(model.job.svgFilePath)
             if FileManager.default.fileExists(atPath: fullURL.path) {
                 return fullURL
             } else {

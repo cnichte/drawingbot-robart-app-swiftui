@@ -30,23 +30,13 @@ struct SVGProperty: Identifiable {
 // MARK: - JobInspectorPanel
 
 struct JobInspectorPanel: View {
-    @Binding var currentJob: JobData
-    @Binding var selectedMachine: MachineData?
-
     @State private var selectedTab: InspectorTab = .fileInfo
-    @StateObject private var svgInspectorModel: SVGInspectorModel
 
     enum InspectorTab: String, CaseIterable, Identifiable {
         case fileInfo = "SVG-FileInfo"
         case properties = "SVG-Properties"
         case machine = "Maschine"
         var id: String { rawValue }
-    }
-
-    init(currentJob: Binding<JobData>, selectedMachine: Binding<MachineData?>) {
-        self._currentJob = currentJob
-        self._selectedMachine = selectedMachine
-        _svgInspectorModel = StateObject(wrappedValue: SVGInspectorModel(job: currentJob.wrappedValue, machine: selectedMachine.wrappedValue))
     }
 
     var body: some View {
@@ -68,11 +58,11 @@ struct JobInspectorPanel: View {
                 VStack(alignment: .leading, spacing: 16) {
                     switch selectedTab {
                     case .fileInfo:
-                        JobInspector_SVGFileInfoView(currentJob: $currentJob)
+                        JobInspector_SVGFileInfoView()
                     case .properties:
-                        JobInspector_SVGPropertiesView(model: svgInspectorModel)
+                        JobInspector_SVGPropertiesView()
                     case .machine:
-                        JobInspector_MachineInfoView(currentJob: $currentJob, selectedMachine: selectedMachine)
+                        JobInspector_MachineInfoView()
                     }
                 }
                 .padding(.horizontal, 12)
@@ -81,10 +71,5 @@ struct JobInspectorPanel: View {
             }
         }
         .background(Color.gray.opacity(0.05))
-        .onAppear {
-            Task {
-                await svgInspectorModel.loadAndParseSVG()
-            }
-        }
     }
 }

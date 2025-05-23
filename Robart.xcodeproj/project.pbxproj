@@ -231,6 +231,10 @@
 		D5E55CF42DC02830003806CF /* CustomSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587A4362DBEA9F10072D83C /* CustomSplitView.swift */; };
 		D5E55CF62DC049C0003806CF /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CF52DC049B4003806CF /* Menubar.swift */; };
 		D5E55CF72DC049C1003806CF /* Menubar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E55CF52DC049B4003806CF /* Menubar.swift */; };
+		D5F0DEA72DE08D3E008D4E06 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F0DEA62DE08D37008D4E06 /* Double.swift */; };
+		D5F0DEA82DE08D3E008D4E06 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F0DEA62DE08D37008D4E06 /* Double.swift */; };
+		D5F0DEAD2DE0A2DD008D4E06 /* JobBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F0DEAC2DE0A2D8008D4E06 /* JobBox.swift */; };
+		D5F0DEAE2DE0A2DD008D4E06 /* JobBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F0DEAC2DE0A2D8008D4E06 /* JobBox.swift */; };
 		D5F4DDF62DB59F9D00C9FE57 /* TabManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */; };
 		D5F4DE012DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
 		D5F4DE022DB5A33900C9FE57 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */; };
@@ -421,6 +425,8 @@
 		D5E55CEE2DBFFF78003806CF /* SignatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureData.swift; sourceTree = "<group>"; };
 		D5E55CF12DC0102E003806CF /* jobs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = jobs.json; sourceTree = "<group>"; };
 		D5E55CF52DC049B4003806CF /* Menubar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menubar.swift; sourceTree = "<group>"; };
+		D5F0DEA62DE08D37008D4E06 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		D5F0DEAC2DE0A2D8008D4E06 /* JobBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobBox.swift; sourceTree = "<group>"; };
 		D5F4DDF52DB59F9A00C9FE57 /* TabManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabManagerView.swift; sourceTree = "<group>"; };
 		D5F4DE002DB5A33800C9FE57 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		D5F4DE032DB5A3A100C9FE57 /* ProjectFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFormView.swift; sourceTree = "<group>"; };
@@ -629,6 +635,7 @@
 				D56C4E3E2DB118DB00F09A0C /* DropHandling.swift */,
 				D56C4E442DB1275C00F09A0C /* View+DropZone.swift */,
 				D56C4E472DB1296700F09A0C /* DropZoneModifier.swift */,
+				D5E55CD82DBF8DE1003806CF /* View+HoverEffect.swift */,
 			);
 			path = ViewExtensions;
 			sourceTree = "<group>";
@@ -709,6 +716,7 @@
 		D581AFA12DBC204300821A7E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D5F0DEA62DE08D37008D4E06 /* Double.swift */,
 				D5D309312DDF860E004511C7 /* Color+Hex.swift */,
 			);
 			path = Extensions;
@@ -765,6 +773,7 @@
 		D5A084C92DAFD83400332690 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
+				D5F0DEAC2DE0A2D8008D4E06 /* JobBox.swift */,
 				D58371A22DDFA0BD00707133 /* SVGInspectorModel.swift */,
 				D5E1E6D52DC41D02008F6347 /* Defaultable.swift */,
 				D5F896E62DBCDDD500397561 /* Assets */,
@@ -811,7 +820,6 @@
 				D559912B2DC8C9BA0066FE1E /* CrossPlatformUI_Helpers */,
 				D587A4402DBEBFFA0072D83C /* Deprecated */,
 				D5E1E6C92DC41497008F6347 /* JobFormView */,
-				D5E55CD72DBF8DBD003806CF /* View-Extensions */,
 				D52C0AFD2DBA87C100F57746 /* PartialViews */,
 				D5F6C61F2DB8348600020AEE /* GenericItemManagerView */,
 				D57076D52DB57F4600C277AF /* Settings+Assets */,
@@ -944,14 +952,6 @@
 				D59161D42DDF609C00E9DC61 /* LeftPanelView.swift */,
 			);
 			path = LeftPanelView;
-			sourceTree = "<group>";
-		};
-		D5E55CD72DBF8DBD003806CF /* View-Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				D5E55CD82DBF8DE1003806CF /* View+HoverEffect.swift */,
-			);
-			path = "View-Extensions";
 			sourceTree = "<group>";
 		};
 		D5F6C61E2DB828E000020AEE /* GenericWindowManager */ = {
@@ -1272,6 +1272,7 @@
 				D5F6C63F2DB8480200020AEE /* MachineManagerView.swift in Sources */,
 				D5F6C6412DB8481A00020AEE /* MachineFormView.swift in Sources */,
 				D5A085282DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
+				D5F0DEA72DE08D3E008D4E06 /* Double.swift in Sources */,
 				D59A28CF2DCA1F1300EAB3BC /* BackgroundTaskManager.swift in Sources */,
 				D56C4E592DB1847400F09A0C /* WindowID.swift in Sources */,
 				D56C4E3F2DB118DB00F09A0C /* DropHandling.swift in Sources */,
@@ -1280,6 +1281,7 @@
 				D5A084DA2DAFD84000332690 /* JobData.swift in Sources */,
 				D5A084DB2DAFD84000332690 /* ConnectionData.swift in Sources */,
 				D572A2342DC624BB00D91FC5 /* MachineCommandResolver.swift in Sources */,
+				D5F0DEAD2DE0A2DD008D4E06 /* JobBox.swift in Sources */,
 				D5D104092DAEF2E600E8406E /* ContentView.swift in Sources */,
 				D5F6C6232DB834B900020AEE /* ItemManagerView.swift in Sources */,
 				D5F6C6262DB834E400020AEE /* ItemListView.swift in Sources */,
@@ -1391,6 +1393,7 @@
 				D572A2332DC624BB00D91FC5 /* MachineCommandResolver.swift in Sources */,
 				D575661B2DB91E5000D95E3F /* ItemManagerView.swift in Sources */,
 				D5E55CD02DBF84E4003806CF /* JobListProjectSectionView.swift in Sources */,
+				D5F0DEA82DE08D3E008D4E06 /* Double.swift in Sources */,
 				D55991342DC8CB000066FE1E /* ViewExtensions.swift in Sources */,
 				D5A0852E2DAFD8DE00332690 /* Speedometer_View.swift in Sources */,
 				D587A4322DBE8EAE0072D83C /* AssetManagerHelper.swift in Sources */,
@@ -1460,6 +1463,7 @@
 				D5A084DF2DAFD85300332690 /* FileManagerService.swift in Sources */,
 				D5E55CF62DC049C0003806CF /* Menubar.swift in Sources */,
 				D57566252DB9256B00D95E3F /* PaperFormView.swift in Sources */,
+				D5F0DEAE2DE0A2DD008D4E06 /* JobBox.swift in Sources */,
 				D587A4432DBEDDDE0072D83C /* JobPropertiesPanel.swift in Sources */,
 				D5E1E6CD2DC417D7008F6347 /* JobInspector_MachineInfoView.swift in Sources */,
 				D5E55CEA2DBFD6DA003806CF /* AutoConnectService.swift in Sources */,

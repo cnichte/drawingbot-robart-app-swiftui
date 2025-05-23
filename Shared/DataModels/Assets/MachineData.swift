@@ -146,7 +146,7 @@ struct MachineData: Codable, Equatable, Identifiable, Hashable, ManageableItem, 
         size: MachineSize = MachineSize(x: 0, y: 0),
         protokoll: String = "",
         commandItems: [MachineCommandItem] = [],
-        penCount: Int = 1,
+        penCount: Int = 0,
         connection: MachineConnection = MachineConnection(),
         options: [MachineOption] = []
     ) {

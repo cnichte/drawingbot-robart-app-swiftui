@@ -10,7 +10,8 @@ import SwiftUI
 import SVGView
 
 struct SVGSectionView: View {
-    @Binding var currentJob: JobData
+    @EnvironmentObject var model: SVGInspectorModel
+    
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool
 
@@ -26,7 +27,7 @@ struct SVGSectionView: View {
                             .font(.subheadline)
                         Spacer()
                         Button {
-                            deleteCurrentSVG()
+                            deleteCurrentSVG() 
                         } label: {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.red)
@@ -61,7 +62,7 @@ struct SVGSectionView: View {
     }
 
     private func resolvedSVGURL() -> URL? {
-        guard !currentJob.svgFilePath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        guard !model.job.svgFilePath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return nil
         }
 
@@ -72,7 +73,7 @@ struct SVGSectionView: View {
                 appropriateFor: nil,
                 create: false
             )
-            return documentsURL.appendingPathComponent(currentJob.svgFilePath)
+            return documentsURL.appendingPathComponent(model.job.svgFilePath)
         } catch {
             appLog(.info, "❌ Fehler beim Ermitteln des Documents-Pfads: \(error)")
             return nil
@@ -87,19 +88,19 @@ struct SVGSectionView: View {
                     defer { selectedURL.stopAccessingSecurityScopedResource() }
 
                     do {
-                        let destinationURL = try JobsDataFileManager.shared.copySVG(toJobID: currentJob.id, from: selectedURL)
+                        let destinationURL = try JobsDataFileManager.shared.copySVG(toJobID: model.job.id, from: selectedURL)
                         
                         // arbeitskopie
-                        let workingCopyURL = JobsDataFileManager.shared.svgFolder(for: currentJob.id).appendingPathComponent("working.svg")
+                        let workingCopyURL = JobsDataFileManager.shared.svgFolder(for: model.job.id).appendingPathComponent("working.svg")
                         try Data(contentsOf: destinationURL).write(to: workingCopyURL)
                         
                         // original
-                        let relativePath = "jobs-data/\(currentJob.id.uuidString)/svg/\(destinationURL.lastPathComponent)"
-                        currentJob.svgFilePath = relativePath
+                        let relativePath = "jobs-data/\(model.job.id.uuidString)/svg/\(destinationURL.lastPathComponent)"
+                        model.job.svgFilePath = relativePath
                         svgFileName = destinationURL.lastPathComponent
 
                         Task {
-                            await store.save(item: currentJob, fileName: currentJob.id.uuidString)
+                            await store.save(item: model.job, fileName: model.job.id.uuidString)
                         }
                     } catch {
                         appLog(.info, "❌ Fehler beim Kopieren der SVG:", error.localizedDescription)
@@ -144,12 +145,12 @@ struct SVGSectionView: View {
     }
     
     private func deleteCurrentSVG() {
-        JobsDataFileManager.shared.deleteAllJobData(for: currentJob.id)
-        currentJob.svgFilePath = ""
+        JobsDataFileManager.shared.deleteAllJobData(for: model.job.id)
+        model.job.svgFilePath = ""
         svgFileName = nil
 
         Task {
-            await store.save(item: currentJob, fileName: currentJob.id.uuidString)
+            await store.save(item: model.job, fileName: model.job.id.uuidString)
         }
     }
 }

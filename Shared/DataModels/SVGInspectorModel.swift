@@ -12,33 +12,87 @@ import SwiftUI
 @MainActor
 final class SVGInspectorModel: ObservableObject {
     // MARK: - Eingaben
-    let job: JobData
-    let machine: MachineData?
-    
-    // MARK: - Parser-Ergebnisse
-    @Published var allElements: [ParserListItem] = []
-    @Published var layers: [SVGLayer] = []
-    @Published var elementsInSelectedLayer: [ParserListItem] = []
-
-    // MARK: - Auswahlstatus
-    @Published var selectedLayer: SVGLayer? {
-        didSet { updateElementsForSelectedLayer() }
+    @Published var job: JobData {
+        didSet {
+            jobBox = JobBox(from: job)
+        }
     }
+        @Published var jobBox: JobBox
+        @Published var machine: MachineData?
 
-    @Published var selectedElement: ParserListItem? {
-        didSet { updatePropertiesForSelectedElement() }
-    }
+        // MARK: - Parser-Ergebnisse
+        @Published var allElements: [ParserListItem] = []
+        @Published var layers: [SVGLayer] = []
+        @Published var elementsInSelectedLayer: [ParserListItem] = []
 
-    @Published var selectedProperties: [SVGProperty] = []
+        // MARK: - Auswahlstatus
+        @Published var selectedLayer: SVGLayer? {
+            didSet { updateElementsForSelectedLayer() }
+        }
 
-    // MARK: - Init
-    init(job: JobData, machine: MachineData?) {
+        @Published var selectedElement: ParserListItem? {
+            didSet { updatePropertiesForSelectedElement() }
+        }
+
+        @Published var selectedProperties: [SVGProperty] = []
+
+        // MARK: - Init
+    init(job: JobData, machine: MachineData? = nil) {
         self.job = job
-        self.machine = machine
+        self.jobBox = JobBox(from: job)
+        self.machine = machine ?? job.selectedMachine
     }
+    
+    func syncJobBoxBack() {
+        self.job = jobBox.toJobData()
+    }
+    
+        // MARK: - Bindings
+        func binding<Value>(_ keyPath: WritableKeyPath<JobData, Value>) -> Binding<Value> {
+            Binding<Value>(
+                get: { self.job[keyPath: keyPath] },
+                set: { newValue in
+                    var updated = self.job
+                    updated[keyPath: keyPath] = newValue
+                    self.job = updated
+                }
+            )
+        }
+
+        func bindingSignature<Value>(
+            _ keyPath: WritableKeyPath<SignatureData, Value>,
+            defaultValue: @escaping () -> SignatureData
+        ) -> Binding<Value> {
+            Binding<Value>(
+                get: {
+                    if self.job.signatur == nil {
+                        self.job.signatur = defaultValue() // TODO: Publishing changes from within view updates is not allowed, this will cause undefined behavior.
+                    }
+                    return self.job.signatur![keyPath: keyPath]
+                },
+                set: { newValue in
+                    if self.job.signatur == nil {
+                        self.job.signatur = defaultValue()
+                    }
+                    var signature = self.job.signatur!
+                    signature[keyPath: keyPath] = newValue
+                    self.job.signatur = signature
+                }
+            )
+        }
+
+        func bindingForJob() -> Binding<JobData> {
+            Binding<JobData>(
+                get: { self.job },
+                set: { self.job = $0 }
+            )
+        }
 
     // MARK: - SVG laden & parsen
-    func loadAndParseSVG(svgSize: CGSize = CGSize(width: 500, height: 500), paperSize: CGSize = CGSize(width: 210, height: 297)) async {
+    func loadAndParseSVG(
+        svgSize: CGSize = CGSize(width: 500, height: 500),
+        paperSize: CGSize = CGSize(width: 210, height: 297)
+    ) async {
         let url = JobsDataFileManager.shared.workingSVGURL(for: job.id)
 
         guard FileManager.default.fileExists(atPath: url.path) else {
@@ -46,9 +100,6 @@ final class SVGInspectorModel: ObservableObject {
             return
         }
 
-        appLog(.error,  "⚙️ Verwende Maschine:", machine?.name ?? "nil")
-        appLog(.error, "⚙️ Commands:", machine?.commandItems.map { $0.name } ?? [])
-        
         let parser = SVGParser(generator: GCodeGenerator(machineData: machine ?? .default))
         let ok = parser.loadSVGFile(
             from: url,
@@ -66,6 +117,14 @@ final class SVGInspectorModel: ObservableObject {
         }
     }
 
+    // MARK: - Speichern
+    func save(using store: GenericStore<JobData>) async {
+        let syncedJob = jobBox.toJobData()
+        appLog(.error, "🧪 SAVE NAME:", syncedJob.name)
+        appLog(.error, "🧪 SAVE DESC:", syncedJob.description)
+        await store.save(item: syncedJob, fileName: syncedJob.id.uuidString)
+    }
+
     // MARK: - Gruppieren nach Layer
     private func groupElementsByLayer() {
         let grouped = Dictionary(grouping: allElements) { item in
@@ -73,10 +132,7 @@ final class SVGInspectorModel: ObservableObject {
         }
 
         layers = grouped.keys.sorted().map { SVGLayer(name: $0) }
-
-        if let first = layers.first {
-            selectedLayer = first
-        }
+        selectedLayer = layers.first
     }
 
     private func updateElementsForSelectedLayer() {
@@ -100,7 +156,7 @@ final class SVGInspectorModel: ObservableObject {
         }
     }
 
-    // MARK: - Hilfsfunktionen
+    // MARK: - GCode Hilfsfunktionen
     func gcodeForSelectedElement() -> String {
         selectedElement?.output ?? ""
     }
@@ -111,5 +167,26 @@ final class SVGInspectorModel: ObservableObject {
 
     func gcodeForAllElements() -> String {
         allElements.map(\.output).joined(separator: "\n")
+    }
+}
+
+// MARK: - bindingForPenSlot
+
+extension SVGInspectorModel {
+    func bindingForPenSlot(at index: Int) -> Binding<PenConfiguration> {
+        Binding<PenConfiguration>(
+            get: {
+                if index < self.job.penConfiguration.count {
+                    return self.job.penConfiguration[index]
+                } else {
+                    return PenConfiguration(penSVGLayerAssignment: .toLayer, color: "", layer: "", angle: 90)
+                }
+            },
+            set: { newValue in
+                if index < self.job.penConfiguration.count {
+                    self.job.penConfiguration[index] = newValue
+                }
+            }
+        )
     }
 }
