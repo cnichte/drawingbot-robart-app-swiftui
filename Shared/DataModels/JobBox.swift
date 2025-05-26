@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 
+// Das ist ein Wrapper um JobData, der die einzelnen Properties Observable macht?
 @MainActor
 final class JobBox: ObservableObject {
     @Published var id: UUID
@@ -18,11 +19,13 @@ final class JobBox: ObservableObject {
     @Published var pitch: Double
     @Published var zoom: Double
     @Published var origin: CGPoint
-    @Published var paper: PaperData
-    @Published var paperFormatID: UUID?
+    @Published var paperData: PaperData
+    @Published var paperDataID: UUID? // Für Picker
     @Published var paperOrientation: PaperOrientation
     @Published var penConfiguration: [PenConfiguration]
-    @Published var selectedMachine: MachineData
+    @Published var penConfigurationIDs: [UUID?]
+    @Published var machineData: MachineData
+    @Published var machineDataID: UUID? // Für Picker
     @Published var signatur: SignatureData?
     @Published var currentCommandIndex: Int
     @Published var isActive: Bool
@@ -35,30 +38,34 @@ final class JobBox: ObservableObject {
         self.pitch = job.pitch
         self.zoom = job.zoom
         self.origin = job.origin
-        self.paper = job.paper
-        self.paperFormatID = job.paperFormatID
+        self.paperData = job.paperData
+        self.paperDataID = job.paperDataID
         self.paperOrientation = job.paperOrientation
         self.penConfiguration = job.penConfiguration
-        self.selectedMachine = job.selectedMachine
-        self.signatur = job.signatur
+        self.penConfigurationIDs = job.penConfigurationIDs
+        self.machineData = job.machineData
+        self.machineDataID = job.machineDataID // NEU
+        self.signatur = job.signaturData
         self.currentCommandIndex = job.currentCommandIndex
         self.isActive = job.isActive
     }
 
     func toJobData() -> JobData {
-        JobData( // Extra arguments at positions #12, #13, #14, #15 in call
+        JobData(
             id: id,
             name: name,
             description: description,
-            paper: paper,
             svgFilePath: svgFilePath,
             currentCommandIndex: currentCommandIndex,
             pitch: pitch,
             zoom: zoom,
             origin: origin,
             penConfiguration: penConfiguration,
-            selectedMachine: selectedMachine,
-            paperFormatID: paperFormatID,
+            penConfigurationIDs: penConfigurationIDs,
+            machineData: machineData,
+            machineDataID: machineDataID,
+            paperData: paperData,
+            paperDataID: paperDataID,
             paperOrientation: paperOrientation,
             signatur: signatur,
             isActive: isActive

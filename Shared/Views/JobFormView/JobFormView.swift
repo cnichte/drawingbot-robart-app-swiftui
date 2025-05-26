@@ -37,14 +37,16 @@ import SwiftUI
 import UIKit
 #endif
 
+// MARK: JobFormView
+
 struct JobFormView: View {
     @AppStorage("jobPreview_sidebarVisible") private var isSidebarVisible: Bool = true
     @AppStorage("jobPreview_inspectorVisible") private var isInspectorVisible: Bool = false
 
     @Binding var currentJob: JobData
-    @Binding var selectedJob: JobData?
+    @Binding var selectedJob: JobData? // TODO: Brauch ich das noch?
 
-    @StateObject private var svgInspectorModel: SVGInspectorModel
+    @ObservedObject var svgInspectorModel: SVGInspectorModel
 
     @EnvironmentObject var plotJobStore: GenericStore<JobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
@@ -68,10 +70,10 @@ struct JobFormView: View {
         var id: String { rawValue }
     }
 
-    init(currentJob: Binding<JobData>, selectedJob: Binding<JobData?>) {
+    init(currentJob: Binding<JobData>, selectedJob: Binding<JobData?>, svgInspectorModel: SVGInspectorModel) {
         self._currentJob = currentJob
         self._selectedJob = selectedJob
-        _svgInspectorModel = StateObject(wrappedValue: SVGInspectorModel(job: currentJob.wrappedValue, machine: nil))
+        self.svgInspectorModel = svgInspectorModel
     }
 
     var body: some View {
@@ -132,32 +134,35 @@ struct JobFormView: View {
         }
         .onAppear {
             appLog(.info, "Geladener SVG-Pfad:", currentJob.svgFilePath)
+
+            // 💡 hole aktuelle Jobdaten aus dem Store (falls aktueller Binding-Wert veraltet ist)
+            if let latest = plotJobStore.items.first(where: { $0.id == currentJob.id }) {
+                currentJob = latest
+            }
+
             loadActiveJob()
         }
         .onDisappear {
             saveCurrentJob()
         }
+        .onChange(of: currentJob) { _, newValue in
+            svgInspectorModel.job = newValue
+        }
     }
-
+    
+    // MARK: load save Functions
+    
     private func loadActiveJob() {
         svgFileName = URL(fileURLWithPath: currentJob.svgFilePath).lastPathComponent
     }
 
     private func saveCurrentJob() {
+        
         Task {
             let start = Date()
             await svgInspectorModel.save(using: plotJobStore)
-
-            // Aktualisiere den Job in der Liste
-            if let index = plotJobStore.items.firstIndex(where: { $0.id == svgInspectorModel.job.id }) {
-                plotJobStore.items[index] = svgInspectorModel.job
-            }
-
-            // Aktuelles Binding aktualisieren
-            currentJob = svgInspectorModel.job
-
             let duration = Date().timeIntervalSince(start)
-            print("Saving job completed in \(duration) seconds")
+            print("✅ Saving job completed in \(duration) seconds")
         }
     }
 }

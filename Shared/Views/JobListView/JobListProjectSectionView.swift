@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct JobListProjectSectionView: View {
-    let project: ProjectData
+    @Binding var project: ProjectData
     var selectedJobID: UUID?
     var viewMode: JobListViewMode
     var thumbnailProvider: (JobData) -> Image?
@@ -52,7 +52,7 @@ struct JobListProjectSectionView: View {
             switch viewMode {
             case .list:
                 LazyVStack(spacing: 12) {
-                    ForEach(project.jobs) { job in
+                    ForEach($project.jobs) { $job in
                         HStack(spacing: 12) {
                             thumbnailProvider(job)?
                                 .resizable()
@@ -83,9 +83,9 @@ struct JobListProjectSectionView: View {
                 }
             case .grid:
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 16) {
-                    ForEach(project.jobs) { job in
+                    ForEach($project.jobs) { $job in
                         JobCardView(
-                            job: job,
+                            job: $job,
                             thumbnail: thumbnailProvider(job),
                             isSelected: selectedJobID == job.id,
                             onSelect: onJobSelected

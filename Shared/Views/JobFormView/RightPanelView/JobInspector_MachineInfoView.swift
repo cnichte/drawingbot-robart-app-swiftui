@@ -11,8 +11,6 @@ import SwiftUI
 struct JobInspector_MachineInfoView: View {
     @EnvironmentObject var model: SVGInspectorModel
 
-    // TODO: Ich kann auf selectedMachine auch durch currentJob zugreifen: currentJob.selectedMachine - was ist sinnvoller, was funktioniert, was nicht?
-
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             if let machine = model.machine {

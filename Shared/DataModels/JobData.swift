@@ -9,7 +9,7 @@
 import SwiftUI
 import Foundation
 import UniformTypeIdentifiers
- 
+
 extension UTType {
     // Type "de.nichte.plotjob" was expected to be declared and exported in the Info.plist of Robart.app, but it was not found.
     static let plotJob = UTType(exportedAs: "de.nichte.plotjob")
@@ -29,9 +29,9 @@ struct PenConfiguration: Codable, Equatable, Identifiable {
     var id = UUID()
     var penSVGLayerAssignment:PenSVGLayerAssignment
     
-    var penID: UUID? = nil               // <-- neu: ausgewählter Stift
-    var penColorID: UUID? = nil          // <-- neu: Farbe aus dem Stift
-    var penVarianteID: UUID? = nil       // <-- neu: Variante aus dem Stift
+    var penID: UUID? = nil               // <-- neu: ausgewählter Stift aus PenData
+    var penColorID: UUID? = nil          // <-- neu: Farbe aus dem Stift aus PenData
+    var penVarianteID: UUID? = nil       // <-- neu: Variante aus dem Stift aus PenData
     
     var color: String // Ein Stift kann einer Farbe im SVG zugeordnet werden
     var layer: String // oder einer Ebene (Element g) zugeordnet werden.
@@ -47,8 +47,8 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
     var description: String
     
     // paper
-    var paper: PaperData
-    var paperFormatID: UUID? = nil // <-- NEU für Picker-Anbindung
+    var paperData: PaperData
+    var paperDataID: UUID? = nil // für Picker-Anbindung
     var paperOrientation:PaperOrientation = .portrait
     
     // svg
@@ -59,14 +59,16 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
     
     // pen
     var penConfiguration: [PenConfiguration]
+    var penConfigurationIDs: [UUID?] = [] // Für Picker-Anbindung
     // TODO: var pens: PenData
     
     // machine -> cgode, egg
-    var selectedMachine: MachineData
+    var machineData: MachineData
+    var machineDataID: UUID? = nil // für Picker-Anbindung
     var currentCommandIndex: Int
     
     // signatur
-    var signatur: SignatureData?
+    var signaturData: SignatureData?
     
     // job is running
     var isActive: Bool = false
@@ -75,15 +77,21 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
         id: UUID = UUID(),
         name: String,
         description: String = "",
-        paper: PaperData,
+        
         svgFilePath: String = "",
         currentCommandIndex: Int = 0,
         pitch: Double = 0,
         zoom: Double = 1.0,
         origin: CGPoint = .zero,
         penConfiguration: [PenConfiguration] = [],
-        selectedMachine: MachineData,
-        paperFormatID: UUID? = nil,
+        penConfigurationIDs: [UUID?] = [],
+        
+        machineData: MachineData,
+        machineDataID: UUID? = nil,
+        
+        paperData: PaperData,
+        paperDataID: UUID? = nil,
+        
         paperOrientation: PaperOrientation = .portrait,
         signatur: SignatureData? = nil,
         isActive: Bool = false
@@ -91,22 +99,41 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
         self.id = id
         self.name = name
         self.description = description
-        self.paper = paper
+        
         self.svgFilePath = svgFilePath
-        self.currentCommandIndex = currentCommandIndex
         self.pitch = pitch
         self.zoom = zoom
         self.origin = origin
+        
+        self.machineData = machineData
+        self.machineDataID = machineDataID ?? machineData.id
+        
         self.penConfiguration = penConfiguration
-        self.selectedMachine = selectedMachine
-        self.paperFormatID = paperFormatID
+        self.penConfigurationIDs = penConfigurationIDs.isEmpty ? penConfiguration.map { $0.penID } : penConfigurationIDs // NEU: Setze penConfigurationIDs basierend auf penID
+        self.currentCommandIndex = currentCommandIndex
+        
+        self.paperData = paperData
+        self.paperDataID = paperDataID ?? paperData.id // Setze paperFormatID auf paper.id, falls nil
         self.paperOrientation = paperOrientation
-        self.signatur = signatur
+        
+        self.signaturData = signatur
+        
         self.isActive = isActive
+        
+        // Setze penConfigurationIDs basierend auf penConfiguration.penID
+        self.penConfigurationIDs = penConfigurationIDs.isEmpty ? penConfiguration.map { $0.penID } : penConfigurationIDs
+        
+        // Validiere Konsistenz zwischen penConfiguration und penConfigurationIDs
+        if penConfiguration.count != penConfigurationIDs.count {
+            self.penConfigurationIDs = Array(repeating: nil, count: penConfiguration.count)
+            for index in 0..<min(penConfiguration.count, penConfigurationIDs.count) {
+                self.penConfigurationIDs[index] = penConfiguration[index].penID
+            }
+        }
     }
     
     static var `default`: JobData {
-        JobData(id: UUID.force("cfd1401b-af1a-4382-a101-cee156f1cda4"), name: "Kein Job", paper: .default, selectedMachine: .default)
+        JobData(id: UUID.force("cfd1401b-af1a-4382-a101-cee156f1cda4"), name: "Kein Job", machineData: .default, paperData: .default)
     }
     
     static func == (lhs: JobData, rhs: JobData) -> Bool {
@@ -122,6 +149,6 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
     static let customUTI = UTType(exportedAs: "de.nichte.plotjob") // TODO: de.nichte.robart.plotjob
     
     public static var transferRepresentation: some TransferRepresentation {
-         CodableRepresentation(contentType: .plotJob)
-     }
+        CodableRepresentation(contentType: .plotJob)
+    }
 }

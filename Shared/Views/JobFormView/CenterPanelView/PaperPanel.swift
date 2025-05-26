@@ -19,8 +19,8 @@ struct PaperPanel: View {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                let paperWidth = CGFloat(model.job.paper.paperFormat.width)
-                let paperHeight = CGFloat(model.job.paper.paperFormat.height)
+                let paperWidth = CGFloat(model.job.paperData.paperFormat.width)
+                let paperHeight = CGFloat(model.job.paperData.paperFormat.height)
                 let scaleFactor = min(geo.size.width / paperWidth, geo.size.height / paperHeight)
 
                 let paperFrame = CGSize(width: paperWidth * scaleFactor, height: paperHeight * scaleFactor)

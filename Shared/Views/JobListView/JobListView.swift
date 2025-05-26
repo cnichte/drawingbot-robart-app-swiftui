@@ -5,14 +5,21 @@
 //  Created by Carsten Nichte on 11.04.25.
 //
 
-// JobListView.swift
-// Erweiterte JobListView mit Sheet, Projekteditor, Drag & Drop, Kopiermodus, Modifier-Key Support (macOS) und visueller Drop-Rückmeldung
-// JobListView.swift – aktualisiert mit funktionierendem Drag & Drop, Copy-Modus und visuellem Feedback
+// Sheet, Projekteditor, Drag & Drop, Kopiermodus, Modifier-Key Support (macOS) und visueller Drop-Rückmeldung
+// Copy-Modus und visuellem Feedback
+
+// MARK: - TODO
 
 // TODO: Projekte als Favoriten markieren, oder mit Farbe.
 // TODO: Projekte bearbeiten schön machen!
 // TODO: Playhead: Job starten, und anhalten.
-// TODO: Delete mit Warnung und okay abfrage.
+// TODO: Delete mit Warnung und okay Abfrage.
+
+// TODO: Delete fehlt. Mit Warnung und Okay Abfrage.
+// TODO: Job Anlegen Button fehlt auf iPhone
+
+// TODO: In Projekten aktualisiert name & description nicht. JobFormView wird mit alten Werten geöffnet!
+// Jobs ohne Projekt funktioniert einwandfrei.
 
 // TODO: Prüfen:
 // Hover-Effekt -Card vergrössert sich leicht + bekommt Schatten. (abba nich in Liste?)
@@ -21,6 +28,8 @@
 // Touch-Optimierung: Auf iOS gibts einfach nur Tap/Highlight.
 
 // TODO: Mini-Animation bauen, wenn der Picker wechselt (z.B. ViewMode Grid → List mit leichtem Fade/Slide)?
+
+// MARK: - JobListView
 
 // JobListView.swift
 import SwiftUI
@@ -36,10 +45,12 @@ struct JobListView: View {
     @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormatData>
 
     @State private var selectedJob: JobData? = nil
+    
     @State private var isCopyMode = false
     @State private var searchText = ""
     @State private var showProjectManager = false
     @State private var viewMode: JobListViewMode = JobListViewMode.allCases.first ?? .list
+    @State private var dummyRefresh: Int = 0
 
     var body: some View {
         NavigationStack {
@@ -48,20 +59,22 @@ struct JobListView: View {
                     menuSection
                     unassignedSection
                     projectSections
-                    
                 }
                 .padding()
             }
-            // .navigationTitle("Jobs")
             .navigationDestination(item: $selectedJob) { job in
                 JobFormView(
                     currentJob: binding(for: job),
-                    selectedJob: $selectedJob
+                    selectedJob: $selectedJob,
+                    svgInspectorModel: SVGInspectorModel(job: job, machine: job.machineData)
                 )
                 .environmentObject(jobStore)
                 .environmentObject(paperStore)
                 .environmentObject(paperFormatsStore)
             }
+        }
+        .onReceive(jobStore.$refreshTrigger) { _ in
+            dummyRefresh += 1 // ⛏️ löst Rebuild aus
         }
     }
 
@@ -73,28 +86,25 @@ struct JobListView: View {
             systemImage: "document.fill",
             toolbar: {
                 HStack(spacing: 12) {
-                    
-                    CustomToolbarButton(title: "", icon: "document.badge.plus.fill", style: .secondary, role: nil,hasBorder:false, iconSize: .large ) {
+                    CustomToolbarButton(title: "", icon: "document.badge.plus.fill", style: .secondary, role: nil, hasBorder: false, iconSize: .large) {
                         Task {
-                            let job = JobData(name: "Neuer Job", paper: .default, selectedMachine: .default)
+                            let job = JobData(name: "Neuer Job", machineData: .default, paperData: .default)
                             let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)
                             selectedJob = newJob
                         }
                     }
-                    
-                    CustomToolbarButton(title: "", icon: "folder.badge.plus", style: .secondary, role: nil,hasBorder:false, iconSize: .large ) {
+
+                    CustomToolbarButton(title: "", icon: "folder.badge.plus", style: .secondary, role: nil, hasBorder: false, iconSize: .large) {
                         showProjectManager = true
                     }
                     .sheet(isPresented: $showProjectManager) {
                         ProjectManagerView()
                     }
-                    
-                    // Drag and Drop move versus copy
+
                     Toggle("D&D Copy", isOn: $isCopyMode)
                         .toggleStyle(.switch)
                         .labelsHidden()
-                    
-                
+
                     CustomToolbarPicker(
                         title: "",
                         icon: nil,
@@ -103,7 +113,7 @@ struct JobListView: View {
                         iconSize: .medium,
                         selection: $viewMode
                     ) {
-                        ForEach(JobListViewMode.allCases, id: \.self) { mode in
+                        ForEach(JobListViewMode.allCases, id: \.self ) { mode in
                             Image(systemName: mode.systemImage)
                                 .tag(mode)
                         }
@@ -123,14 +133,13 @@ struct JobListView: View {
         let assignedIDs = Set(projectStore.items.flatMap { $0.jobs.map { $0.id } })
         let unassignedJobs = jobStore.items.filter { !assignedIDs.contains($0.id) }
             .filter {
-                searchText.isEmpty ||
-                $0.name.localizedCaseInsensitiveContains(searchText) ||
-                $0.description.localizedCaseInsensitiveContains(searchText)
+                searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText) || $0.description.localizedCaseInsensitiveContains(searchText)
             }
 
         return JobListUnassignedSectionView(
             title: "Jobs ohne Projekt",
-            jobs: unassignedJobs,
+            jobs: .constant(unassignedJobs),
+            selectedJobID: selectedJob?.id,
             viewMode: viewMode,
             thumbnailProvider: { thumbnail(for: $0) },
             onDrop: { droppedItems, _ in handleUnassign(jobs: droppedItems) },
@@ -155,9 +164,10 @@ struct JobListView: View {
             })
         }
 
-        return ForEach(filteredProjects) { project in
+        return ForEach($projectStore.items) { $project in
             JobListProjectSectionView(
-                project: project,
+                project: $project,
+                selectedJobID: selectedJob?.id,
                 viewMode: viewMode,
                 thumbnailProvider: { thumbnail(for: $0) },
                 onDrop: { droppedItems, _ in handleDrop(into: project, with: droppedItems) },

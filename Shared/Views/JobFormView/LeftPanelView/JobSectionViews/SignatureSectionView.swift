@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SignatureSectionView: View {
     @EnvironmentObject var model: SVGInspectorModel
-    @EnvironmentObject var store: GenericStore<JobData>
+    @EnvironmentObject var assetStores: AssetStores // Ändere von store zu assetStores für Konsistenz
 
     @State private var showingFileImporter = false
     @State private var signatureFileName: String? = nil
@@ -18,7 +18,7 @@ struct SignatureSectionView: View {
     var body: some View {
         CollapsibleSection(title: "Signatur", systemImage: "signature") {
             VStack(alignment: .leading, spacing: 10) {
-                if let name = model.job.signatur?.name {
+                if let name = model.jobBox.signatur?.name {
                     HStack {
                         Text("Signatur: \(name)")
                             .font(.subheadline)
@@ -39,28 +39,73 @@ struct SignatureSectionView: View {
 
                 VStack(alignment: .leading) {
                     Text("Signatur-Position:")
-                    Picker("Position", selection: model.bindingSignature(
-                        \SignatureData.signatureLocation,
-                        defaultValue: { SignatureData(name: "", svgFilePath: "", signatureLocation: .bottomRight, abstandHorizontal: 0, abstandVertical: 0) }
+                    Picker("Position", selection: Binding(
+                        get: { model.jobBox.signatur?.signatureLocation ?? .bottomRight },
+                        set: { newValue in
+                            appLog(.info, "Binding set signatureLocation to: \(newValue.rawValue)")
+                            if model.jobBox.signatur == nil {
+                                model.jobBox.signatur = SignatureData(
+                                    name: "",
+                                    svgFilePath: "",
+                                    signatureLocation: newValue,
+                                    abstandHorizontal: 0,
+                                    abstandVertical: 0
+                                )
+                            } else {
+                                model.jobBox.signatur?.signatureLocation = newValue
+                            }
+                            model.syncJobBoxBack()
+                        }
                     )) {
                         ForEach(SignatureLocation.allCases, id: \.self) { location in
                             Text(location.rawValue).tag(location)
                         }
                     }
-                    .pickerStyle(MenuPickerStyle())
+                    .pickerStyle(.menu)
+                    .onChange(of: model.jobBox.signatur?.signatureLocation) { _, newValue in
+                        appLog(.info, "Picker signatureLocation changed to: \(newValue?.rawValue ?? "nil")")
+                    }
 
                     VStack(alignment: .leading) {
                         Text("Horizontaler Abstand:")
-                        TextField("Abstand", value: model.bindingSignature(
-                            \SignatureData.abstandHorizontal,
-                            defaultValue: { SignatureData(name: "", svgFilePath: "", signatureLocation: .bottomRight, abstandHorizontal: 0, abstandVertical: 0) }
+                        TextField("Abstand", value: Binding(
+                            get: { model.jobBox.signatur?.abstandHorizontal ?? 0 },
+                            set: { newValue in
+                                appLog(.info, "Binding set abstandHorizontal to: \(newValue)")
+                                if model.jobBox.signatur == nil {
+                                    model.jobBox.signatur = SignatureData(
+                                        name: "",
+                                        svgFilePath: "",
+                                        signatureLocation: .bottomRight,
+                                        abstandHorizontal: newValue,
+                                        abstandVertical: 0
+                                    )
+                                } else {
+                                    model.jobBox.signatur?.abstandHorizontal = newValue
+                                }
+                                model.syncJobBoxBack()
+                            }
                         ), formatter: NumberFormatter())
                         .crossPlatformDecimalKeyboard()
 
                         Text("Vertikaler Abstand:")
-                        TextField("Abstand", value: model.bindingSignature(
-                            \SignatureData.abstandVertical,
-                            defaultValue: { SignatureData(name: "", svgFilePath: "", signatureLocation: .bottomRight, abstandHorizontal: 0, abstandVertical: 0) }
+                        TextField("Abstand", value: Binding(
+                            get: { model.jobBox.signatur?.abstandVertical ?? 0 },
+                            set: { newValue in
+                                appLog(.info, "Binding set abstandVertical to: \(newValue)")
+                                if model.jobBox.signatur == nil {
+                                    model.jobBox.signatur = SignatureData(
+                                        name: "",
+                                        svgFilePath: "",
+                                        signatureLocation: .bottomRight,
+                                        abstandHorizontal: 0,
+                                        abstandVertical: newValue
+                                    )
+                                } else {
+                                    model.jobBox.signatur?.abstandVertical = newValue
+                                }
+                                model.syncJobBoxBack()
+                            }
                         ), formatter: NumberFormatter())
                         .crossPlatformDecimalKeyboard()
                     }
@@ -75,6 +120,9 @@ struct SignatureSectionView: View {
         ) { result in
             handleFileImport(result: result)
         }
+        .onAppear {
+            appLog(.info, "SignatureSectionView appeared, current signatur: \(model.jobBox.signatur?.name ?? "nil"), location: \(model.jobBox.signatur?.signatureLocation.rawValue ?? "nil")")
+        }
     }
 
     private func handleFileImport(result: Result<[URL], Error>) {
@@ -87,23 +135,25 @@ struct SignatureSectionView: View {
                     let destinationURL = try copyToSignatureFolder(sourceURL: selectedURL)
                     signatureFileName = destinationURL.lastPathComponent
 
-                    model.job.signatur = SignatureData(
+                    model.jobBox.signatur = SignatureData(
                         name: destinationURL.lastPathComponent,
                         svgFilePath: destinationURL.relativePath,
                         signatureLocation: .bottomRight,
                         abstandHorizontal: 0.0,
                         abstandVertical: 0.0
                     )
+                    model.syncJobBoxBack()
 
                     Task {
-                        await store.save(item: model.job, fileName: model.job.id.uuidString)
+                        await model.save(using: assetStores.plotJobStore)
+                        appLog(.info, "Saved signature: \(destinationURL.lastPathComponent)")
                     }
                 } catch {
-                    appLog(.info, "❌ Fehler beim Speichern der Signatur: \(error.localizedDescription)")
+                    appLog(.error, "❌ Fehler beim Speichern der Signatur: \(error.localizedDescription)")
                 }
             }
         case .failure(let error):
-            appLog(.info, "❌ Fehler beim Importieren der Signatur: \(error.localizedDescription)")
+            appLog(.error, "❌ Fehler beim Importieren der Signatur: \(error.localizedDescription)")
         }
     }
 
@@ -132,7 +182,7 @@ struct SignatureSectionView: View {
     }
 
     private func deleteCurrentSignature() {
-        if let fileName = model.job.signatur?.name {
+        if let fileName = model.jobBox.signatur?.name {
             let fileManager = FileManager.default
             let signatureURL = try? fileManager.url(
                 for: .documentDirectory,
@@ -143,11 +193,13 @@ struct SignatureSectionView: View {
 
             if let url = signatureURL, fileManager.fileExists(atPath: url.path) {
                 try? fileManager.removeItem(at: url)
-                model.job.signatur = nil
+                model.jobBox.signatur = nil
+                model.syncJobBoxBack()
                 signatureFileName = nil
 
                 Task {
-                    await store.save(item: model.job, fileName: model.job.id.uuidString)
+                    await model.save(using: assetStores.plotJobStore)
+                    appLog(.info, "Deleted signature: \(fileName)")
                 }
             }
         }

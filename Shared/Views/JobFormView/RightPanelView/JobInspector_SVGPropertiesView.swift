@@ -107,11 +107,24 @@ struct JobInspector_SVGPropertiesView: View {
             }
         }
         .onAppear {
-            if model.layers.isEmpty {
+            appLog(.info, "JobInspector_SVGPropertiesView appeared, layers: \(model.layers.count), machine: \(model.machine?.name ?? "nil")")
+            if model.layers.isEmpty, !model.job.svgFilePath.isEmpty {
+                Task {
+                    appLog(.info, "Initial SVG parsing triggered")
+                    await model.loadAndParseSVG()
+                }
+            }
+        }
+        .onChange(of: model.machine) { _, newMachine in
+            appLog(.info, "Machine changed to: \(newMachine?.name ?? "nil"), triggering SVG parse")
+            if !model.job.svgFilePath.isEmpty {
                 Task {
                     await model.loadAndParseSVG()
                 }
             }
+        }
+        .onChange(of: model.layers) { _, newLayers in
+            appLog(.info, "Layers updated, count: \(newLayers.count)")
         }
     }
 }

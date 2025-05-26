@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct JobCardView: View {
-    let job: JobData
+    @Binding var job: JobData
     let thumbnail: Image?
     let isSelected: Bool
     let onSelect: (JobData) -> Void

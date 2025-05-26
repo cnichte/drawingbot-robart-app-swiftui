@@ -208,9 +208,10 @@ extension GenericStore where T.ID == UUID {
 }
 
 extension GenericStore {
-    func replace(_ item: T) {
-        if let index = items.firstIndex(where: { $0.id == item.id }) {
-            items[index] = item
+    func replace(_ updated: T) {
+        if let index = items.firstIndex(where: { $0.id == updated.id }) {
+            items[index] = updated
+            refreshTrigger += 1
         }
     }
 }
