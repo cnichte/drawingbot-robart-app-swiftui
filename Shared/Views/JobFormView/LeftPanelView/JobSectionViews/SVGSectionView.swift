@@ -65,7 +65,16 @@ struct SVGSectionView: View {
         guard !model.job.svgFilePath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return nil
         }
-
+        
+        let docs = try! FileManager.default.url(
+                for: .documentDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: false)
+            let full = docs.appendingPathComponent(model.job.svgFilePath)
+            // appLog(.info, "🔍 resolvedSVGURL → \(full.path), exists: \(FileManager.default.fileExists(atPath: full.path))")
+            return full
+/*
         do {
             let documentsURL = try FileManager.default.url(
                 for: .documentDirectory,
@@ -78,6 +87,7 @@ struct SVGSectionView: View {
             appLog(.info, "❌ Fehler beim Ermitteln des Documents-Pfads: \(error)")
             return nil
         }
+*/
     }
 
     private func handleFileImport(result: Result<[URL], Error>) {
@@ -96,11 +106,27 @@ struct SVGSectionView: View {
                         
                         // original
                         let relativePath = "jobs-data/\(model.job.id.uuidString)/svg/\(destinationURL.lastPathComponent)"
+                        // model.job.svgFilePath = relativePath
+                        
+                        // 1a) Update im reinen JobData
                         model.job.svgFilePath = relativePath
+                        // 1b) Update auch im JobBox
+                        model.jobBox.svgFilePath = relativePath
+                        
                         svgFileName = destinationURL.lastPathComponent
+                        
+                        // 1c) Jetzt beide zusammen in sync zurückschreiben
+                        model.syncJobBoxBack()
 
                         Task {
                             await store.save(item: model.job, fileName: model.job.id.uuidString)
+                            // 2) aktualisiere store.items direkt,
+                            //    damit beim nächsten "onReceive" wirklich dein neuer Pfad drinsteht
+                            DispatchQueue.main.async {
+                                if let idx = store.items.firstIndex(where: { $0.id == model.job.id }) {
+                                    store.items[idx] = model.job
+                                }
+                            }
                         }
                     } catch {
                         appLog(.info, "❌ Fehler beim Kopieren der SVG:", error.localizedDescription)

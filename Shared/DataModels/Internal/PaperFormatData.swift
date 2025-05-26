@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 24.04.25.
 //
 
+// PaperFormatData.swift
 import Foundation
 /*
  Die Formate der A-Reihe sind die Grundlage aller weiteren Papiernormen. Man spricht dabei auch von den beschnittenen Formaten:

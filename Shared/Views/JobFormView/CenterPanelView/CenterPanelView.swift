@@ -9,16 +9,12 @@
 import SwiftUI
 
 struct CenterPanelView: View {
-    @Binding var zoom: Double
-    @Binding var pitch: Double
-    @Binding var origin: CGPoint
-    // @Binding var job: JobData
     @Binding var previewMode: JobFormView.PreviewMode
     @Binding var isSidebarVisible: Bool
     @Binding var isInspectorVisible: Bool
 
     var body: some View {
-        PaperPanel(zoom: $zoom, pitch: $pitch, origin: $origin)
+        PaperPanel()
             .background(ColorHelper.backgroundColor)
             .toolbar {
                 ToolbarItem(placement: .automatic) {
@@ -29,11 +25,13 @@ struct CenterPanelView: View {
                     }
                 }
                 ToolbarItem(placement: .automatic) {
+                    // LeftPanelView
                     CustomToolbarButton(title: "", icon: "sidebar.left", style: .secondary, role: nil,hasBorder:false, iconSize: .large ) {
                         isSidebarVisible.toggle()
                     }
                 }
                 ToolbarItem(placement: .automatic) {
+                    // RightPanelView
                     CustomToolbarButton(title: "", icon: "sidebar.left", style: .secondary, role: nil,hasBorder:false, iconSize: .large ) {
                         isInspectorVisible.toggle()
                     }

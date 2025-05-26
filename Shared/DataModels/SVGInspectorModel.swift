@@ -5,7 +5,7 @@
 //  Created by Carsten Nichte on 22.05.25.
 //
 
-// SVGInspectorModel.swift - Korrigierte Version ohne Endlosschleife
+// SVGInspectorModel.swift
 import Foundation
 import SwiftUI
 

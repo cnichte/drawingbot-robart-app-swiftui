@@ -12,20 +12,14 @@ import SwiftUI
 struct MacJobPreviewLayoutView: View {
     @EnvironmentObject var model: SVGInspectorModel // TODO: NEW
     
-    // @Binding var currentJob: JobData
     @Binding var svgFileName: String?
     @Binding var showingFileImporter: Bool
-    // @Binding var selectedMachine: MachineData?
-
-    @Binding var zoom: Double
-    @Binding var pitch: Double
-    @Binding var origin: CGPoint
     @Binding var previewMode: JobFormView.PreviewMode
 
     @Binding var isSidebarVisible: Bool
     @Binding var isInspectorVisible: Bool
     @Binding var inspectorWidth: CGFloat
-
+    
     @EnvironmentObject var plotJobStore: GenericStore<JobData>
     @EnvironmentObject var paperStore: GenericStore<PaperData>
     @EnvironmentObject var paperFormatsStore: GenericStore<PaperFormatData>
@@ -49,10 +43,6 @@ struct MacJobPreviewLayoutView: View {
             },
             centerView: {
                 CenterPanelView(
-                    zoom: $zoom,
-                    pitch: $pitch,
-                    origin: $origin,
-                    // job: $currentJob,
                     previewMode: $previewMode,
                     
                     isSidebarVisible: $isSidebarVisible,

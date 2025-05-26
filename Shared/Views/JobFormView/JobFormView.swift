@@ -82,9 +82,6 @@ struct JobFormView: View {
             MacJobPreviewLayoutView(
                 svgFileName: $svgFileName,
                 showingFileImporter: $showingFileImporter,
-                zoom: $zoom,
-                pitch: $pitch,
-                origin: $origin,
                 previewMode: $previewMode,
                 isSidebarVisible: $isSidebarVisible,
                 isInspectorVisible: $isInspectorVisible,

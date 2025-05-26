@@ -28,10 +28,6 @@ struct iPhoneJobPreviewLayout: View {
     var body: some View {
         VStack {
             CenterPanelView(
-                zoom: $zoom,
-                pitch: $pitch,
-                origin: $origin,
-                job: $currentJob,
                 previewMode: $previewMode,
                 isSidebarVisible: .constant(false),
                 isInspectorVisible: .constant(false)
@@ -47,17 +43,12 @@ struct iPhoneJobPreviewLayout: View {
         }
         .sheet(isPresented: $showingSettings) {
             LeftPanelView(
-                currentJob: $currentJob,
                 svgFileName: $svgFileName,
                 showingFileImporter: $showingFileImporter,
-                selectedMachine: $selectedMachine
             )
         }
         .sheet(isPresented: $showingInspector) {
-            RightPanelView(
-                currentJob: $currentJob,
-                selectedMachine: $selectedMachine
-            )
+            RightPanelView()
         }
     }
 }
