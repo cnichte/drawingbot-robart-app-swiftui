@@ -5,45 +5,53 @@
 //  Created by Carsten Nichte on 01.05.25.
 //
 
-// JobInspector_SVGPropertiesView.swift
+// JobInspector_SVGPropertiesView.swift - Vereinfachte Version
 import SwiftUI
 
 struct JobInspector_SVGPropertiesView: View {
     @EnvironmentObject var model: SVGInspectorModel
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("SVG-Ebenen").font(.headline)
-
+                
                 if model.layers.isEmpty {
                     Text("Keine Ebenen gefunden").foregroundColor(.secondary)
                 } else {
-                    List(model.layers, id: \.id, selection: $model.selectedLayer) { layer in
-                        HStack {
-                            Text(layer.name)
-                            Spacer()
+                    ScrollView {
+                        VStack(spacing: 4) {
+                            // Keine List, weil sonst keine Aktualisierung!
+                            // Siehe auch parent: RightPanelView
+                            ForEach(model.layers, id: \.id) { layer in
+                                HStack {
+                                    Text(layer.name)
+                                    Spacer()
+                                }
+                                .contentShape(Rectangle())
+                                .onTapGesture { model.selectedLayer = layer }
+                                .background(
+                                    model.selectedLayer == layer
+                                    ? Color.accentColor.opacity(0.2)
+                                    : Color.clear
+                                )
+                                .padding(.vertical, 2)
+                            }
                         }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            model.selectedLayer = layer
-                        }
-                        .background(
-                            (model.selectedLayer == layer ? Color.accentColor.opacity(0.2) : Color.clear)
-                        )
+                        .padding(.horizontal, 4)
                     }
                     .frame(height: 120)
-                    #if os(macOS)
+#if os(macOS)
                     .listStyle(.inset)
-                    #endif
+#endif
                 }
             }
-
+            
             Divider()
-
+            
             VStack(alignment: .leading, spacing: 8) {
                 Text("SVG-Ebenen-Elemente").font(.headline)
-
+                
                 if model.elementsInSelectedLayer.isEmpty {
                     Text("Keine Elemente in dieser Ebene").foregroundColor(.secondary)
                 } else {
@@ -61,17 +69,17 @@ struct JobInspector_SVGPropertiesView: View {
                         )
                     }
                     .frame(height: 120)
-                    #if os(macOS)
+#if os(macOS)
                     .listStyle(.inset)
-                    #endif
+#endif
                 }
             }
-
+            
             Divider()
-
+            
             VStack(alignment: .leading, spacing: 8) {
                 Text("SVG-Properties").font(.headline)
-
+                
                 if model.selectedProperties.isEmpty {
                     Text("Keine Properties verfügbar").foregroundColor(.secondary)
                 } else {
@@ -84,12 +92,12 @@ struct JobInspector_SVGPropertiesView: View {
                     }
                 }
             }
-
+            
             Divider()
-
+            
             VStack(alignment: .leading, spacing: 8) {
                 Text("G-Code für Auswahl").font(.headline)
-
+                
                 if let _ = model.selectedElement {
                     ScrollView {
                         Text(model.gcodeForSelectedElement())
@@ -107,24 +115,20 @@ struct JobInspector_SVGPropertiesView: View {
             }
         }
         .onAppear {
-            appLog(.info, "JobInspector_SVGPropertiesView appeared, layers: \(model.layers.count), machine: \(model.machine?.name ?? "nil")")
-            if model.layers.isEmpty, !model.job.svgFilePath.isEmpty {
-                Task {
+            appLog(.info, "JobInspector_SVGPropertiesView appeared, layers: \(model.layers.count)")
+            // Nur parsen wenn noch keine Layers vorhanden und SVG-Pfad existiert
+            if model.layers.isEmpty && !model.job.svgFilePath.isEmpty {
+                Task { @MainActor in
                     appLog(.info, "Initial SVG parsing triggered")
-                    await model.loadAndParseSVG()
-                }
-            }
-        }
-        .onChange(of: model.machine) { _, newMachine in
-            appLog(.info, "Machine changed to: \(newMachine?.name ?? "nil"), triggering SVG parse")
-            if !model.job.svgFilePath.isEmpty {
-                Task {
                     await model.loadAndParseSVG()
                 }
             }
         }
         .onChange(of: model.layers) { _, newLayers in
             appLog(.info, "Layers updated, count: \(newLayers.count)")
+        }
+        .onChange(of: model.allElements) { _, newElements in
+            appLog(.info, "AllElements updated, count: \(newElements.count)")
         }
     }
 }

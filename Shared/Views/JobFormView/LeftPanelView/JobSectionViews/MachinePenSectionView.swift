@@ -24,6 +24,7 @@ struct MachinePenSectionView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(0..<penSlots, id: \.self) { index in
                         PenSlotView(
+                            slotIndex: index,
                             penID: Binding(
                                 get: { index < model.jobBox.penConfigurationIDs.count ? model.jobBox.penConfigurationIDs[index] : nil },
                                 set: { newID in
@@ -215,6 +216,7 @@ struct MachinePenSectionView: View {
 
 // MachinePenSectionView.swift (PenSlotView)
 struct PenSlotView: View {
+    let slotIndex: Int
     @Binding var penID: UUID?
     @Binding var penColorID: UUID?
     @Binding var penVarianteID: UUID?
@@ -233,7 +235,7 @@ struct PenSlotView: View {
         let selectedVariante = availableVarianten.first(where: { $0.id == penVarianteID })
 
         VStack(alignment: .leading, spacing: 8) {
-            Text("Slot \(UUID().uuidString.prefix(4))").font(.headline)
+            Text("Slot \(slotIndex+1)").font(.headline)
 
             Picker("Stift", selection: $penID) {
                 Text("– Kein Stift –").tag(nil as UUID?)

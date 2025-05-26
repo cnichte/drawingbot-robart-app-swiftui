@@ -5,7 +5,7 @@
 //  Created by Carsten Nichte on 26.04.25.
 //
 
-// MachineSectionView.swift
+// MachineSectionView.swift - Verbesserte Version
 import SwiftUI
 
 struct MachineSectionView: View {
@@ -15,6 +15,29 @@ struct MachineSectionView: View {
     var body: some View {
         CollapsibleSection(title: "Maschine", systemImage: "gearshape.2", toolbar: { EmptyView() }) {
             VStack(alignment: .leading) {
+                Picker("Maschine auswählen",
+                       selection: Binding<UUID?>(
+                         get: { model.machine?.id },
+                         set: { newID in
+                             let sel: MachineData?
+                             if let id = newID,
+                                let m = assetStores.machineStore.items.first(where: { $0.id == id }) {
+                               sel = m
+                             } else {
+                               sel = .default
+                             }
+                             model.updateMachine(sel)
+                         }
+                       )
+                ) {
+                  Text("– Keine Maschine –").tag(nil as UUID?)
+                  ForEach(assetStores.machineStore.items) { machine in
+                    Text(machine.name).tag(Optional(machine.id))
+                  }
+                }
+                .pickerStyle(.menu)
+                // KEIN onChange mehr nötig!
+/*
                 Picker("Maschine auswählen", selection: $model.jobBox.machineDataID) {
                     Text("– Keine Maschine –").tag(Optional(MachineData.default.id) as UUID?)
                     ForEach(assetStores.machineStore.items) { machine in
@@ -24,35 +47,31 @@ struct MachineSectionView: View {
                 .pickerStyle(.menu)
                 .onChange(of: model.jobBox.machineDataID) { _, newID in
                     appLog(.info, "Picker changed to machineID: \(newID?.uuidString ?? "nil")")
+                    
+                    let selectedMachine: MachineData?
                     if let id = newID {
                         if id == MachineData.default.id {
-                            model.jobBox.machineData = .default
-                            model.machine = .default
-                        } else if let selectedMachine = assetStores.machineStore.items.first(where: { $0.id == id }) {
-                            model.jobBox.machineData = selectedMachine
-                            model.machine = selectedMachine
+                            selectedMachine = .default
+                        } else {
+                            selectedMachine = assetStores.machineStore.items.first(where: { $0.id == id }) ?? .default
                         }
                     } else {
-                        model.jobBox.machineData = .default
-                        model.machine = .default
+                        selectedMachine = .default
                     }
-                    model.syncJobBoxBack() // Synchronisiere Änderungen zurück in job
-                    // Neu: Parse SVG mit der neuen Maschine
-                    Task {
-                        appLog(.info, "Loading and parsing SVG for new machine: \(model.machine?.name ?? "default")")
-                        await model.loadAndParseSVG()
-                    }
+                    
+                    // Verwende die zentrale updateMachine Methode
+                    model.updateMachine(selectedMachine)
                 }
-                
+*/
                 // Zeige die Details nur, wenn eine Maschine ausgewählt wurde
-                if model.jobBox.machineDataID != MachineData.default.id {
+                if let machine = model.machine, machine.id != MachineData.default.id {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Name: \(model.jobBox.machineData.name)")
-                        Text("Typ: \(model.jobBox.machineData.typ.rawValue)")
-                        Text("Größe: \(model.jobBox.machineData.size.x) x \(model.jobBox.machineData.size.y) mm")
-                        Text("Protokoll: \(model.jobBox.machineData.commandProtocol)")
-                        Text("Verbindung: \(model.jobBox.machineData.connection.connectionID?.uuidString ?? "Keine")")
-                        Text("Verbunden: \(model.jobBox.machineData.isConnected ? "Ja" : "Nein")")
+                        Text("Name: \(machine.name)")
+                        Text("Typ: \(machine.typ.rawValue)")
+                        Text("Größe: \(machine.size.x) x \(machine.size.y) mm")
+                        Text("Protokoll: \(machine.commandProtocol)")
+                        Text("Verbindung: \(machine.connection.connectionID?.uuidString ?? "Keine")")
+                        Text("Verbunden: \(machine.isConnected ? "Ja" : "Nein")")
                     }
                     .padding(.top, 10)
                 }
@@ -64,8 +83,7 @@ struct MachineSectionView: View {
                         .textFieldStyle(.roundedBorder)
                 }
                 .onChange(of: model.jobBox.origin.x) {
-                    // model.syncJobBoxBack()
-                    // Task {  await model.save(using: assetStores.plotJobStore) }
+                    model.syncJobBoxBack()
                 }
                 
                 HStack {
@@ -75,8 +93,7 @@ struct MachineSectionView: View {
                         .textFieldStyle(.roundedBorder)
                 }
                 .onChange(of: model.jobBox.origin.y) {
-                    // model.syncJobBoxBack()
-                    // Task {  await model.save(using: assetStores.plotJobStore) }
+                    model.syncJobBoxBack()
                 }
             }
         }

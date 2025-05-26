@@ -48,6 +48,7 @@ struct RightPanelView: View {
                 .padding(.horizontal, 8)
                 .padding(.top, 8)
 
+// SwiftUI hasst verschachtelte ScrollViews ↔ List, das führt oft dazu, dass die List ihre Höhe falsch berechnet und schlichtweg nicht rendered, obwohl die Daten da sind.
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     switch selectedTab {
