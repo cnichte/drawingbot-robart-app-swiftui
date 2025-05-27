@@ -27,7 +27,7 @@ struct SVGSectionView: View {
                             .font(.subheadline)
                         Spacer()
                         Button {
-                            deleteCurrentSVG() 
+                            deleteCurrentSVG()
                         } label: {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.red)
@@ -38,9 +38,11 @@ struct SVGSectionView: View {
 
                 if let url = resolvedSVGURL() {
                     if FileManager.default.fileExists(atPath: url.path) {
-                        // SVGView(contentsOf: url).frame(maxWidth: .infinity, maxHeight: 200).clipped()
+                        // mach nix
                     } else {
                         if let name = svgFileName, !name.isEmpty {
+                            // Der Fehler tritt hier auf, obwohl hier gar nix gemacht wird.
+                            // Das müssetn wir mal genauer debuggen
                             Text("SVG-Datei konnte nicht geladen werden.")
                                 .foregroundColor(.red)
                         }
@@ -62,32 +64,29 @@ struct SVGSectionView: View {
     }
 
     private func resolvedSVGURL() -> URL? {
-        guard !model.job.svgFilePath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return nil
-        }
         
-        let docs = try! FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: false)
-            let full = docs.appendingPathComponent(model.job.svgFilePath)
-            // appLog(.info, "🔍 resolvedSVGURL → \(full.path), exists: \(FileManager.default.fileExists(atPath: full.path))")
-            return full
-/*
-        do {
-            let documentsURL = try FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: false
-            )
-            return documentsURL.appendingPathComponent(model.job.svgFilePath)
-        } catch {
-            appLog(.info, "❌ Fehler beim Ermitteln des Documents-Pfads: \(error)")
-            return nil
-        }
-*/
+        // Sobald svgFileName gesetzt ist, baue daraus den vollständigen Pfad
+        guard
+            let name = svgFileName,
+            !name.isEmpty
+        else { return nil }
+        
+        // Basis: ~/Documents
+        let docs = FileManager.default
+            .urls(for: .documentDirectory, in: .userDomainMask)
+            .first!
+
+        // ~/Documents/jobs-data/<JobID>/svg
+        let svgFolder = docs
+            .appendingPathComponent("jobs-data")
+            .appendingPathComponent(model.job.id.uuidString)
+            .appendingPathComponent("svg")
+        
+        // ~/Documents/jobs-data/<JobID>/svg/<Dateiname>
+        let fullURL = svgFolder.appendingPathComponent(name)
+
+        appLog(.info, "🔍 Resolved SVG → \(fullURL.path), exists: \(FileManager.default.fileExists(atPath: fullURL.path))")
+        return fullURL
     }
 
     private func handleFileImport(result: Result<[URL], Error>) {
@@ -106,18 +105,22 @@ struct SVGSectionView: View {
                         
                         // original
                         let relativePath = "jobs-data/\(model.job.id.uuidString)/svg/\(destinationURL.lastPathComponent)"
-                        // model.job.svgFilePath = relativePath
                         
-                        // 1a) Update im reinen JobData
-                        model.job.svgFilePath = relativePath
-                        // 1b) Update auch im JobBox
+                        // 1) Update in JobBox
                         model.jobBox.svgFilePath = relativePath
-                        
+                        // 2) UI-State aktualisieren
                         svgFileName = destinationURL.lastPathComponent
-                        
-                        // 1c) Jetzt beide zusammen in sync zurückschreiben
-                        model.syncJobBoxBack()
-
+ /*
+                        Task {
+                            await model.save(using: store)
+                            DispatchQueue.main.async {
+                                if let idx = store.items.firstIndex(where: { $0.id == model.job.id }) {
+                                    store.items[idx] = model.job
+                                }
+                            }
+                        }
+*/
+/*
                         Task {
                             await store.save(item: model.job, fileName: model.job.id.uuidString)
                             // 2) aktualisiere store.items direkt,
@@ -128,6 +131,7 @@ struct SVGSectionView: View {
                                 }
                             }
                         }
+*/
                     } catch {
                         appLog(.info, "❌ Fehler beim Kopieren der SVG:", error.localizedDescription)
                     }

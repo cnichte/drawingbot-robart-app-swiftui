@@ -9,8 +9,22 @@
 import SwiftUI
 import SVGView
 
+private class RulerFormat{
+    
+    public var lenght:CGFloat
+    public var width:CGFloat
+    public var color:Color
+    
+    init(length:CGFloat, width:CGFloat, color:Color){
+        self.lenght = length
+        self.width = width
+        self.color = color
+    }
+}
+
 struct PaperPanel: View {
     @EnvironmentObject var model: SVGInspectorModel
+    @State private var isLoading: Bool = false
 
     var body: some View {
         GeometryReader { geo in
@@ -25,15 +39,29 @@ struct PaperPanel: View {
                     : model.job.paperData.paperFormat.height
 
                 let paperSize    = CGSize(width: CGFloat(widthUnits), height: CGFloat(heightUnits))
-                let scaleFactor  = min(geo.size.width / paperSize.width,
-                                       geo.size.height / paperSize.height)
-                let paperFrame   = CGSize(width: paperSize.width * scaleFactor,
-                                          height: paperSize.height * scaleFactor)
-                let unitsLabel   = "mm" // TODO: model.job.paperData.unitsData?.name ?? "mm"
-
-                // ruler configuration
+                // Account for panel padding and top ruler
                 let rulerThickness: CGFloat = 20
                 let rulerGap: CGFloat = 5
+                let horizontalPadding: CGFloat = 20 + 20  // leading + trailing
+                let verticalPadding: CGFloat = 20 + 40 + rulerThickness + rulerGap // top + bottom + top ruler + gap
+                let availableWidth = geo.size.width - horizontalPadding
+                let availableHeight = geo.size.height - verticalPadding
+
+                let scaleFactor = min(availableWidth / paperSize.width,
+                                       availableHeight / paperSize.height)
+                let paperFrame   = CGSize(width: paperSize.width * scaleFactor,
+                                          height: paperSize.height * scaleFactor)
+                
+                let unitsLabel  = model.job.paperData.paperFormat.unit.name
+                let unitsFactor = model.job.paperData.paperFormat.unit.factor
+                
+                // RulerFormat
+                let shortRF:RulerFormat = RulerFormat(length: 5.0, width: 0.5, color: .white);
+                let longRF:RulerFormat  = RulerFormat(length: 7.5, width: 1.0, color: .red);
+                
+                // ruler configuration
+                // let rulerThickness: CGFloat = 20
+                // let rulerGap: CGFloat = 5
 
                 // Bindings über JobBox
                 let zoomBinding = Binding<Double>(
@@ -55,7 +83,7 @@ struct PaperPanel: View {
                     .frame(width: paperFrame.width, height: paperFrame.height)
                     .shadow(color: .black.opacity(0.2), radius: 5, x: 5, y: 5)
                     .overlay(
-                        Rectangle().stroke(Color.black, lineWidth: 1)
+                        Rectangle().stroke(Color.black, lineWidth: 0.5)
                     )
 
                 // 3) Ruler oben
@@ -66,23 +94,29 @@ struct PaperPanel: View {
                         for i in stride(from: 0.0, through: widthUnits, by: 10.0) {
                             let x = CGFloat(i) * scaleFactor
                             var tick = Path()
-                            let h: CGFloat = (i.truncatingRemainder(dividingBy: 50) == 0) ? 15 : 10
+                            let h: CGFloat = (i.truncatingRemainder(dividingBy: 50) == 0) ? longRF.lenght : shortRF.lenght
                             tick.move(to: CGPoint(x: x, y: size.height))
                             tick.addLine(to: CGPoint(x: x, y: size.height - h))
-                            context.stroke(tick, with: .color(.black), lineWidth: 1)
+                            
+                            if(h == longRF.lenght){
+                                context.stroke(tick, with: .color(longRF.color), lineWidth: longRF.width)
+                            }else{
+                                context.stroke(tick, with: .color(shortRF.color), lineWidth: shortRF.width)
+                            }
+                            
                             if i.truncatingRemainder(dividingBy: 50) == 0 {
-                                let txt = Text("\(Int(i))\(unitsLabel)")
+                                let txt = Text("\(Int(i))") // \(unitsLabel)
                                     .font(.caption2)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
                                 context.draw(txt,
-                                             at: CGPoint(x: x + 2, y: size.height - h - 2),
+                                             at: CGPoint(x: x + 2, y: size.height * 0.9),
                                              anchor: .bottomLeading)
                             }
                         }
                     }
                 }
                 .frame(width: paperFrame.width, height: rulerThickness)
-                .cornerRadius(4)
+                .cornerRadius(0)
                 .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                 .offset(x: 0, y: -(paperFrame.height/2 + rulerThickness/2 + rulerGap))
 
@@ -94,28 +128,39 @@ struct PaperPanel: View {
                         for i in stride(from: 0.0, through: heightUnits, by: 10.0) {
                             let y = CGFloat(i) * scaleFactor
                             var tick = Path()
-                            let w: CGFloat = (i.truncatingRemainder(dividingBy: 50) == 0) ? 15 : 10
+                            let w: CGFloat = (i.truncatingRemainder(dividingBy: 50) == 0) ? longRF.lenght : shortRF.lenght
                             tick.move(to: CGPoint(x: size.width, y: y))
                             tick.addLine(to: CGPoint(x: size.width - w, y: y))
-                            context.stroke(tick, with: .color(.black), lineWidth: 1)
+                            
+                            if(w == longRF.lenght){
+                                context.stroke(tick, with: .color(longRF.color), lineWidth: longRF.width)
+                            }else{
+                                context.stroke(tick, with: .color(shortRF.color), lineWidth: shortRF.width)
+                            }
+                            
                             if i.truncatingRemainder(dividingBy: 50) == 0 {
-                                let txt = Text("\(Int(i))\(unitsLabel)")
+                                let txt = Text("\(Int(i))") // \(unitsLabel)
                                     .font(.caption2)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
                                 context.draw(txt,
-                                             at: CGPoint(x: size.width - w - 2, y: y + 2),
+                                             at: CGPoint(x: size.width * 0.9, y: y + 2),
                                              anchor: .topTrailing)
                             }
                         }
                     }
                 }
                 .frame(width: rulerThickness, height: paperFrame.height)
-                .cornerRadius(4)
+                .cornerRadius(0)
                 .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                 .offset(x: -(paperFrame.width/2 + rulerThickness/2 + rulerGap), y: 0)
 
                 // 5) SVG-Inhalt mit Pan/Zoom/Rotate
-                if let svgURL = resolveSVGURL() {
+                if isLoading {
+                    ProgressView("SVG wird geladen…")
+                        .progressViewStyle(.linear)
+                        .frame(width: paperFrame.width)
+                        .offset(x: 0, y: 0)
+                } else if let svgURL = resolveSVGURL() {
                     SVGView(contentsOf: svgURL)
                         .scaleEffect(CGFloat(model.jobBox.zoom))
                         .rotationEffect(.degrees(model.jobBox.pitch))
@@ -164,7 +209,21 @@ struct PaperPanel: View {
                         model.syncJobBoxBack()
                     }
             )
-            .padding(20) // Rand um das Papier
+            .onAppear {
+                loadSVG()
+            }
+            .padding(EdgeInsets(top: 20, leading: 20, bottom: 40, trailing: 20)) // Rand um das Papier
+        }
+    }
+
+    private func loadSVG() {
+        guard let url = resolveSVGURL() else { return }
+        isLoading = true
+        Task {
+            _ = try? Data(contentsOf: url)
+            await MainActor.run {
+                isLoading = false
+            }
         }
     }
 

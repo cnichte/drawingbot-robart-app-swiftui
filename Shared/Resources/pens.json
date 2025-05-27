@@ -67,12 +67,14 @@
                 },
                 "spitzeUnit": {
                     "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
-                    "name": "mm"
+                    "name": "mm",
+                    "factor": 0.001
                 },
                 "reichweite": 1000.00,
                 "reichweiteUnit": {
                     "id": "f740bef0-962e-4c0d-8df3-c990eb1b0378",
-                    "name": "m"
+                    "name": "m",
+                    "factor": 1
                 }
             },
             {
@@ -84,12 +86,14 @@
                 },
                 "spitzeUnit": {
                     "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
-                    "name": "mm"
+                    "name": "mm",
+                    "factor": 0.001
                 },
                 "reichweite": 1000.00,
                 "reichweiteUnit": {
                     "id": "f740bef0-962e-4c0d-8df3-c990eb1b0378",
-                    "name": "m"
+                    "name": "m",
+                    "factor": 1
                 }
             }
         ]

@@ -14,7 +14,8 @@
             "height": 420,
             "unit": {
                 "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
-                "name": "mm"
+                "name": "mm",
+                "factor":0.001
             },
             "description": "DIN A3 – Zeichnungen, Präsentationen",
             "aspectRatio": {
@@ -39,7 +40,8 @@
             "height": 841,
             "unit": {
                 "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
-                "name": "mm"
+                "name": "mm",
+                "factor":0.001
             },
             "description": "DIN A1 – Großformatige Poster, Pläne",
             "aspectRatio": {
@@ -64,7 +66,8 @@
             "height": 297,
             "unit": {
                 "id": "5f6bbf82-57cc-435d-8644-655481cd556b",
-                "name": "mm"
+                "name": "mm",
+                "factor":0.001
             },
             "description": "DIN A4 – Standard-Briefformate, Drucker",
             "aspectRatio": {

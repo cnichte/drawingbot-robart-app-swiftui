@@ -130,9 +130,8 @@ struct JobFormView: View {
 #endif
         }
         .onAppear {
-            appLog(.info, "Geladener SVG-Pfad:", currentJob.svgFilePath)
-
-            // 💡 hole aktuelle Jobdaten aus dem Store (falls aktueller Binding-Wert veraltet ist)
+            // appLog(.info, "JobFormView.onAppear: geladener SVG-Pfad:", currentJob.svgFilePath)
+            //💡 hole aktuelle Jobdaten aus dem Store (falls aktueller Binding-Wert veraltet ist)
             if let latest = plotJobStore.items.first(where: { $0.id == currentJob.id }) {
                 currentJob = latest
             }
@@ -150,6 +149,7 @@ struct JobFormView: View {
     // MARK: load save Functions
     
     private func loadActiveJob() {
+        appLog(.info, "JobFormView.loadActiveJob: geladener SVG-Pfad:", currentJob.svgFilePath)
         svgFileName = URL(fileURLWithPath: currentJob.svgFilePath).lastPathComponent
     }
 
