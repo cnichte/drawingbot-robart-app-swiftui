@@ -29,17 +29,11 @@ struct iPadJobPreviewLayout: View {
         HStack {
             if isSidebarVisible {
                 LeftPanelView(
-                    currentJob: $currentJob,
                     svgFileName: $svgFileName,
                     showingFileImporter: $showingFileImporter,
-                    selectedMachine: $selectedMachine
                 )
             }
             CenterPanelView(
-                zoom: $zoom,
-                pitch: $pitch,
-                origin: $origin,
-                job: $currentJob,
                 previewMode: $previewMode,
                 isSidebarVisible: $isSidebarVisible,
                 isInspectorVisible: $showingInspector
@@ -61,10 +55,7 @@ struct iPadJobPreviewLayout: View {
             */
         }
         .sheet(isPresented: $showingInspector) {
-            RightPanelView(
-                currentJob: $currentJob,
-                selectedMachine: $selectedMachine
-            )
+            RightPanelView()
         }
     }
 }

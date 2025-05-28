@@ -30,6 +30,8 @@
 		<array>
     	<string>CloudDocuments</string>
 		</array>
+        <key>NSOpenPanelUsageDescription</key>
+        <string>We need access to your files to load SVG files.</string>
     </dict>
 </array>
 </dict>

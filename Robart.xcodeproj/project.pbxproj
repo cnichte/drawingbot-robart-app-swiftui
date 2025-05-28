@@ -352,6 +352,7 @@
 		D59161D42DDF609C00E9DC61 /* LeftPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftPanelView.swift; sourceTree = "<group>"; };
 		D59161D62DDF60DC00E9DC61 /* CenterPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterPanelView.swift; sourceTree = "<group>"; };
 		D59A28CE2DCA1F0800EAB3BC /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
+		D59CA8FD2DE733D600050F56 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D5A084C12DAFD59B00332690 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		D5A084CA2DAFD84000332690 /* ConnectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionData.swift; sourceTree = "<group>"; };
 		D5A084CB2DAFD84000332690 /* MachineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineData.swift; sourceTree = "<group>"; };
@@ -908,6 +909,7 @@
 		D5D1042C2DAEF44B00E8406E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D59CA8FD2DE733D600050F56 /* WebKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

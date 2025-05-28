@@ -86,7 +86,7 @@ struct JobListView: View {
             systemImage: "document.fill",
             toolbar: {
                 HStack(spacing: 12) {
-                    CustomToolbarButton(title: "", icon: "document.badge.plus.fill", style: .secondary, role: nil, hasBorder: false, iconSize: .large) {
+                    CustomToolbarButton(title: "New Job", icon: "text.document.fill", style: .secondary, role: nil, hasBorder: false, iconSize: .large) {
                         Task {
                             let job = JobData(name: "Neuer Job", machineData: .default, paperData: .default)
                             let newJob = await jobStore.createNewItem(defaultItem: job, fileName: job.id.uuidString)

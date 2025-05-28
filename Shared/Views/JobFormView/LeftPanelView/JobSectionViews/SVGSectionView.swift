@@ -85,7 +85,7 @@ struct SVGSectionView: View {
         // ~/Documents/jobs-data/<JobID>/svg/<Dateiname>
         let fullURL = svgFolder.appendingPathComponent(name)
 
-        appLog(.info, "🔍 Resolved SVG → \(fullURL.path), exists: \(FileManager.default.fileExists(atPath: fullURL.path))")
+        // appLog(.info, "🔍 Resolved SVG → \(fullURL.path), exists: \(FileManager.default.fileExists(atPath: fullURL.path))")
         return fullURL
     }
 
