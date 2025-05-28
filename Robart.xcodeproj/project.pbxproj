@@ -376,12 +376,8 @@
 		D5A085032DAFD8AD00332690 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		D5A085132DAFD8C900332690 /* JobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListView.swift; sourceTree = "<group>"; };
 		D5A085142DAFD8C900332690 /* JobFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobFormView.swift; sourceTree = "<group>"; };
-		D5A085152DAFD8C900332690 /* JobSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSummaryView.swift; sourceTree = "<group>"; };
 		D5A085202DAFD8DE00332690 /* PaperPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperPanel.swift; sourceTree = "<group>"; };
-		D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperSourcePreview.swift; sourceTree = "<group>"; };
 		D5A085232DAFD8DE00332690 /* Speedometer_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speedometer_View.swift; sourceTree = "<group>"; };
-		D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgPropertyEditorView.swift; sourceTree = "<group>"; };
-		D5A085252DAFD8DE00332690 /* SVGTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGTreeView.swift; sourceTree = "<group>"; };
 		D5A085322DAFE17000332690 /* CollapsibleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSection.swift; sourceTree = "<group>"; };
 		D5A085AE2DB0248000332690 /* ProjectManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectManagerView.swift; sourceTree = "<group>"; };
 		D5A085B42DB02D7800332690 /* ProjectSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSectionView.swift; sourceTree = "<group>"; };
@@ -713,17 +709,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		D587A4402DBEBFFA0072D83C /* Deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				D5A085242DAFD8DE00332690 /* SvgPropertyEditorView.swift */,
-				D5A085152DAFD8C900332690 /* JobSummaryView.swift */,
-				D5A085252DAFD8DE00332690 /* SVGTreeView.swift */,
-				D5A085222DAFD8DE00332690 /* PaperSourcePreview.swift */,
-			);
-			path = Deprecated;
-			sourceTree = "<group>";
-		};
 		D59161D82DDF616B00E9DC61 /* CenterPanelView */ = {
 			isa = PBXGroup;
 			children = (
@@ -809,7 +794,6 @@
 			children = (
 				D59A28D12DCA4A3A00EAB3BC /* Joystick */,
 				D559912B2DC8C9BA0066FE1E /* CrossPlatformUI_Helpers */,
-				D587A4402DBEBFFA0072D83C /* Deprecated */,
 				D5E1E6C92DC41497008F6347 /* JobFormView */,
 				D52C0AFD2DBA87C100F57746 /* PartialViews */,
 				D5F6C61F2DB8348600020AEE /* GenericItemManagerView */,
