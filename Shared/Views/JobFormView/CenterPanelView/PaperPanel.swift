@@ -182,15 +182,17 @@ struct PaperPanel: View {
                         .offset(x: 0, y: 0)
                 } else if let svgURL = resolveSVGURL() {
                     WebView(fileURL: svgURL) { error in
-                        if let error = error {// Modifying state during view update, this will cause undefined behavior.
+                        if let error = error {
                             print("WebView error: \(error)")
                         }
                     }
-                    .scaleEffect(CGFloat(model.jobBox.zoom))
-                    .rotationEffect(.degrees(model.jobBox.pitch))
-                    .offset(x: model.jobBox.origin.x, y: model.jobBox.origin.y)
                     .frame(width: paperFrame.width, height: paperFrame.height)
+                    // .border(Color.green) // TODO: Debug
                     .clipped()
+                    .scaleEffect(CGFloat(model.jobBox.zoom), anchor: .center)
+                    .rotationEffect(.degrees(model.jobBox.pitch), anchor: .center)
+                    .offset(x: model.jobBox.origin.x, y: model.jobBox.origin.y)
+                    .allowsHitTesting(false)
                     .onAppear {
                         ensureFileIsDownloaded(url: svgURL)
                     }
@@ -341,6 +343,8 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
         config.limitsNavigationsToAppBoundDomains = true
         config.suppressesIncrementalRendering = true
         webView = WKWebView(frame: view.bounds, configuration: config)
+        webView.isOpaque = false
+        webView.backgroundColor = .clear
         webView.navigationDelegate = self
         view.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -361,7 +365,32 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
             errorHandler?("No file selected")
             return
         }
-        webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
+        do {
+            let svgData = try Data(contentsOf: url)
+            guard let svgString = String(data: svgData, encoding: .utf8) else {
+                errorHandler?("Unable to read SVG")
+                return
+            }
+            let htmlString = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    html, body { margin:0; padding:0; overflow:hidden; background-color:transparent; }
+                    svg { width:100%; height:100%; }
+                </style>
+            </head>
+            <body>
+            \(svgString)
+            </body>
+            </html>
+            """
+            webView.loadHTMLString(htmlString, baseURL: url.deletingLastPathComponent())
+        } catch {
+            errorHandler?("Error loading SVG: \(error.localizedDescription)")
+        }
     }
     func setupGestures() {
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
@@ -450,13 +479,37 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
         if secureURL.startAccessingSecurityScopedResource() {
             do { secureURL.stopAccessingSecurityScopedResource() }
         }
-        webView.loadFileURL(secureURL, allowingReadAccessTo: secureURL.deletingLastPathComponent())
+        do {
+            let svgData = try Data(contentsOf: secureURL)
+            guard let svgString = String(data: svgData, encoding: .utf8) else {
+                errorHandler?("Unable to read SVG")
+                return
+            }
+            let htmlString = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                    html, body { margin:0; padding:0; overflow:hidden;} <!--  // TODO: Debug background-color:red; -->
+                    svg { width:100%; height:100%; }
+                </style>
+            </head>
+            <body>
+            \(svgString)
+            </body>
+            </html>
+            """
+            webView.loadHTMLString(htmlString, baseURL: secureURL.deletingLastPathComponent())
+        } catch {
+            errorHandler?("Error loading SVG: \(error.localizedDescription)")
+        }
     }
     func setupGestures() {
-        let pan = NSPanGestureRecognizer(target: self, action: #selector(handlePan))
         let mag = NSMagnificationGestureRecognizer(target: self, action: #selector(handleMagnification))
         let rot = NSRotationGestureRecognizer(target: self, action: #selector(handleRotation))
-        [pan, mag, rot].forEach {
+        [mag, rot].forEach {
             $0.delegate = self
             webView.addGestureRecognizer($0)
         }
@@ -464,7 +517,12 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
     @objc func handlePan(_ g: NSPanGestureRecognizer) {
         guard let v = g.view else { return }
         let t = g.translation(in: v)
-        v.setFrameOrigin(NSPoint(x: v.frame.origin.x + t.x, y: v.frame.origin.y + t.y))
+        // Invert Y so drag-up moves content up
+        let newOrigin = NSPoint(
+            x: v.frame.origin.x + t.x,
+            y: v.frame.origin.y - t.y
+        )
+        v.setFrameOrigin(newOrigin)
         g.setTranslation(.zero, in: v)
     }
     @objc func handleMagnification(_ g: NSMagnificationGestureRecognizer) {
