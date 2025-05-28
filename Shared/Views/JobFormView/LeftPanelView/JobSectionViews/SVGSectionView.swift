@@ -7,7 +7,6 @@
 
 // SVGSectionView.swift
 import SwiftUI
-import SVGView
 
 struct SVGSectionView: View {
     @EnvironmentObject var model: SVGInspectorModel

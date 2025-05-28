@@ -17,16 +17,10 @@
 // Property editor for editing job properties
 // PropertyEditorView(currentJob: $currentJob)
 
-// TODO: Wenn die SVG Datei zu groß ist: Erzeuge ein passendes jpg, und rendere das als Preview, mit der Möglichkeit das zu zoomen und zu drehen und diese Werte zu übernehmen.
 // TODO: Nullpunkt überlagern:  links / rechts oben, mitte, links / rechts unten.
 // TODO: Signatur überlagern
-// TODO: Verschieben geht, aber zoom nicht, und drehen ist noch nicht implementiert
-// TODO: Auf iOS und iPad wird beim öffnen des Jobs die Vorschau nicht geladen. Bei MacOS funktionierts.
-// TODO: Wiederverwendbare SplitPanelView oder FormScaffold
-
 // TODO: UUID-Relationen in JSON! https://x.com/i/grok/share/HJ7BTKeYeDGFm4NhUtrOyYWdp
 
-// FIXME: ACHTUNG NICHT UMBENENNEN !! Danach kompliliert iOS nicht mehr.
 // MARK: Das ist eine Markierung
 // TODO: Das ist ein TODO
 
@@ -37,8 +31,10 @@ import SwiftUI
 import UIKit
 #endif
 
-// MARK: JobFormView
+// --- neu: für Snapshot Funktionalität
+import UniformTypeIdentifiers
 
+// MARK: JobFormView
 struct JobFormView: View {
     @AppStorage("jobPreview_sidebarVisible") private var isSidebarVisible: Bool = true
     @AppStorage("jobPreview_inspectorVisible") private var isInspectorVisible: Bool = false
@@ -160,6 +156,28 @@ struct JobFormView: View {
             await svgInspectorModel.save(using: plotJobStore)
             let duration = Date().timeIntervalSince(start)
             print("✅ Saving job completed in \(duration) seconds")
+            
+            // --- Neuer Code: Screenshot vom gesamten PaperPanel
+            // TODO: Der Inhalt fehlt noch!
+            // 1) Errechne Papiermaße in Points
+            let fmt = svgInspectorModel.job.paperData.paperFormat
+            let isLandscape = svgInspectorModel.job.paperOrientation == .landscape
+            let w = CGFloat(isLandscape ? fmt.height : fmt.width)
+            let h = CGFloat(isLandscape ? fmt.width  : fmt.height)
+            let size = CGSize(width: w, height: h)
+
+            // 2) Erstelle die View-Instanz mit EnvironmentObject
+            let panel = PaperPanel()
+                .environmentObject(svgInspectorModel)
+
+            // 3) Generiere Snapshot
+            if let img = SVGSnapshot.snapshot(of: panel, size: size) {
+                // 4) Speicher-Pfad für das Panel-Bild
+                let previewFolder = JobsDataFileManager.shared.previewFolder(for: svgInspectorModel.job.id)
+                let url = previewFolder.appendingPathComponent("thumbnail.png")
+                try? SVGSnapshot.saveThumbnail(img, to: url)
+                print("📸 Panel screenshot saved to \(url.path)")
+            }
         }
     }
 }

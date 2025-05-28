@@ -7,7 +7,6 @@
 
 // PaperPanel.swift
 import SwiftUI
-import SVGView
 #if canImport(UIKit)
 import UIKit
 #elseif canImport(AppKit)
@@ -16,7 +15,8 @@ import AppKit
 import WebKit
 import UniformTypeIdentifiers
 
-private class RulerFormat{
+// MARK: - RulerFormat
+private class RulerFormat {
     
     public var lenght:CGFloat
     public var width:CGFloat
@@ -29,6 +29,7 @@ private class RulerFormat{
     }
 }
 
+// MARK: - PaperPanel
 struct PaperPanel: View {
     @EnvironmentObject var model: SVGInspectorModel
     @State private var isLoading: Bool = false
@@ -92,6 +93,7 @@ struct PaperPanel: View {
                         model.syncJobBoxBack()
                     })
 
+                // MARK: - PaperPanel: Hintergrund-Papier
                 // 2) Hintergrund-Papier mit Farbe, Rand und Schatten
                 Rectangle()
                     .fill(Color(hex: model.job.paperData.color))
@@ -101,6 +103,7 @@ struct PaperPanel: View {
                         Rectangle().stroke(Color.black, lineWidth: 0.5)
                     )
 
+                // MARK: - PaperPanel: Ruler oben
                 // 3) Ruler oben
                 ZStack {
                     Rectangle()
@@ -135,6 +138,7 @@ struct PaperPanel: View {
                 .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                 .offset(x: 0, y: -(paperFrame.height/2 + rulerThickness/2 + rulerGap))
 
+                // MARK: - PaperPanel: Ruler links
                 // 4) Ruler links
                 ZStack {
                     Rectangle()
@@ -169,6 +173,7 @@ struct PaperPanel: View {
                 .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                 .offset(x: -(paperFrame.width/2 + rulerThickness/2 + rulerGap), y: 0)
 
+                // MARK: - PaperPanel: Progress & WebView
                 // 5) SVG-Inhalt mit Pan/Zoom/Rotate
                 if isLoading {
                     ProgressView("SVG wird geladen…")
@@ -195,7 +200,7 @@ struct PaperPanel: View {
                             .foregroundColor(.red)
                     }
                 }
-
+                // MARK: - PaperPanel: Overlay-Steuerung
                 // 6) Overlay-Steuerung (Zoom + Drehung)
                 VStack(spacing: 8) {
                     HStack {
@@ -214,6 +219,8 @@ struct PaperPanel: View {
                             .frame(width: 50)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                     }
+                     .padding()
+                    
                 }
                 .padding(8)
                 .background(Color.black.opacity(0.5))
@@ -222,6 +229,7 @@ struct PaperPanel: View {
                 .offset(x: 0, y: paperFrame.height / 2 - 60)
                 .opacity(0.8)
             }
+            // MARK: - PaperPanel: Gesamt-Frame & Pan-Gesture
             // Gesamt-Frame & Pan-Gesture
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(Rectangle())
@@ -236,7 +244,7 @@ struct PaperPanel: View {
             .onAppear {
                 loadSVG()
             }
-            .padding(EdgeInsets(top: 20, leading: 20, bottom: 40, trailing: 20)) // Rand um das Papier
+            .padding(EdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)) // Rand um das Papier
         }
     }
 
@@ -252,7 +260,6 @@ struct PaperPanel: View {
     }
 
     // MARK: - Helpers
-
     private func resolveSVGURL() -> URL? {
         guard !model.job.svgFilePath.trimmingCharacters(in: .whitespaces).isEmpty else {
             return nil
@@ -284,6 +291,7 @@ struct PaperPanel: View {
 }
 
 #if canImport(UIKit)
+// MARK: - DocumentPicker (UIKit, iOS)
 struct DocumentPicker: UIViewControllerRepresentable {
     @Binding var fileURL: URL?
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
@@ -303,6 +311,8 @@ struct DocumentPicker: UIViewControllerRepresentable {
         }
     }
 }
+
+// MARK: - WebView (UIKit, iOS)
 struct WebView: UIViewControllerRepresentable {
     let fileURL: URL?
     let errorHandler: (String?) -> Void
@@ -316,6 +326,8 @@ struct WebView: UIViewControllerRepresentable {
         uiViewController.loadSVG(fileURL: fileURL)
     }
 }
+
+// MARK: - WebController (UIKit, iOS)
 class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizerDelegate {
     var webView: WKWebView!
     var fileURL: URL?
@@ -382,6 +394,7 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
     func webView(_ w: WKWebView, didFinish navigation: WKNavigation!) {}
 }
 #elseif canImport(AppKit)
+// MARK: - AppKit WebView (AppKit, macOS)
 struct WebView: NSViewControllerRepresentable {
     let fileURL: URL?
     let errorHandler: (String?) -> Void
@@ -395,18 +408,19 @@ struct WebView: NSViewControllerRepresentable {
         nc.loadSVG(fileURL: fileURL)
     }
 }
+// MARK: - WebController (AppKit, macOS)
 class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizerDelegate {
     var webView: WKWebView!
     var fileURL: URL?
     var errorHandler: ((String?) -> Void)?
     override func loadView() {
         let cfg = WKWebViewConfiguration()
-        cfg.preferences.javaScriptEnabled = false
+        // cfg.preferences.javaScriptEnabled = false // TODO: 'javaScriptEnabled' was deprecated in macOS 11.0: Use WKWebpagePreferences.allowsContentJavaScript to disable content JavaScript on a per-navigation basis
         cfg.limitsNavigationsToAppBoundDomains = true
         webView = WKWebView(frame: .zero, configuration: cfg)
         webView.setValue(false, forKey: "drawsBackground")
         webView.wantsLayer = true
-        webView.layer?.backgroundColor = NSColor.white.cgColor
+        webView.layer?.backgroundColor = NSColor.blue.cgColor // TODO: Testweise auf blue gesetzt
         webView.navigationDelegate = self
         view = webView
     }
@@ -434,7 +448,7 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
             }
         }
         if secureURL.startAccessingSecurityScopedResource() {
-            defer { secureURL.stopAccessingSecurityScopedResource() }
+            do { secureURL.stopAccessingSecurityScopedResource() }
         }
         webView.loadFileURL(secureURL, allowingReadAccessTo: secureURL.deletingLastPathComponent())
     }
@@ -472,24 +486,3 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
     func webView(_ w: WKWebView, didFinish navigation: WKNavigation!) {}
 }
 #endif
-
-// Hex-String → Color
-extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let r, g, b: UInt64
-        if hex.count == 6 {
-            (r, g, b) = ((int >> 16) & 0xFF,
-                         (int >> 8)  & 0xFF,
-                         int         & 0xFF)
-        } else {
-            (r, g, b) = (255, 255, 255)
-        }
-        self.init(
-            red:   Double(r) / 255.0,
-            green: Double(g) / 255.0,
-            blue:  Double(b) / 255.0)
-    }
-}

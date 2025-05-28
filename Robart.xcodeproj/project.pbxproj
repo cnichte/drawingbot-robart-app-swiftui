@@ -182,8 +182,6 @@
 		D5D104252DAEF38000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104242DAEF38000E8406E /* USBSerialScanner.swift */; platformFilters = (macos, ); };
 		D5D104272DAEF39000E8406E /* USBSerialScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D104262DAEF39000E8406E /* USBSerialScanner.swift */; platformFilter = ios; };
 		D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042A2DAEF43900E8406E /* ORSSerial */; };
-		D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042D2DAEF44B00E8406E /* SVGView */; };
-		D5D104302DAEF45100E8406E /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = D5D1042F2DAEF45100E8406E /* SVGView */; };
 		D5D309322DDF8613004511C7 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D309312DDF860E004511C7 /* Color+Hex.swift */; };
 		D5D309332DDF8613004511C7 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D309312DDF860E004511C7 /* Color+Hex.swift */; };
 		D5E1E6CD2DC417D7008F6347 /* JobInspector_MachineInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1E6CC2DC417BD008F6347 /* JobInspector_MachineInfoView.swift */; };
@@ -528,7 +526,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5D1042E2DAEF44B00E8406E /* SVGView in Frameworks */,
 				D5D1042B2DAEF43900E8406E /* ORSSerial in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -537,7 +534,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5D104302DAEF45100E8406E /* SVGView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1061,7 +1057,6 @@
 			name = Robart;
 			packageProductDependencies = (
 				D5D1042A2DAEF43900E8406E /* ORSSerial */,
-				D5D1042D2DAEF44B00E8406E /* SVGView */,
 			);
 			productName = Robart;
 			productReference = D5D104032DAEF2E600E8406E /* Robart.app */;
@@ -1084,7 +1079,6 @@
 			);
 			name = "Robart-iOS";
 			packageProductDependencies = (
-				D5D1042F2DAEF45100E8406E /* SVGView */,
 			);
 			productName = "Robart-iOS";
 			productReference = D5D104162DAEF30700E8406E /* Robart-iOS.app */;
@@ -1126,7 +1120,6 @@
 			mainGroup = D5D103FA2DAEF2E600E8406E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */,
 				D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -1890,14 +1883,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exyte/SVGView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.6;
-			};
-		};
 		D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/armadsen/ORSSerialPort";
@@ -1913,16 +1898,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D5D104292DAEF43900E8406E /* XCRemoteSwiftPackageReference "ORSSerialPort" */;
 			productName = ORSSerial;
-		};
-		D5D1042D2DAEF44B00E8406E /* SVGView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */;
-			productName = SVGView;
-		};
-		D5D1042F2DAEF45100E8406E /* SVGView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D5D104282DAEF41800E8406E /* XCRemoteSwiftPackageReference "SVGView" */;
-			productName = SVGView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -94,13 +94,14 @@ class JobsDataFileManager {
         appLog(.info, "✅ SVG kopiert: \(destinationURL.lastPathComponent)")
 
         // 👉 Thumbnail erzeugen
+        /*
         Task {
             await generateThumbnail(for: jobID, svgURL: destinationURL)
         }
-
+*/
         return destinationURL
     }
-    
+ /*
     private func generateThumbnail(for jobID: UUID, svgURL: URL) async {
         let thumbnailURL = previewFolder(for: jobID).appendingPathComponent("thumbnail.png")
 
@@ -113,7 +114,7 @@ class JobsDataFileManager {
             }
         }
     }
-
+*/
     func deleteAllJobData(for jobID: UUID) {
         let jobFolder = jobFolder(for: jobID)
 
