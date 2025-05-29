@@ -91,7 +91,7 @@ final class SVGInspectorModel: ObservableObject {
         
         // Prüfe ob sich die Maschine wirklich geändert hat
         guard newMachine?.id != machine?.id else {
-            appLog(.info, "Machine unchanged, skipping update")
+            appLog(.info, "Machine unchanged, skipping update.")
             return
         }
         
@@ -144,7 +144,7 @@ final class SVGInspectorModel: ObservableObject {
         
         // Prevent concurrent parsing operations
         guard !isParsingInProgress else {
-            appLog(.info, "SVG parsing already in progress, skipping")
+            appLog(.info, "SVG parsing already in progress, skipping.")
             return
         }
         

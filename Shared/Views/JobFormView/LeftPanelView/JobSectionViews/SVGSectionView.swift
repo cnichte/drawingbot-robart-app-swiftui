@@ -109,7 +109,9 @@ struct SVGSectionView: View {
                         model.jobBox.svgFilePath = relativePath
                         // 2) UI-State aktualisieren
                         svgFileName = destinationURL.lastPathComponent
- /*
+                        model.syncJobBoxBack()
+                        
+ /* Gespeichert wird nur beim verlassen von JobFormView.
                         Task {
                             await model.save(using: store)
                             DispatchQueue.main.async {

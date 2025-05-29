@@ -5,6 +5,7 @@
 //  Created by Carsten Nichte on 30.04.25.
 //
 
+// SVGParser+PatternSupport.swift
 import Foundation
 
 /// Parser für <pattern>-Elemente und automatische Anwendung von HatchFillManager.

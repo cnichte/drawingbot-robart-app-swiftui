@@ -53,8 +53,10 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
     
     // svg
     var svgFilePath: String
-    var pitch: Double
+    
+    var angle: Double
     var zoom: Double
+    
     var origin: CGPoint
     
     // pen
@@ -80,7 +82,7 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
         
         svgFilePath: String = "",
         currentCommandIndex: Int = 0,
-        pitch: Double = 0,
+        angle: Double = 0,
         zoom: Double = 1.0,
         origin: CGPoint = .zero,
         penConfiguration: [PenConfiguration] = [],
@@ -101,7 +103,7 @@ struct JobData: Identifiable, Codable, Equatable, Transferable, Hashable, Defaul
         self.description = description
         
         self.svgFilePath = svgFilePath
-        self.pitch = pitch
+        self.angle = angle
         self.zoom = zoom
         self.origin = origin
         

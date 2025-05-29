@@ -13,7 +13,7 @@
         "selectedMachine": {},
         "currentCommandIndex": 0,
         "name": "Neuer Job 1",
-        "pitch": 0,
+        "angle": 0,
         "zoom": 1,
         "paper": {
             "color": "weiß",

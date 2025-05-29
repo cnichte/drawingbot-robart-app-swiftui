@@ -51,13 +51,16 @@ struct JobFormView: View {
     @State private var zoom: Double = 1.0
     @State private var pitch: Double = 0.0
     @State private var origin: CGPoint = .zero
+    
     @State private var svgFileName: String? = nil
+    @State private var selectedMachine: MachineData? = nil
+
     @State private var showingFileImporter = false
     @State private var previewMode: PreviewMode = .svgPreview
     @State private var inspectorWidth: CGFloat = 300
     @State private var showingSettings = false
     @State private var showingInspector = false
-    @State private var selectedMachine: MachineData? = nil
+    
 
     enum PreviewMode: String, CaseIterable, Identifiable {
         case svgPreview = "SVG Preview"
@@ -87,7 +90,7 @@ struct JobFormView: View {
             .environmentObject(plotJobStore)
             .environmentObject(paperStore)
             .environmentObject(paperFormatsStore)
-            .navigationTitle("Job Preview")
+            .navigationTitle("Job")
 #else
             Group {
                 if UIDevice.current.userInterfaceIdiom == .pad {
@@ -122,7 +125,7 @@ struct JobFormView: View {
             .environmentObject(plotJobStore)
             .environmentObject(paperStore)
             .environmentObject(paperFormatsStore)
-            .navigationTitle("Job Preview")
+            .navigationTitle("Job")
 #endif
         }
         .onAppear {

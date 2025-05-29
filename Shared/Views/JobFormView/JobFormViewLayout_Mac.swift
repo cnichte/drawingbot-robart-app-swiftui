@@ -31,11 +31,8 @@ struct MacJobPreviewLayoutView: View {
             rightPanelWidth: $inspectorWidth,
             leftView: {
                 LeftPanelView(
-                    // currentJob: $currentJob,
                     svgFileName: $svgFileName,
                     showingFileImporter: $showingFileImporter,
-                    // selectedMachine: $selectedMachine
-                    
                 )
                 .environmentObject(plotJobStore)
                 .environmentObject(paperStore)
@@ -44,18 +41,12 @@ struct MacJobPreviewLayoutView: View {
             centerView: {
                 CenterPanelView(
                     previewMode: $previewMode,
-                    
                     isSidebarVisible: $isSidebarVisible,
                     isInspectorVisible: $isInspectorVisible
                 )
             },
             rightView: {
-                RightPanelView(
-                    /*
-                    currentJob: $currentJob,
-                    selectedMachine: $selectedMachine
-                     */
-                )
+                RightPanelView()
             }
         )
     }

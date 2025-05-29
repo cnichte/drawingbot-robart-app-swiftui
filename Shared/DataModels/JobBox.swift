@@ -16,7 +16,7 @@ final class JobBox: ObservableObject {
     @Published var name: String
     @Published var description: String
     @Published var svgFilePath: String
-    @Published var pitch: Double
+    @Published var angle: Double
     @Published var zoom: Double
     @Published var origin: CGPoint
     @Published var paperData: PaperData
@@ -35,7 +35,7 @@ final class JobBox: ObservableObject {
         self.name = job.name
         self.description = job.description
         self.svgFilePath = job.svgFilePath
-        self.pitch = job.pitch
+        self.angle = job.angle
         self.zoom = job.zoom
         self.origin = job.origin
         self.paperData = job.paperData
@@ -57,7 +57,7 @@ final class JobBox: ObservableObject {
             description: description,
             svgFilePath: svgFilePath,
             currentCommandIndex: currentCommandIndex,
-            pitch: pitch,
+            angle: angle,
             zoom: zoom,
             origin: origin,
             penConfiguration: penConfiguration,

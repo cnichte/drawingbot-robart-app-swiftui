@@ -29,7 +29,11 @@ final class GCodeGenerator: BasePlotterGenerator {
 
     /// Liefert einen GCode-Befehl durch Ersetzung von Platzhaltern im Template
     private func cmd(_ name: String, x: Double, y: Double) -> String {
-        resolver.resolve(name: name, variables: ["X": x, "Y": y]) ?? "; fehlend: \(name)"
+        guard let gcode = resolver.resolve(name: name, variables: ["X": x, "Y": y]) else {
+            appLog(.error, "❌ GCode für '\(name)' nicht auflösbar – Template fehlt oder Platzhalter nicht ersetzt (X: \(x), Y: \(y))")
+            return "; fehlend: \(name)"
+        }
+        return gcode
     }
 
     /// Generates G-code for a given SVG element based on its type.

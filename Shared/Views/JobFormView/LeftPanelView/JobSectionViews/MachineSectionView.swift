@@ -27,6 +27,7 @@ struct MachineSectionView: View {
                                sel = .default
                              }
                              model.updateMachine(sel)
+                             
                          }
                        )
                 ) {

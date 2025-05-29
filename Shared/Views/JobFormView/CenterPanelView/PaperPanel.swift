@@ -34,6 +34,8 @@ struct PaperPanel: View {
     @EnvironmentObject var model: SVGInspectorModel
     @State private var isLoading: Bool = false
     @State private var errorMessage: String? = nil
+    @State private var initialDragOrigin: CGPoint = .zero
+    
 
     var body: some View {
         GeometryReader { geo in
@@ -86,10 +88,10 @@ struct PaperPanel: View {
                         model.jobBox.zoom = newZoom
                         model.syncJobBoxBack()
                     })
-                let pitchBinding = Binding<Double>(
-                    get: { model.jobBox.pitch },
-                    set: { newPitch in
-                        model.jobBox.pitch = newPitch
+                let angleBinding = Binding<Double>(
+                    get: { model.jobBox.angle },
+                    set: { newAngle in
+                        model.jobBox.angle = newAngle
                         model.syncJobBoxBack()
                     })
 
@@ -133,7 +135,7 @@ struct PaperPanel: View {
                         }
                     }
                 }
-                .frame(width: paperFrame.width, height: rulerThickness) // TODO: Invalid frame dimension (negative or non-finite).
+                .frame(width: paperFrame.width, height: rulerThickness)
                 .cornerRadius(0)
                 .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                 .offset(x: 0, y: -(paperFrame.height/2 + rulerThickness/2 + rulerGap))
@@ -181,21 +183,23 @@ struct PaperPanel: View {
                         .frame(width: paperFrame.width)
                         .offset(x: 0, y: 0)
                 } else if let svgURL = resolveSVGURL() {
-                    WebView(fileURL: svgURL) { error in
-                        if let error = error {
-                            print("WebView error: \(error)")
+                    Group {
+                        #if canImport(UIKit)
+                        WebView(fileURL: svgURL) { error in
+                            if let error = error { print("WebView error: \(error)") }
                         }
+                        #elseif canImport(AppKit)
+                        WebView(fileURL: svgURL,
+                                zoom: model.jobBox.zoom,
+                                angle: model.jobBox.angle) { error in
+                            if let error = error { print("WebView error: \(error)") }
+                        }
+                        #endif
                     }
                     .frame(width: paperFrame.width, height: paperFrame.height)
-                    // .border(Color.green) // TODO: Debug
+                    .border(Color.green)
                     .clipped()
-                    .scaleEffect(CGFloat(model.jobBox.zoom), anchor: .center)
-                    .rotationEffect(.degrees(model.jobBox.pitch), anchor: .center)
-                    .offset(x: model.jobBox.origin.x, y: model.jobBox.origin.y)
-                    .allowsHitTesting(false)
-                    .onAppear {
-                        ensureFileIsDownloaded(url: svgURL)
-                    }
+                    .onAppear { ensureFileIsDownloaded(url: svgURL) }
                 } else {
                     if let error = errorMessage {
                         Text(error)
@@ -215,8 +219,8 @@ struct PaperPanel: View {
                     }
                     HStack {
                         Text("Drehung:")
-                        Slider(value: pitchBinding, in: 0...360)
-                        TextField("", value: pitchBinding,
+                        Slider(value: angleBinding, in: 0...360)
+                        TextField("", value: angleBinding,
                                   format: .number.precision(.fractionLength(0)))
                             .frame(width: 50)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -234,15 +238,6 @@ struct PaperPanel: View {
             // MARK: - PaperPanel: Gesamt-Frame & Pan-Gesture
             // Gesamt-Frame & Pan-Gesture
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .contentShape(Rectangle())
-            .gesture(
-                DragGesture()
-                    .onChanged { val in
-                        model.jobBox.origin = CGPoint(x: val.translation.width,
-                                                      y: val.translation.height)
-                        model.syncJobBoxBack()
-                    }
-            )
             .onAppear {
                 loadSVG()
             }
@@ -316,16 +311,19 @@ struct DocumentPicker: UIViewControllerRepresentable {
 
 // MARK: - WebView (UIKit, iOS)
 struct WebView: UIViewControllerRepresentable {
+    @EnvironmentObject var model: SVGInspectorModel
     let fileURL: URL?
     let errorHandler: (String?) -> Void
     func makeUIViewController(context: Context) -> WebController {
         let controller = WebController()
         controller.fileURL = fileURL
         controller.errorHandler = errorHandler
+        controller.model = model
         return controller
     }
     func updateUIViewController(_ uiViewController: WebController, context: Context) {
         uiViewController.loadSVG(fileURL: fileURL)
+        uiViewController.applyModelTransforms()
     }
 }
 
@@ -334,6 +332,7 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
     var webView: WKWebView!
     var fileURL: URL?
     var errorHandler: ((String?) -> Void)?
+    var model: SVGInspectorModel!
     override func viewDidLoad() {
         super.viewDidLoad()
         let config = WKWebViewConfiguration()
@@ -359,6 +358,7 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.scrollView.bounces = false
         setupGestures()
+        applyModelTransforms()
     }
     func loadSVG(fileURL: URL?) {
         guard let url = fileURL else {
@@ -378,7 +378,7 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
-                    html, body { margin:0; padding:0; overflow:hidden; background-color:transparent; }
+                    html, body { margin:0; padding:0; overflow:hidden; background-color:red; } <!-- DEBUG: background-color:transparent; -->
                     svg { width:100%; height:100%; }
                 </style>
             </head>
@@ -392,49 +392,95 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
             errorHandler?("Error loading SVG: \(error.localizedDescription)")
         }
     }
-    func setupGestures() {
-        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        let rotation = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation))
-        [pinch, pan, rotation].forEach {
-            $0.delegate = self
-            webView.addGestureRecognizer($0)
-        }
-    }
-    @objc func handlePinch(_ g: UIPinchGestureRecognizer) {
-        guard let v = g.view else { return }
-        if g.state == .changed { v.transform = v.transform.scaledBy(x: max(0.1,g.scale), y: max(0.1,g.scale)); g.scale = 1 }
-    }
-    @objc func handlePan(_ g: UIPanGestureRecognizer) {
-        guard let v = g.view else { return }
-        if g.state == .changed {
-            let t = g.translation(in: v)
-            v.transform = v.transform.translatedBy(x: t.x, y: t.y)
-            g.setTranslation(.zero, in: v)
-        }
-    }
-    @objc func handleRotation(_ g: UIRotationGestureRecognizer) {
-        guard let v = g.view else { return }
-        if g.state == .changed { v.transform = v.transform.rotated(by: g.rotation); g.rotation = 0 }
-    }
     func webView(_ w: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         errorHandler?("Navigation error: \(error.localizedDescription)")
     }
-    func webView(_ w: WKWebView, didFinish navigation: WKNavigation!) {}
+    func webView(_ w: WKWebView, didFinish navigation: WKNavigation!) {
+        // applyModelTransforms()
+    }
+
+    func applyModelTransforms() {
+        let o = model.jobBox.origin
+        let z = CGFloat(model.jobBox.zoom)
+        let a = CGFloat(model.jobBox.angle * .pi/180)
+        var t = CGAffineTransform.identity
+        t = t.translatedBy(x: o.x, y: o.y)
+        t = t.scaledBy(x: z, y: z)
+        t = t.rotated(by: a)
+        webView.transform = t
+    }
+
+    private func setupGestures() {
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        pan.delegate = self
+        webView.addGestureRecognizer(pan)
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        pinch.delegate = self
+        webView.addGestureRecognizer(pinch)
+        let rotation = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation(_:)))
+        rotation.delegate = self
+        webView.addGestureRecognizer(rotation)
+    }
+    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: webView.superview)
+        if gesture.state == .began {
+            // Store initial origin if needed
+        }
+        if gesture.state == .changed || gesture.state == .ended {
+            let newOrigin = CGPoint(
+                x: model.jobBox.origin.x + translation.x,
+                y: model.jobBox.origin.y + translation.y
+            )
+            model.jobBox.origin = newOrigin
+            if gesture.state == .ended {
+                // Optionally sync back if needed
+            }
+            // Assign back to model and apply transforms
+            applyModelTransforms()
+        }
+        gesture.setTranslation(.zero, in: webView.superview)
+    }
+    @objc private func handlePinch(_ gesture: UIPinchGestureRecognizer) {
+        if gesture.state == .changed || gesture.state == .ended {
+            let newZoom = model.jobBox.zoom * Double(gesture.scale)
+            model.jobBox.zoom = newZoom
+            if gesture.state == .ended {
+                // Optionally sync back if needed
+            }
+            applyModelTransforms()
+            gesture.scale = 1.0
+        }
+    }
+    @objc private func handleRotation(_ gesture: UIRotationGestureRecognizer) {
+        if gesture.state == .changed || gesture.state == .ended {
+            let newAngle = model.jobBox.angle + Double(gesture.rotation * 180 / .pi)
+            model.jobBox.angle = newAngle
+            if gesture.state == .ended {
+                // Optionally sync back if needed
+            }
+            applyModelTransforms()
+            gesture.rotation = 0
+        }
+    }
 }
 #elseif canImport(AppKit)
 // MARK: - AppKit WebView (AppKit, macOS)
 struct WebView: NSViewControllerRepresentable {
+    @EnvironmentObject var model: SVGInspectorModel
     let fileURL: URL?
+    let zoom: Double
+    let angle: Double
     let errorHandler: (String?) -> Void
     func makeNSViewController(context: Context) -> WebController {
         let c = WebController()
         c.fileURL = fileURL
         c.errorHandler = errorHandler
+        c.model = model
         return c
     }
     func updateNSViewController(_ nc: WebController, context: Context) {
         nc.loadSVG(fileURL: fileURL)
+        nc.applyModelTransforms()
     }
 }
 // MARK: - WebController (AppKit, macOS)
@@ -442,6 +488,7 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
     var webView: WKWebView!
     var fileURL: URL?
     var errorHandler: ((String?) -> Void)?
+    var model: SVGInspectorModel!
     override func loadView() {
         let cfg = WKWebViewConfiguration()
         // cfg.preferences.javaScriptEnabled = false // TODO: 'javaScriptEnabled' was deprecated in macOS 11.0: Use WKWebpagePreferences.allowsContentJavaScript to disable content JavaScript on a per-navigation basis
@@ -462,6 +509,7 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
             scrollView.borderType = .noBorder
         }
         setupGestures()
+        applyModelTransforms()
     }
     func loadSVG(fileURL: URL?) {
         guard let url = fileURL else {
@@ -492,7 +540,7 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
-                    html, body { margin:0; padding:0; overflow:hidden;} <!--  // TODO: Debug background-color:red; -->
+                    html, body { margin:0; padding:0; overflow:hidden; background-color:red; } <!-- DEBUG: background-color:transparent; -->
                     svg { width:100%; height:100%; }
                 </style>
             </head>
@@ -506,41 +554,76 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
             errorHandler?("Error loading SVG: \(error.localizedDescription)")
         }
     }
-    func setupGestures() {
-        let mag = NSMagnificationGestureRecognizer(target: self, action: #selector(handleMagnification))
-        let rot = NSRotationGestureRecognizer(target: self, action: #selector(handleRotation))
-        [mag, rot].forEach {
-            $0.delegate = self
-            webView.addGestureRecognizer($0)
-        }
-    }
-    @objc func handlePan(_ g: NSPanGestureRecognizer) {
-        guard let v = g.view else { return }
-        let t = g.translation(in: v)
-        // Invert Y so drag-up moves content up
-        let newOrigin = NSPoint(
-            x: v.frame.origin.x + t.x,
-            y: v.frame.origin.y - t.y
-        )
-        v.setFrameOrigin(newOrigin)
-        g.setTranslation(.zero, in: v)
-    }
-    @objc func handleMagnification(_ g: NSMagnificationGestureRecognizer) {
-        guard let v = g.view else { return }
-        v.setFrameSize(NSSize(width: v.frame.width * (1+g.magnification),
-        height: v.frame.height * (1+g.magnification)))
-        g.magnification = 0
-    }
-    @objc func handleRotation(_ g: NSRotationGestureRecognizer) {
-        guard let v = g.view else { return }
-        var t = v.layer?.transform ?? CATransform3DIdentity
-        t = CATransform3DRotate(t, -g.rotation, 0, 0, 1)
-        v.layer?.transform = t
-        g.rotation = 0
-    }
     func webView(_ w: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         errorHandler?("Error: \(error.localizedDescription)")
     }
-    func webView(_ w: WKWebView, didFinish navigation: WKNavigation!) {}
+    func webView(_ w: WKWebView, didFinish navigation: WKNavigation!) {
+        // Nach dem Laden des SVGs direkt die gespeicherten Transform-Werte anwenden
+        applyModelTransforms()
+    }
+
+    func applyModelTransforms() {
+        let o = model.jobBox.origin
+        let z = CGFloat(model.jobBox.zoom)
+        let a = CGFloat(model.jobBox.angle * .pi/180)
+        webView.layer?.anchorPoint = CGPoint(x:0.5,y:0.5)
+        var t = CATransform3DIdentity
+        t = CATransform3DTranslate(t, o.x, o.y, 0)
+        t = CATransform3DScale(t, z, z, 1)
+        t = CATransform3DRotate(t, a, 0, 0, 1)
+        webView.layer?.transform = t
+    }
+
+    private func setupGestures() {
+        let pan = NSPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        pan.delegate = self
+        webView.addGestureRecognizer(pan)
+        let mag = NSMagnificationGestureRecognizer(target: self, action: #selector(handleMagnification(_:)))
+        mag.delegate = self
+        webView.addGestureRecognizer(mag)
+        let rot = NSRotationGestureRecognizer(target: self, action: #selector(handleRotation(_:)))
+        rot.delegate = self
+        webView.addGestureRecognizer(rot)
+    }
+    @objc private func handlePan(_ gesture: NSPanGestureRecognizer) {
+        let translation = gesture.translation(in: webView)
+        if gesture.state == .began {
+            // Optionally store initial origin
+        }
+        if gesture.state == .changed || gesture.state == .ended {
+            let newOrigin = CGPoint(
+                x: model.jobBox.origin.x + translation.x,
+                y: model.jobBox.origin.y - translation.y
+            )
+            model.jobBox.origin = newOrigin
+            if gesture.state == .ended {
+                // Optionally sync back if needed
+            }
+            applyModelTransforms()
+            gesture.setTranslation(.zero, in: webView)
+        }
+    }
+    @objc private func handleMagnification(_ gesture: NSMagnificationGestureRecognizer) {
+        if gesture.state == .changed || gesture.state == .ended {
+            let newZoom = model.jobBox.zoom * Double(1 + gesture.magnification)
+            model.jobBox.zoom = newZoom
+            if gesture.state == .ended {
+                // Optionally sync back if needed
+            }
+            applyModelTransforms()
+            gesture.magnification = 0
+        }
+    }
+    @objc private func handleRotation(_ gesture: NSRotationGestureRecognizer) {
+        if gesture.state == .changed || gesture.state == .ended {
+            let newAngle = model.jobBox.angle + Double(gesture.rotation * 180 / .pi)
+            model.jobBox.angle = newAngle
+            if gesture.state == .ended {
+                // Optionally sync back if needed
+            }
+            applyModelTransforms()
+            gesture.rotation = 0
+        }
+    }
 }
 #endif

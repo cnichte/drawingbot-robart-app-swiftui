@@ -6,8 +6,6 @@
 //
 
 // MachineCommandResolver.swift
-import Foundation
-
 final class MachineCommandResolver {
     private let commands: [String: MachineCommandItem]
 
@@ -17,7 +15,17 @@ final class MachineCommandResolver {
 
     func resolve(name: String, variables: [String: CustomStringConvertible]) -> String? {
         guard let template = commands[name]?.command else { return nil }
-        return replaceVariables(in: template, with: variables)
+        let resolved = replaceVariables(in: template, with: variables)
+        
+        // Überprüfen, ob alle Platzhalter ersetzt wurden
+        if resolved.contains("{") {
+            return nil // Es gibt noch unersetzte Platzhalter → Fehler
+        }
+        return resolved
+    }
+
+    func hasTemplate(name: String) -> Bool {
+        return commands[name] != nil
     }
 
     private func replaceVariables(in template: String, with variables: [String: CustomStringConvertible]) -> String {

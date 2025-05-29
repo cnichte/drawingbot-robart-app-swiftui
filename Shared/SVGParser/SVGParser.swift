@@ -204,6 +204,12 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
     
     /// A stack of transformation offsets (dx, dy) for handling nested group transformations.
     private var transformStack: [(dx: Double, dy: Double)] = [(0, 0)]
+
+    /// Stack of current layer names (inkscape:label or id, inherited to children)
+    private var layerStack: [String] = ["ohne Ebene"]
+    
+    /// Counter for auto‑generated group names when no label/id exists
+    private var autoGroupIndex: Int = 0
     
     /// The scaling factor for the x-axis based on paper and SVG dimensions.
     private var scaleX: Double = 1.0
@@ -305,6 +311,7 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
         
         // ----- originalcode
         if elementName == "g" {
+            // --- transform handling (unchanged) ---
             if let transform = attributeDict["transform"],
                transform.starts(with: "translate("),
                let open = transform.range(of: "translate(")?.upperBound,
@@ -322,7 +329,32 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
             } else {
                 transformStack.append(currentTransform())
             }
+            // --- layer handling ---
+            let label: String
+            if let l = attributeDict["inkscape:label"], !l.isEmpty {
+                label = l
+            } else if let id = attributeDict["id"], !id.isEmpty {
+                label = id
+            } else {
+                autoGroupIndex += 1
+                label = "Ebene | Gruppe \(autoGroupIndex)"
+            }
+            layerStack.append(label)
+            // create a minimal SVGElement representing this group (so it counts in grouping)
+            let groupElement = SVGElement(
+                id: UUID(),
+                name: "g",
+                attributes: [:],
+                rawAttributes: ["inkscape:label": label]
+            )
+            elements.append(ParserListItem(element: groupElement, output: ""))
             return
+        }
+
+        // inherit current layer label if element itself has none
+        var rawAttr = attributeDict
+        if rawAttr["inkscape:label"] == nil {
+            rawAttr["inkscape:label"] = layerStack.last
         }
         
         var attributes: [String: Double] = [:]
@@ -346,22 +378,22 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
         }
         
         // Handle special attributes (e.g., "points", "d") by preserving their raw values
-        if let points = attributeDict["points"] {
+        if let points = rawAttr["points"] {
             attributes["points_raw"] = 1 // Marker
-            let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: ["points": points])
+            let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: rawAttr)
             let output = generator.generate(for: element)
             elements.append(ParserListItem(element: element, output: output))
             return
         }
-        if let d = attributeDict["d"] {
+        if let d = rawAttr["d"] {
             attributes["d_raw"] = 1
-            let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: ["d": d])
+            let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: rawAttr)
             let output = generator.generate(for: element)
             elements.append(ParserListItem(element: element, output: output))
             return
         }
         
-        let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: attributeDict)
+        let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: rawAttr)
         let output = generator.generate(for: element)
         elements.append(ParserListItem(element: element, output: output))
     }
@@ -379,6 +411,7 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
                 namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "g" {
             _ = transformStack.popLast()
+            _ = layerStack.popLast()
         }
     }
     
