@@ -45,10 +45,11 @@ struct PaperFormatData: Codable, Equatable, Identifiable, Hashable, ManageableIt
     var description: String
     var width:Double
     var height:Double
+    var aspectRatio:AspectRatioData
     var unit:UnitsData
     
     static var `default`: PaperFormatData {
-        PaperFormatData(id: UUID.force("7e3eb341-cee9-4da6-8acb-677d5cb19e13"), name: "DIN A4", width: 210, height: 297, unit: .default)
+        PaperFormatData(id: UUID.force("7e3eb341-cee9-4da6-8acb-677d5cb19e13"), name: "DIN A4", width: 210, height: 297, aspectRatio: .default , unit: .default)
     }
     
     init(
@@ -57,6 +58,7 @@ struct PaperFormatData: Codable, Equatable, Identifiable, Hashable, ManageableIt
         description: String = "",
         width:Double = 0,
         height:Double = 0,
+        aspectRatio:AspectRatioData = .default,
         unit:UnitsData = .default
     ) {
         self.id = id
@@ -64,6 +66,7 @@ struct PaperFormatData: Codable, Equatable, Identifiable, Hashable, ManageableIt
         self.description = description
         self.width = width
         self.height = height
+        self.aspectRatio = aspectRatio
         self.unit = unit
     }
     

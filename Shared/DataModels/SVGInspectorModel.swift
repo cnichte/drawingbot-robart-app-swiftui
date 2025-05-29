@@ -17,6 +17,12 @@ final class SVGInspectorModel: ObservableObject {
     
     // Zentrale Maschinenreferenz - OHNE didSet um Endlosschleifen zu vermeiden
     @Published var machine: MachineData?
+
+    private var activeParser: SVGParser<GCodeGenerator>? = nil
+
+    // MARK: - SVG Parser Fortschritt & Statistik
+    @Published var statistic: SVGParserStatistic? = nil
+    @Published var progress: Double = 0.0
     
     // MARK: - Parser-Ergebnisse
     @Published var allElements: [ParserListItem] = []
@@ -44,6 +50,9 @@ final class SVGInspectorModel: ObservableObject {
     
     // Flag to prevent multiple concurrent parsing operations
     private var isParsingInProgress = false
+    
+    public var svgWidthString = "100%"
+    public var svgHeightString = "100%"
     
     // MARK: - Init
     init(job: JobData, machine: MachineData? = nil, pensStore: GenericStore<PenData>? = nil) {
@@ -129,6 +138,31 @@ final class SVGInspectorModel: ObservableObject {
         }
     }
     
+    
+    func caluclateSVGSizeFromPaper(){
+        // Passe die SVG-Größe proportional an das Papier an (mit Seitenverhältnis)
+        if let svgW = self.statistic?.svgWidth, let svgH = self.statistic?.svgHeight {
+            let paperW = Double(self.job.paperData.paperFormat.width)
+            let paperH = Double(self.job.paperData.paperFormat.height)
+
+            let scaleW = paperW / svgW
+            let scaleH = paperH / svgH
+            let scale = min(1.0, scaleW, scaleH) // Nur verkleinern, nicht vergrößern
+
+            let finalW = svgW * scale
+            let finalH = svgH * scale
+
+            self.svgWidthString = String(format: "%.0f", finalW)
+            self.svgHeightString = String(format: "%.0f", finalH)
+            
+        } else {
+            self.svgWidthString = "100%"
+            self.svgHeightString = "100%"
+        }
+        
+        print("SVG: \(self.svgWidthString), \(self.svgHeightString)")
+    }
+    
     // MARK: - Speichern
     func save(using store: GenericStore<JobData>) async {
         self.syncJobBoxBack()
@@ -167,12 +201,20 @@ final class SVGInspectorModel: ObservableObject {
         }
         
         appLog(.info, "Attempting to parse SVG at URL: \(url.path)")
-        let parser = SVGParser(generator: GCodeGenerator(machineData: machine ?? .default))
-        
+        let parser = SVGParser<GCodeGenerator>(generator: GCodeGenerator(machineData: machine ?? .default))
+        self.activeParser = parser
+
+        // Fortschritt über Closure beobachten
+        parser.onProgressUpdate = { [weak self] newProgress in
+            Task { @MainActor in
+                self?.progress = newProgress
+            }
+        }
+
         // Parser-Aufruf auf Background Thread
         let parseResult = await withCheckedContinuation { continuation in
             DispatchQueue.global(qos: .userInitiated).async {
-                let ok = parser.loadSVGFile( // Capture of 'parser' with non-sendable type 'SVGParser<GCodeGenerator>' in a '@Sendable' closure
+                let ok = parser.loadSVGFile(
                     from: url,
                     svgWidth: svgSize.width,
                     svgHeight: svgSize.height,
@@ -183,10 +225,13 @@ final class SVGInspectorModel: ObservableObject {
             }
         }
         
+        self.activeParser = nil
+        
         // UI-Updates auf Main Thread
         if parseResult.0 {
             self.allElements = parseResult.1
             self.groupElementsByLayer()
+            self.statistic = parser.statistic
             appLog(.info, "SVG parsing successful, found \(allElements.count) elements, \(layers.count) layers")
         } else {
             // Reset bei Fehler
@@ -198,6 +243,11 @@ final class SVGInspectorModel: ObservableObject {
             self.selectedProperties = []
             appLog(.error, "Failed to parse SVG at: \(url.path)")
         }
+    }
+    
+    func cancelParsing() {
+        activeParser?.cancelParsing()
+        appLog(.info, "SVG parsing cancelled by user.")
     }
     
     // MARK: - Gruppieren nach Layer

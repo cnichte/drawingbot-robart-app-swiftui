@@ -66,8 +66,25 @@ struct PaperFormView: View {
                     }
                 .pickerStyle(.menu)
 
+                
                 if isCustomFormat {
                     VStack(alignment: .leading, spacing: 8) {
+                        
+                        Picker(selection: Binding(
+                            get: { data.paperFormat.aspectRatio.id },
+                                set: { newID in
+                                    if let ar = assetStores.aspectRatiosStore.items.first(where: { $0.id == newID }) {
+                                        data.paperFormat.aspectRatio = ar
+                                        save()
+                                    }
+                                }
+                            ), label: Text("Seitenverhältnis")) {
+                                ForEach(assetStores.aspectRatiosStore.items) { ar in
+                                    Text(ar.name).tag(ar.id)
+                                }
+                            }
+                        .pickerStyle(.menu)
+                        
                         TextField("Breite", value: $data.paperFormat.width, format: .number)
                             .platformTextFieldModifiers()
                             .crossPlatformDecimalKeyboard()

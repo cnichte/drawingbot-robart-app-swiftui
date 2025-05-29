@@ -10,7 +10,7 @@ import SwiftUI
 
 struct JobInspector_SVGPropertiesView: View {
     @EnvironmentObject var model: SVGInspectorModel
-    
+
     private var layersSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("SVG-Gruppen").font(.headline)
@@ -109,6 +109,10 @@ struct JobInspector_SVGPropertiesView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
+            SVGStatistikView(statistic: model.statistic)
+            SVGParserProgressView()
+                .environmentObject(model)
+            Divider()
             layersSection
             Divider()
             elementsSection
@@ -140,4 +144,62 @@ struct JobInspector_SVGPropertiesView: View {
             appLog(.info, "AllElements updated, count: \(newElements.count)")
         }
     }
+}
+
+struct SVGStatistikView: View {
+    let statistic: SVGParserStatistic?
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("SVG Statistik").font(.headline)
+            if let stat = statistic {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Größe: \(Int(stat.svgWidth ?? 0)) x \(Int(stat.svgHeight ?? 0))")
+                    Text("Layer: \(stat.svgLayerCount)")
+                    Text("Elemente: \(stat.svgElementCount)")
+                }
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            } else {
+                Text("Keine Statistik verfügbar").foregroundColor(.secondary)
+            }
+        }
+    }
+}
+
+struct SVGParserProgressView: View {
+    @EnvironmentObject var model: SVGInspectorModel
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("SVG Parsing Fortschritt").font(.headline)
+                Spacer()
+                if model.progress > 0 && model.progress < 1.0 {
+                    Button(action: {
+                        model.cancelParsing()
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            
+            ProgressView(value: model.progress, total: 1.0)
+                .progressViewStyle(LinearProgressViewStyle())
+                .animation(.easeInOut(duration: 0.3), value: model.progress)
+            
+            if model.progress == 0 || model.progress >= 1.0 {
+                Button("SVG erneut analysieren") {
+                    Task { await model.loadAndParseSVG() }
+                }
+                .buttonStyle(.borderedProminent)
+            }
+        }
+    }
+}
+
+extension Notification.Name {
+    static let cancelSVGParsing = Notification.Name("cancelSVGParsing")
+    static let triggerSVGParsing = Notification.Name("triggerSVGParsing")
 }

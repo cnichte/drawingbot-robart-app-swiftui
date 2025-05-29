@@ -102,6 +102,26 @@ struct SVGSectionView: View {
                         let workingCopyURL = JobsDataFileManager.shared.svgFolder(for: model.job.id).appendingPathComponent("working.svg")
                         try Data(contentsOf: destinationURL).write(to: workingCopyURL)
                         
+                        // TODO: Hier muss nur kurz width und height aus dem SVG geparst werden.
+                        // TODO: umgerechnet werden mit model.caluclateSVGSizeFromPaper()
+                        // TODO: und im Job abgelegt werden!
+                        // TODO: Eine Neuberechnung erfolgt nur wenn sich das Papier ändert (oder die Maschine?).
+                        // TODO: Das kann dann im PaperPanel entfallen!s
+  /*
+                        appLog(.info, "SVGSectionView: Parse SVG width und height.")
+                        let nullGen = BasePlotterGenerator()
+                        let svgParser = SVGParser(generator: nullGen)
+                        guard svgParser.loadSVGFile(from: workingCopyURL,
+                                                    svgWidth: 1, // TODO: Whats That? Das will ich ja gerade ermitteln!
+                                                    svgHeight: 1,
+                                                    paperWidth: model.jobBox.paperData.paperFormat.width,
+                                                    paperHeight: model.jobBox.paperData.paperFormat.height)
+                        else { fatalError("SVGSectionView: Fehler beim Laden der SVG-Datei") }
+                        
+                        appLog(.info, "SVGSectionView: Parse SVG vorher width: \(model.svgWidthString) und height: \(model.svgHeightString).")
+                        model.caluclateSVGSizeFromPaper();
+                        appLog(.info, "SVGSectionView: Parse SVG danach width: \(model.svgWidthString) und height: \(model.svgHeightString).")
+*/
                         // original
                         let relativePath = "jobs-data/\(model.job.id.uuidString)/svg/\(destinationURL.lastPathComponent)"
                         

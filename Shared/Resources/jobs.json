@@ -25,6 +25,11 @@
                     "id": "5F6BBF82-57CC-435D-8644-655481CD556B",
                     "name": "mm"
                 },
+                "aspectratio":{
+                    "id":"4b34dc07-a722-4a40-8bbf-8503739db801",
+                    "name":"From Paper",
+                    "factor":1.0
+                },
                 "id": "7E3EB341-CEE9-4DA6-8ACB-677D5CB19E13",
                 "height": 297
             },

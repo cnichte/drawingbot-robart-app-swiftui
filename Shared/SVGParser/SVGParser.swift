@@ -97,6 +97,15 @@ Oder als ein einzelner Block GCode:
 // SVGParser.swift
 import Foundation
 
+// MARK: - SVGParserStatistic
+
+struct SVGParserStatistic {
+    var svgElementCount: Int
+    var svgLayerCount: Int
+    var svgWidth: Double?
+    var svgHeight: Double?
+}
+
 // MARK: - SVGElement & ParserListItem
 
 import Foundation
@@ -198,9 +207,18 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
     
     /// The XML parser used to process the SVG file.
     private var parser: XMLParser?
+
+    /// Indicates whether parsing has been cancelled.
+    private var isCancelled = false
     
     /// The list of parsed SVG elements and their generated outputs.
     private(set) var elements: [ParserListItem] = []
+
+    /// Statistic tracking for SVG parsing.
+    private(set) var statistic = SVGParserStatistic(svgElementCount: 0, svgLayerCount: 0, svgWidth: nil, svgHeight: nil)
+
+    /// Closure to report progress updates.
+    var onProgressUpdate: ((Double) -> Void)?
     
     /// A stack of transformation offsets (dx, dy) for handling nested group transformations.
     private var transformStack: [(dx: Double, dy: Double)] = [(0, 0)]
@@ -236,12 +254,34 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
     func loadSVGFile(from fileURL: URL, svgWidth: Double, svgHeight: Double, paperWidth: Double, paperHeight: Double) -> Bool {
         scaleX = paperWidth / svgWidth
         scaleY = paperHeight / svgHeight
-        
+
+        // Extract width and height manually from SVG tag
+        if let svgText = try? String(data: Data(contentsOf: fileURL), encoding: .utf8),
+           let svgRange = svgText.range(of: "<svg[^>]*>", options: .regularExpression),
+           let svgTag = svgText[svgRange].data(using: .utf8) {
+            let attrRegex = try? NSRegularExpression(pattern: #"(\w+)=["']([^"']+)["']"#)
+            let matches = attrRegex?.matches(in: String(data: svgTag, encoding: .utf8) ?? "", range: NSRange(location: 0, length: svgTag.count))
+            matches?.forEach { match in
+                let tagString = String(data: svgTag, encoding: .utf8) ?? ""
+                let nameRange = Range(match.range(at: 1), in: tagString)
+                let valueRange = Range(match.range(at: 2), in: tagString)
+                if let name = nameRange.flatMap({ String(tagString[$0]) }),
+                   let valueStr = valueRange.flatMap({ String(tagString[$0]) }),
+                   let value = Double(valueStr.replacingOccurrences(of: "[^0-9.]", with: "", options: .regularExpression)) {
+                    if name == "width" {
+                        statistic.svgWidth = value
+                    } else if name == "height" {
+                        statistic.svgHeight = value
+                    }
+                }
+            }
+        }
+
         do {
             let data = try Data(contentsOf: fileURL)
-            parser = XMLParser(data: data)
-            parser?.delegate = self
-            return parser?.parse() ?? false
+            self.parser = XMLParser(data: data)
+            self.parser?.delegate = self
+            return self.parser?.parse() ?? false
         } catch {
             appLog(.info, "Fehler beim Laden der Datei: \(error.localizedDescription)")
             return false
@@ -276,9 +316,14 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
     ///   - namespaceURI: The namespace URI, if any.
     ///   - qName: The qualified name of the element.
     ///   - attributeDict: A dictionary of the element's attributes.
-    func parser(_ parser: XMLParser, didStartElement elementName: String,
+    @MainActor
+    @preconcurrency func parser(_ parser: XMLParser, didStartElement elementName: String,
                 namespaceURI: String?, qualifiedName qName: String?,
                 attributes attributeDict: [String: String]) {
+        guard !isCancelled else {
+            self.parser?.abortParsing()
+            return
+        }
  
         /* TODO: Neuer Pattern Support / Experimentell
         // ########## neuer pattern support - start
@@ -348,6 +393,9 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
                 rawAttributes: ["inkscape:label": label]
             )
             elements.append(ParserListItem(element: groupElement, output: ""))
+            statistic.svgElementCount += 1
+            statistic.svgLayerCount = layerStack.count
+            onProgressUpdate?(Double(elements.count) / 1000.0) // Example scaling, adjust to actual expected max
             return
         }
 
@@ -383,6 +431,10 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
             let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: rawAttr)
             let output = generator.generate(for: element)
             elements.append(ParserListItem(element: element, output: output))
+            statistic.svgElementCount += 1
+            
+            let scaledProgress = min(Double(elements.count) / 130000.0, 1.0)
+            onProgressUpdate?(scaledProgress) // Example scaling, adjust to actual expected max
             return
         }
         if let d = rawAttr["d"] {
@@ -390,12 +442,19 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
             let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: rawAttr)
             let output = generator.generate(for: element)
             elements.append(ParserListItem(element: element, output: output))
+            statistic.svgElementCount += 1
+            
+            let scaledProgress = min(Double(elements.count) / 130000.0, 1.0)
+            onProgressUpdate?(scaledProgress) // Example scaling, adjust to actual expected max
             return
         }
         
         let element = SVGElement(id: UUID(), name: elementName, attributes: attributes, rawAttributes: rawAttr)
         let output = generator.generate(for: element)
         elements.append(ParserListItem(element: element, output: output))
+        statistic.svgElementCount += 1
+        let scaledProgress = min(Double(elements.count) / 130000.0, 1.0)
+        onProgressUpdate?(scaledProgress)
     }
     
     /// Called when the XML parser encounters the end of an element.
@@ -429,5 +488,11 @@ class SVGParser<Generator: PlotterCodeGenerator>: NSObject, XMLParserDelegate {
     var patternParser: SVGPatternElementParser? {
         // muss extern initialisiert werden
         return nil
+    }
+
+    /// Cancels the SVG parsing operation.
+    func cancelParsing() {
+        isCancelled = true
+        parser?.abortParsing()
     }
 }

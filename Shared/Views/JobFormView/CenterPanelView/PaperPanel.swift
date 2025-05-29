@@ -197,7 +197,7 @@ struct PaperPanel: View {
                         #endif
                     }
                     .frame(width: paperFrame.width, height: paperFrame.height)
-                    .border(Color.green)
+                    .border(Color.green) // TODO: DEBUG
                     .clipped()
                     .onAppear { ensureFileIsDownloaded(url: svgURL) }
                 } else {
@@ -371,6 +371,14 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
                 errorHandler?("Unable to read SVG")
                 return
             }
+            
+            // Passe die SVG-Größe proportional an das Papier an (mit Seitenverhältnis)
+            // TODO: Das muss eigentlich nur ein einziges mal passieren (im SVGSectionView), wenn das SVG das erste mal geladen wird! Die Info ist ja konstant und kann im job! (nicht nur im model, das ist nicht persistent) despeichert werden.
+            model.caluclateSVGSizeFromPaper()
+            
+            let svgWidthString = model.svgWidthString;
+            let svgHeightString = model.svgHeightString;
+        
             let htmlString = """
             <!DOCTYPE html>
             <html>
@@ -378,8 +386,8 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
-                    html, body { margin:0; padding:0; overflow:hidden; background-color:red; } <!-- DEBUG: background-color:transparent; -->
-                    svg { width:100%; height:100%; }
+                    html, body {  margin:0; padding:0; overflow:hidden; background-color:transparent; } 
+                    svg { width: \(svgWidthString); height:\(svgHeightString); background-color: transparent; }
                 </style>
             </head>
             <body>
@@ -387,6 +395,7 @@ class WebController: UIViewController, WKNavigationDelegate, UIGestureRecognizer
             </body>
             </html>
             """
+            
             webView.loadHTMLString(htmlString, baseURL: url.deletingLastPathComponent())
         } catch {
             errorHandler?("Error loading SVG: \(error.localizedDescription)")
@@ -533,6 +542,14 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
                 errorHandler?("Unable to read SVG")
                 return
             }
+            
+            // Passe die SVG-Größe proportional an das Papier an (mit Seitenverhältnis)
+            // TODO: Das muss eigentlich nur ein einziges mal passieren (im SVGSectionView), wenn das SVG das erste mal geladen wird! Die Info ist ja konstant und kann im job! (nicht nur im model, das ist nicht persistent) despeichert werden.
+            model.caluclateSVGSizeFromPaper()
+            
+            let svgWidthString = model.svgWidthString;
+            let svgHeightString = model.svgHeightString;
+            
             let htmlString = """
             <!DOCTYPE html>
             <html>
@@ -540,8 +557,19 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
-                    html, body { margin:0; padding:0; overflow:hidden; background-color:red; } <!-- DEBUG: background-color:transparent; -->
-                    svg { width:100%; height:100%; }
+                    html, body { 
+                        margin: 0; 
+                        padding: 0; 
+                        overflow: hidden; 
+                        background-color: transparent;
+                    }
+                    svg {
+                        display: block;
+                        margin: auto;
+                        width: \(svgWidthString);
+                        height:\(svgHeightString);
+                        background-color: green;
+                    }
                 </style>
             </head>
             <body>
@@ -549,6 +577,7 @@ class WebController: NSViewController, WKNavigationDelegate, NSGestureRecognizer
             </body>
             </html>
             """
+
             webView.loadHTMLString(htmlString, baseURL: secureURL.deletingLastPathComponent())
         } catch {
             errorHandler?("Error loading SVG: \(error.localizedDescription)")

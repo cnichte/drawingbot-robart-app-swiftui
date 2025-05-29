@@ -39,7 +39,7 @@ struct Menubar<Toolbar: View>: View {
                 toolbar
             }
             .padding(.horizontal, 8)
-            .padding(.vertical, 8)
+            .padding(.vertical, 4)
             .background(ColorHelper.backgroundColor)
             .foregroundColor(.primary)
             .cornerRadius(8)
